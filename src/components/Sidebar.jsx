@@ -28,10 +28,10 @@ const Sidebar = () => {
            <span className='flex items-center'><IoMdSettings className='mr-1'/>Monitoring</span>
          </button>
          <div>
-        <span className='text-[#0066AE] font-semibold'>Memo</span>
+        <span className='text-[#0066AE] font-semibold'>Logistic</span>
         <div className="h-[0.5px] bg-black"></div>
         <button className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-           <span className='flex items-center'><CiMemoPad className='mr-1'/>Monitoring</span>
+           <span className='flex items-center'><CiMemoPad className='mr-1'/>Memo</span>
          </button>
          </div>
           </div>
