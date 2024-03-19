@@ -5,8 +5,8 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="min-h-screen bg-[#00A6B4]">
-      <HeaderLogin title="DaMaS" />
+    <div className="min-h-screen bg-[#00A6B4] bg-opacity-20">
+      <HeaderLogin title="Damas" />
       <Footer />
       <div className="mt-6 flex flex-col justify-center items-center">
         <div className="bg-white p-6 rounded-lg w-[450px]">
