@@ -1,43 +1,197 @@
-import React from 'react'
-import { TbProgress } from "react-icons/tb";
+"use client";
+import React, { useState } from "react";
+import { PiPath } from "react-icons/pi";
 import { GoFile } from "react-icons/go";
 import { IoMdSettings } from "react-icons/io";
 import { CiMemoPad } from "react-icons/ci";
+import { IoStatsChartOutline } from "react-icons/io5";
+import { MdArrowDropDown } from "react-icons/md";
+import { IoCreateOutline } from "react-icons/io5";
+import { GoTasklist } from "react-icons/go";
+import { FaRegFolderOpen } from "react-icons/fa";
+import Link from "next/link";
 
 const Sidebar = () => {
-    return (
-        <div className="bg-[#00A6B4]/[0.5] text-black w-64 min-h-screen p-4">
-          <span className='text-[#0066AE] font-semibold'>Development</span>
-          <div className="h-[0.5px] bg-black"></div>
-           <button className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
-              <span className='flex items-center'><TbProgress className='mr-1'/>SDLC</span>
+  const [isSdlcShow, setIsSdlcShow] = useState(false);
+  const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
+  const [isPpoSkseShow, setIsPpoSkseShow] = useState(false);
+  // const [isOperationMonitoringSystemShow, setOperationMonitoringSystemShow] =
+  //   useState(false);
+  const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
+  return (
+    <div className="bg-[#00A6B4]/[0.5] text-black w-80 min-h-screen p-4">
+      <span className="text-[#0066AE] font-semibold">Development</span>
+      <div className="h-[0.5px] bg-black"></div>
+      <div className="">
+        <button
+          className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
+          onClick={() => setIsSdlcShow(!isSdlcShow)}
+        >
+          <span className="flex items-center">
+            <MdArrowDropDown className="mr-1" />
+            SDLC
+          </span>
+        </button>
+        <div
+          className={`${
+            isSdlcShow ? "flex flex-col items-start pl-5 mt-2" : "hidden"
+          }  `}
+        >
+          <Link href="/main/development">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+              <PiPath className="mr-1" />
+              All Project
             </button>
-        <div>
-        <span className='text-[#0066AE] font-semibold'>PPO</span>
+          </Link>
+          <Link href="/main/development/myproject">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+              <GoTasklist className="mr-1" />
+              My Project
+            </button>
+          </Link>
+          <Link href="/main/development/createnewproject">
+            <button className="flex items-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+              <IoCreateOutline className="mr-1" />
+              Create New Project
+            </button>
+          </Link>
+        </div>
+      </div>
+      <div className="mt-3">
+        <span className="text-[#0066AE] font-semibold">PPO</span>
         <div className="h-[0.5px] bg-black"></div>
-        <button className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-           <span className='flex items-center'><TbProgress className='mr-1'/>SDLC</span>
-         </button>
-         <button className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-gray-600 mb-4">
-         <span className='flex items-center'><GoFile className='mr-1'/>SK/SE</span>
-         </button>
-         <div>
-        <span className='text-[#0066AE] font-semibold'>Operation</span>
+        <div className="">
+          <button
+            className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
+            onClick={() => setIsPpoSdlcShow(!isPpoSdlcShow)}
+          >
+            <span className="flex items-center">
+              <MdArrowDropDown className="mr-1" />
+              SDLC
+            </span>
+          </button>
+        </div>
+        <div
+          className={`${
+            isPpoSdlcShow ? "flex  flex-col items-start pl-5 mt-2" : "hidden"
+          }  `}
+        >
+          <Link href="/main/ppo">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+              <PiPath className="mr-1" />
+              All Project
+            </button>
+          </Link>
+          <Link href="/main/ppo/myproject">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+              <GoTasklist className="mr-1" />
+              My Project
+            </button>
+          </Link>
+          <Link href="/main/ppo/createnewproject">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
+              <IoCreateOutline className="mr-1" />
+              Create New Project
+            </button>
+          </Link>
+        </div>
+      </div>
+      <div className="">
+        <button
+          className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-gray-600 mb-4"
+          onClick={() => setIsPpoSkseShow(!isPpoSkseShow)}
+        >
+          <span className="flex items-center">
+            <MdArrowDropDown className="mr-1" />
+            SK/SE
+          </span>
+        </button>
+        <div
+          className={`${
+            isPpoSkseShow ? "flex  flex-col items-start pl-5 mt-2" : "hidden"
+          }  `}
+        >
+          <Link href="/main/ppo/allskse">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+              <GoFile className="mr-1" />
+              All SK/SE
+            </button>
+          </Link>
+          <Link href="/main/ppo/myskse">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+              <FaRegFolderOpen className="mr-1" />
+              My SK/SE
+            </button>
+          </Link>
+          <Link href="/main/ppo/createnewskse">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
+              <IoCreateOutline className="mr-1" />
+              Create New SK/SE
+            </button>
+          </Link>
+        </div>
+      </div>
+      <div>
+        <span className="text-[#0066AE] font-semibold">Operation</span>
         <div className=" h-[0.5px] bg-black"></div>
-        <button className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
-           <span className='flex items-center'><IoMdSettings className='mr-1'/>Monitoring</span>
-         </button>
-         <div>
-        <span className='text-[#0066AE] font-semibold'>Logistic</span>
-        <div className="h-[0.5px] bg-black"></div>
-        <button className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-           <span className='flex items-center'><CiMemoPad className='mr-1'/>Memo</span>
-         </button>
-         </div>
+        <Link href="/main/operation">
+          <button className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+            <span className="flex items-center">
+              <IoStatsChartOutline className="mr-1" />
+              Monitoring System
+            </span>
+          </button>
+        </Link>
+        <Link href="/main/operation/settingthreshold">
+          <button className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
+            <span className="flex items-center">
+              <IoMdSettings className="mr-1" />
+              Setting Threshold
+            </span>
+          </button>
+        </Link>
+        <div>
+          <span className="text-[#0066AE] font-semibold">Logistic</span>
+          <div className="h-[0.5px] bg-black"></div>
+          <button
+            className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
+            onClick={() => setIsLogisticMemoShow(!isLogisticMemoShow)}
+          >
+            <span className="flex items-center">
+              <MdArrowDropDown className="mr-1" />
+              Memo
+            </span>
+          </button>
+          <div
+            className={`${
+              isLogisticMemoShow
+                ? "flex  flex-col items-start pl-5 mt-2"
+                : "hidden"
+            }  `}
+          >
+            <Link href="/main/logistic">
+              <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+                <CiMemoPad className="mr-1" />
+                All Memo
+              </button>
+            </Link>
+            <Link href="/main/logistic/mymemo">
+              <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+                <FaRegFolderOpen className="mr-1" />
+                My Memo
+              </button>
+            </Link>
+            <Link href="/main/logistic/createnewmemo">
+              <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+                <IoCreateOutline className="mr-1" />
+                Create New Memo
+              </button>
+            </Link>
           </div>
-          </div>
-          </div>
-      );
-    };
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default Sidebar
+export default Sidebar;

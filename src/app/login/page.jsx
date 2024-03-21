@@ -42,7 +42,7 @@ const page = () => {
               />
             </div>
             <div className="mt-2">
-              <Link href="/Master_Dashboard">
+              <Link href="/main">
                 <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-[#0066AE] rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
                   Login
                 </button>

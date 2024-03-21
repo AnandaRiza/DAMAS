@@ -1,6 +1,6 @@
 import React from "react";
 
-const Table = () => {
+const LogisticTable = () => {
   // Sample data for demonstration
   const rowData = [
     {
@@ -95,4 +95,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default LogisticTable;
