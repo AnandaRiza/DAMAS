@@ -1,14 +1,17 @@
-import React from "react";
+'use client';
+
+import React, { useState } from "react";
 
 const LogisticTable = () => {
   // Sample data for demonstration
-  const rowData = [
+  const [rowData, setRowData] = useState([
     {
       id: 1,
       noMemo: "2024/01/17A",
       perihal: "TTD persetujuan dokumen A",
       pic: "Bu Maya",
       deadline: "19/03/2024",
+      status: "Ongoing"
     },
     {
       id: 2,
@@ -16,6 +19,7 @@ const LogisticTable = () => {
       perihal: "TTD persetujuan dokumen B",
       pic: "Pak Ridhwan",
       deadline: "19/03/2024",
+      status: "Ongoing"
     },
     {
       id: 3,
@@ -23,8 +27,28 @@ const LogisticTable = () => {
       perihal: "TTD persetujuan dokumen X",
       pic: "Pak Riza",
       deadline: "19/03/2024",
+      status: "Ongoing"
     },
-  ];
+  ]);
+
+  // State to track the currently selected row for editing
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  // Function to handle edit action
+  const handleEdit = (rowId) => {
+    setSelectedRow(rowId);
+    // Add your edit logic here, such as opening a modal or navigating to an edit page
+    console.log("Editing row with ID:", rowId);
+  };
+
+  // Function to handle status change
+  const handleStatusChange = (rowId, status) => {
+    setRowData(prevData =>
+      prevData.map(row =>
+        row.id === rowId ? { ...row, status: status } : row
+      )
+    );
+  };
 
   return (
     <div className="overflow-x-auto">
@@ -53,27 +77,32 @@ const LogisticTable = () => {
               <td>
                 <div className="dropdown">
                   <div tabIndex={0} role="button" className="btn m-1">
-                    Ongoing
+                    {row.status}
                   </div>
                   <ul
                     tabIndex={0}
                     className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
                   >
                     <li>
-                      <a>Ongoing</a>
+                      <a onClick={() => handleStatusChange(row.id, "Ongoing")}>Ongoing</a>
                     </li>
                     <li>
-                      <a>Finished</a>
+                      <a onClick={() => handleStatusChange(row.id, "Finished")}>Finished</a>
                     </li>
                     <li>
-                      <a>Past Deadline</a>
+                      <a onClick={() => handleStatusChange(row.id, "Past Deadline")}>Past Deadline</a>
                     </li>
                   </ul>
                 </div>
               </td>
               <td>
                 <div className="dropdown">
-                  <div tabIndex={0} role="button" className="btn m-1">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn m-1"
+                    onClick={() => handleEdit(row.id)}
+                  >
                     Edit
                   </div>
                   <div
@@ -81,8 +110,8 @@ const LogisticTable = () => {
                     className="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-primary text-primary-content"
                   >
                     <div className="card-body">
-                      <h3 className="card-title">Card title!</h3>
-                      <p>you can use any element as a dropdown.</p>
+                      <h3 className="card-title">Edit Item</h3>
+                      <p>Editing {row.perihal}</p>
                     </div>
                   </div>
                 </div>
@@ -96,3 +125,4 @@ const LogisticTable = () => {
 };
 
 export default LogisticTable;
+
