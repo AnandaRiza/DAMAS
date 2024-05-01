@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 
 const LogisticTable = () => {
   // Sample data for demonstration
@@ -11,7 +12,7 @@ const LogisticTable = () => {
       perihal: "TTD persetujuan dokumen A",
       pic: "Bu Maya",
       deadline: "19/03/2024",
-      status: "Ongoing"
+      status: "Ongoing",
     },
     {
       id: 2,
@@ -19,7 +20,7 @@ const LogisticTable = () => {
       perihal: "TTD persetujuan dokumen B",
       pic: "Pak Ridhwan",
       deadline: "19/03/2024",
-      status: "Ongoing"
+      status: "Ongoing",
     },
     {
       id: 3,
@@ -27,7 +28,7 @@ const LogisticTable = () => {
       perihal: "TTD persetujuan dokumen X",
       pic: "Pak Riza",
       deadline: "19/03/2024",
-      status: "Ongoing"
+      status: "Ongoing",
     },
   ]);
 
@@ -43,8 +44,8 @@ const LogisticTable = () => {
 
   // Function to handle status change
   const handleStatusChange = (rowId, status) => {
-    setRowData(prevData =>
-      prevData.map(row =>
+    setRowData((prevData) =>
+      prevData.map((row) =>
         row.id === rowId ? { ...row, status: status } : row
       )
     );
@@ -84,13 +85,23 @@ const LogisticTable = () => {
                     className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
                   >
                     <li>
-                      <a onClick={() => handleStatusChange(row.id, "Ongoing")}>Ongoing</a>
+                      <a onClick={() => handleStatusChange(row.id, "Ongoing")}>
+                        Ongoing
+                      </a>
                     </li>
                     <li>
-                      <a onClick={() => handleStatusChange(row.id, "Finished")}>Finished</a>
+                      <a onClick={() => handleStatusChange(row.id, "Finished")}>
+                        Finished
+                      </a>
                     </li>
                     <li>
-                      <a onClick={() => handleStatusChange(row.id, "Past Deadline")}>Past Deadline</a>
+                      <a
+                        onClick={() =>
+                          handleStatusChange(row.id, "Past Deadline")
+                        }
+                      >
+                        Past Deadline
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -105,15 +116,15 @@ const LogisticTable = () => {
                   >
                     Edit
                   </div>
-                  <div
-                    tabIndex={0}
-                    className="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-primary text-primary-content"
-                  >
+            
                     <div className="card-body">
-                      <h3 className="card-title">Edit Item</h3>
-                      <p>Editing {row.perihal}</p>
+                      <Link href="/main/logistic/mymemo/editmemo">
+                      <button className="card-title">Edit Item</button>
+
+                      </Link>
                     </div>
-                  </div>
+
+                
                 </div>
               </td>
             </tr>
@@ -125,4 +136,3 @@ const LogisticTable = () => {
 };
 
 export default LogisticTable;
-
