@@ -107,24 +107,13 @@ const LogisticTable = () => {
                 </div>
               </td>
               <td>
-                <div className="dropdown">
-                  <div
-                    tabIndex={0}
-                    role="button"
-                    className="btn m-1"
-                    onClick={() => handleEdit(row.id)}
-                  >
-                    Edit
-                  </div>
-            
-                    <div className="card-body">
-                      <Link href="/main/logistic/mymemo/editmemo">
-                      <button className="card-title">Edit Item</button>
+                <div className="button">
+                <Link href="/main/logistic/mymemo/editmemo">
+                  <button className="btn btn-slate">
+                    Edit Memo
+                  </button>
+                </Link>
 
-                      </Link>
-                    </div>
-
-                
                 </div>
               </td>
             </tr>
@@ -136,3 +125,4 @@ const LogisticTable = () => {
 };
 
 export default LogisticTable;
+

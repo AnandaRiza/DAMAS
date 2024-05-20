@@ -115,9 +115,10 @@ const MemoForm = () => {
         </div>
       </div>
       {/* Submit button */}
-      <button type="submit" className="btn btn-primary mt-4">Create Memo</button>
+      <button type="submit" className="btn btn-slate-500 mt-4">Create Memo</button>
     </form>
   );
 };
 
 export default MemoForm;
+
