@@ -1,15 +1,13 @@
 
 "use client"
-import React from "react";
+import React, { useState } from "react";
 import Footer from "@/components/Footer";
 import HeaderLogin from "@/components/HeaderLogin";
-import Link from "next/link";
-import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 const Page = () => {
+  const router = useRouter();
   const [form, setForm] = useState({
     username: "",
     password: "",
