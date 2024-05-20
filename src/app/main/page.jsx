@@ -1,5 +1,3 @@
-import Header2 from "@/components/Header2";
-import Sidebar from "@/components/Sidebar";
 import React from "react";
 import Card from "@/components/Card";
 
@@ -12,13 +10,10 @@ const data = [
 
 const page = () => {
   return (
-    <>
       <div className="flex-grow justify-center items-center min-h-screen">
-        <Header2 title="Damas" />
-        <div className="flex">
-          <Sidebar />
-          <div>
-            <div className="text-[#0066AE] font-semibold ml-10 mt-4">Dashboard</div>
+            <div className="text-[#0066AE] font-semibold ml-10 mt-4">
+              Dashboard
+            </div>
             <div>
               <span className="flex text-[#0066AE] ml-10 mt-2">
                 Working & Managing Together
@@ -32,9 +27,6 @@ const page = () => {
               ))}
             </div>
           </div>
-        </div>
-      </div>
-    </>
   );
 };
 
