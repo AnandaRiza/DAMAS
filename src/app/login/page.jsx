@@ -1,10 +1,13 @@
+"use client"
 import Footer from "@/components/Footer";
 import HeaderLogin from "@/components/HeaderLogin";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -17,8 +20,10 @@ const page = () => {
         form
       );
       alert("login success");
+      document.cookie = `token=; expires=; path=/`;
+      router.push("/main")
     } catch (error) {
-      alert(error);
+      alert("invalid password or username");
     }
   };
 
@@ -63,13 +68,11 @@ const page = () => {
               />
             </div>
             <div className="mt-2">
-              <Link href="/main">
                 <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-[#0066AE] rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
                 onClick={() => handleLogin()}
                 >
                   Login
                 </button>
-              </Link>
             </div>
             <div className="w-full h-[0.5px] bg-black mt-3"></div>
             <div className="mb-2">
