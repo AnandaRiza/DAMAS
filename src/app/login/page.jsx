@@ -1,10 +1,11 @@
+"use client"
 import Footer from "@/components/Footer";
 import HeaderLogin from "@/components/HeaderLogin";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-const page = () => {
+const Page = () => {
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -83,4 +84,4 @@ const page = () => {
     </div>
   );
 };
-export default page;
+export default Page;
