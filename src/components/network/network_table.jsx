@@ -4,21 +4,18 @@ const TableSKSE = () => {
   const rowData = [
     {
       id: 1,
-      noSurat: "12a/bcas/2023-1",
       perihal: "Kabel Fiber Wisma 3",
       pic: "Bu Maya",
       deadline: "19/03/2024",
     },
     {
       id: 2,
-      noSurat: "12a/bcas/2023-2",
       perihal: "Kabel Lan Wisma 2 Lantai 4",
       pic: "Pak Ridhwan",
       deadline: "19/03/2024",
     },
     {
       id: 3,
-      noSurat: "12a/bcas/2023-3",
       perihal: "Jaringan DRC ke Wisma 2",
       pic: "Pak Riza",
       deadline: "19/03/2024",
@@ -32,7 +29,6 @@ const TableSKSE = () => {
         <thead>
           <tr>
             <th></th>
-            <th>No Network</th>
             <th>Perihal</th>
             <th>PIC</th>
             <th>Deadline</th>
@@ -45,7 +41,6 @@ const TableSKSE = () => {
           {rowData.map((row) => (
             <tr key={row.id} className="hover">
               <th>{row.id}</th>
-              <td>{row.noSurat}</td>
               <td>{row.perihal}</td>
               <td>{row.pic}</td>
               <td>{row.deadline}</td>

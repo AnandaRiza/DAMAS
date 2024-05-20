@@ -5,7 +5,6 @@ import React, { useState } from "react";
 const SKSEForm = () => {
   // State to manage form data
   const [formData, setFormData] = useState({
-    noSurat: "",
     perihal: "",
     pic: "",
     deadline: "",
@@ -19,7 +18,6 @@ const SKSEForm = () => {
     console.log("Form submitted:", formData);
     // Reset form fields after submission
     setFormData({
-      noSurat: "",
       perihal: "",
       pic: "",
       deadline: "",
@@ -47,17 +45,6 @@ const SKSEForm = () => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Input fields for memo attributes */}
-      <div className="flex flex-col">
-        <label htmlFor="noSurat" className="text-sm font-semibold text-gray-600">No Surat</label>
-        <input
-          type="text"
-          id="noSurat"
-          name="noMemo"
-          value={formData.noMemo}
-          onChange={handleInputChange}
-          className="input input-bordered mt-1"
-        />
-      </div>
       <div className="flex flex-col">
         <label htmlFor="perihal" className="text-sm font-semibold text-gray-600">Perihal</label>
         <input
