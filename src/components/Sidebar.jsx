@@ -15,6 +15,8 @@ const Sidebar = () => {
   const [isSdlcShow, setIsSdlcShow] = useState(false);
   const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
   const [isPpoSkseShow, setIsPpoSkseShow] = useState(false);
+  const [IsOpsMonitorSystemShow, setIsOpsMonitorSystemShow] = useState(false);
+  const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] = useState(false);
   // const [isOperationMonitoringSystemShow, setOperationMonitoringSystemShow] =
   //   useState(false);
   const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
@@ -147,7 +149,7 @@ const Sidebar = () => {
         <div className="">
           <button
             className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
-            onClick={() => setIsPpoSdlcShow(!isPpoSdlcShow)}
+            onClick={() => setIsOpsMonitorSystemShow(!IsOpsMonitorSystemShow)}
           >
             <span className="flex items-center">
               <MdArrowDropDown className="mr-1" />
@@ -157,7 +159,7 @@ const Sidebar = () => {
         </div>
         <div
           className={`${
-            isPpoSdlcShow ? "flex  flex-col items-start pl-5 mt-2" : "hidden"
+            IsOpsMonitorSystemShow ? "flex  flex-col items-start pl-5 mt-2" : "hidden"
           }  `}
         >
           <Link href="/main/operation">
@@ -177,7 +179,7 @@ const Sidebar = () => {
       <div className="">
         <button
           className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-gray-600 mb-4"
-          onClick={() => setIsPpoSkseShow(!isPpoSkseShow)}
+          onClick={() => setIsOpsMonitorNetworkShow(!IsOpsMonitorNetworkShow)}
         >
           <span className="flex items-center">
             <MdArrowDropDown className="mr-1" />
@@ -186,7 +188,7 @@ const Sidebar = () => {
         </button>
         <div
           className={`${
-            isPpoSkseShow ? "flex  flex-col items-start pl-5 mt-2" : "hidden"
+            IsOpsMonitorNetworkShow ? "flex  flex-col items-start pl-5 mt-2" : "hidden"
           }  `}
         >
           <Link href="/main/operation/allprogress">
