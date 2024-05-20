@@ -131,8 +131,85 @@ const Sidebar = () => {
           </Link>
         </div>
       </div>
-      <div>
+
+      {/* ///////// */}
+
+      <div className="mt-3">
         <span className="text-[#0066AE] font-semibold">Operation</span>
+        <div className="h-[0.5px] bg-black"></div>
+        <div className="">
+          <button
+            className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
+            onClick={() => setIsPpoSdlcShow(!isPpoSdlcShow)}
+          >
+            <span className="flex items-center">
+              <MdArrowDropDown className="mr-1" />
+              Monitoring System
+            </span>
+          </button>
+        </div>
+        <div
+          className={`${
+            isPpoSdlcShow ? "flex  flex-col items-start pl-5 mt-2" : "hidden"
+          }  `}
+        >
+          <Link href="/main/operation">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+              <PiPath className="mr-1" />
+              Monitoring System
+            </button>
+          </Link>
+          <Link href="/main/operation/settingthreshold">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
+              <GoTasklist className="mr-1" />
+              Setting Threshold
+            </button>
+          </Link>
+        </div>
+      </div>
+      <div className="">
+        <button
+          className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-gray-600 mb-4"
+          onClick={() => setIsPpoSkseShow(!isPpoSkseShow)}
+        >
+          <span className="flex items-center">
+            <MdArrowDropDown className="mr-1" />
+            Monitoring Network
+          </span>
+        </button>
+        <div
+          className={`${
+            isPpoSkseShow ? "flex  flex-col items-start pl-5 mt-2" : "hidden"
+          }  `}
+        >
+          <Link href="/main/operation/allprogress">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+              <GoFile className="mr-1" />
+              All Network Progress
+            </button>
+          </Link>
+          <Link href="/main/operation/myprogress">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
+              <FaRegFolderOpen className="mr-1" />
+              My Progress
+            </button>
+          </Link>
+          <Link href="/main/operation/createnewprogress">
+            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
+              <IoCreateOutline className="mr-1" />
+              Create New Progress
+            </button>
+          </Link>
+        </div>
+      </div>
+
+      {/* ----- */}
+      
+      
+
+
+      <div>
+        {/* <span className="text-[#0066AE] font-semibold">Operation</span>
         <div className=" h-[0.5px] bg-black"></div>
         <Link href="/main/operation">
           <button className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
@@ -149,7 +226,10 @@ const Sidebar = () => {
               Setting Threshold
             </span>
           </button>
-        </Link>
+        </Link> */}
+
+
+        
         <div>
           <span className="text-[#0066AE] font-semibold">Logistic</span>
           <div className="h-[0.5px] bg-black"></div>
