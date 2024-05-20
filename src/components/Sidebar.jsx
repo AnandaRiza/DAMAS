@@ -19,6 +19,8 @@ const Sidebar = () => {
   //   useState(false);
   const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
   return (
+
+    // Start Button Development
     <div className="bg-[#00A6B4]/[0.5] text-black w-80 min-h-screen p-4">
       <span className="text-[#0066AE] font-semibold">Development</span>
       <div className="h-[0.5px] bg-black"></div>
@@ -57,6 +59,10 @@ const Sidebar = () => {
           </Link>
         </div>
       </div>
+      {/* End Button Development */}
+      
+
+      {/* Start Button PPO */}
       <div className="mt-3">
         <span className="text-[#0066AE] font-semibold">PPO</span>
         <div className="h-[0.5px] bg-black"></div>
@@ -131,9 +137,10 @@ const Sidebar = () => {
           </Link>
         </div>
       </div>
+      {/* End Button PPO */}
+      
 
-      {/* ///////// */}
-
+      {/* Start Button Operation */}
       <div className="mt-3">
         <span className="text-[#0066AE] font-semibold">Operation</span>
         <div className="h-[0.5px] bg-black"></div>
@@ -202,12 +209,9 @@ const Sidebar = () => {
           </Link>
         </div>
       </div>
+      {/* End Button Operation */}
 
-      {/* ----- */}
-      
-      
-
-
+      {/* Start Button Logistic */}
       <div>
         {/* <span className="text-[#0066AE] font-semibold">Operation</span>
         <div className=" h-[0.5px] bg-black"></div>
@@ -270,6 +274,7 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
+      {/* End Button Logistic */}
     </div>
   );
 };
