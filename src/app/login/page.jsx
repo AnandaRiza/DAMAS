@@ -12,6 +12,7 @@ const Page = () => {
     username: "",
     password: "",
   });
+  const [error, setError] = useState(null)
 
   const handleLogin = async () => {
     try {
@@ -19,11 +20,11 @@ const Page = () => {
         "http://localhost:8081/api/login",
         form
       );
-      alert("login success");
-      document.cookie = `token=; expires=; path=/`;
+      document.cookie = `token=${response.data.data.token}; expires=; path=/`;
       router.push("/main")
     } catch (error) {
-      alert("invalid password or username");
+      console.log(error.response.data.error)
+      alert(error.response.data.error);
     }
   };
 
