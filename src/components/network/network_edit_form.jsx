@@ -18,7 +18,6 @@ const EditProgressForm = ({ memoId }) => {
                 const response = await fetch(`/api/memos/${memoId}`);
                 const data = await response.json();
                 setFormData({
-                    noMemo: data.noMemo,
                     perihal: data.perihal,
                     pic: data.pic,
                     deadline: data.deadline,
