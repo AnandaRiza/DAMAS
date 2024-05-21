@@ -129,7 +129,7 @@ const EditMemoForm = ({ memoId }) => {
                 </div>
             </div>
             {/* Submit button */}
-            <button type="submit" className="btn btn-slate-500 mt-4">Update Memo</button>
+            <button type="submit" className="btn bg-[#67e8f9] mt-4">Update Memo</button>
         </form>
     );
 };

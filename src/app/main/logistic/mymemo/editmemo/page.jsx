@@ -6,7 +6,7 @@ import LogisticBreadcrumbs from "@/components/logistic_components/logistic_bread
 const page = () => {
     return (
         <>
-            <div className="flex flex-col justify-center items-center min-h-screen">
+            <div className="flex-grow justify-center items-center min-h-screen">
                 <div className="w-full max-w-4xl">
                     <div className="text-[#0066AE] font-semibold ml-10 mt-4">
                         Edit Memo
