@@ -1,4 +1,4 @@
-import TableSDLC from '@/components/network/network_table';
+import TableNetwork from '@/components/network/network_table';
 import React from 'react'
 import { MdArrowDropDown } from "react-icons/md";
 
@@ -12,7 +12,7 @@ const page = () => {
       </div>
     </div>
     <div className="flex-grow justify-center items-center min-h-screen mt-4">
-    <TableSDLC/>
+    <TableNetwork/>
     </div>
     </div>
   );
