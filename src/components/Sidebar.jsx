@@ -18,7 +18,7 @@ const Sidebar = () => {
   //   const fetchUserData = async () => {
   //     try {
   //       const response = await fetch('/api/login', {
-  //         method: 'GET',
+  //         method: 'POST',
   //         headers: {
   //           'Content-Type': 'application/json',
   //           // Pastikan untuk mengirimkan token autentikasi jika diperlukan
@@ -58,7 +58,9 @@ const Sidebar = () => {
       <div className="h-[0.5px] bg-black"></div>
       <div className="">
         {/* {user && user.role === "SUPER_ADMIN" &&(
-            <div className=""></div>
+            <div className="">
+            menampilkan yg diinginkan
+            </div>
         )} */}
         <button
             className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
