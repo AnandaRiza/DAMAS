@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PiPath } from "react-icons/pi";
 import { GoFile } from "react-icons/go";
 import { IoMdSettings } from "react-icons/io";
@@ -12,6 +12,32 @@ import { FaRegFolderOpen } from "react-icons/fa";
 import Link from "next/link";
 
 const Sidebar = () => {
+  // const [user, setUser] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await fetch('/api/login', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           // Pastikan untuk mengirimkan token autentikasi jika diperlukan
+  //           'Authorization': 'Bearer ' + localStorage.getItem('token')
+  //         }
+  //       });
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       const data = await response.json();
+  //       setUser(data);
+  //     } catch (error) {
+  //       console.error('Failed to fetch user:', error);
+  //     }
+  //   };
+
+  //   fetchUserData();
+  // }, []);
+
   const [isSdlcShow, setIsSdlcShow] = useState(false);
   const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
   const [isPpoSkseShow, setIsPpoSkseShow] = useState(false);
@@ -20,6 +46,10 @@ const Sidebar = () => {
   // const [isOperationMonitoringSystemShow, setOperationMonitoringSystemShow] =
   //   useState(false);
   const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
+  // const user = {
+  //   role: "SUPER_ADMIN",
+  //   role: "DEV_ADMIN"
+  // };
   return (
 
     // Start Button Development
@@ -27,15 +57,21 @@ const Sidebar = () => {
       <span className="text-[#0066AE] font-semibold">Development</span>
       <div className="h-[0.5px] bg-black"></div>
       <div className="">
+        {/* {user && user.role === "SUPER_ADMIN" &&(
+            <div className="">
+            menampilkan yg diinginkan
+            </div>
+        )} */}
         <button
-          className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
-          onClick={() => setIsSdlcShow(!isSdlcShow)}
-        >
-          <span className="flex items-center">
-            <MdArrowDropDown className="mr-1" />
-            SDLC
-          </span>
-        </button>
+            className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
+            onClick={() => setIsSdlcShow(!isSdlcShow)}
+          >
+            
+            <span className="flex items-center">
+              <MdArrowDropDown className="mr-1" />
+              SDLC
+            </span>
+          </button>
         <div
           className={`${
             isSdlcShow ? "flex flex-col items-start pl-5 mt-2" : "hidden"
@@ -225,11 +261,11 @@ const Sidebar = () => {
             </span>
           </button>
         </Link>
-        <Link href="/main/operation/settingthreshold">
+        <Link href="/main/operation/monitoringnetwork">
           <button className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
             <span className="flex items-center">
               <IoMdSettings className="mr-1" />
-              Setting Threshold
+              Monitoring Network
             </span>
           </button>
         </Link> */}
