@@ -1,5 +1,5 @@
-import TableNetwork from '@/components/network/network_table';
-import TableSDLC from '@/components/network/network_table';
+import TableNetwork from '@/components/operation/operation_network_table';
+import TableSDLC from '@/components/operation/operation_network_table';
 import React from 'react'
 import { MdArrowDropDown } from "react-icons/md";
 

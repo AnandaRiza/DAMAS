@@ -1,7 +1,7 @@
 import React from "react";
 import EditMemoForm from "@/components/logistic_components/logistic_edit_memo_form";
 import LogisticBreadcrumbs from "@/components/logistic_components/logistic_breadcrumbs";
-import EditProgressForm from "@/components/network/network_edit_form";
+import EditProgressForm from "@/components/operation/operation_network_edit_form";
 
 const page = () => {
     return (

@@ -1,4 +1,4 @@
-import SDLCForm from '@/components/network/network_form';
+import SDLCForm from '@/components/operation/operation_network_form';
 import React from 'react'
 
 const page = () => {
