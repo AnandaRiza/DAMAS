@@ -1,17 +1,18 @@
 
 "use client"
-import React from "react";
+import React, { useState } from "react";
 import Footer from "@/components/Footer";
 import HeaderLogin from "@/components/HeaderLogin";
-import Link from "next/link";
 import axios from "axios";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
   const [form, setForm] = useState({
     username: "",
     password: "",
   });
+  const [error, setError] = useState(null)
 
   const handleLogin = async () => {
     try {
@@ -19,9 +20,11 @@ const Page = () => {
         "http://localhost:8081/api/login",
         form
       );
-      alert("login success");
+      document.cookie = `token=${response.data.data.token}; expires=; path=/`;
+      router.push("/main")
     } catch (error) {
-      alert(error);
+      console.log(error.response.data.error)
+      alert(error.response.data.error);
     }
   };
 
@@ -45,8 +48,8 @@ const Page = () => {
                 Username
               </label>
               <input
-                type="email"
-                id="email"
+                type="username"
+                id="username"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 onChange={(e) => setForm({ ...form, username: e.target.value})}
               />
@@ -66,13 +69,11 @@ const Page = () => {
               />
             </div>
             <div className="mt-2">
-              <Link href="/main">
                 <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-[#0066AE] rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
                 onClick={() => handleLogin()}
                 >
                   Login
                 </button>
-              </Link>
             </div>
             <div className="w-full h-[0.5px] bg-black mt-3"></div>
             <div className="mb-2">
