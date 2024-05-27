@@ -1,8 +1,7 @@
 "use client";
-import TableNetwork from '@/components/operation/operation_network_table';
+import NetworkTable from '@/components/operation/operation_network_table';
 import FormSearch from "@/components/FormSearch";
 import PleaseWait from "@/components/PleaseWait";
-import TableSDLC from "@/components/operation/operation_network_table";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -50,7 +49,7 @@ const page = () => {
             </div>
             {dataAllProject ? (
                 <div className="mt-4">
-                    <TableSDLC
+                    <NetworkTable
                         headers={Object.keys(dataAllProject[0]).slice(
                             0,
                             Object.keys(dataAllProject[0]).length - 1
