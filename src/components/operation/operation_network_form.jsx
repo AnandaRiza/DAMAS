@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-const SKSEForm = () => {
+const NetworkForm = () => {
   // State to manage form data
   const [formData, setFormData] = useState({
     perihal: "",
@@ -107,4 +107,4 @@ const SKSEForm = () => {
   );
 };
 
-export default SKSEForm;
+export default NetworkForm;
