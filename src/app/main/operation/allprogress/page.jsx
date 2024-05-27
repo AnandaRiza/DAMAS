@@ -2,7 +2,7 @@
 import TableNetwork from '@/components/operation/operation_network_table';
 import FormSearch from "@/components/FormSearch";
 import PleaseWait from "@/components/PleaseWait";
-import TableSDLC from "@/components/sdlc/TableSDLC";
+import TableSDLC from "@/components/operation/operation_network_table";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -23,7 +23,7 @@ const page = () => {
         setDataAllProject(null);
         try {
             const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allproject?start=${startIndex}&size=${perPage}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/networkshow?start=${startIndex}&size=${perPage}`
             );
             setDataAllProject(response.data.data);
         } catch (error) {
