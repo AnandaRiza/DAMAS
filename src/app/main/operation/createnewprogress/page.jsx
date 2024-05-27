@@ -1,3 +1,4 @@
+import NetworkForm from '@/components/operation/operation_network_form';
 import SDLCForm from '@/components/operation/operation_network_form';
 import React from 'react'
 
@@ -25,7 +26,7 @@ const page = () => {
             </span>
           </div>
           <div className="px-10 grid grid-cols-2 gap-3 mt-10 w-full">
-            <SDLCForm />
+            < NetworkForm />
           </div>
         </div>
       </div>
