@@ -41,9 +41,10 @@ const Header = ({ title }) => {
               </button>
             </Link > */}
 
-                    <button 
-                    className="flex items-center font-roboto text-base tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
-                    onClick={handleLogout}
+                    <button
+                        type="button"
+                        className="flex items-center font-roboto text-base tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
+                        onClick={handleLogout}
                     >
                         Logout
                     </button>
