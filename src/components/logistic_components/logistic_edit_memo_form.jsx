@@ -1,135 +1,97 @@
-'use client';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 
-import React, { useState, useEffect } from "react";
+const EditMemoForm = () => {
+    const router = useRouter();
+    const { memoId } = router.query;
 
-const EditMemoForm = ({ memoId }) => {
-    // State to manage form data
     const [formData, setFormData] = useState({
-        noMemo: "",
-        perihal: "",
-        pic: "",
-        deadline: "",
-        status: "Ongoing", // Default status
+        memo_num: "",
+        memo_perihal: "",
+        memo_pic: "",
+        memo_deadline: "",
+        memo_status: "",
     });
 
-    // Fetch memo data from the database
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`/api/memos/${memoId}`);
-                const data = await response.json();
-                setFormData({
-                    noMemo: data.noMemo,
-                    perihal: data.perihal,
-                    pic: data.pic,
-                    deadline: data.deadline,
-                    status: data.status,
-                });
-            } catch (error) {
-                console.error('Failed to fetch memo data:', error);
-            }
-        };
-
-        fetchData();
+        if (memoId) {
+            fetchMemoDetails();
+        }
     }, [memoId]);
 
-    // Handle form submission
-    const handleSubmit = (event) => {
+    const fetchMemoDetails = async () => {
+        try {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/getMemoByID/${memoId}`
+            );
+            const { data } = response.data;
+            setFormData({
+                memo_num: data.memo_num,
+                memo_perihal: data.memo_perihal,
+                memo_pic: data.memo_pic,
+                memo_deadline: data.memo_deadline,
+                memo_status: data.memo_status,
+            });
+        } catch (error) {
+            console.error("Error fetching memo details:", error);
+        }
+    };
+
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
-        // Handle form submission logic here (e.g., send data to server)
-        console.log("Form submitted:", formData);
-        // Optionally reset form fields after submission
+        try {
+            await axios.put(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memo/${memoId}`,
+                formData
+            );
+            // Handle successful update, e.g., show success message or redirect
+        } catch (error) {
+            console.error("Error updating memo:", error);
+        }
     };
 
-    // Handle form input changes
-    const handleInputChange = (event) => {
+    const handleChange = (event) => {
         const { name, value } = event.target;
-        setFormData({
-            ...formData,
+        setFormData((prevFormData) => ({
+            ...prevFormData,
             [name]: value,
-        });
-    };
-
-    // Handle status change
-    const handleStatusChange = (status) => {
-        setFormData({
-            ...formData,
-            status,
-        });
+        }));
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-md">
-            {/* Input fields for memo attributes */}
-            <div className="flex flex-col">
-                <label htmlFor="noMemo" className="text-sm font-semibold text-gray-700">No Memo</label>
-                <input
-                    type="text"
-                    id="noMemo"
-                    name="noMemo"
-                    value={formData.noMemo}
-                    onChange={handleInputChange}
-                    className="input input-bordered mt-2 p-2"
-                />
-            </div>
-            <div className="flex flex-col">
-                <label htmlFor="perihal" className="text-sm font-semibold text-gray-700">Perihal</label>
-                <input
-                    type="text"
-                    id="perihal"
-                    name="perihal"
-                    value={formData.perihal}
-                    onChange={handleInputChange}
-                    className="input input-bordered mt-2 p-2"
-                />
-            </div>
-            <div className="flex flex-col">
-                <label htmlFor="pic" className="text-sm font-semibold text-gray-700">PIC</label>
-                <input
-                    type="text"
-                    id="pic"
-                    name="pic"
-                    value={formData.pic}
-                    onChange={handleInputChange}
-                    className="input input-bordered mt-2 p-2"
-                />
-            </div>
-            <div className="flex flex-col">
-                <label htmlFor="deadline" className="text-sm font-semibold text-gray-700">Deadline</label>
-                <input
-                    type="date"
-                    id="deadline"
-                    name="deadline"
-                    value={formData.deadline}
-                    onChange={handleInputChange}
-                    className="input input-bordered mt-2 p-2"
-                />
-            </div>
-            {/* Status dropdown */}
-            <div className="flex flex-col">
-                <label htmlFor="status" className="text-sm font-semibold text-gray-700">Status</label>
-                <div className="dropdown mt-2">
-                    <div tabIndex={0} role="button" className="btn m-1">
-                        {formData.status}
-                    </div>
-                    <ul
-                        tabIndex={0}
-                        className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
-                    >
-                        <li>
-                            <a onClick={() => handleStatusChange("Ongoing")}>Ongoing</a>
-                        </li>
-                        <li>
-                            <a onClick={() => handleStatusChange("Finished")}>Finished</a>
-                        </li>
-                        <li>
-                            <a onClick={() => handleStatusChange("Past Deadline")}>Past Deadline</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            {/* Submit button */}
-            <button type="submit" className="btn bg-[#67e8f9] mt-4">Update Memo</button>
+        <form onSubmit={handleFormSubmit}>
+            <input
+                type="text"
+                name="memo_num"
+                value={formData.memo_num}
+                onChange={handleChange}
+            />
+            <input
+                type="text"
+                name="memo_perihal"
+                value={formData.memo_perihal}
+                onChange={handleChange}
+            />
+            <input
+                type="text"
+                name="memo_pic"
+                value={formData.memo_pic}
+                onChange={handleChange}
+            />
+            <input
+                type="text"
+                name="memo_deadline"
+                value={formData.memo_deadline}
+                onChange={handleChange}
+            />
+            <input
+                type="text"
+                name="memo_status"
+                value={formData.memo_status}
+                onChange={handleChange}
+            />
+            <button type="submit">Update Memo</button>
         </form>
     );
 };

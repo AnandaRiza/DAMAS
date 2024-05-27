@@ -1,7 +1,7 @@
 "use client";
 import FormSearch from "@/components/FormSearch";
 import PleaseWait from "@/components/PleaseWait";
-import TableSDLC from "@/components/logistic_components/logistic_table";
+import TableLogistic from "@/components/logistic_components/logistic_table";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
@@ -64,14 +64,14 @@ const Page = () => {
             </div>
             {dataAllMemo ? (
                 <div className="mt-4">
-                    <TableSDLC
+                    <TableLogistic
                         headers={Object.keys(dataAllMemo[0]).slice(
                             0,
                             Object.keys(dataAllMemo[0]).length - 1
                         )}
                         data={dataAllMemo}
                         action={true}
-                    />
+                    />  
                 </div>
             ) : (
                 <PleaseWait />

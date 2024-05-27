@@ -1,9 +1,12 @@
 import React from "react";
-import MemoForm from "@/components/logistic_components/logistic_memo_form";
+import { useRouter } from "next/router";
 import EditMemoForm from "@/components/logistic_components/logistic_edit_memo_form";
 import LogisticBreadcrumbs from "@/components/logistic_components/logistic_breadcrumbs";
 
-const page = () => {
+const Page = () => {
+    const router = useRouter();
+    const { memoId } = router.query;
+
     return (
         <>
             <div className="flex-grow justify-center items-center min-h-screen">
@@ -15,7 +18,7 @@ const page = () => {
                     <LogisticBreadcrumbs />
 
                     <div className="px-10 mt-10">
-                        <EditMemoForm />
+                        <EditMemoForm memoId={memoId} />
                     </div>
                 </div>
             </div>
@@ -23,4 +26,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;
