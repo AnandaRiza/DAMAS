@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "@/components/operation/operation_network_card";
+import Card from "@/components/operation/operation_system_card";
 
 const data = [
   { nama_sistem: "Hard Disk 1", keterangan: "Hard Disk Wisma 1", threshold_1: "500 MB", threshold_2: "500 MB", threshold_3: "500 MB"},
