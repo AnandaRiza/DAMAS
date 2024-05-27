@@ -14,10 +14,8 @@ const SDLCForm = () => {
 
     const handleSubmit = async () => {
         try {
-            await axios.post(`${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/projectdev`, formData);
+            await axios.post("http://localhost:8081/api/projectdev", formData);
             alert("Create Project Success");
-            
-
         } catch (error) {
             console.log(error);
             alert("Create Project Failed!");

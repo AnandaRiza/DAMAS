@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 
-const NetworkTable = ({headers, data, action}) => {
+const operation_network_table = ({headers, data, action}) => {
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -50,4 +50,4 @@ const NetworkTable = ({headers, data, action}) => {
   );
 };
 
-export default NetworkTable;
+export default operation_network_table;
