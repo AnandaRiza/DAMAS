@@ -172,13 +172,7 @@ const MemoForm = () => {
 
 
       {/* Submit button */}
-      <button
-        type="button"
-        className="btn btn-primary mt-4"
-        onClick={handleSubmit}
-      >
-        Create Memo
-      </button>
+      <button type="submit" className="btn bg-[#67e8f9] mt-4">Create Memo</button>
     </form>
   );
 };
