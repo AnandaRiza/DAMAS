@@ -49,8 +49,6 @@ const MemoForm = () => {
             })
           }
           className="input input-bordered mt-1" 
-          readOnly
-          placeholder="1239913/321321/312"
         />
       </div>
 
@@ -179,7 +177,6 @@ const MemoForm = () => {
       >
         Create Memo
       </button>
-      <button type="submit" className="btn bg-[#67e8f9] mt-4">Create Memo</button>
     </form>
   );
 };
