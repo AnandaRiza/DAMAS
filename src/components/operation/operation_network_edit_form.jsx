@@ -2,10 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 
-const EditMemoForm = ({ memoId }) => {
+const EditProgressForm = ({ memoId }) => {
     // State to manage form data
     const [formData, setFormData] = useState({
-        noMemo: "",
         perihal: "",
         pic: "",
         deadline: "",
@@ -19,7 +18,6 @@ const EditMemoForm = ({ memoId }) => {
                 const response = await fetch(`/api/memos/${memoId}`);
                 const data = await response.json();
                 setFormData({
-                    noMemo: data.noMemo,
                     perihal: data.perihal,
                     pic: data.pic,
                     deadline: data.deadline,
@@ -61,17 +59,6 @@ const EditMemoForm = ({ memoId }) => {
     return (
         <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-md">
             {/* Input fields for memo attributes */}
-            <div className="flex flex-col">
-                <label htmlFor="noMemo" className="text-sm font-semibold text-gray-700">No Memo</label>
-                <input
-                    type="text"
-                    id="noMemo"
-                    name="noMemo"
-                    value={formData.noMemo}
-                    onChange={handleInputChange}
-                    className="input input-bordered mt-2 p-2"
-                />
-            </div>
             <div className="flex flex-col">
                 <label htmlFor="perihal" className="text-sm font-semibold text-gray-700">Perihal</label>
                 <input
@@ -134,4 +121,4 @@ const EditMemoForm = ({ memoId }) => {
     );
 };
 
-export default EditMemoForm;
+export default EditProgressForm;

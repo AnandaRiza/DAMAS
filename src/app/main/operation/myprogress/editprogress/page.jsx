@@ -1,7 +1,7 @@
 import React from "react";
-import MemoForm from "@/components/logistic_components/logistic_memo_form";
 import EditMemoForm from "@/components/logistic_components/logistic_edit_memo_form";
 import LogisticBreadcrumbs from "@/components/logistic_components/logistic_breadcrumbs";
+import EditProgressForm from "@/components/operation/operation_network_edit_form";
 
 const page = () => {
     return (
@@ -9,13 +9,13 @@ const page = () => {
             <div className="flex-grow justify-center items-center min-h-screen">
                 <div className="w-full max-w-4xl">
                     <div className="text-[#0066AE] font-semibold ml-10 mt-4">
-                        Edit Memo
+                        Edit Progress Network
                     </div>
                     {/* breadcrumbs */}
                     <LogisticBreadcrumbs />
 
                     <div className="px-10 mt-10">
-                        <EditMemoForm />
+                        <EditProgressForm />
                     </div>
                 </div>
             </div>
