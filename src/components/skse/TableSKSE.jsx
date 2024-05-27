@@ -1,93 +1,49 @@
+"use client"
+import Link from "next/link";
 import React from "react";
+import { AiOutlineEdit } from "react-icons/ai";
 
-const TableSKSE = () => {
-  const rowData = [
-    {
-      id: 1,
-      noSurat: "12a/bcas/2023-1",
-      perihal: "Pemberitahuan Libur Lebaran",
-      pic: "Bu Maya",
-      deadline: "19/03/2024",
-    },
-    {
-      id: 2,
-      noSurat: "12a/bcas/2023-2",
-      perihal: "Memo Internal",
-      pic: "Pak Ridhwan",
-      deadline: "19/03/2024",
-    },
-    {
-      id: 3,
-      noSurat: "12a/bcas/2023-3",
-      perihal: "Memo Eksternal",
-      pic: "Pak Riza",
-      deadline: "19/03/2024",
-    },
-  ];
-
+const TableSKSE = ({headers, data, action}) => {
   return (
     <div className="overflow-x-auto">
       <table className="table">
-        {/* head */}
         <thead>
-          <tr>
-            <th></th>
-            <th>No Surat</th>
-            <th>Perihal</th>
-            <th>PIC</th>
-            <th>Deadline</th>
-            <th>Status</th>
-            <th>Action</th>
+          <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm"> 
+          
+          {headers.map((item, index) => (
+            <th key={index} className="py-3 px-6 uppercase">
+              {item}
+            </th>
+          ))}
+          {action && <th className="py-3 px-6 w-32 flex items-center justify-center gap-3 uppercase">Edit</th> }
           </tr>
         </thead>
         <tbody>
-          {/* Loop through the data array and generate rows dynamically */}
-          {rowData.map((row) => (
-            <tr key={row.id} className="hover">
-              <th>{row.id}</th>
-              <td>{row.noSurat}</td>
-              <td>{row.perihal}</td>
-              <td>{row.pic}</td>
-              <td>{row.deadline}</td>
-              <td>
-                <div className="dropdown">
-                  <div tabIndex={0} role="button" className="btn m-1">
-                    Ongoing
-                  </div>
-                  <ul
-                    tabIndex={0}
-                    className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                  >
-                    <li>
-                      <a>Ongoing</a>
-                    </li>
-                    <li>
-                      <a>Finished</a>
-                    </li>
-                    <li>
-                      <a>Past Deadline</a>
-                    </li>
-                  </ul>
-                </div>
-              </td>
-              <td>
-                <div className="dropdown">
-                  <div tabIndex={0} role="button" className="btn m-1">
-                    Edit
-                  </div>
-                  <div
-                    tabIndex={0}
-                    className="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-primary text-primary-content"
-                  >
-                    <div className="card-body">
-                      <h3 className="card-title">Card title!</h3>
-                      <p>you can use any element as a dropdown.</p>
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          ))}
+          {data.map((item, index) => (
+                        <tr
+                            key={index}
+                            className={`${
+                                index % 2 === 0 ? "bg-white" : "bg-[#00A6B4]/[0.5]"
+                            } hover:bg-gray-100 text-xs leading-5`}
+                        >
+                           
+
+                            {headers.map((header, headerIndex) => (
+                                <td key={headerIndex} className="py-3 px-6">
+                                    {item[header]}
+                                </td>
+                            ))}
+
+                             {action && (
+                                <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                                    <button className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2 ">
+                                        <AiOutlineEdit size={20}  />
+                                        {/* <p className="text-blue-500">Edit</p> */}
+                                    </button>
+                                </td>
+                            )}
+                        </tr>
+                    ))}
         </tbody>
       </table>
     </div>

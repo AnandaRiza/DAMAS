@@ -1,124 +1,187 @@
-'use client';
+"use client";
 
+import axios from "axios";
 import React, { useState } from "react";
 
 const MemoForm = () => {
   // State to manage form data
   const [formData, setFormData] = useState({
-    noMemo: "",
-    perihal: "",
-    pic: "",
-    deadline: "",
-    status: "Ongoing", // Default status
+    memo_perihal: "",
+    memo_pic: "",
+    memo_deadline: "",
+    memo_status: "",
   });
 
-  // Handle form submission
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic here (e.g., send data to server)
-    console.log("Form submitted:", formData);
-    // Reset form fields after submission
-    setFormData({
-      noMemo: "",
-      perihal: "",
-      pic: "",
-      deadline: "",
-      status: "Ongoing", // Reset status to default
-    });
-  };
-
-  // Handle form input changes
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  // Handle status change
-  const handleStatusChange = (status) => {
-    setFormData({
-      ...formData,
-      status,
-    });
+  const handleSubmit = async () => {
+    try {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo`,
+        formData
+      );
+      alert("Create Memo Success");
+    } catch (error) {
+      console.log(error);
+      alert("Create Memo Failed!");
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form className="space-y-4">
+
+
+
+<div className="flex flex-col">
+        <label
+          htmlFor="memo_perihal"
+          className="text-sm font-semibold text-gray-600"
+        >
+          Memo Number
+        </label>
+        <input
+          type="text"
+          id="memo_num"
+          name="memo_num"
+          value={formData.memo_num}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              memo_num: e.target.value,
+            })
+          }
+          className="input input-bordered mt-1" 
+          readOnly
+          placeholder="1239913/321321/312"
+        />
+      </div>
+
+
+
+
       {/* Input fields for memo attributes */}
       <div className="flex flex-col">
-        <label htmlFor="noMemo" className="text-sm font-semibold text-gray-600">No Memo</label>
+        <label
+          htmlFor="memo_perihal"
+          className="text-sm font-semibold text-gray-600"
+        >
+          Perihal Memo
+        </label>
         <input
           type="text"
-          id="noMemo"
-          name="noMemo"
-          value={formData.noMemo}
-          onChange={handleInputChange}
+          id="memo_perihal"
+          name="memo_perihal"
+          value={formData.memo_perihal}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              memo_perihal: e.target.value,
+            })
+          }
           className="input input-bordered mt-1"
         />
       </div>
+     
+
+
       <div className="flex flex-col">
-        <label htmlFor="perihal" className="text-sm font-semibold text-gray-600">Perihal</label>
+        <label htmlFor="memo_pic" className="text-sm font-semibold text-gray-600">
+          PIC
+        </label>
         <input
           type="text"
-          id="perihal"
-          name="perihal"
-          value={formData.perihal}
-          onChange={handleInputChange}
+          id="memo_pic"
+          name="memo_pic"
+          value={formData.memo_pic}
+          onChange={(e) => setFormData({ ...formData, memo_pic: e.target.value })}
           className="input input-bordered mt-1"
         />
       </div>
+
+
       <div className="flex flex-col">
-        <label htmlFor="pic" className="text-sm font-semibold text-gray-600">PIC</label>
-        <input
-          type="text"
-          id="pic"
-          name="pic"
-          value={formData.pic}
-          onChange={handleInputChange}
-          className="input input-bordered mt-1"
-        />
-      </div>
-      <div className="flex flex-col">
-        <label htmlFor="deadline" className="text-sm font-semibold text-gray-600">Deadline</label>
+        <label
+          htmlFor="memo_deadline"
+          className="text-sm font-semibold text-gray-600"
+        >
+          Deadline
+        </label>
         <input
           type="date"
-          id="deadline"
-          name="deadline"
-          value={formData.deadline}
-          onChange={handleInputChange}
+          id="memo_deadline"
+          name="memo_deadline"
+          value={formData.memo_deadline}
+          onChange={(e) =>
+            setFormData({ ...formData, memo_deadline: e.target.value })
+          }
           className="input input-bordered mt-1"
         />
       </div>
+
+
       {/* Status dropdown */}
       <div className="flex flex-col">
-        <label htmlFor="status" className="text-sm font-semibold text-gray-600">Status</label>
+        <label htmlFor="memo_status" className="text-sm font-semibold text-gray-600">
+          Status
+        </label>
         <div className="dropdown mt-1">
           <div tabIndex={0} role="button" className="btn m-1">
-            {formData.status}
+            {formData.memo_status}
           </div>
           <ul
             tabIndex={0}
             className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
           >
             <li>
-              <a onClick={() => handleStatusChange("Ongoing")}>Ongoing</a>
+              <a
+                onClick={() =>
+                  setFormData({
+                    ...formData,
+                    memo_status: "Ongoing",
+                  })
+                }
+              >
+                Ongoing
+              </a>
             </li>
             <li>
-              <a onClick={() => handleStatusChange("Finished")}>Finished</a>
+              <a
+                onClick={() =>
+                  setFormData({
+                    ...formData,
+                    memo_status: "Finished",
+                  })
+                }
+              >
+                Finished
+              </a>
             </li>
             <li>
-              <a onClick={() => handleStatusChange("Past Deadline")}>Past Deadline</a>
+              <a
+                onClick={() =>
+                  setFormData({
+                    ...formData,
+                    memo_status: "Past-Deadline",
+                  })
+                }
+              >
+                Past Deadline
+              </a>
             </li>
           </ul>
         </div>
       </div>
+
+
       {/* Submit button */}
+      <button
+        type="button"
+        className="btn btn-primary mt-4"
+        onClick={handleSubmit}
+      >
+        Create Memo
+      </button>
       <button type="submit" className="btn bg-[#67e8f9] mt-4">Create Memo</button>
     </form>
   );
 };
 
 export default MemoForm;
-

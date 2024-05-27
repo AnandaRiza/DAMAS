@@ -1,5 +1,6 @@
-import TableSDLC from '@/components/sdlc/TableSDLC';
-import React from 'react'
+
+import TableSDLC from "@/components/sdlc/TableSDLC";
+import React from "react";
 import { MdArrowDropDown } from "react-icons/md";
 
 const page = () => {
@@ -12,10 +13,9 @@ const page = () => {
       </div>
     </div>
     <div className="flex-grow justify-center items-center min-h-screen mt-4">
-    <TableSDLC/>
+    {/* <TableSDLC/> */}
     </div>
     </div>
   );
-}
-
-export default page
+  }
+export default page;
