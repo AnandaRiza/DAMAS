@@ -1,8 +1,8 @@
 "use client";
-
+ 
 import axios from "axios";
 import React, { useState } from "react";
-
+ 
 const MemoForm = () => {
   // State to manage form data
   const [formData, setFormData] = useState({
@@ -11,7 +11,7 @@ const MemoForm = () => {
     memo_deadline: "",
     memo_status: "",
   });
-
+ 
   const handleSubmit = async () => {
     try {
       await axios.post(
@@ -24,12 +24,12 @@ const MemoForm = () => {
       alert("Create Memo Failed!");
     }
   };
-
+ 
   return (
     <form className="space-y-4">
-
-
-
+ 
+ 
+ 
 <div className="flex flex-col">
         <label
           htmlFor="memo_perihal"
@@ -48,13 +48,13 @@ const MemoForm = () => {
               memo_num: e.target.value,
             })
           }
-          className="input input-bordered mt-1" 
+          className="input input-bordered mt-1"
         />
       </div>
-
-
-
-
+ 
+ 
+ 
+ 
       {/* Input fields for memo attributes */}
       <div className="flex flex-col">
         <label
@@ -78,8 +78,8 @@ const MemoForm = () => {
         />
       </div>
      
-
-
+ 
+ 
       <div className="flex flex-col">
         <label htmlFor="memo_pic" className="text-sm font-semibold text-gray-600">
           PIC
@@ -93,8 +93,8 @@ const MemoForm = () => {
           className="input input-bordered mt-1"
         />
       </div>
-
-
+ 
+ 
       <div className="flex flex-col">
         <label
           htmlFor="memo_deadline"
@@ -113,8 +113,8 @@ const MemoForm = () => {
           className="input input-bordered mt-1"
         />
       </div>
-
-
+ 
+ 
       {/* Status dropdown */}
       <div className="flex flex-col">
         <label htmlFor="memo_status" className="text-sm font-semibold text-gray-600">
@@ -167,8 +167,8 @@ const MemoForm = () => {
           </ul>
         </div>
       </div>
-
-
+ 
+ 
       {/* Submit button */}
       <button
         type="button"
@@ -180,5 +180,5 @@ const MemoForm = () => {
     </form>
   );
 };
-
+ 
 export default MemoForm;
