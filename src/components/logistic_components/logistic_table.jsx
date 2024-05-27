@@ -51,3 +51,5 @@ const logistic_table = ({headers, data, action}) => {
 };
 
 export default logistic_table;
+
+//testing
