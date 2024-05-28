@@ -1,5 +1,6 @@
 "use client";
 import FormSearch from "@/components/FormSearch";
+import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
 import TableSDLC from "@/components/sdlc/TableSDLC";
 import axios from "axios";
@@ -8,7 +9,8 @@ import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 
 const page = () => {
-    const [serachInput, setSearchInput] = useState("");
+    const [searchInput, setSearchInput] = useState("");
+    const [searchResult, setSearchResult] = useState(null);
     const [dataAllProject, setDataAllProject] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
@@ -30,6 +32,17 @@ const page = () => {
         }
     };
 
+    const handleSearch = async () => {
+        try {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allproject/getproject?input=${searchInput}`
+            );
+            setSearchResult(response.data.data);
+        }catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div>
             <div className="w-full px-5 py-5 mt-4">
@@ -45,9 +58,11 @@ const page = () => {
                 <FormSearch
                     placeholder="Find Project"
                     setState={setSearchInput}
+                    handleSubmit={handleSearch}
                 />
             </div>
-            {dataAllProject ? (
+            {dataAllProject && (!searchResult || searchInput == "") ? (
+            
                 <div className="mt-4">
                     <TableSDLC
                         headers={Object.keys(dataAllProject[0]).slice(
@@ -56,15 +71,37 @@ const page = () => {
                         )}
                         data={dataAllProject}
                         action={true}
+                        link={"main/development/"}
                     />
                 </div>
             ) : (
-                <PleaseWait />
+                !(searchResult && searchInput != "") && <PleaseWait />
+            )}
+            
+            {searchResult && searchInput != "" && searchResult.length !== 0 && (
+                <div className="mt-4">
+                    <TableSDLC
+                        headers={Object.keys(searchResult[0]).slice(
+                            0,
+                            Object.keys(searchResult[0]).length - 1
+                        )}
+                        data={searchResult}
+                        action={true}
+                        link={"main/development/"}
+                    />
+                </div>
             )}
 
-            {dataAllProject && (
+            {searchResult && searchInput != "" && searchResult.length === 0 && (
+                <NotFound />
+            )}
+
+
+
+            {dataAllProject && !searchResult && (
                 <div className="w-full flex justify-end items-center gap-3">
                     <button
+                    type="button"
                         disabled={currentPage === 1 || startIndex === 0}
                         onClick={() => {
                             setCurrentPage(currentPage - 1);
@@ -76,6 +113,7 @@ const page = () => {
                     </button>
                     <h5 className="font-semibold">{currentPage}</h5>
                     <button
+                    typr="button"
                         disabled={
                             startIndex + perPage >= dataAllProject[0].maxSize
                         }
