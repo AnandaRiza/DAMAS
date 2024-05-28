@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { FiLoader, FiRefreshCw } from "react-icons/fi";
  
 export const IsLogin = ({ children }) => {
     const router = useRouter();
@@ -25,7 +26,12 @@ export const IsLogin = ({ children }) => {
  
  
     if (loading) {
-        return <div>Please Wait...</div>
+        return <div>
+            <div className="min-h-screen min-w-full bg-gray-300 text-black flex gap-3 items-center justify-center">
+                    <p>Please Wait</p>{" "}
+                    <FiLoader size={20} className="animate-spin-slow" />
+                </div>
+        </div>
     } else {
         return children
     }
