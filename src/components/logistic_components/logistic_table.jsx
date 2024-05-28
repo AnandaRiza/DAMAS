@@ -7,9 +7,11 @@ const LogisticTable = ({ headers, data, action }) => {
     const router = useRouter();
 
     const handleEditClick = (memoId) => {
-        console.log("Navigating to edit memo with ID:", memoId); // Debug output
+        console.log("Memo ID:", memoId); // Debug log
         router.push(`/logistic/mymemo/editmemo?memoId=${memoId}`);
     };
+
+    console.log("Data:", data); // Debug log
 
     return (
         <div className="overflow-x-auto">
@@ -33,7 +35,9 @@ const LogisticTable = ({ headers, data, action }) => {
                         <tr
                             key={index}
                             className={`${
-                                index % 2 === 0 ? "bg-white" : "bg-[#00A6B4]/[0.5]"
+                                index % 2 === 0
+                                    ? "bg-white"
+                                    : "bg-[#00A6B4]/[0.5]"
                             } hover:bg-gray-100 text-xs leading-5`}
                         >
                             {headers.map((header, headerIndex) => (
@@ -41,11 +45,14 @@ const LogisticTable = ({ headers, data, action }) => {
                                     {item[header]}
                                 </td>
                             ))}
+                            <td className="hidden">{item.memo_id}</td> {/* Hidden column for memo_id */}
                             {action && (
                                 <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                     <button
                                         className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2"
-                                        onClick={() => handleEditClick(item.memo_id)}
+                                        onClick={() =>
+                                            handleEditClick(item.memo_id)
+                                        }
                                     >
                                         <AiOutlineEdit size={20} />
                                     </button>

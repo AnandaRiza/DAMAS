@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
 
-const EditMemoForm = () => {
-    const router = useRouter();
-    const { memoId } = router.query;
-
+const EditMemoForm = ({ memoId }) => {
     const [formData, setFormData] = useState({
         memo_num: "",
         memo_perihal: "",
@@ -13,6 +9,7 @@ const EditMemoForm = () => {
         memo_deadline: "",
         memo_status: "",
     });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (memoId) {
@@ -23,7 +20,7 @@ const EditMemoForm = () => {
     const fetchMemoDetails = async () => {
         try {
             const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/getMemoByID/${memoId}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/api/getMemoByID/${memoId}`
             );
             const { data } = response.data;
             setFormData({
@@ -33,6 +30,7 @@ const EditMemoForm = () => {
                 memo_deadline: data.memo_deadline,
                 memo_status: data.memo_status,
             });
+            setLoading(false);
         } catch (error) {
             console.error("Error fetching memo details:", error);
         }
@@ -42,7 +40,7 @@ const EditMemoForm = () => {
         event.preventDefault();
         try {
             await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memo/${memoId}`,
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/api/memo/${memoId}`,
                 formData
             );
             // Handle successful update, e.g., show success message or redirect
@@ -58,6 +56,10 @@ const EditMemoForm = () => {
             [name]: value,
         }));
     };
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <form onSubmit={handleFormSubmit}>

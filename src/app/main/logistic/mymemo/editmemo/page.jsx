@@ -7,6 +7,9 @@ const Page = () => {
     const router = useRouter();
     const { memoId } = router.query;
 
+    // Debugging output
+    console.log("memoId from query:", memoId);
+
     return (
         <>
             <div className="flex-grow justify-center items-center min-h-screen">
@@ -18,7 +21,11 @@ const Page = () => {
                     <LogisticBreadcrumbs />
 
                     <div className="px-10 mt-10">
-                        <EditMemoForm memoId={memoId} />
+                        {memoId ? (
+                            <EditMemoForm memoId={memoId} />
+                        ) : (
+                            <p>Loading...</p>
+                        )}
                     </div>
                 </div>
             </div>
