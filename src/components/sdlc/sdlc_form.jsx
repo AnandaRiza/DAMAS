@@ -44,6 +44,7 @@ const SDLCForm = () => {
                         })
                     }
                     className="input input-bordered mt-1"
+                    
                 />
             </div>
             <div className="flex flex-col">
