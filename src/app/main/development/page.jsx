@@ -71,7 +71,7 @@ const page = () => {
                         )}
                         data={dataAllProject}
                         action={true}
-                        link={"main/development/"}
+                        link={"/main/development/"}
                     />
                 </div>
             ) : (
@@ -87,7 +87,7 @@ const page = () => {
                         )}
                         data={searchResult}
                         action={true}
-                        link={"main/development/"}
+                        link={"/main/development/"}
                     />
                 </div>
             )}
