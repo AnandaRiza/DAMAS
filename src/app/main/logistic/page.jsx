@@ -5,29 +5,29 @@ import TableLogistic from "@/components/logistic_components/logistic_table";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
-
+ 
 const Page = () => {
     const [searchInput, setSearchInput] = useState("");
     const [dataAllMemo, setDataAllMemo] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
     const [perPage, setPerPage] = useState(10);
-
+ 
     useEffect(() => {
         getDataAllMemo();
     }, [startIndex]);
-
+ 
     const getDataAllMemo = async () => {
         setDataAllMemo(null);
         const url = `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allmemo?start=${startIndex}&size=${perPage}`;
         console.log("Fetching data from URL:", url);
-
+ 
         // Validate parameters
         if (isNaN(startIndex) || isNaN(perPage)) {
             console.error("Invalid parameters: startIndex and perPage must be numbers");
             return;
         }
-
+ 
         try {
             const response = await axios.get(url);
             setDataAllMemo(response.data.data);
@@ -47,7 +47,7 @@ const Page = () => {
             }
         }
     };
-
+ 
     return (
         <div>
             <div className="w-full px-5 py-5 mt-4">
@@ -76,7 +76,7 @@ const Page = () => {
             ) : (
                 <PleaseWait />
             )}
-
+ 
             {dataAllMemo && (
                 <div className="w-full flex justify-end items-center gap-3">
                     <button
@@ -105,5 +105,5 @@ const Page = () => {
         </div>
     );
 };
-
+ 
 export default Page;

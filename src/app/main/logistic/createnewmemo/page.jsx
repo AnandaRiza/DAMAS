@@ -5,7 +5,7 @@ const page = () => {
   return (
     <>
       <div className="flex-grow justify-center items-center min-h-screen">
-        <div>
+        <div className="w-full max-w-4xl">
           <div className="text-[#0066AE] font-semibold ml-10 mt-4">
             Create New Memo
           </div>
