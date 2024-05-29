@@ -1,5 +1,6 @@
 "use client";
 import NetworkTable from '@/components/operation/operation_network_table';
+import NotFound from "@/components/NotFound";
 import FormSearch from "@/components/FormSearch";
 import PleaseWait from "@/components/PleaseWait";
 import axios from "axios";
@@ -8,24 +9,36 @@ import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 
 const page = () => {
-    const [serachInput, setSearchInput] = useState("");
-    const [dataAllProject, setDataAllProject] = useState(null);
+    const [searchInput, setSearchInput] = useState("");
+    const [searchResult, setSearchResult] = useState(null);
+    const [dataAllNetwork, setDataAllNetwork] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
     const [perPage, setPerPage] = useState(10);
 
     useEffect(() => {
-        getDataAllProject();
+        getDataAllNetwork();
     }, [startIndex]);
 
-    const getDataAllProject = async () => {
-        setDataAllProject(null);
+    const getDataAllNetwork = async () => {
+        setDataAllNetwork(null);
         try {
             const response = await axios.get(
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/networkshow?start=${startIndex}&size=${perPage}`
             );
-            setDataAllProject(response.data.data);
+            setDataAllNetwork(response.data.data);
         } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleSearch = async () => {
+        try {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/networkshow/getnetwork?input=${searchInput}`
+            );
+            setSearchResult(response.data.data);
+        }catch (error) {
             console.log(error);
         }
     };
@@ -43,27 +56,47 @@ const page = () => {
                     </span>
                 </div>
                 <FormSearch
-                    placeholder="Find Project"
+                    placeholder="Find Network"
                     setState={setSearchInput}
+                    handleSubmit={handleSearch}
                 />
             </div>
-            {dataAllProject ? (
+            {dataAllNetwork && (!searchResult || searchInput == "") ? (
+
                 <div className="mt-4">
                     <NetworkTable
-                        headers={Object.keys(dataAllProject[0]).slice(
+                        headers={Object.keys(dataAllNetwork[0]).slice(
                             0,
-                            Object.keys(dataAllProject[0]).length - 1
+                            Object.keys(dataAllNetwork[0]).length - 1
                         )}
-                        data={dataAllProject}
+                        data={dataAllNetwork}
                         action={true}
                         link={"/main/operation/"}
                     />
                 </div>
             ) : (
-                <PleaseWait />
+                !(searchResult && searchInput != "") && <PleaseWait/>
             )}
 
-            {dataAllProject && (
+            {searchResult && searchInput != "" && searchResult.length !== 0 && (
+                <div className="mt-4">
+                    <NetworkTable
+                        headers={Object.keys(searchResult[0]).slice(
+                            0,
+                            Object.keys(searchResult[0]).length - 1
+                        )}
+                        data={searchResult}
+                        action={true}
+                        link={"/main/operation/"}
+                    />
+                </div>
+            )}
+
+            {searchResult && searchInput != "" && searchResult.length === 0 && (
+                <NotFound />
+            )}
+
+            {searchResult && !searchInput &&  (
                 <div className="w-full flex justify-end items-center gap-3">
                     <button
                         disabled={currentPage === 1 || startIndex === 0}
@@ -78,7 +111,7 @@ const page = () => {
                     <h5 className="font-semibold">{currentPage}</h5>
                     <button
                         disabled={
-                            startIndex + perPage >= dataAllProject[0].maxSize
+                            startIndex + perPage >= dataAllNetwork[0].maxSize
                         }
                         onClick={() => {
                             setCurrentPage(currentPage + 1);
