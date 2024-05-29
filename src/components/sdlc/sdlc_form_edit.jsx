@@ -15,6 +15,8 @@ const page = () => {
         deadline: "",
         status: "",
     });
+    const [loading, setLoading] = useEffect(true)
+
     useEffect(() => {
         const getCurrentData = async () => {
             try {
