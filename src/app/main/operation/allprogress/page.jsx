@@ -56,6 +56,7 @@ const page = () => {
                         )}
                         data={dataAllProject}
                         action={true}
+                        link={"/main/operation/"}
                     />
                 </div>
             ) : (
