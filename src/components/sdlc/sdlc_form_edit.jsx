@@ -29,8 +29,21 @@ const page = () => {
         getCurrentData();
     }, [params.id]);
 
+    const handleEditedData = async () => {
+        try {
+            const response = await axios.put(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allproject/editedproject?input=${params.id}`,
+                dataAllProject
+            );
+            console.log(response.data);
+            alert("Edit Success");
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
-        <form className="space-y-4">
+        <div className="space-y-4">
             {dataAllProject ? (
                 <form className="space-y-4">
                     <div className="flex flex-col">
@@ -50,7 +63,6 @@ const page = () => {
                                 })
                             }
                             className="input input-bordered mt-1"
-                        
                         />
                     </div>
                     <div className="flex flex-col">
@@ -80,7 +92,7 @@ const page = () => {
                             Deadline
                         </label>
                         <input
-                        type="date"
+                            type="date"
                             className="input input-bordered mt-1"
                             value={dataAllProject.deadline}
                             onChange={(e) =>
@@ -152,7 +164,11 @@ const page = () => {
                                 <span>Cancel</span>
                             </button>
                         </Link>
-                        <button className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center">
+                        <button
+                        type="button"
+                            className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center"
+                            onClick={handleEditedData}
+                        >
                             <FiSave />
                             <span>Edit</span>
                         </button>
@@ -161,7 +177,7 @@ const page = () => {
             ) : (
                 <PleaseWait />
             )}
-        </form>
+        </div>
     );
 };
 
