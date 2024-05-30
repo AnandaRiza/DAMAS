@@ -96,7 +96,7 @@ const page = () => {
                 <NotFound />
             )}
 
-            {searchResult && !searchInput &&  (
+            {dataAllNetwork && !searchResult &&  (
                 <div className="w-full flex justify-end items-center gap-3">
                     <button
                         disabled={currentPage === 1 || startIndex === 0}
