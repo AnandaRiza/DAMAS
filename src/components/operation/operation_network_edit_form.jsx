@@ -48,7 +48,7 @@ const page = () => {
                 <form className="space-y-4">
                     <div className="flex flex-col">
                         <label
-                            htmlFor="network_perihal`"
+                            htmlFor="perihal"
                             className="text-sm font-semibold text-gray-600"
                         >
                             Network Name
@@ -67,7 +67,7 @@ const page = () => {
                     </div>
                     <div className="flex flex-col">
                         <label
-                            htmlFor="network_pic"
+                            htmlFor="pic"
                             className="text-sm font-semibold text-gray-600"
                         >
                             PIC
@@ -86,7 +86,7 @@ const page = () => {
                     </div>
                     <div className="flex flex-col">
                         <label
-                            htmlFor="network_deadline"
+                            htmlFor="deadline"
                             className="text-sm font-semibold text-gray-600"
                         >
                             Deadline
@@ -105,7 +105,7 @@ const page = () => {
                     </div>
                     <div className="flex flex-col">
                         <label
-                            htmlFor="network_status"
+                            htmlFor="status"
                             className="text-sm font-semibold text-gray-600"
                         >
                             Status
