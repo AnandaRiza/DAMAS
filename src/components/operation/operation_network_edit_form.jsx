@@ -19,7 +19,7 @@ const page = () => {
         const getCurrentData = async () => {
             try {
                 const response = await axios.get(
-                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/networkshow/getnetwork?input=${params.network_id}`
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/networkshow/getnetwork/${params.network_id}`
                 );
                 setDataAllNetwork(response.data.data[0]);
             } catch (error) {
