@@ -5,27 +5,43 @@ import HeaderLogin from "@/components/HeaderLogin";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import PleaseWait from "@/components/PleaseWait";
 
 const Page = () => {
     const router = useRouter();
     const [form, setForm] = useState({
-        username: "",
-        password: "",
+        userid: "",
+        pass: "",
     });
-    const [error, setError] = useState(null);
+    const [errors, setErrors] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post(
-                "http://localhost:8081/api/login",
-                form
+            const currentUserInfo = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/secure/users`,
+                {
+                    headers: {
+                        "USER-ID": form.userid,
+                    },
+                }
             );
-            console.log(response);
-            document.cookie = `token=${response.data.data.token}; expires=; path=/`;
-            router.push("/main");
+            if (currentUserInfo.data.data.status == 1) {
+                document.cookie = `DAMAS-USERID=${form.userid}; expires=; path=/`;
+                router.push("/main");
+                setIsLoading(false);
+            } else {
+                await axios.post(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/secure/login`,
+                    form
+                );
+                document.cookie = `DAMAS-USERID=${form.userid}; expires=; path=/`;
+                router.push("/main");
+                setIsLoading(false);
+            }
         } catch (error) {
-            console.log(error.response.data.error);
-            alert(error.response.data.error);
+            setErrors(error.response.data.errors);
+            setIsLoading(false);
         }
     };
 
@@ -37,6 +53,11 @@ const Page = () => {
                 <div className="bg-white p-6 rounded-lg w-[450px]">
                     <form>
                         <div className="mb-4">
+                            {errors && (
+                                <div className="text-red-500 font-semibold text-sm ml-3 mb-1">
+                                    <p>* {errors}</p>
+                                </div>
+                            )}
                             <h1 className="font-roboto font-bold text-2xl flex justify-center">
                                 Login Page
                             </h1>
@@ -54,7 +75,7 @@ const Page = () => {
                                 onChange={(e) =>
                                     setForm({
                                         ...form,
-                                        username: e.target.value,
+                                        userid: e.target.value,
                                     })
                                 }
                             />
@@ -73,7 +94,7 @@ const Page = () => {
                                 onChange={(e) =>
                                     setForm({
                                         ...form,
-                                        password: e.target.value,
+                                        pass: e.target.value,
                                     })
                                 }
                             />
@@ -82,20 +103,27 @@ const Page = () => {
                         <Link href="/main">
                             <div className="mt-2">
                                 <button
-                                    className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-[#0066AE] rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+                                    className="w-full px-4 py-2 text-white transition-colors duration-200 transform bg-[#0066AE] rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
                                     onClick={() => handleLogin()}
                                 >
-                                    Login
+                                    {isLoading ? (
+                                        <PleaseWait />
+                                    ) : (
+                                        <span className="text-sm font-semibold">
+                                             Login
+                                        </span>
+                                    )}
+                                   
                                 </button>
                             </div>
                         </Link>
 
-                        <div className="w-full h-[0.5px] bg-black mt-3"></div>
+                        {/* <div className="w-full h-[0.5px] bg-black mt-3"></div>
                         <div className="mb-2">
                             <a className="text-xs text-blue-600 hover:underline flex justify-center mt-2">
                                 Forget Password?
                             </a>
-                        </div>
+                        </div> */}
                     </form>
                 </div>
             </div>
