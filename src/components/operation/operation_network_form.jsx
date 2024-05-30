@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const NetworkForm = () => {
+const SKSEForm = () => {
   // State to manage form data
   const [formData, setFormData] = useState({
     network_perihal: "",
@@ -151,4 +151,4 @@ return (
 );
 };
 
-export default NetworkForm;
+export default SKSEForm;
