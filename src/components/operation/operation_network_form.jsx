@@ -14,7 +14,7 @@ const NetworkForm = () => {
 
 const handleSubmit = async () => {
     try {
-        await axios.post(`${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationnetwork`, formData);
+        await axios.post("http://localhost:8081/api/operationnetwork", formData);
         alert("Create Project Success");
         
 
