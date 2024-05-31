@@ -10,7 +10,11 @@ const LogisticTable = ({ headers, data, action, link }) => {
     const getDisplayName = (header) => {
         const displayNames = {
             memo_id: 'Memo ID',
-            memo_num: 'Memo Number'
+            memo_num: 'Nomor Memo',
+            memo_perihal: 'Perihal Memo',
+            memo_pic: 'PIC',
+            memo_status: 'Status Memo',
+            memo_deadline:'Deadline'
           
         };
         return displayNames[header] || header;
