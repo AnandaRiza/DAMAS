@@ -10,18 +10,29 @@ const TableSDLC = ({ headers, data, action, link }) => {
         router.push(`${link}/edit/${id}`);
     };
 
+    const getDisplayName = (header) => {
+        const displayNames = {
+            projectname: 'Project Name',
+            pic: "PIC",
+            deadline: "Deadline",
+            status: "Status",
+          
+        };
+        return displayNames[header] || header;
+    };
+
     return (
         <div className="overflow-x-auto">
             <table className="table">
                 <thead>
                     <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
                         {headers.map((item, index) => (
-                            <th key={index} className="py-3 px-6 uppercase">
-                                {item}
+                            <th key={index} className="py-3 px-6 ">
+                                {getDisplayName(item)}
                             </th>
                         ))}
                         {action && 
-                            <th className="py-3 px-6 w-32 flex items-center justify-center gap-3 uppercase">
+                            <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                 Edit
                             </th>
                         }
