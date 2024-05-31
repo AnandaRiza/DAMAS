@@ -6,9 +6,8 @@ import { AiOutlineEdit } from "react-icons/ai";
 const TableSDLC = ({ headers, data, action, link }) => {
     const router = useRouter();
 
-    const handleEditClick = (memoId) => {
-        console.log("Memo ID:", memoId); // Debug log
-        router.push(`${link}mymemo/editmemo/${memoId}`);
+    const handleEdit = (id) => {
+        router.push(`${link}/edit/${id}`);
     };
 
     return (
