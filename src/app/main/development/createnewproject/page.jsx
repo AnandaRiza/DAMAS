@@ -9,7 +9,7 @@ const page = () => {
           <div className="text-[#0066AE] font-semibold ml-10 mt-4">
             Create New SDLC
           </div>
-          <div>
+          {/* <div>
             <span className="flex text-[#0066AE] ml-10 mt-2">
               <div className="text-sm breadcrumbs">
                 <ul>
@@ -23,7 +23,7 @@ const page = () => {
                 </ul>
               </div>
             </span>
-          </div>
+          </div> */}
           <div className="px-10 grid grid-cols-2 gap-3 mt-10 w-full">
             <SDLCForm />
           </div>

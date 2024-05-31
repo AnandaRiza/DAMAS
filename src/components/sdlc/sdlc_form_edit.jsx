@@ -1,110 +1,184 @@
-'use client';
+"use client";
+import PleaseWait from "@/components/PleaseWait";
+import axios from "axios";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { FiSave } from "react-icons/fi";
+import { MdOutlineCancel } from "react-icons/md";
 
-import React, { useState } from "react";
-
-const SDLC_form_edit = () => {
-  // State to manage form data
-  const [formData, setFormData] = useState({
-    namaproject: "",
-    pic: "",
-    deadline: "",
-    status: "Ongoing", // Default status
-  });
-
-  // Handle form submission
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic here (e.g., send data to server)
-    console.log("Form submitted:", formData);
-    // Reset form fields after submission
-    setFormData({
-      namaproject: "",
-      pic: "",
-      deadline: "",
-      status: "Ongoing", // Reset status to default
+const page = () => {
+    const params = useParams();
+    const [dataAllProject, setDataAllProject] = useState({
+        projectname: "",
+        pic: "",
+        deadline: "",
+        status: "",
     });
-  };
+    useEffect(() => {
+        const getCurrentData = async () => {
+            try {
+                const response = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allproject/getproject?input=${params.id}`
+                );
+                setDataAllProject(response.data.data[0]);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getCurrentData();
+    }, [params.id]);
 
-  // Handle form input changes
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+    const handleEditedData = async () => {
+        try {
+            const response = await axios.put(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allproject/editedproject?input=${params.id}`,
+                dataAllProject
+            );
+            console.log(response.data);
+            alert("Edit Success");
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-  // Handle status change
-  const handleStatusChange = (status) => {
-    setFormData({
-      ...formData,
-      status,
-    });
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Input fields for memo attributes */}
-      <div className="flex flex-col">
-        <label htmlFor="namaproject" className="text-sm font-semibold text-gray-600">Nama Project</label>
-        <input
-          type="text"
-          id="namaproject"
-          name="namaproject"
-          value={formData.perihal}
-          onChange={handleInputChange}
-          className="input input-bordered mt-1"
-        />
-      </div>
-      <div className="flex flex-col">
-        <label htmlFor="pic" className="text-sm font-semibold text-gray-600">PIC</label>
-        <input
-          type="text"
-          id="pic"
-          name="pic"
-          value={formData.pic}
-          onChange={handleInputChange}
-          className="input input-bordered mt-1"
-        />
-      </div>
-      <div className="flex flex-col">
-        <label htmlFor="deadline" className="text-sm font-semibold text-gray-600">Deadline</label>
-        <input
-          type="date"
-          id="deadline"
-          name="deadline"
-          value={formData.deadline}
-          onChange={handleInputChange}
-          className="input input-bordered mt-1"
-        />
-      </div>
-      {/* Status dropdown */}
-      <div className="flex flex-col">
-        <label htmlFor="status" className="text-sm font-semibold text-gray-600">Status</label>
-        <div className="dropdown mt-1">
-          <div tabIndex={0} role="button" className="btn m-1">
-            {formData.status}
-          </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
-          >
-            <li>
-              <a onClick={() => handleStatusChange("Ongoing")}>Ongoing</a>
-            </li>
-            <li>
-              <a onClick={() => handleStatusChange("Finished")}>Finished</a>
-            </li>
-            <li>
-              <a onClick={() => handleStatusChange("Past Deadline")}>Past Deadline</a>
-            </li>
-          </ul>
+    return (
+        <div className="space-y-4">
+            {dataAllProject ? (
+                <form className="space-y-4">
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="namaproject"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Project Name
+                        </label>
+                        <input
+                            type="text"
+                            value={dataAllProject.projectname}
+                            onChange={(e) =>
+                                setDataAllProject({
+                                    ...dataAllProject,
+                                    projectname: e.target.value,
+                                })
+                            }
+                            className="input input-bordered mt-1"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="pic"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            PIC
+                        </label>
+                        <input
+                            type="text"
+                            className="input input-bordered mt-1"
+                            value={dataAllProject.pic}
+                            onChange={(e) =>
+                                setDataAllProject({
+                                    ...dataAllProject,
+                                    pic: e.target.value,
+                                })
+                            }
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="deadline"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Deadline
+                        </label>
+                        <input
+                            type="date"
+                            className="input input-bordered mt-1"
+                            value={dataAllProject.deadline}
+                            onChange={(e) =>
+                                setDataAllProject({
+                                    ...dataAllProject,
+                                    deadline: e.target.value,
+                                })
+                            }
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="status"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Status
+                        </label>
+                        <div className="dropdown mt-1">
+                            <div tabIndex={0} role="button" className="btn m-1">
+                                {dataAllProject.status}
+                            </div>
+                            <ul
+                                tabIndex={0}
+                                className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
+                            >
+                                <li>
+                                    <a
+                                        onClick={(e) =>
+                                            setDataAllProject({
+                                                ...dataAllProject,
+                                                status: e.target.value,
+                                            })
+                                        }
+                                    >
+                                        <option value="Ongoing">Ongoing</option>
+                                    </a>
+                                    <a
+                                        onClick={(e) =>
+                                            setDataAllProject({
+                                                ...dataAllProject,
+                                                status: e.target.value,
+                                            })
+                                        }
+                                    >
+                                        <option value="Finished">
+                                            Finished
+                                        </option>
+                                    </a>
+                                    <a
+                                        onClick={(e) =>
+                                            setDataAllProject({
+                                                ...dataAllProject,
+                                                status: e.target.value,
+                                            })
+                                        }
+                                    >
+                                        <option value="Past Deadline">
+                                            Past Deadline
+                                        </option>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 items-center text-white ml-3 mt-3">
+                        <Link href="/main/development">
+                            <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
+                                <MdOutlineCancel />
+                                <span>Cancel</span>
+                            </button>
+                        </Link>
+                        <button
+                        type="button"
+                            className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center"
+                            onClick={handleEditedData}
+                        >
+                            <FiSave />
+                            <span>Edit</span>
+                        </button>
+                    </div>
+                </form>
+            ) : (
+                <PleaseWait />
+            )}
         </div>
-      </div>
-      {/* Submit button */}
-      <button type="submit" className="btn btn-primary mt-4">Edit Project</button>
-    </form>
-  );
+    );
 };
 
-export default SDLC_form_edit;
+export default page;

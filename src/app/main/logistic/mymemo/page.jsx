@@ -27,7 +27,7 @@ const page = () => {
               </span>
             </div>
             <div className="px-10 grid grid-cols-2 gap-3 mt-10 w-full"></div>
-            <LogisticTable />
+            {/* <LogisticTable /> */}
           </div>
       </div>
     </>
