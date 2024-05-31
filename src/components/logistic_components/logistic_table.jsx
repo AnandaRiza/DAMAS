@@ -3,8 +3,18 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 
-const LogisticTable = ({ headers, data, action,link }) => {
+const LogisticTable = ({ headers, data, action, link }) => {
     const router = useRouter();
+
+   
+    const getDisplayName = (header) => {
+        const displayNames = {
+            memo_id: 'Memo ID',
+            memo_num: 'Memo Number'
+          
+        };
+        return displayNames[header] || header;
+    };
 
     const handleEditClick = (memoId) => {
         console.log("Memo ID:", memoId); // Debug log
@@ -19,8 +29,11 @@ const LogisticTable = ({ headers, data, action,link }) => {
                 <thead>
                     <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
                         {headers.map((item, index) => (
-                            <th key={index} className="py-3 px-6 uppercase">
-                                {item}
+                            <th
+                                key={index}
+                                className={`py-3 px-6 uppercase ${item === 'memo_id' ? 'hidden' : ''}`}
+                            >
+                                {getDisplayName(item)}
                             </th>
                         ))}
                         {action && (
@@ -41,7 +54,10 @@ const LogisticTable = ({ headers, data, action,link }) => {
                             } hover:bg-gray-100 text-xs leading-5`}
                         >
                             {headers.map((header, headerIndex) => (
-                                <td key={headerIndex} className="py-3 px-6">
+                                <td
+                                    key={headerIndex}
+                                    className={`py-3 px-6 ${header === 'memo_id' ? 'hidden' : ''}`}
+                                >
                                     {item[header]}
                                 </td>
                             ))}
@@ -49,10 +65,10 @@ const LogisticTable = ({ headers, data, action,link }) => {
                             {action && (    
                                 <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                     <button
-                                    type="button"
+                                        type="button"
                                         className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2"
                                         onClick={() =>
-                                            handleEditClick(item[headers[0]])
+                                            handleEditClick(item.memo_id) // Access memo_id directly from item
                                         }
                                     >
                                         <AiOutlineEdit size={20} />

@@ -79,7 +79,7 @@ const EditMemoPage = ( ) => {
 //      }
     
     const handleEditedData = async () => {
-        const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+        const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
         const memoId = params.memoId;
         console.log(memoId);
         try {
@@ -87,8 +87,7 @@ const EditMemoPage = ( ) => {
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${memoId}`,dataAllMemo , 
                 {
                     headers: {
-                        "X-API-TOKEN" : token,  
-                        "Content-Type": "application/json"
+                        "USER-ID" : userid,  
 
                     }
                 }
