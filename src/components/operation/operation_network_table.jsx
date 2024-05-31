@@ -10,14 +10,28 @@ const operation_network_table = ({ headers, data, action, link }) => {
         router.push(`${link}/networkedit/${network_id}`);
     };
 
+    const getDisplayName = (header) => {
+        const displayNames = {
+            network_id: 'Network ID',
+            network_perihal: "Network Perihal",
+            network_pic: "PIC",
+            network_deadline: "Deadline",
+            network_status: "status"
+          
+        };
+        return displayNames[header] || header;
+    };
+
     return (
         <div className="overflow-x-auto">
             <table className="table">
                 <thead>
                     <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
                         {headers.map((item, index) => (
-                            <th key={index} className="py-3 px-6 uppercase">
-                                {item}
+                            <th key={index} 
+                            className={`py-3 px-6 uppercase ${item === 'network_id' ? 'hidden' : ''}`}
+                            >
+                                {getDisplayName(item)}
                             </th>
                         ))}
                         {action && 
@@ -38,7 +52,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
                             } hover:bg-gray-100 text-xs leading-5`}
                         >
                             {headers.map((header, headerIndex) => (
-                                <td key={headerIndex} className="py-3 px-6">
+                                <td key={headerIndex} className={`py-3 px-6 ${header === 'network_id' ? 'hidden' : ''}`}>
                                     {item[header]}
                                 </td>
                             ))}
