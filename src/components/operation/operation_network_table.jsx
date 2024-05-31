@@ -13,7 +13,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
     const getDisplayName = (header) => {
         const displayNames = {
             network_id: 'Network ID',
-            network_perihal: "Network Perihal",
+            network_perihal: "Perihal",
             network_pic: "PIC",
             network_deadline: "Deadline",
             network_status: "status"
