@@ -1,137 +1,244 @@
-'use client';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import PleaseWait from "@/components/PleaseWait";
+import Link from "next/link";
+import { FiSave } from "react-icons/fi";
+import { MdOutlineCancel } from "react-icons/md";
+import { useParams } from "next/navigation";
 
-import React, { useState, useEffect } from "react";
-
-const EditMemoForm = ({ memoId }) => {
-    // State to manage form data
-    const [formData, setFormData] = useState({
-        noMemo: "",
-        perihal: "",
-        pic: "",
-        deadline: "",
-        status: "Ongoing", // Default status
+const EditMemoPage = ( ) => {
+    const [dataAllMemo, setDataAllMemo] = useState({
+        memo_id: "92419b6f-dbf4-4c5a-b3b9-e522cbfd4443",
+        memo_num: "",
+        memo_perihal: "",
+        memo_pic: "",
+        memo_status: "",    
+        memo_deadline: "",
+        maxSize: "123"
+        
     });
-
-    // Fetch memo data from the database
+    
+    const [loading, setLoading] = useState(true);
+    
+    const params = useParams();
     useEffect(() => {
-        const fetchData = async () => {
+        const getCurrentData = async () => {
             try {
-                const response = await fetch(`/api/memos/${memoId}`);
-                const data = await response.json();
-                setFormData({
-                    noMemo: data.noMemo,
-                    perihal: data.perihal,
-                    pic: data.pic,
-                    deadline: data.deadline,
-                    status: data.status,
-                });
+                const response = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/getMemoByID/${params.memoId}`
+                );
+                
+                setDataAllMemo(response.data.data);
+                setLoading(false);
             } catch (error) {
-                console.error('Failed to fetch memo data:', error);
+                console.log(error);
+                setLoading(false);
             }
         };
+        if (params.memoId) {
+            getCurrentData();
+        }
+    }, [params.memoId]);
 
-        fetchData();
-    }, [memoId]);
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setDataAllMemo((prevData) => ({
+    //         ...prevData,
+    //         [name]: value,
+    //     }));
+    // };
 
-    // Handle form submission
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Handle form submission logic here (e.g., send data to server)
-        console.log("Form submitted:", formData);
-        // Optionally reset form fields after submission
+    // Function to handle changes in the memo deadline input
+    // const handleMemoDeadlineChange = (e) => {
+    
+    //     const parsedDate = parseDate(e.target.value);
+        
+
+    //     setDataAllMemo({
+    //         ...dataAllMemo,
+    //         memo_deadline: parsedDate,
+    //     });
+    // };
+
+    // // Function to parse the date string from the input
+    // const parseDate = (dateString) => {
+    //     const [year, month, day] = dateString.split('-');
+    //     // Reformat the date to "yyyy-MM-dd" format
+    //     return `${year}-${month}-${day}`;
+    // };
+
+// const dummy = {
+//     memo_id: "92419b6f-dbf4-4c5a-b3b9-e522cbfd4443",   
+//     memo_num: "3012/323/21",
+//     memo_perihal: "Pengadaan Barang Logistik",
+//     memo_pic: "Pak Muslim",
+//     memo_status: "finished",
+//     memo_deadline: "04/04/2021",
+    
+//     maxSize: 3
+//      }
+    
+    const handleEditedData = async () => {
+        const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
+        const memoId = params.memoId;
+        console.log(memoId);
+        try {
+            const response = await axios.put(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${memoId}`,dataAllMemo , 
+                {
+                    headers: {
+                        "USER-ID" : userid,  
+
+                    }
+                }
+            );
+            console.log(response.data);
+            
+            alert("Edit Success");
+        } catch (error) {
+            console.log(error);
+        }
     };
+    
+    // const handleEditedData = async () => {
+    //     const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+    //     try {
+    //         const response = await axios.put(
+    //             `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo/${params.memoId}`,dataAllMemo , 
+    //             {
+    //                 headers: {
+    //                     "X-API-TOKEN" : token
+    //                 }
+    //             }
+    //         );
+    //         console.log(response.data);
+    //         alert("Edit Success");
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
+    
 
-    // Handle form input changes
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
-
-    // Handle status change
-    const handleStatusChange = (status) => {
-        setFormData({
-            ...formData,
-            status,
-        });
-    };
+    if (loading) {
+        return <PleaseWait />;
+    }
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-md">
-            {/* Input fields for memo attributes */}
+        <form className="space-y-4">
             <div className="flex flex-col">
-                <label htmlFor="noMemo" className="text-sm font-semibold text-gray-700">No Memo</label>
+                <label htmlFor="memo_num" className="text-sm font-semibold text-gray-600">
+                    Nomor Memo
+                </label>
                 <input
                     type="text"
-                    id="noMemo"
-                    name="noMemo"
-                    value={formData.noMemo}
-                    onChange={handleInputChange}
-                    className="input input-bordered mt-2 p-2"
+                    id="memo_num"
+                    className="input input-bordered mt-1"
+                    value={dataAllMemo.memo_num}
+                    onChange={(e) =>
+                        setDataAllMemo({
+                            ...dataAllMemo,
+                            memo_num: e.target.value,
+                        })
+                    }
+                    name="memo_num"
                 />
             </div>
+
             <div className="flex flex-col">
-                <label htmlFor="perihal" className="text-sm font-semibold text-gray-700">Perihal</label>
+                <label htmlFor="memo_perihal" className="text-sm font-semibold text-gray-600">
+                    Perihal Memo
+                </label>
                 <input
                     type="text"
-                    id="perihal"
-                    name="perihal"
-                    value={formData.perihal}
-                    onChange={handleInputChange}
-                    className="input input-bordered mt-2 p-2"
+                    id="memo_perihal"
+                    className="input input-bordered mt-1"
+                    value={dataAllMemo.memo_perihal}
+                    onChange={(e) =>
+                        setDataAllMemo({
+                            ...dataAllMemo,
+                            memo_perihal: e.target.value,
+                        })
+                    }
+                    name="memo_perihal"
                 />
             </div>
+
             <div className="flex flex-col">
-                <label htmlFor="pic" className="text-sm font-semibold text-gray-700">PIC</label>
+                <label htmlFor="memo_pic" className="text-sm font-semibold text-gray-600">
+                    Memo PIC
+                </label>
                 <input
                     type="text"
-                    id="pic"
-                    name="pic"
-                    value={formData.pic}
-                    onChange={handleInputChange}
-                    className="input input-bordered mt-2 p-2"
+                    id="memo_pic"
+                    className="input input-bordered mt-1"
+                    value={dataAllMemo.memo_pic}
+                    onChange={(e) =>
+                        setDataAllMemo({
+                            ...dataAllMemo,
+                            memo_pic: e.target.value,
+                        })
+                    }
+                    name="memo_pic"
                 />
             </div>
+
             <div className="flex flex-col">
-                <label htmlFor="deadline" className="text-sm font-semibold text-gray-700">Deadline</label>
-                <input
-                    type="date"
-                    id="deadline"
-                    name="deadline"
-                    value={formData.deadline}
-                    onChange={handleInputChange}
-                    className="input input-bordered mt-2 p-2"
-                />
+                <label htmlFor="memo_status" className="text-sm font-semibold text-gray-600">
+                    Status
+                </label>
+                <select
+                    id="memo_status"
+                    className="input input-bordered mt-1"
+                    value={dataAllMemo.memo_status}
+                    onChange={(e) =>
+                        setDataAllMemo({
+                            ...dataAllMemo,
+                            memo_status: e.target.value,
+                        })
+                    }
+                    name="memo_status"
+                >
+                    <option value="Ongoing">Ongoing</option>
+                    <option value="Finished">Finished</option>
+                    <option value="Past Deadline">Past Deadline</option>
+                </select>
             </div>
-            {/* Status dropdown */}
+
             <div className="flex flex-col">
-                <label htmlFor="status" className="text-sm font-semibold text-gray-700">Status</label>
-                <div className="dropdown mt-2">
-                    <div tabIndex={0} role="button" className="btn m-1">
-                        {formData.status}
-                    </div>
-                    <ul
-                        tabIndex={0}
-                        className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
-                    >
-                        <li>
-                            <a onClick={() => handleStatusChange("Ongoing")}>Ongoing</a>
-                        </li>
-                        <li>
-                            <a onClick={() => handleStatusChange("Finished")}>Finished</a>
-                        </li>
-                        <li>
-                            <a onClick={() => handleStatusChange("Past Deadline")}>Past Deadline</a>
-                        </li>
-                    </ul>
-                </div>
+            <label htmlFor="memo_deadline" className="text-sm font-semibold text-gray-600">
+                Deadline
+            </label>
+            <input
+                type="text"
+                id="memo_deadline"
+                className="input input-bordered mt-1"
+                value={dataAllMemo.memo_deadline}
+                onChange={(e) => setDataAllMemo({
+                    ...dataAllMemo,
+                    memo_deadline: e.target.value,
+                })} 
+                name="memo_deadline"
+            />
+        </div>
+
+            <div className="flex gap-2 items-center text-white ml-3 mt-3">
+                <Link href="/main/logistic">
+                    <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
+                        <MdOutlineCancel />
+                        <span>Cancel</span>
+                    </button>
+                </Link>
+                <button
+                        type="button"
+                            className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center"
+                            onClick={handleEditedData}
+                        >
+                            <FiSave />
+                            <span>Edit</span>
+                        </button>
             </div>
-            {/* Submit button */}
-            <button type="submit" className="btn bg-[#67e8f9] mt-4">Update Memo</button>
         </form>
     );
 };
 
-export default EditMemoForm;
+export default EditMemoPage;

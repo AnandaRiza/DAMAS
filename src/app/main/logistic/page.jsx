@@ -1,53 +1,56 @@
 "use client";
 import FormSearch from "@/components/FormSearch";
+import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
 import TableLogistic from "@/components/logistic_components/logistic_table";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
- 
+
 const Page = () => {
     const [searchInput, setSearchInput] = useState("");
+    const [searchResult, setSearchResult] = useState(null);
     const [dataAllMemo, setDataAllMemo] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
     const [perPage, setPerPage] = useState(10);
- 
+
     useEffect(() => {
         getDataAllMemo();
     }, [startIndex]);
- 
+
     const getDataAllMemo = async () => {
         setDataAllMemo(null);
-        const url = `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allmemo?start=${startIndex}&size=${perPage}`;
-        console.log("Fetching data from URL:", url);
- 
-        // Validate parameters
-        if (isNaN(startIndex) || isNaN(perPage)) {
-            console.error("Invalid parameters: startIndex and perPage must be numbers");
-            return;
-        }
- 
         try {
-            const response = await axios.get(url);
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allmemo?start=${startIndex}&size=${perPage}`
+            );
             setDataAllMemo(response.data.data);
         } catch (error) {
             console.error("Error fetching data:", error);
             if (error.response) {
-                // The request was made and the server responded with a status code that falls out of the range of 2xx
                 console.error("Response data:", error.response.data);
                 console.error("Response status:", error.response.status);
                 console.error("Response headers:", error.response.headers);
             } else if (error.request) {
-                // The request was made but no response was received
                 console.error("Request data:", error.request);
             } else {
-                // Something happened in setting up the request that triggered an Error
                 console.error("Error message:", error.message);
             }
         }
     };
- 
+
+    const handleSearch = async () => {
+        try {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allmemo/getmemo?input=${searchInput}`
+            );
+            setSearchResult(response.data.data);
+        }catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div>
             <div className="w-full px-5 py-5 mt-4">
@@ -60,9 +63,10 @@ const Page = () => {
                 <FormSearch
                     placeholder="Find Memo"
                     setState={setSearchInput}
+                    handleSubmit={handleSearch}
                 />
             </div>
-            {dataAllMemo ? (
+            {dataAllMemo && (!searchResult || searchInput === "") ? (
                 <div className="mt-4">
                     <TableLogistic
                         headers={Object.keys(dataAllMemo[0]).slice(
@@ -71,15 +75,36 @@ const Page = () => {
                         )}
                         data={dataAllMemo}
                         action={true}
-                    />  
+                        link={"/main/logistic/"}
+                    />
                 </div>
             ) : (
-                <PleaseWait />
+                !(searchResult && searchInput !== "") && <PleaseWait />
             )}
- 
-            {dataAllMemo && (
+
+            {searchResult && searchInput !== "" && searchResult.length !== 0 && (
+                <div className="mt-4">
+                    <TableLogistic
+                        headers={Object.keys(searchResult[0]).slice(
+                            0,
+                            Object.keys(searchResult[0]).length - 1
+                        )}
+                        data={searchResult}
+                        action={true}
+                        link={"/main/logistic/"}
+
+                    />
+                </div>
+            )}
+
+            {searchResult && searchInput !== "" && searchResult.length === 0 && (
+                <NotFound />
+            )}
+
+            {dataAllMemo && !searchResult && (
                 <div className="w-full flex justify-end items-center gap-3">
                     <button
+                        type="button"
                         disabled={currentPage === 1 || startIndex === 0}
                         onClick={() => {
                             setCurrentPage(currentPage - 1);
@@ -91,6 +116,7 @@ const Page = () => {
                     </button>
                     <h5 className="font-semibold">{currentPage}</h5>
                     <button
+                        type="button"
                         disabled={startIndex + perPage >= dataAllMemo[0].maxSize}
                         onClick={() => {
                             setCurrentPage(currentPage + 1);
@@ -105,5 +131,5 @@ const Page = () => {
         </div>
     );
 };
- 
+
 export default Page;
