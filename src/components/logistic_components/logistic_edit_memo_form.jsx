@@ -5,6 +5,8 @@ import Link from "next/link";
 import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+
 
 const EditMemoPage = ( ) => {
     const [dataAllMemo, setDataAllMemo] = useState({
@@ -18,6 +20,7 @@ const EditMemoPage = ( ) => {
         
     });
     
+    const router = useRouter();
     const [loading, setLoading] = useState(true);
     
     const params = useParams();
@@ -95,6 +98,7 @@ const EditMemoPage = ( ) => {
             console.log(response.data);
             
             alert("Edit Success");
+            router.push('/main/logistic');
         } catch (error) {
             console.log(error);
         }

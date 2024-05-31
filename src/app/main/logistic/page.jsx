@@ -2,7 +2,7 @@
 import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
-import TableLogistic from "@/components/logistic_components/logistic_table";
+import LogisticTable from "@/components/logistic_components/logistic_table";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
@@ -14,6 +14,7 @@ const Page = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
     const [perPage, setPerPage] = useState(10);
+    const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
 
     useEffect(() => {
         getDataAllMemo();
@@ -46,9 +47,28 @@ const Page = () => {
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allmemo/getmemo?input=${searchInput}`
             );
             setSearchResult(response.data.data);
-        }catch (error) {
+        } catch (error) {
             console.log(error);
         }
+    };
+
+    const handleSort = (key) => {
+        let direction = 'ascending';
+        if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+            direction = 'descending';
+        }
+        setSortConfig({ key, direction });
+
+        const sortedData = [...dataAllMemo].sort((a, b) => {
+            if (a[key] < b[key]) {
+                return direction === 'ascending' ? -1 : 1;
+            }
+            if (a[key] > b[key]) {
+                return direction === 'ascending' ? 1 : -1;
+            }
+            return 0;
+        });
+        setDataAllMemo(sortedData);
     };
 
     return (
@@ -68,7 +88,7 @@ const Page = () => {
             </div>
             {dataAllMemo && (!searchResult || searchInput === "") ? (
                 <div className="mt-4">
-                    <TableLogistic
+                    <LogisticTable
                         headers={Object.keys(dataAllMemo[0]).slice(
                             0,
                             Object.keys(dataAllMemo[0]).length - 1
@@ -76,6 +96,8 @@ const Page = () => {
                         data={dataAllMemo}
                         action={true}
                         link={"/main/logistic/"}
+                        onSort={handleSort}
+                        sortConfig={sortConfig}
                     />
                 </div>
             ) : (
@@ -84,7 +106,7 @@ const Page = () => {
 
             {searchResult && searchInput !== "" && searchResult.length !== 0 && (
                 <div className="mt-4">
-                    <TableLogistic
+                    <LogisticTable
                         headers={Object.keys(searchResult[0]).slice(
                             0,
                             Object.keys(searchResult[0]).length - 1
@@ -92,7 +114,8 @@ const Page = () => {
                         data={searchResult}
                         action={true}
                         link={"/main/logistic/"}
-
+                        onSort={handleSort}
+                        sortConfig={sortConfig}
                     />
                 </div>
             )}

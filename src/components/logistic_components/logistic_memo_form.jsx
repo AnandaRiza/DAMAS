@@ -1,6 +1,7 @@
 "use client";
  
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
  
 const MemoForm = () => {
@@ -11,7 +12,9 @@ const MemoForm = () => {
     memo_deadline: "",
     memo_status: "",
   });
- 
+  
+  const router = useRouter();
+
   const handleSubmit = async () => {
     try {
       await axios.post(
@@ -19,10 +22,12 @@ const MemoForm = () => {
         formData
       );
       alert("Create Memo Success");
+      router.push('/main/logistic');
     } catch (error) {
       console.log(error);
       alert("Create Memo Failed!");
     }
+    
   };
  
   return (
@@ -115,58 +120,29 @@ const MemoForm = () => {
       </div>
  
  
-      {/* Status dropdown */}
-      <div className="flex flex-col">
+     {/* Status dropdown */}
+     <div className="flex flex-col">
         <label htmlFor="memo_status" className="text-sm font-semibold text-gray-600">
           Status
         </label>
-        <div className="dropdown mt-1">
-          <div tabIndex={0} role="button" className="btn m-1">
-            {formData.memo_status}
-          </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
-          >
-            <li>
-              <a
-                onClick={() =>
-                  setFormData({
-                    ...formData,
-                    memo_status: "Ongoing",
-                  })
-                }
-              >
-                Ongoing
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() =>
-                  setFormData({
-                    ...formData,
-                    memo_status: "Finished",
-                  })
-                }
-              >
-                Finished
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() =>
-                  setFormData({
-                    ...formData,
-                    memo_status: "Past-Deadline",
-                  })
-                }
-              >
-                Past Deadline
-              </a>
-            </li>
-          </ul>
-        </div>
+        <select
+          id="memo_status"
+          className="input input-bordered mt-1"
+          value={formData.memo_status}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              memo_status: e.target.value,
+            })
+          }
+          name="memo_status"
+        >
+          <option value="Ongoing">Ongoing</option>
+          <option value="Finished">Finished</option>
+          <option value="Past Deadline">Past Deadline</option>
+        </select>
       </div>
+
  
  
       {/* Submit button */}
