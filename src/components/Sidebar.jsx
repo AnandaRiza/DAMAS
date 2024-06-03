@@ -20,6 +20,7 @@ const Sidebar = () => {
   const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] = useState(false);
   const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -27,8 +28,18 @@ const Sidebar = () => {
 
 
   return (
-    <div className="bg-[#00A6B4]/[0.5] text-black w-80 min-h-screen p-4">
-      <span className="text-[#0066AE] font-semibold">Development</span>
+    <div className="flex">
+      {/* Sidebar */}
+      <div
+        // Conditional class based on isOpen 
+        // state to control width and visibility
+        className={`bg-[#00A6B4]/[0.5] text-black 
+                    min-h-screen transition-all p-4
+                    duration-300 z-10 rounded
+                    ${isOpen ? 'w-64' : 'w-0 overflow-hidden px-0 py-0'
+          }`}>
+        {/* Sidebar content */}
+        <span className="text-[#0066AE] font-semibold">Development</span>
       <div className="h-[0.5px] bg-black"></div>
       <div className="">
         <button
@@ -261,6 +272,45 @@ const Sidebar = () => {
         </div>
       </div>
       {/* End Button Logistic */}
+      </div>
+      {/* Main content */}
+      <div className={`flex-1 p-4 
+                        ${isOpen ? 'ml-30' : 'ml-0'}`}>
+        {/* Button to toggle sidebar */}
+        <div className="ml-auto">
+          <button
+            className="bg-[#00A6B4] hover:bg-blue-700 
+                       text-white font-bold py-2 px-4 rounded"
+            onClick={() => setIsOpen(!isOpen)}>
+            {/* Toggle icon based on isOpen state */}
+            {isOpen ? (
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            )}
+          </button>
+        </div>
+      </div>
     </div>
     
   );
