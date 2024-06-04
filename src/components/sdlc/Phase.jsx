@@ -6,23 +6,25 @@ import React, { useState } from "react";
 const PhaseForm = () => {
     // State to manage form data
     const [formData, setFormData] = useState({
-        nopmo: "",
-        projectname: "",
-        phase: "",
-        pic: "",
-        departement: "",
-        team: "",
-        deadline: "",
+        kickoff: "",
+        userrequirement: "",
+        applicationdevelopment: "",
+        sit: "",
+        uat: "",
+        implementationprepare: "",
+        implementationmeeting: "",
+        implementation: "",
+        postimplementationreview: "",
         status: "",
     });
 
     const handleSubmit = async () => {
         try {
             await axios.post("http://localhost:8081/api/projectphase", formData);
-            alert("Create Project Success");
+            alert("Create Phase Success");
         } catch (error) {
             console.log(error);
-            alert("Create Project Failed!");
+            alert("Create Phase Failed!");
         }
     };
 
@@ -31,20 +33,20 @@ const PhaseForm = () => {
             {/* Input fields for memo attributes */}
             <div className="flex flex-col">
                 <label
-                    htmlFor="nopmo"
+                    htmlFor="kickoff"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    No PMO
+                    Kick Off
                 </label>
                 <input
-                    type="text"
-                    id="nopmo"
-                    name="nopmo"
-                    value={formData.nopmo}
+                    type="date"
+                    id="kickoff"
+                    name="kickoff"
+                    value={formData.kickoff}
                     onChange={(e) =>
                         setFormData({
                             ...formData,
-                            nopmo: e.target.value,
+                            kickoff: e.target.value,
                         })
                     }
                     className="input input-bordered mt-1"
@@ -53,20 +55,20 @@ const PhaseForm = () => {
             </div>
             <div className="flex flex-col">
                 <label
-                    htmlFor="namaproject"
+                    htmlFor="userrequirement"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    Nama Project
+                    User Requierement
                 </label>
                 <input
-                    type="text"
-                    id="namaproject"
-                    name="namaproject"
-                    value={formData.projectname}
+                    type="date"
+                    id="userrequirement"
+                    name="userrequirement"
+                    value={formData.userrequirement}
                     onChange={(e) =>
                         setFormData({
                             ...formData,
-                            projectname: e.target.value,
+                            userrequirement: e.target.value,
                         })
                     }
                     className="input input-bordered mt-1"
@@ -75,20 +77,20 @@ const PhaseForm = () => {
             </div>
             <div className="flex flex-col">
                 <label
-                    htmlFor="phase"
+                    htmlFor="applicationdevelopment"
                     className="text-sm font-semibold text-gray-600"
                 >
                     Phase
                 </label>
                 <input
-                    type="text"
-                    id="phase"
-                    name="phase"
-                    value={formData.phase}
+                    type="date"
+                    id="applicationdevelopment"
+                    name="applicationdevelopment"
+                    value={formData.applicationdevelopment}
                     onChange={(e) =>
                         setFormData({
                             ...formData,
-                            phase: e.target.value,
+                            applicationdevelopment: e.target.value,
                         })
                     }
                     className="input input-bordered mt-1"
@@ -97,72 +99,108 @@ const PhaseForm = () => {
             </div>
             <div className="flex flex-col">
                 <label
-                    htmlFor="pic"
+                    htmlFor="sit"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    PIC
-                </label>
-                <input
-                    type="text"
-                    id="pic"
-                    name="pic"
-                    value={formData.pic}
-                    onChange={(e) =>
-                        setFormData({ ...formData, pic: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div>
-            <div className="flex flex-col">
-                <label
-                    htmlFor="department"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Departement
-                </label>
-                <input
-                    type="text"
-                    id="department"
-                    name="department"
-                    value={formData.departement}
-                    onChange={(e) =>
-                        setFormData({ ...formData, departement: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div>
-            <div className="flex flex-col">
-                <label
-                    htmlFor="team"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Team
-                </label>
-                <input
-                    type="text"
-                    id="team"
-                    name="team"
-                    value={formData.team}
-                    onChange={(e) =>
-                        setFormData({ ...formData, team: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div>
-            <div className="flex flex-col">
-                <label
-                    htmlFor="deadline"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Deadline
+                    SIT
                 </label>
                 <input
                     type="date"
-                    id="deadline"
-                    name="deadline"
-                    value={formData.deadline}
+                    id="sit"
+                    name="sit"
+                    value={formData.sit}
                     onChange={(e) =>
-                        setFormData({ ...formData, deadline: e.target.value })
+                        setFormData({ ...formData, sit: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="uat"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    UAT
+                </label>
+                <input
+                    type="date"
+                    id="uat"
+                    name="uat"
+                    value={formData.uat}
+                    onChange={(e) =>
+                        setFormData({ ...formData, uat: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementationprepare"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Implementation Prepare
+                </label>
+                <input
+                    type="date"
+                    id="implementationprepare"
+                    name="implementationprepare"
+                    value={formData.implementationprepare}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementationprepare: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementationmeeting"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Implementation Meeting
+                </label>
+                <input
+                    type="date"
+                    id="implementationmeeting"
+                    name="implementationmeeting"
+                    value={formData.implementationmeeting}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementationmeeting: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementation"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Implementation
+                </label>
+                <input
+                    type="date"
+                    id="implementation"
+                    name="implementation"
+                    value={formData.implementation}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementation: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="postimplementationreview"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Post Implementation Review
+                </label>
+                <input
+                    type="date"
+                    id="postimplementationreview"
+                    name="postimplementationreview"
+                    value={formData.postimplementationreview}
+                    onChange={(e) =>
+                        setFormData({ ...formData, postimplementationreview: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
@@ -222,16 +260,16 @@ const PhaseForm = () => {
                     </ul>
                 </div>
             </div>
-            {/* Submit button */}
+            {/* Submit button
             <button
                 type="button"
                 className="btn btn-primary mt-4"
                 onClick={handleSubmit}
             >
                 Create Project
-            </button>
+            </button> */}
         </form>
     );
 };
 
-export default SDLCForm;
+export default PhaseForm;

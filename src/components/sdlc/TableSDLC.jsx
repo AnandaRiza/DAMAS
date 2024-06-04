@@ -27,7 +27,8 @@ const TableSDLC = ({ headers, data, action, link }) => {
                 <thead>
                     <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
                         {headers.map((item, index) => (
-                            <th key={index} className="py-3 px-6 ">
+                            <th key={index} 
+                            className={`py-3 px-6 uppercase ${item === 'id' ? 'hidden' : ''}`}>
                                 {getDisplayName(item)}
                             </th>
                         ))}
@@ -49,7 +50,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
                             } hover:bg-gray-100 text-xs leading-5`}
                         >
                             {headers.map((header, headerIndex) => (
-                                <td key={headerIndex} className="py-3 px-6">
+                                <td key={headerIndex} className={`py-3 px-6 ${header === 'id' ? 'hidden' : ''}`}>
                                     {item[header]}
                                 </td>
                             ))}
