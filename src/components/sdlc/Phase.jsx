@@ -80,7 +80,7 @@ const PhaseForm = () => {
                     htmlFor="applicationdevelopment"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    Phase
+                    Application Development
                 </label>
                 <input
                     type="date"

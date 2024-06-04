@@ -12,9 +12,23 @@ const SDLCForm = () => {
         status: "",
     });
 
+    const [phaseData, setPhaseData] = useState({
+        kickoff: "",
+        userrequirement: "",
+        applicationdevelopment: "",
+        sit: "",
+        uat: "",
+        implementationprepare: "",
+        implementationmeeting: "",
+        implementation: "",
+        postimplementationreview: "",
+    });
+
+
     const handleSubmit = async () => {
         try {
             await axios.post("http://localhost:8081/api/projectdev", formData);
+            await axios.post("http://localhost:8081/api/projectphase", phaseData);
             alert("Create Project Success");
         } catch (error) {
             console.log(error);
@@ -66,8 +80,180 @@ const SDLCForm = () => {
                 />
             </div>
 
-        
-        
+            <div className="flex flex-col">
+                <label
+                    htmlFor="kickoff"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Kick Off
+                </label>
+                <input
+                    type="date"
+                    id="kickoff"
+                    name="kickoff"
+                    value={phaseData.kickoff}
+                    onChange={(e) =>
+                        setPhaseData({
+                            ...phaseData,
+                            kickoff: e.target.value,
+                        })
+                    }
+                    className="input input-bordered mt-1"
+                    
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="userrequirement"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    User Requierement
+                </label>
+                <input
+                    type="date"
+                    id="userrequirement"
+                    name="userrequirement"
+                    value={phaseData.userrequirement}
+                    onChange={(e) =>
+                        setPhaseData({
+                            ...phaseData,
+                            userrequirement: e.target.value,
+                        })
+                    }
+                    className="input input-bordered mt-1"
+                    
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="applicationdevelopment"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Application Development
+                </label>
+                <input
+                    type="date"
+                    id="applicationdevelopment"
+                    name="applicationdevelopment"
+                    value={phaseData.applicationdevelopment}
+                    onChange={(e) =>
+                        setPhaseData({
+                            ...phaseData,
+                            applicationdevelopment: e.target.value,
+                        })
+                    }
+                    className="input input-bordered mt-1"
+                    
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="sit"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    SIT
+                </label>
+                <input
+                    type="date"
+                    id="sit"
+                    name="sit"
+                    value={phaseData.sit}
+                    onChange={(e) =>
+                        setPhaseData({ ...phaseData, sit: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="uat"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    UAT
+                </label>
+                <input
+                    type="date"
+                    id="uat"
+                    name="uat"
+                    value={phaseData.uat}
+                    onChange={(e) =>
+                        setPhaseData({ ...phaseData, uat: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementationprepare"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Implementation Prepare
+                </label>
+                <input
+                    type="date"
+                    id="implementationprepare"
+                    name="implementationprepare"
+                    value={phaseData.implementationprepare}
+                    onChange={(e) =>
+                        setPhaseData({ ...phaseData, implementationprepare: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementationmeeting"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Implementation Meeting
+                </label>
+                <input
+                    type="date"
+                    id="implementationmeeting"
+                    name="implementationmeeting"
+                    value={phaseData.implementationmeeting}
+                    onChange={(e) =>
+                        setPhaseData({ ...phaseData, implementationmeeting: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementation"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Implementation
+                </label>
+                <input
+                    type="date"
+                    id="implementation"
+                    name="implementation"
+                    value={phaseData.implementation}
+                    onChange={(e) =>
+                        setPhaseData({ ...phaseData, implementation: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="postimplementationreview"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Post Implementation Review
+                </label>
+                <input
+                    type="date"
+                    id="postimplementationreview"
+                    name="postimplementationreview"
+                    value={phaseData.postimplementationreview}
+                    onChange={(e) =>
+                        setPhaseData({ ...phaseData, postimplementationreview: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
             <div className="flex flex-col">
                 <label
                     htmlFor="deadline"
