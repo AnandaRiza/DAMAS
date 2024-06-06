@@ -53,7 +53,7 @@ const Sidebar = () => {
   return (
 
     // Start Button Development
-    <div className="bg-[#00A6B4]/[0.5] text-black w-80 min-h-screen p-4">
+    <div className="bg-[#00A6B4]/[0.5] text-black w-80 min-h-screen p-4 sticky top-0">
       <span className="text-[#0066AE] font-semibold">Development</span>
       <div className="h-[0.5px] bg-black"></div>
       <div className="">

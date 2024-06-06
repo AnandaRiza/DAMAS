@@ -10,6 +10,7 @@ const SDLCForm = () => {
     const [formData, setFormData] = useState({
         projectname: "",
         pic: "",
+        departement:"",
         kickoff: "",
         userrequirement: "",
         applicationdevelopment: "",
@@ -43,8 +44,7 @@ const SDLCForm = () => {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post("http://localhost:8081/api/projectdev", formData);
-            setDataId(response.data.data.id)
+            await axios.post("http://localhost:8081/api/projectdev", formData);
             alert("Create Project Success");
         } catch (error) {
             console.log(error);
@@ -90,7 +90,7 @@ const SDLCForm = () => {
                         value={formData.nama}
                         onChange={(e) => {
                             const selectedPic = JSON.parse(e.target.value);
-                            setFormData({ ...formData, pic: selectedPic.nama });
+                            setFormData({ ...formData, pic: selectedPic.nama, departement:selectedPic.departemen });
                             setSelectedDept(selectedPic.departemen)
                         }
                         }
