@@ -1,18 +1,15 @@
 "use client";
 
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const SDLCForm = () => {
+    const [dataAllPic, setDataAllPic] = useState(null);
+    const [selectedDept, setSelectedDept] = useState("");
     // State to manage form data
     const [formData, setFormData] = useState({
         projectname: "",
         pic: "",
-        deadline: "",
-        status: "",
-    });
-
-    const [phaseData, setPhaseData] = useState({
         kickoff: "",
         userrequirement: "",
         applicationdevelopment: "",
@@ -22,13 +19,32 @@ const SDLCForm = () => {
         implementationmeeting: "",
         implementation: "",
         postimplementationreview: "",
+        status: "",
     });
 
+  
+
+    const getDataAllPic = async () => {
+        setDataAllPic(null);
+        try {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
+            );
+            setDataAllPic(response.data.data);
+            // console.log(response.data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getDataAllPic();
+    }, []);
 
     const handleSubmit = async () => {
         try {
-            await axios.post("http://localhost:8081/api/projectdev", formData);
-            await axios.post("http://localhost:8081/api/projectphase", phaseData);
+            const response = await axios.post("http://localhost:8081/api/projectdev", formData);
+            setDataId(response.data.data.id)
             alert("Create Project Success");
         } catch (error) {
             console.log(error);
@@ -38,13 +54,12 @@ const SDLCForm = () => {
 
     return (
         <form className="space-y-4">
-            {/* Input fields for memo attributes */}
             <div className="flex flex-col">
                 <label
                     htmlFor="namaproject"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    Nama Project
+                    Project Name
                 </label>
                 <input
                     type="text"
@@ -58,7 +73,6 @@ const SDLCForm = () => {
                         })
                     }
                     className="input input-bordered mt-1"
-                    
                 />
             </div>
             <div className="flex flex-col">
@@ -68,16 +82,46 @@ const SDLCForm = () => {
                 >
                     PIC
                 </label>
-                <input
-                    type="text"
-                    id="pic"
-                    name="pic"
-                    value={formData.pic}
-                    onChange={(e) =>
-                        setFormData({ ...formData, pic: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
+                {dataAllPic && (
+                    <select
+                        name="pic"
+                        id="pic"
+                        className="input input-bordered mt-1"
+                        value={formData.nama}
+                        onChange={(e) => {
+                            const selectedPic = JSON.parse(e.target.value);
+                            setFormData({ ...formData, pic: selectedPic.nama });
+                            setSelectedDept(selectedPic.departemen)
+                        }
+                        }
+                    >
+                        <option
+                            disabled
+                            selected
+                            className="text-sm text-gray-600 opacity-50"
+                        >
+                            Select PIC...
+                        </option>
+                        {dataAllPic.map((item, index) => (
+                            <option key={index} value={JSON.stringify(item)}>
+                                    {item.nama}
+                            </option>
+                        ))}
+                    </select>
+                )}
+            </div>
+
+            <div className="flex flex-col">
+                <label
+                    htmlFor="departemen"
+                    className="text-sm font-semibold"
+                >
+                    Departemen
+                </label>
+                <input 
+                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                type="text" 
+                value={selectedDept} disabled />
             </div>
 
             <div className="flex flex-col">
@@ -91,10 +135,10 @@ const SDLCForm = () => {
                     type="date"
                     id="kickoff"
                     name="kickoff"
-                    value={phaseData.kickoff}
+                    value={formData.kickoff}
                     onChange={(e) =>
-                        setPhaseData({
-                            ...phaseData,
+                        setFormData({
+                            ...formData,
                             kickoff: e.target.value,
                         })
                     }
@@ -113,10 +157,10 @@ const SDLCForm = () => {
                     type="date"
                     id="userrequirement"
                     name="userrequirement"
-                    value={phaseData.userrequirement}
+                    value={formData.userrequirement}
                     onChange={(e) =>
-                        setPhaseData({
-                            ...phaseData,
+                        setFormData({
+                            ...formData,
                             userrequirement: e.target.value,
                         })
                     }
@@ -135,10 +179,10 @@ const SDLCForm = () => {
                     type="date"
                     id="applicationdevelopment"
                     name="applicationdevelopment"
-                    value={phaseData.applicationdevelopment}
+                    value={formData.applicationdevelopment}
                     onChange={(e) =>
-                        setPhaseData({
-                            ...phaseData,
+                        setFormData({
+                            ...formData,
                             applicationdevelopment: e.target.value,
                         })
                     }
@@ -157,9 +201,9 @@ const SDLCForm = () => {
                     type="date"
                     id="sit"
                     name="sit"
-                    value={phaseData.sit}
+                    value={formData.sit}
                     onChange={(e) =>
-                        setPhaseData({ ...phaseData, sit: e.target.value })
+                        setFormData({ ...formData, sit: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
@@ -175,9 +219,9 @@ const SDLCForm = () => {
                     type="date"
                     id="uat"
                     name="uat"
-                    value={phaseData.uat}
+                    value={formData.uat}
                     onChange={(e) =>
-                        setPhaseData({ ...phaseData, uat: e.target.value })
+                        setFormData({ ...formData, uat: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
@@ -193,9 +237,9 @@ const SDLCForm = () => {
                     type="date"
                     id="implementationprepare"
                     name="implementationprepare"
-                    value={phaseData.implementationprepare}
+                    value={formData.implementationprepare}
                     onChange={(e) =>
-                        setPhaseData({ ...phaseData, implementationprepare: e.target.value })
+                        setFormData({ ...formData, implementationprepare: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
@@ -211,9 +255,9 @@ const SDLCForm = () => {
                     type="date"
                     id="implementationmeeting"
                     name="implementationmeeting"
-                    value={phaseData.implementationmeeting}
+                    value={formData.implementationmeeting}
                     onChange={(e) =>
-                        setPhaseData({ ...phaseData, implementationmeeting: e.target.value })
+                        setFormData({ ...formData, implementationmeeting: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
@@ -229,9 +273,9 @@ const SDLCForm = () => {
                     type="date"
                     id="implementation"
                     name="implementation"
-                    value={phaseData.implementation}
+                    value={formData.implementation}
                     onChange={(e) =>
-                        setPhaseData({ ...phaseData, implementation: e.target.value })
+                        setFormData({ ...formData, implementation: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
@@ -247,27 +291,9 @@ const SDLCForm = () => {
                     type="date"
                     id="postimplementationreview"
                     name="postimplementationreview"
-                    value={phaseData.postimplementationreview}
+                    value={formData.postimplementationreview}
                     onChange={(e) =>
-                        setPhaseData({ ...phaseData, postimplementationreview: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div>
-            <div className="flex flex-col">
-                <label
-                    htmlFor="deadline"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Deadline
-                </label>
-                <input
-                    type="date"
-                    id="deadline"
-                    name="deadline"
-                    value={formData.deadline}
-                    onChange={(e) =>
-                        setFormData({ ...formData, deadline: e.target.value })
+                        setFormData({ ...formData, postimplementationreview: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />

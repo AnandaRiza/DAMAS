@@ -14,7 +14,15 @@ const TableSDLC = ({ headers, data, action, link }) => {
         const displayNames = {
             projectname: 'Project Name',
             pic: "PIC",
-            deadline: "Deadline",
+            kickoff: "Kick Off",
+            userrequirement: "User Requirement",
+            applicationdevelopment: "Application Development",
+            sit: "SIT",
+            uat: "UAT",
+            implementationprepare: "Implementation Prepare",
+            implementationmeeting: "Implementation Meeting",
+            implementation: "Implementation",
+            postimplementationreview: "Post Implementation Review",
             status: "Status",
           
         };
