@@ -44,7 +44,7 @@ const Sidebar = () => {
     <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200">
       <input type="checkbox" className="peer" />
 
-      {/* start button Dev */}
+      {/* start button */}
         <div className="collapse-title text-xl font-medium font-bold flex items-center">
     <div className="mr-2">
     <FaProjectDiagram />
@@ -52,38 +52,28 @@ const Sidebar = () => {
       Development
     </div>
 
-    <div className="collapse-content">
-
-    <Link href="/main/development/myproject">
+    <div className="collapse-content"> 
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/development">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/development/createnewproject">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
     </div>
-    </Link>
   </div>
 
     </div>
 
     <hr className="my-4 border-gray-300" />
-    {/* End Button Dev */}
 
-
-    {/* start button PPO */}
     <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200">
       <input type="checkbox" className="peer" />
   <div className="collapse-title text-xl font-medium font-bold flex items-center">
@@ -102,33 +92,23 @@ const Sidebar = () => {
     </div>
     SDLC
     </div>
-
-        <div className="collapse-content">
-
-    <Link href="/main/ppo/myproject">
+        <div className="collapse-content"> 
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/ppo">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/ppo/createnewproject">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
     </div>
-    </Link>
   </div>
-
-
     </div>
     <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200">
       <input type="checkbox" className="peer" />
@@ -138,40 +118,31 @@ const Sidebar = () => {
     </div>
         SK/SE
     </div>
-
-    <div className="collapse-content">
-
-    <Link href="/main/ppo/myskse">
+    <div className="collapse-content"> 
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/ppo/allskse">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/ppo/createnewskse">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
     </div>
-    </Link>
   </div>
-
     </div>
   </div>
     </div>
-    {/* End Button PPO */}
+    {/* end button */}
 
     <hr className="my-4 border-gray-300" />
 
-    {/* start button Operation */}
+    {/* start button */}
     <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200">
       <input type="checkbox" className="peer" />
   <div className="collapse-title text-xl font-medium font-bold flex items-center">
@@ -189,31 +160,23 @@ const Sidebar = () => {
     </div>
     Network
     </div>
-    <div className="collapse-content">
-
-    <Link href="/main/operation/network/myprogress">
+    <div className="collapse-content"> 
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/operation/network/allprogress">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/operation/network/createnewprogress">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
     </div>
-    </Link>
   </div>
-
     </div>
     <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2">
       <input type="checkbox" className="peer" />
@@ -223,30 +186,22 @@ const Sidebar = () => {
     </div>
     Server
     </div>
-
-    <div className="collapse-content">
-
-    <Link href="/main/operation/server/myserver">
+    <div className="collapse-content"> 
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/operation/server/allserver">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/operation/server/createnewserver">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
     </div>
-    </Link>
   </div>
     </div>
 
@@ -259,39 +214,31 @@ const Sidebar = () => {
     </div>
     Monitoring
     </div>
-
-     <div className="collapse-content">
-
-     <Link href="/main/logistic/mymemo">
+    <div className="collapse-content"> 
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/logistic">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/logistic/createnewmemo">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
     </div>
-    </Link>
   </div>
     </div>
   </div>
     </div>
-    {/* end button Operation */}
+    {/* end button */}
 
     <hr className="my-4 border-gray-300" />
 
-    {/* start button Logistic */}
+    {/* start button */}
     <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200">
       <input type="checkbox" className="peer" />
   <div className="collapse-title text-xl font-medium font-bold flex items-center">
@@ -300,32 +247,25 @@ const Sidebar = () => {
     </div>
         Logistic
     </div>
-        <div className="collapse-content">
-
-        <Link href="/main/logistic/mymemo">
+    <div className="collapse-content"> 
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/logistic">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
     </div>
-    </Link>
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/logistic/createnewmemo"> 
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
     </div>
-    </Link>
   </div>
     </div>
-    {/* end button Logistic */}
+    {/* end button */}
     
 
 
@@ -339,3 +279,15 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+<div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200">
+      <input type="checkbox" className="peer" />
+  <div className="collapse-title text-xl font-medium font-bold">
+    Development
+  </div>
+  <div className="collapse-content"> 
+    <p>All Project</p>
+    <p>My Project</p>
+
+  </div>
+</div>
