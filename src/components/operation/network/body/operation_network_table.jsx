@@ -7,7 +7,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
     const router = useRouter();
 
     const handleEdit = (network_id) => {
-        router.push(`${link}/networkedit/${network_id}`);
+        router.push(`${link}/network/networkedit/${network_id}`);
     };
 
     const getDisplayName = (header) => {

@@ -191,7 +191,7 @@ const Sidebar = () => {
     </div>
     <div className="collapse-content">
 
-    <Link href="/main/operation/myprogress">
+    <Link href="/main/operation/network/myprogress">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
     </div>
@@ -199,7 +199,7 @@ const Sidebar = () => {
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/operation/allprogress">
+    <Link href="/main/operation/network/allprogress">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
     </div>
@@ -207,7 +207,7 @@ const Sidebar = () => {
 
     <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/operation/createnewprogress">
+    <Link href="/main/operation/network/createnewprogress">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
     </div>
@@ -223,22 +223,30 @@ const Sidebar = () => {
     </div>
     Server
     </div>
-    <div className="collapse-content"> 
+
+    <div className="collapse-content">
+
+    <Link href="/main/operation/server/myserver">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
     </div>
+    </Link>
 
     <hr className="my-4 border-gray-300" />
 
+    <Link href="/main/operation/server/allserver">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
     </div>
+    </Link>
 
     <hr className="my-4 border-gray-300" />
 
+    <Link href="/main/operation/server/createnewserver">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
     </div>
+    </Link>
   </div>
     </div>
 
