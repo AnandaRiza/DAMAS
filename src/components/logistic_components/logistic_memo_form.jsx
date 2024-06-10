@@ -3,16 +3,17 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
- 
+
 const MemoForm = () => {
-  // State to manage form data
   const [formData, setFormData] = useState({
+    memo_num: "",
     memo_perihal: "",
     memo_pic: "",
     memo_deadline: "",
     memo_status: "",
   });
-  
+
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSubmit = async () => {
@@ -27,20 +28,39 @@ const MemoForm = () => {
       console.log(error);
       alert("Create Memo Failed!");
     }
-    
   };
- 
+
+  const validateDate = (date) => {
+    const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+    return regex.test(date);
+  };
+
+  const handleDateChange = (e) => {
+    const { value } = e.target;
+    const regex = /^[0-9\/]*$/; // Allow only numbers and "/"
+    if (regex.test(value)) {
+      setFormData({
+        ...formData,
+        memo_deadline: value,
+      });
+      if (!validateDate(value)) {
+        setError("Date must be in the format dd/mm/yyyy");
+      } else {
+        setError("");
+      }
+    } else {
+      setError("Only numbers and '/' are allowed");
+    }
+  };
+
   return (
     <form className="space-y-4">
- 
- 
- 
-<div className="flex flex-col">
+      <div className="flex flex-col">
         <label
-          htmlFor="memo_perihal"
+          htmlFor="memo_num"
           className="text-sm font-semibold text-gray-600"
         >
-          Memo Number
+          Nomor Memo
         </label>
         <input
           type="text"
@@ -56,11 +76,7 @@ const MemoForm = () => {
           className="input input-bordered mt-1"
         />
       </div>
- 
- 
- 
- 
-      {/* Input fields for memo attributes */}
+
       <div className="flex flex-col">
         <label
           htmlFor="memo_perihal"
@@ -82,9 +98,7 @@ const MemoForm = () => {
           className="input input-bordered mt-1"
         />
       </div>
-     
- 
- 
+
       <div className="flex flex-col">
         <label htmlFor="memo_pic" className="text-sm font-semibold text-gray-600">
           PIC
@@ -98,8 +112,7 @@ const MemoForm = () => {
           className="input input-bordered mt-1"
         />
       </div>
- 
- 
+
       <div className="flex flex-col">
         <label
           htmlFor="memo_deadline"
@@ -108,20 +121,19 @@ const MemoForm = () => {
           Deadline
         </label>
         <input
-          type="date"
+          type="text"
           id="memo_deadline"
           name="memo_deadline"
           value={formData.memo_deadline}
-          onChange={(e) =>
-            setFormData({ ...formData, memo_deadline: e.target.value })
-          }
+          onChange={handleDateChange} // Use the validation handler
           className="input input-bordered mt-1"
+          placeholder="dd/mm/yyyy"
         />
+        {error && <span className="text-red-600 text-xs mt-1">{error}</span>}
       </div>
- 
- 
-     {/* Status dropdown */}
-     <div className="flex flex-col">
+
+      {/* Status dropdown */}
+      <div className="flex flex-col">
         <label htmlFor="memo_status" className="text-sm font-semibold text-gray-600">
           Status
         </label>
@@ -143,8 +155,6 @@ const MemoForm = () => {
         </select>
       </div>
 
- 
- 
       {/* Submit button */}
       <button
         type="button"
@@ -156,5 +166,6 @@ const MemoForm = () => {
     </form>
   );
 };
- 
+
 export default MemoForm;
+
