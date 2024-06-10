@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/navbar";
 import Sidebar from "@/components/Sidebar";
 import { IsLogin } from "@/validation/IsLogin";
+import Link from "next/link";
 import React from "react";
 
 const layout = ({ children }) => {
