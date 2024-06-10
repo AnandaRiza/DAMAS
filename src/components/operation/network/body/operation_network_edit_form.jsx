@@ -43,13 +43,15 @@ const page = () => {
     };
 
     return (
-        <div className="space-y-4">
+<div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl ">
+    <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
+        <div className="space-y">
             {dataAllNetwork ? (
                 <form className="space-y-4">
                     <div className="flex flex-col">
                         <label
                             htmlFor="perihal"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Network Name
                         </label>
@@ -68,7 +70,7 @@ const page = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="pic"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             PIC
                         </label>
@@ -87,7 +89,7 @@ const page = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="deadline"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Deadline
                         </label>
@@ -166,7 +168,7 @@ const page = () => {
                         </Link>
                         <button
                         type="button"
-                            className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center"
+                            className="py-2 px-4 rounded-xl bg-green-500 flex gap-1 items-center"
                             onClick={handleEditedData}
                         >
                             <FiSave />
@@ -177,6 +179,8 @@ const page = () => {
             ) : (
                 <PleaseWait />
             )}
+        </div>
+        </div>
         </div>
     );
 };
