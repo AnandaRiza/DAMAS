@@ -116,7 +116,7 @@ const SDLCForm = () => {
                     htmlFor="departemen"
                     className="text-sm font-semibold"
                 >
-                    Departemen
+                    Departement
                 </label>
                 <input 
                 className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"

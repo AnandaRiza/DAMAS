@@ -38,6 +38,8 @@ const page = () => {
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allproject/getproject?input=${searchInput}`
             );
             setSearchResult(response.data.data);
+            setCurrentPage(1);
+            setStartIndex(0);
         }catch (error) {
             console.log(error);
         }
@@ -98,7 +100,7 @@ const page = () => {
 
 
 
-            {dataAllProject && !searchResult && (
+            {dataAllProject && (
                 <div className="w-full flex justify-end items-center gap-3">
                     <button
                     type="button"
