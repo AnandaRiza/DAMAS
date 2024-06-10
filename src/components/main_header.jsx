@@ -7,7 +7,7 @@ const page = () => {
   
   return (
     <>
-      <div className="flex-grow justify-center items-center bg-white rounded bg-[#FFFFFF] rounded-xl">
+      <div className="flex-grow justify-center items-center bg-white rounded bg-[#FFFFFF] rounded-xl shadow-lg">
         <div>
           <div className="text-[#0066AE] font-bold ml-12 mt-3 py-2">
             DAMAS
