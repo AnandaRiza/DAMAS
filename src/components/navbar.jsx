@@ -41,11 +41,13 @@ const Header = ({ title }) => {
       <li>
         <details>
           <summary className="font-bold text-[#0066AE]">
-            Welcome Ridhwan Rifky
+            Welcome User
           </summary>
-          <ul className="p-2 bg-base-100 rounded-t-none text-blac">
+          <button className="p-2 bg-base-100 rounded-t-none text-black"
+           onClick={handleLogout}
+          >
             <li><a>Logout</a></li>
-          </ul>
+          </button>
         </details>
       </li>
     </ul>

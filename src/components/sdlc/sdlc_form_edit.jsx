@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
-const SDLC_form_edit = () => {
+const Page = () => {
     const params = useParams();
     const [selectedDept, setSelectedDept] = useState("");
     const [dataAllPic, setDataAllPic] = useState(null);
@@ -418,4 +418,4 @@ const SDLC_form_edit = () => {
     );
 };
 
-export default page;
+export default Page;

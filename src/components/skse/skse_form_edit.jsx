@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
-const SKSEFormEdit = () => {
+const Page = () => {
     const params = useParams();
     const [selectedDept, setSelectedDept] = useState("");
     const [dataAllPic, setDataAllPic] = useState(null);
@@ -260,4 +260,4 @@ const SKSEFormEdit = () => {
     );
 };
 
-export default SKSEFormEdit;
+export default Page;
