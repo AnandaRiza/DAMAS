@@ -1,3 +1,4 @@
+
 "use client";
 import PleaseWait from "@/components/PleaseWait";
 import axios from "axios";
@@ -7,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
-const page = () => {
+const SDLC_form_edit = () => {
     const params = useParams();
     const [selectedDept, setSelectedDept] = useState("");
     const [dataAllPic, setDataAllPic] = useState(null);

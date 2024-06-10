@@ -1,4 +1,4 @@
-import TableNetwork from '@/components/operation/operation_network_table';
+import TableNetwork from '@/components/operation/network/body/operation_network_table';
 import React from 'react'
 import { MdArrowDropDown } from "react-icons/md";
 

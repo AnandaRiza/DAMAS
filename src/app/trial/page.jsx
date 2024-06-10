@@ -4,7 +4,6 @@ import Headertesting from '@/components/Headertesting';
 import Testingform from '@/components/testingform';
 import Listtesting from '@/components/Listtesting';
 import NetworkTable from '@/components/operation/network/body/operation_network_table';
-import Header from '@/components/operation/network/header/header_all_project';
 
 import NotFound from "@/components/NotFound";
 import FormSearch from "@/components/FormSearch";
@@ -58,7 +57,7 @@ const page = () => {
   return (
       
             <>
-            <Header />
+            <Headertesting />
             {/* <Testingform /> */}
             
             <div style={{ position: 'absolute', top: 30, right: 45 }}>
@@ -69,7 +68,7 @@ const page = () => {
                 />
         </div>
             <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl px-3">
-            <div className=" bw-full px-5 py-2 mt-4">
+            <div className=" bw-full px-5 py-5 mt-4">
                 <div className="w-full flex justify-between items-center">
                 </div>                
             </div>
