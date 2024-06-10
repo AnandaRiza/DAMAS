@@ -72,7 +72,7 @@ const Sidebar = () => {
 
     <Link href="/main/development/createnewproject">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New Project</button>
     </div>
     </Link>
   </div>
@@ -123,7 +123,7 @@ const Sidebar = () => {
 
     <Link href="/main/ppo/createnewproject">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New Project</button>
     </div>
     </Link>
   </div>
@@ -143,7 +143,7 @@ const Sidebar = () => {
 
     <Link href="/main/ppo/myskse">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My SK/SE</button>
     </div>
     </Link>
 
@@ -151,7 +151,7 @@ const Sidebar = () => {
 
     <Link href="/main/ppo/allskse">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All SK/SE</button>
     </div>
     </Link>
 
@@ -159,7 +159,7 @@ const Sidebar = () => {
 
     <Link href="/main/ppo/createnewskse">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New SK/SE</button>
     </div>
     </Link>
   </div>
@@ -193,7 +193,7 @@ const Sidebar = () => {
 
     <Link href="/main/operation/network/myprogress">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Network Project</button>
     </div>
     </Link>
 
@@ -201,7 +201,7 @@ const Sidebar = () => {
 
     <Link href="/main/operation/network/allprogress">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Network Project</button>
     </div>
     </Link>
 
@@ -209,7 +209,7 @@ const Sidebar = () => {
 
     <Link href="/main/operation/network/createnewprogress">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New Network Project</button>
     </div>
     </Link>
   </div>
@@ -228,7 +228,7 @@ const Sidebar = () => {
 
     <Link href="/main/operation/server/myserver">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Server Project</button>
     </div>
     </Link>
 
@@ -236,7 +236,7 @@ const Sidebar = () => {
 
     <Link href="/main/operation/server/allserver">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Server Project</button>
     </div>
     </Link>
 
@@ -244,7 +244,7 @@ const Sidebar = () => {
 
     <Link href="/main/operation/server/createnewserver">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New Server Project</button>
     </div>
     </Link>
   </div>
@@ -264,7 +264,7 @@ const Sidebar = () => {
 
      <Link href="/main/logistic/mymemo">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Grafana</button>
     </div>
     </Link>
 
@@ -272,17 +272,17 @@ const Sidebar = () => {
 
     <Link href="/main/logistic">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">SNMP</button>
     </div>
     </Link>
 
-    <hr className="my-4 border-gray-300" />
+    {/* <hr className="my-4 border-gray-300" /> */}
 
-    <Link href="/main/logistic/createnewmemo">
+    {/* <Link href="/main/logistic/createnewmemo">
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New Memo</button>
     </div>
-    </Link>
+    </Link> */}
   </div>
     </div>
   </div>
@@ -304,7 +304,7 @@ const Sidebar = () => {
 
         <Link href="/main/logistic/mymemo">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Project</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Memo</button>
     </div>
     </Link>
 
@@ -312,7 +312,7 @@ const Sidebar = () => {
 
     <Link href="/main/logistic">
     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Project</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">All Memo</button>
     </div>
     </Link>
 
@@ -320,7 +320,7 @@ const Sidebar = () => {
 
     <Link href="/main/logistic/createnewmemo"> 
     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New</button>
+    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New Memo</button>
     </div>
     </Link>
   </div>
