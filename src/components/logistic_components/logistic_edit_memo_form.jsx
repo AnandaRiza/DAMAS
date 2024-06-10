@@ -3,7 +3,7 @@ import axios from "axios";
 import PleaseWait from "@/components/PleaseWait";
 import Link from "next/link";
 import { FiSave } from "react-icons/fi";
-import { MdOutlineCancel } from "react-icons/md";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { FaPenNib } from "react-icons/fa";
@@ -218,8 +218,8 @@ const EditMemoPage = () => {
                 <div className="flex gap-2 items-center text-white ml-3 mt-3">
                     <Link href="/main/logistic">
                         <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
-                            <MdOutlineCancel />
-                            <span>Cancel</span>
+                    <IoMdArrowRoundBack />
+                            <span>Back</span>
                         </button>
                     </Link>
                     <button
