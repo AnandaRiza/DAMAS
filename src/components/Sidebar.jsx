@@ -10,6 +10,11 @@ import { FaServer } from "react-icons/fa";
 import { MdMonitor } from "react-icons/md";
 import { GoWorkflow } from "react-icons/go";
 import { AiOutlineMail } from "react-icons/ai";
+import { FaDatabase } from "react-icons/fa";
+import { BiSupport } from "react-icons/bi";
+import { GrUserManager } from "react-icons/gr";
+import { MdOutlineSecurity } from "react-icons/md";
+import { MdApproval } from "react-icons/md";
 
 const Sidebar = () => {
     const [isSdlcShow, setIsSdlcShow] = useState(false);
@@ -26,7 +31,7 @@ const Sidebar = () => {
     };
 
     return (
-        <div className="bg-[#00A6B4]/[0.5] text-w w-80 min-h-screen p-4 ml-4 mt-3 rounded-xl ">
+        <div className="bg-[#00A6B4]/[0.5] text-w w-full h-full p-4 ml-4 mt-3 rounded-xl shadow-r-md">
             <ul className="collapse collapse-arrow ">
                 <li>
                     <a>
@@ -228,7 +233,7 @@ const Sidebar = () => {
 
                             <Link href="/main/operation/network/createnewprogress">
                             <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New Network Project</button>
+                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New  Project</button>
                             </div>
                             </Link>
                         </div>
@@ -269,7 +274,175 @@ const Sidebar = () => {
                                         <Link href="/main/operation/server/createnewserver">
                                         <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                                             <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                                Create New Server Project
+                                                Create New  Project
+                                            </button>
+                                        </div>
+                                         </Link>
+                                    </div>
+                                </div>
+
+                                <div
+                                    tabIndex={0}
+                                    className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
+                                >
+                                    <input type="checkbox" className="peer" />
+                                    <div className="collapse-title text-xl font-medium font-bold flex items-center ">
+                                        <div className="mr-2">
+                                        <FaDatabase />
+                                        </div>
+                                        Data Center
+                                    </div>
+                                    <div className="collapse-content">
+                                    <Link href="/main/operation/datacenter/myprogress">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                My Project
+                                            </button>
+                                        </div>
+                                        </Link>
+
+                                        <hr className="my-4 border-gray-300" />
+                                        
+                                        <Link href="/main/operation/datacenter/allprogress">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                All Project
+                                            </button>
+                                        </div>
+                                        </Link>
+
+                                        <hr className="my-4 border-gray-300" />
+
+                                        <Link href="/main/operation/datacenter/createnewprogress">
+                                        <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                Create New  Project
+                                            </button>
+                                        </div>
+                                         </Link>
+                                    </div>
+                                </div>
+
+                                <div
+                                    tabIndex={0}
+                                    className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
+                                >
+                                    <input type="checkbox" className="peer" />
+                                    <div className="collapse-title text-xl font-medium font-bold flex items-center ">
+                                        <div className="mr-2">
+                                        <BiSupport />
+                                        </div>
+                                        IT Support
+                                    </div>
+                                    <div className="collapse-content">
+                                    <Link href="/main/operation/server/myserver">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                My Project
+                                            </button>
+                                        </div>
+                                        </Link>
+
+                                        <hr className="my-4 border-gray-300" />
+                                        
+                                        <Link href="/main/operation/server/allserver">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                All Project
+                                            </button>
+                                        </div>
+                                        </Link>
+
+                                        <hr className="my-4 border-gray-300" />
+
+                                        <Link href="/main/operation/server/createnewserver">
+                                        <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                Create New  Project
+                                            </button>
+                                        </div>
+                                         </Link>
+                                    </div>
+                                </div>
+
+                                <div
+                                    tabIndex={0}
+                                    className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
+                                >
+                                    <input type="checkbox" className="peer" />
+                                    <div className="collapse-title text-xl font-medium font-bold flex items-center ">
+                                        <div className="mr-2">
+                                        <GrUserManager />
+                                        </div>
+                                        IT-MO
+                                    </div>
+                                    <div className="collapse-content">
+                                    <Link href="/main/operation/server/myserver">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                My Project
+                                            </button>
+                                        </div>
+                                        </Link>
+
+                                        <hr className="my-4 border-gray-300" />
+                                        
+                                        <Link href="/main/operation/server/allserver">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                All Project
+                                            </button>
+                                        </div>
+                                        </Link>
+
+                                        <hr className="my-4 border-gray-300" />
+
+                                        <Link href="/main/operation/server/createnewserver">
+                                        <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                Create New  Project
+                                            </button>
+                                        </div>
+                                         </Link>
+                                    </div>
+                                </div>
+
+                                <div
+                                    tabIndex={0}
+                                    className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
+                                >
+                                    <input type="checkbox" className="peer" />
+                                    <div className="collapse-title text-xl font-medium font-bold flex items-center ">
+                                        <div className="mr-2">
+                                        <MdOutlineSecurity />
+                                        </div>
+                                        IT Security
+                                    </div>
+                                    <div className="collapse-content">
+                                    <Link href="/main/operation/server/myserver">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                My Project
+                                            </button>
+                                        </div>
+                                        </Link>
+
+                                        <hr className="my-4 border-gray-300" />
+                                        
+                                        <Link href="/main/operation/server/allserver">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                All Project
+                                            </button>
+                                        </div>
+                                        </Link>
+
+                                        <hr className="my-4 border-gray-300" />
+
+                                        <Link href="/main/operation/server/createnewserver">
+                                        <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                Create New  Project
                                             </button>
                                         </div>
                                          </Link>
@@ -289,7 +462,7 @@ const Sidebar = () => {
                                     </div>
 
                                     <div className="collapse-content">
-                                        <Link href="/main/logistic/mymemo">
+                                        <Link href="">
                                             <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                                 <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
                                                     Grafana
@@ -299,7 +472,7 @@ const Sidebar = () => {
 
                                         <hr className="my-4 border-gray-300" />
 
-                                        <Link href="/main/logistic">
+                                        <Link href="">
                                             <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                                 <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
                                                     SNMP
@@ -377,10 +550,10 @@ const Sidebar = () => {
                         >
                             <input type="checkbox" className="peer" />
 
-                            {/* start button Dev */}
+                            {/* start button Approval */}
                             <div className="collapse-title text-xl font-medium font-bold flex items-center">
                                 <div className="mr-2">
-                                    <FaProjectDiagram />
+                                <MdApproval />
                                 </div>
                                 Approvement
                             </div>

@@ -14,7 +14,7 @@ const page = () => {
   
   return (
     <>
-      <div className="w-full justify-center items-center bg-white rounded-xl bg-[#FFFFFF] shadow-md">
+      <div className="flex-grow justify-center items-center bg-white rounded-xl bg-[#FFFFFF] shadow-md">
         <div>
         <div className="text-[#0066AE] font-semibold ml-12 mt-3 py-2">
             My Project
@@ -29,7 +29,12 @@ const page = () => {
                   <li>
                     <a>Operation</a>
                   </li>
-                  <li>My Project</li>
+                  <li>
+                    <a>Data Center</a>
+                  </li>
+                  <li>
+                    <a>My Project</a>
+                  </li>
                 </ul>
               </div>
             </span>
