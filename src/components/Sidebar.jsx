@@ -226,39 +226,14 @@ const Sidebar = () => {
 
                                         <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/operation/network/createnewprogress">
-    <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New Network Project</button>
-    </div>
-    </Link>
-  </div>
+                            <Link href="/main/operation/network/createnewprogress">
+                            <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">Create New Network Project</button>
+                            </div>
+                            </Link>
+                        </div>
 
-    </div>
-    <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2">
-      <input type="checkbox" className="peer" />
-  <div className="collapse-title text-xl font-medium font-bold flex items-center ">
-    <div className="mr-2">
-    <FaServer />
-    </div>
-    Server
-    </div>
-
-    <div className="collapse-content">
-
-    <Link href="/main/operation/server/myserver">
-    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">My Server Project</button>
-    </div>
-    </Link>
-                                        <Link href="/main/operation/createnewprogress">
-                                            <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                                    Create New
-                                                </button>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                </div>
+                            </div>
                                 <div
                                     tabIndex={0}
                                     className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
@@ -271,29 +246,33 @@ const Sidebar = () => {
                                         Server
                                     </div>
                                     <div className="collapse-content">
+                                    <Link href="/main/operation/server/myserver">
                                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                             <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
                                                 My Project
                                             </button>
                                         </div>
+                                        </Link>
 
                                         <hr className="my-4 border-gray-300" />
-
+                                        
+                                        <Link href="/main/operation/server/allserver">
                                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                             <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
                                                 All Project
                                             </button>
                                         </div>
+                                        </Link>
 
                                         <hr className="my-4 border-gray-300" />
 
-    <Link href="/main/operation/server/createnewserver">
+                                        <Link href="/main/operation/server/createnewserver">
                                         <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                                             <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
                                                 Create New Server Project
                                             </button>
                                         </div>
-    </Link>
+                                         </Link>
                                     </div>
                                 </div>
 
