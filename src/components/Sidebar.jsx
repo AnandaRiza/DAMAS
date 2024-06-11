@@ -419,7 +419,7 @@ const Sidebar = () => {
                                         IT Security
                                     </div>
                                     <div className="collapse-content">
-                                    <Link href="/main/operation/server/myserver">
+                                    <Link href="/main/operation/itsecurity/myprogress">
                                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                             <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
                                                 My Project
@@ -429,7 +429,7 @@ const Sidebar = () => {
 
                                         <hr className="my-4 border-gray-300" />
                                         
-                                        <Link href="/main/operation/server/allserver">
+                                        <Link href="/main/operation/itsecurity/allprogress">
                                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                             <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
                                                 All Project
@@ -439,7 +439,7 @@ const Sidebar = () => {
 
                                         <hr className="my-4 border-gray-300" />
 
-                                        <Link href="/main/operation/server/createnewserver">
+                                        <Link href="/main/operation/itsecurity/createnewprogress">
                                         <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                                             <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
                                                 Create New  Project
