@@ -3,16 +3,27 @@
 import PleaseWait from "@/components/PleaseWait";
 import axios from "axios";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
 const Page = () => {
+    const userid = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("DAMAS-USERID="))
+        ?.split("=")[1];
+
     const params = useParams();
+    const router = useRouter();
     const [selectedDept, setSelectedDept] = useState("");
     const [dataAllPic, setDataAllPic] = useState(null);
     const [dataAllProject, setDataAllProject] = useState({
+        submitter: "",
+        authorizer: "",
+        submitAt: "",
+        deadlineApprovement: "",
+        statusApprovement: "",
         projectname: "",
         pic: "",
         departement: "",
