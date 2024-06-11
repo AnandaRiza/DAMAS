@@ -1,24 +1,43 @@
 "use client";
 
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const SKSEForm = () => {
     // State to manage form data
+    const [dataAllPic, setDataAllPic] = useState(null);
+    const [selectedDept, setSelectedDept] = useState("");
     const [formData, setFormData] = useState({
         nosurat: "",
         perihal: "",
         pic: "",
+        departement: "",
         deadline: "",
         status: "",
     });
+
+    const getDataAllPic = async () => {
+        setDataAllPic(null);
+        try {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
+            );
+            setDataAllPic(response.data.data);
+            // console.log(response.data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getDataAllPic();
+    }, []);
+
 
     const handleSubmit = async () => {
         try {
             await axios.post(`${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/newskse`, formData);
             alert("Create SK/SE Success");
-            
-
         } catch (error) {
             console.log(error);
             alert("Create SK/SE Failed!");
@@ -77,17 +96,48 @@ const SKSEForm = () => {
                 >
                     PIC
                 </label>
-                <input
-                    type="text"
-                    id="pic"
-                    name="pic"
-                    value={formData.pic}
-                    onChange={(e) =>
-                        setFormData({ ...formData, pic: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
+                {dataAllPic && (
+                    <select
+                        name="pic"
+                        id="pic"
+                        className="input input-bordered mt-1"
+                        value={formData.nama}
+                        onChange={(e) => {
+                            const selectedPic = JSON.parse(e.target.value);
+                            setFormData({ ...formData, pic: selectedPic.nama, departement:selectedPic.departemen });
+                            setSelectedDept(selectedPic.departemen)
+                        }
+                        }
+                    >
+                        <option
+                            disabled
+                            selected
+                            className="text-sm text-gray-600 opacity-50"
+                        >
+                            Select PIC...
+                        </option>
+                        {dataAllPic.map((item, index) => (
+                            <option key={index} value={JSON.stringify(item)}>
+                                    {item.nama}
+                            </option>
+                        ))}
+                    </select>
+                )}
             </div>
+
+            <div className="flex flex-col">
+                <label
+                    htmlFor="departemen"
+                    className="text-sm font-semibold"
+                >
+                    Departement
+                </label>
+                <input 
+                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                type="text" 
+                value={selectedDept} disabled />
+            </div>
+
             <div className="flex flex-col">
                 <label
                     htmlFor="deadline"
