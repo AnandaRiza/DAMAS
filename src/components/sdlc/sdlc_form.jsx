@@ -11,16 +11,35 @@ const SDLCForm = () => {
         projectname: "",
         pic: "",
         departement:"",
-        kickoff: "",
-        userrequirement: "",
-        applicationdevelopment: "",
-        sit: "",
-        uat: "",
-        implementationprepare: "",
-        implementationmeeting: "",
-        implementation: "",
-        postimplementationreview: "",
+        kickoffstart: "",
+        kickoffdeadline: "",
+        kickoffdone: "",
+        userrequirementstart: "",
+        userrequirementdeadline: "",
+        userrequirementdone: "",
+        applicationdevelopmentstart: "",
+        applicationdevelopmentdeadline: "",
+        applicationdevelopmentdone: "",
+        sitstart: "",
+        sitdeadline: "",
+        sitdone: "",
+        uatstart: "",
+        uatdeadline: "",
+        uatdone: "",
+        implementationpreparestart: "",
+        implementationpreparedeadline: "",
+        implementationpreparedone: "",
+        implementationmeetingstart: "",
+        implementationmeetingdeadline: "",
+        implementationmeetingdone: "",
+        implementationstart: "",
+        implementationdeadline: "",
+        implementationdone: "",
+        postimplementationreviewstart: "",
+        postimplementationreviewdeadline: "",
+        postimplementationreviewdone: "",
         status: "",
+        deadlineproject: "",
     });
 
   
@@ -126,20 +145,86 @@ const SDLCForm = () => {
 
             <div className="flex flex-col">
                 <label
+                    htmlFor="kickoffstart"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Kick Off Start
+                </label>
+                <input
+                    type="date"
+                    id="kickoffstart"
+                    name="kickoffstart"
+                    value={formData.kickoffstart}
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            kickoffstart: e.target.value,
+                        })
+                    }
+                    className="input input-bordered mt-1"
+                    
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="kickoffdeadline"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Kick Off Deadline
+                </label>
+                <input
+                    type="date"
+                    id="kickoffdeadline"
+                    name="kickoffdeadline"
+                    value={formData.kickoffdeadline}
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            kickoffdeadline: e.target.value,
+                        })
+                    }
+                    className="input input-bordered mt-1"
+                    
+                />
+            </div>
+            {/* <div className="flex flex-col">
+                <label
                     htmlFor="kickoff"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    Kick Off
+                    Kick Off Acctual Done
                 </label>
                 <input
                     type="date"
                     id="kickoff"
                     name="kickoff"
-                    value={formData.kickoff}
+                    value={formData.kickoffdone}
                     onChange={(e) =>
                         setFormData({
                             ...formData,
-                            kickoff: e.target.value,
+                            kickoffdone: e.target.value,
+                        })
+                    }
+                    className="input input-bordered mt-1"
+                    
+                />
+            </div> */}
+            <div className="flex flex-col">
+                <label
+                    htmlFor="userrequirementstart"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    User Requierement Start
+                </label>
+                <input
+                    type="date"
+                    id="userrequirementstart"
+                    name="userrequirementstart"
+                    value={formData.userrequirementstart}
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            userrequirementstart: e.target.value,
                         })
                     }
                     className="input input-bordered mt-1"
@@ -148,20 +233,65 @@ const SDLCForm = () => {
             </div>
             <div className="flex flex-col">
                 <label
+                    htmlFor="userrequirementdeadline"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    User Requierement Deadline
+                </label>
+                <input
+                    type="date"
+                    id="userrequirementdeadline"
+                    name="userrequirementdeadline"
+                    value={formData.userrequirementdeadline}
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            userrequirementdeadline: e.target.value,
+                        })
+                    }
+                    className="input input-bordered mt-1"
+                    
+                />
+            </div>
+            {/* <div className="flex flex-col">
+                <label
                     htmlFor="userrequirement"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    User Requierement
+                    User Requierement Acctual Done
                 </label>
                 <input
                     type="date"
                     id="userrequirement"
                     name="userrequirement"
-                    value={formData.userrequirement}
+                    value={formData.userrequirementdone}
                     onChange={(e) =>
                         setFormData({
                             ...formData,
-                            userrequirement: e.target.value,
+                            userrequirementdone: e.target.value,
+                        })
+                    }
+                    className="input input-bordered mt-1"
+                    
+                />
+            </div> */}
+            
+            <div className="flex flex-col">
+                <label
+                    htmlFor="applicationdevelopmentstart"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Application Development Start
+                </label>
+                <input
+                    type="date"
+                    id="applicationdevelopmentstart"
+                    name="applicationdevelopmentstart"
+                    value={formData.applicationdevelopmentstart}
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            applicationdevelopmentstart: e.target.value,
                         })
                     }
                     className="input input-bordered mt-1"
@@ -170,134 +300,372 @@ const SDLCForm = () => {
             </div>
             <div className="flex flex-col">
                 <label
+                    htmlFor="applicationdevelopmentdeadline"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Application Development Deadline
+                </label>
+                <input
+                    type="date"
+                    id="applicationdevelopmentdeadline"
+                    name="applicationdevelopmentdeadline"
+                    value={formData.applicationdevelopmentdeadline}
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            applicationdevelopmentdeadline: e.target.value,
+                        })
+                    }
+                    className="input input-bordered mt-1"
+                    
+                />
+            </div>
+            {/* <div className="flex flex-col">
+                <label
                     htmlFor="applicationdevelopment"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    Application Development
+                    Application Development Acctual Done
                 </label>
                 <input
                     type="date"
                     id="applicationdevelopment"
                     name="applicationdevelopment"
-                    value={formData.applicationdevelopment}
+                    value={formData.applicationdevelopmentdone}
                     onChange={(e) =>
                         setFormData({
                             ...formData,
-                            applicationdevelopment: e.target.value,
+                            applicationdevelopmentdone: e.target.value,
                         })
                     }
                     className="input input-bordered mt-1"
                     
                 />
+            </div> */}
+            <div className="flex flex-col">
+                <label
+                    htmlFor="sitstart"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    SIT Start
+                </label>
+                <input
+                    type="date"
+                    id="sitstart"
+                    name="sitstart"
+                    value={formData.sitstart}
+                    onChange={(e) =>
+                        setFormData({ ...formData, sitstart: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
             </div>
             <div className="flex flex-col">
+                <label
+                    htmlFor="sitdeadline"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    SIT Deadline
+                </label>
+                <input
+                    type="date"
+                    id="sitdeadline"
+                    name="sitdeadline"
+                    value={formData.sitdeadline}
+                    onChange={(e) =>
+                        setFormData({ ...formData, sitdeadline: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            {/* <div className="flex flex-col">
                 <label
                     htmlFor="sit"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    SIT
+                    SIT Acctual Done
                 </label>
                 <input
                     type="date"
                     id="sit"
                     name="sit"
-                    value={formData.sit}
+                    value={formData.sitdone}
                     onChange={(e) =>
-                        setFormData({ ...formData, sit: e.target.value })
+                        setFormData({ ...formData, sitdone: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div> */}
+            <div className="flex flex-col">
+                <label
+                    htmlFor="uatstart"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    UAT Start
+                </label>
+                <input
+                    type="date"
+                    id="uatstart"
+                    name="uatstart"
+                    value={formData.uatstart}
+                    onChange={(e) =>
+                        setFormData({ ...formData, uatstart: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
             </div>
             <div className="flex flex-col">
                 <label
+                    htmlFor="uatdeadline"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    UAT Deadline
+                </label>
+                <input
+                    type="date"
+                    id="uatdeadline"
+                    name="uatdeadline"
+                    value={formData.uatdeadline}
+                    onChange={(e) =>
+                        setFormData({ ...formData, uatdeadline: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            {/* <div className="flex flex-col">
+                <label
                     htmlFor="uat"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    UAT
+                    UAT Acctual Done
                 </label>
                 <input
                     type="date"
                     id="uat"
                     name="uat"
-                    value={formData.uat}
+                    value={formData.uatdone}
                     onChange={(e) =>
-                        setFormData({ ...formData, uat: e.target.value })
+                        setFormData({ ...formData, uatdone: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div> */}
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementationpreparestart"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Implementation Prepare Start
+                </label>
+                <input
+                    type="date"
+                    id="implementationpreparestart"
+                    name="implementationpreparestart"
+                    value={formData.implementationpreparestart}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementationpreparestart: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
             </div>
             <div className="flex flex-col">
                 <label
+                    htmlFor="implementationpreparedeadline"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Implementation Prepare Deadline
+                </label>
+                <input
+                    type="date"
+                    id="implementationpreparedeadline"
+                    name="implementationpreparedeadline"
+                    value={formData.implementationpreparedeadline}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementationpreparedeadline: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            {/* <div className="flex flex-col">
+                <label
                     htmlFor="implementationprepare"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    Implementation Prepare
+                    Implementation Prepare Acctual Done
                 </label>
                 <input
                     type="date"
                     id="implementationprepare"
                     name="implementationprepare"
-                    value={formData.implementationprepare}
+                    value={formData.implementationpreparedone}
                     onChange={(e) =>
-                        setFormData({ ...formData, implementationprepare: e.target.value })
+                        setFormData({ ...formData, implementationpreparedone: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div> */}
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementationmeetingstart"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Implementation Meeting Start
+                </label>
+                <input
+                    type="date"
+                    id="implementationmeetingstart"
+                    name="implementationmeetingstart"
+                    value={formData.implementationmeetingstart}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementationmeetingstart: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
             </div>
             <div className="flex flex-col">
                 <label
+                    htmlFor="implementationmeetingdeadline"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Implementation Meeting Deadline
+                </label>
+                <input
+                    type="date"
+                    id="implementationmeetingdeadline"
+                    name="implementationmeetingdeadline"
+                    value={formData.implementationmeetingdeadline}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementationmeetingdeadline: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            {/* <div className="flex flex-col">
+                <label
                     htmlFor="implementationmeeting"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    Implementation Meeting
+                    Implementation Meeting Acctual Done
                 </label>
                 <input
                     type="date"
                     id="implementationmeeting"
                     name="implementationmeeting"
-                    value={formData.implementationmeeting}
+                    value={formData.implementationmeetingdone}
                     onChange={(e) =>
-                        setFormData({ ...formData, implementationmeeting: e.target.value })
+                        setFormData({ ...formData, implementationmeetingdone: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div> */}
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementationstart"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Implementation Start
+                </label>
+                <input
+                    type="date"
+                    id="implementationstart"
+                    name="implementationstart"
+                    value={formData.implementationstart}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementationstart: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
             </div>
             <div className="flex flex-col">
                 <label
+                    htmlFor="implementationdeadline"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Implementation Deadline
+                </label>
+                <input
+                    type="date"
+                    id="implementationdeadline"
+                    name="implementationdeadline"
+                    value={formData.implementationdeadline}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementationdeadline: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            {/* <div className="flex flex-col">
+                <label
                     htmlFor="implementation"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    Implementation
+                    Implementation Acctual Done
                 </label>
                 <input
                     type="date"
                     id="implementation"
                     name="implementation"
-                    value={formData.implementation}
+                    value={formData.implementationdone}
                     onChange={(e) =>
-                        setFormData({ ...formData, implementation: e.target.value })
+                        setFormData({ ...formData, implementationdone: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div> */}
+            <div className="flex flex-col">
+                <label
+                    htmlFor="postimplementationreviewstart"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Post Implementation Review Start
+                </label>
+                <input
+                    type="date"
+                    id="postimplementationreviewstart"
+                    name="postimplementationreviewstart"
+                    value={formData.postimplementationreviewstart}
+                    onChange={(e) =>
+                        setFormData({ ...formData, postimplementationreviewstart: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
             </div>
             <div className="flex flex-col">
                 <label
+                    htmlFor="postimplementationreviewdeadline"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Post Implementation Review Deadline
+                </label>
+                <input
+                    type="date"
+                    id="postimplementationreviewdeadline"
+                    name="postimplementationreviewdeadline"
+                    value={formData.postimplementationreviewdeadline}
+                    onChange={(e) =>
+                        setFormData({ ...formData, postimplementationreviewdeadline: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            {/* <div className="flex flex-col">
+                <label
                     htmlFor="postimplementationreview"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    Post Implementation Review
+                    Post Implementation Review Acctual Done
                 </label>
                 <input
                     type="date"
                     id="postimplementationreview"
                     name="postimplementationreview"
-                    value={formData.postimplementationreview}
+                    value={formData.postimplementationreviewdone}
                     onChange={(e) =>
-                        setFormData({ ...formData, postimplementationreview: e.target.value })
+                        setFormData({ ...formData, postimplementationreviewdone: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
-            </div>
+            </div> */}
             {/* Status dropdown */}
             <div className="flex flex-col">
                 <label
@@ -352,6 +720,24 @@ const SDLCForm = () => {
                         </li>
                     </ul>
                 </div>
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="deadlineproject"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Deadline Project
+                </label>
+                <input
+                    type="date"
+                    id="deadlineproject"
+                    name="deadlineproject"
+                    value={formData.deadlineproject}
+                    onChange={(e) =>
+                        setFormData({ ...formData, deadlineproject: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
             </div>
             {/* Submit button */}
             <button

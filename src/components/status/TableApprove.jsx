@@ -4,6 +4,51 @@ import React from 'react'
 import { FiCheckSquare, FiXSquare } from "react-icons/fi";
 
 const TableApprove = ({ headers, data, parameter, action, isRefresh }) => {
+    const getDisplayName = (header) => {
+        const displayNames = {
+            submitter: "Submitter",
+            authorizer: "Authorizer",
+            submitAt: "Submit At",
+            deadlineApprovement: " Deadline Approvement",
+            statusApprovement: "Status Approvement",
+            projectname: "Project Name",
+            pic: "PIC",
+            departement: "Departement",
+            kickoffstart: "Kick Off Start",
+            kickoffdeadline: "Kick Off Deadline",
+            kickoffdone: "Kick off Done",
+            userrequirementstart: "User Requirement Start",
+            userrequirementdeadline: "User Requirement Deadline",
+            userrequirementdone: "User Requirement Done",
+            applicationdevelopmentstart: "Application Development Start",
+            applicationdevelopmentdeadline: "Application Development Deadline",
+            applicationdevelopmentdone: "Application Development Done",
+            sitstart: "SIT Start",
+            sitdeadline: "SIT Deadline",
+            sitdone: "SIT Done",
+            uatstart: "UAT Start",
+            uatdeadline: "UAT Deadline",
+            uatdone: "UAT Done",
+            implementationpreparestart: "Implementation Prepare Start",
+            implementationpreparedeadline: "Implementation Prepare Deadline",
+            implementationpreparedone: "Implementation Prepare Done",
+            implementationmeetingstart: "Implementation Meeting Start",
+            implementationmeetingdeadline: "Implementation Meeting Deadline",
+            implementationmeetingdone: "Implementation Meeting Done",
+            implementationstart: "Implementation Start",
+            implementationdeadline: "Implementation Deadline",
+            implementationdone: "Implementation Done",
+            postimplementationreviewstart: "Post Implementation Review Start",
+            postimplementationreviewdeadline: "Post Implementation Review Deadline",
+            postimplementationreviewdone: "Post Implementation Review Done",
+            status: "Status",
+            deadlineproject: "Deadline Project",
+        };
+
+        const displayName = displayNames[header] || header;
+        // console.log(`Header: ${header}, DisplayName: ${displayName}`);
+        return displayName
+    };
 
     const handleStatusApprove = async (id, status) => {
         isRefresh();
@@ -24,7 +69,7 @@ const TableApprove = ({ headers, data, parameter, action, isRefresh }) => {
                         {action && <th className="py-2 px-4 w-32">Action</th>}
                         {headers.map((item, index) => (
                             <th key={index} className="py-3 px-6 capitalize">
-                                {item}
+                                {getDisplayName(item)}
                             </th>
                         ))}
                     </tr>

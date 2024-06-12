@@ -31,6 +31,13 @@ const Page = () => {
 
     return (
         <div>
+            <div className="w-full px-5 py-5 mt-4">
+                <div className="w-full flex justify-between items-center">
+                    <span className="text-[#0066AE] font-semibold">
+                        Approvement
+                    </span>
+                </div>
+            </div>
             {dataLog && dataLog.length !==0 ? (
                 <TableApprove
                     headers={Object.keys(dataLog[0]).slice(1)}
