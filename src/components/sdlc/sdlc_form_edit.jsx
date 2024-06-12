@@ -103,6 +103,7 @@ const Page = () => {
                             className="input input-bordered mt-1"
                         />
                     </div>
+
                     <div className="flex flex-col">
                         <label
                             htmlFor="pic"
@@ -146,6 +147,7 @@ const Page = () => {
                             </select>
                         )}
                     </div>
+
                     <div className="flex flex-col">
                         <label
                             htmlFor="departemen"
@@ -160,6 +162,7 @@ const Page = () => {
                             disabled
                         />
                     </div>
+                    
                     <div className="flex flex-col">
                         <label
                             htmlFor="kickoff"

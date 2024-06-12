@@ -14,8 +14,8 @@ const page = () => {
   
   return (
     <>
-     <div className="flex-grow justify-center items-center bg-white rounded-xl bg-[#FFFFFF] shadow-md">
-        <div>
+     <div className="flex-grow justify-center w-full items-center bg-white rounded-xl bg-[#FFFFFF] shadow-md">
+
         <div className="text-[#0066AE] font-semibold ml-12 mt-3 py-2">
             All Network Project
           </div>
@@ -30,7 +30,7 @@ const page = () => {
                     <a>Operation</a>
                   </li>
                   <li>
-                    <a>Server</a>
+                    <a>Network</a>
                   </li>
                   <li>
                     <a>All Network Project</a>
@@ -40,7 +40,6 @@ const page = () => {
             </span>
           </div>
         </div>
-      </div>
     </>
   );
 };

@@ -15,7 +15,7 @@ const layout = ({ children }) => {
                     <div className="w-[15%] relative">
                         <Sidebar />
                     </div>
-                    <div className="px-10 w-[83%]">
+                    <div className="px-6 w-[85%] h-full">
                         <div className="">{children}</div>
                     </div>
                     {/* <Footer /> */}
