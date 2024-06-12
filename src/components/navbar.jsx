@@ -32,22 +32,24 @@ const Header = ({ title }) => {
     };
 
     return (
-        <div className="navbar bg-[#FFFFFF] rounded shadow-md">
+        <div className="navbar bg-[#FFFFFF] rounded shadow-lg">
   <div className="flex-1">
-    <a className="btn btn-ghost text-xl font-bold text-[#0066AE]">DAMAS</a>
+    <a className="ml-10 text-xl font-bold text-[#0066AE]" href="/main">DAMAS</a>
   </div>
   <div className="flex-none">
     <ul className="menu menu-horizontal px-1">
       <li>
-        <details>
+        <details className="mr-10">
           <summary className="font-bold text-[#0066AE]">
             Welcome User
           </summary>
-          <button className="p-2 bg-base-100 rounded-t-none text-black"
-           onClick={handleLogout}
-          >
-            <li><a>Logout</a></li>
-          </button>
+          <ul className="rounded-t-none text-black absolute top-full right-10 z-10 shadow-md">
+            <li>
+              <button className="btn btn-error" onClick={handleLogout}>
+                Logout
+              </button>
+            </li>
+          </ul>
         </details>
       </li>
     </ul>

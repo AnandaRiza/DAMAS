@@ -55,12 +55,6 @@ const Header = ({ title }) => {
                             <IoMdArrowDropdown className="mt-1" />
                         </button>
                         <div className="dropdown-content flex flex-col items-start ml-5 mt-1">
-                            {/* <Link href="/profile">
-                            <button className="flex items-center font-roboto text-base tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-                            Profile
-                            </button>
-                            </Link > */}
-
                             <button
                                 type="button"
                                 className="flex items-center font-roboto text-base tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
