@@ -65,7 +65,7 @@ const TableApprove = ({ headers, data, parameter, action, isRefresh }) => {
         <div className="overflow-auto mx-auto">
             <table className="text-center border-b cursor-pointer">
                 <thead>
-                    <tr className="border-b-2 bg-blue-300 text-sm">
+                    <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
                         {action && <th className="py-2 px-4 w-32">Action</th>}
                         {headers.map((item, index) => (
                             <th key={index} className="py-3 px-6 capitalize">
@@ -79,7 +79,7 @@ const TableApprove = ({ headers, data, parameter, action, isRefresh }) => {
                         <tr
                             key={index}
                             className={`${
-                                index % 2 === 0 ? "bg-white" : "bg-blue-100"
+                                index % 2 === 0 ? "bg-white" : "bg-[#00A6B4]/[0.5]"
                             } hover:bg-gray-100 text-xs leading-5`}
                         >
                             {action && (

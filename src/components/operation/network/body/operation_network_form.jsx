@@ -48,7 +48,7 @@ return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
         <div>
           <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
-    <form className="space-y-4">
+            <form className="space-y-4">
         {/* Input fields for memo attributes */}
         <div className="flex flex-col">
             <label

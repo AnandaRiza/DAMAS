@@ -63,8 +63,15 @@ const SDLCForm = () => {
 
     const handleSubmit = async () => {
         try {
+            const requiredFields = ["projectname", "pic", "kickoffstart", "kickoffdeadline", "userrequirementstart","userrequirementdeadline","applicationdevelopmentstart","applicationdevelopmentdeadline", "sitstart", "sitdeadline", "uatstart", "uatdeadline", "implementationpreparestart", "implementationpreparedeadline", "implementationmeetingstart", "implementationmeetingdeadline", "implementationstart", "implementationdeadline", "postimplementationreviewstart", "postimplementationreviewdeadline", "status", "deadlineproject"];
+            const emptyFields = requiredFields.filter(field => !formData[field]);
+            if (emptyFields.length > 0) {
+                alert(`Please fill in the following fields: ${emptyFields.join(", ")}`);
+                return;
+            }
             await axios.post("http://localhost:8081/api/projectdev", formData);
             alert("Create Project Success");
+
         } catch (error) {
             console.log(error);
             alert("Create Project Failed!");
@@ -72,13 +79,16 @@ const SDLCForm = () => {
     };
 
     return (
-        <form className="space-y-4">
+        <div  className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
+            <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
+
+            <form className="space-y-4 ">
             <div className="flex flex-col">
                 <label
                     htmlFor="namaproject"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Project Name
+                    Project Name <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="text"
@@ -97,9 +107,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="pic"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    PIC
+                    PIC <span className="text-red-500">*</span>
                 </label>
                 {dataAllPic && (
                     <select
@@ -133,7 +143,7 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="departemen"
-                    className="text-sm font-semibold"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
                     Departement
                 </label>
@@ -146,9 +156,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="kickoffstart"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Kick Off Start
+                    Kick Off Start <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -168,9 +178,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="kickoffdeadline"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Kick Off Deadline
+                    Kick Off Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -187,34 +197,12 @@ const SDLCForm = () => {
                     
                 />
             </div>
-            {/* <div className="flex flex-col">
-                <label
-                    htmlFor="kickoff"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Kick Off Acctual Done
-                </label>
-                <input
-                    type="date"
-                    id="kickoff"
-                    name="kickoff"
-                    value={formData.kickoffdone}
-                    onChange={(e) =>
-                        setFormData({
-                            ...formData,
-                            kickoffdone: e.target.value,
-                        })
-                    }
-                    className="input input-bordered mt-1"
-                    
-                />
-            </div> */}
             <div className="flex flex-col">
                 <label
                     htmlFor="userrequirementstart"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    User Requierement Start
+                    User Requierement Start <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -234,9 +222,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="userrequirementdeadline"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    User Requierement Deadline
+                    User Requierement Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -253,35 +241,12 @@ const SDLCForm = () => {
                     
                 />
             </div>
-            {/* <div className="flex flex-col">
-                <label
-                    htmlFor="userrequirement"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    User Requierement Acctual Done
-                </label>
-                <input
-                    type="date"
-                    id="userrequirement"
-                    name="userrequirement"
-                    value={formData.userrequirementdone}
-                    onChange={(e) =>
-                        setFormData({
-                            ...formData,
-                            userrequirementdone: e.target.value,
-                        })
-                    }
-                    className="input input-bordered mt-1"
-                    
-                />
-            </div> */}
-            
             <div className="flex flex-col">
                 <label
                     htmlFor="applicationdevelopmentstart"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Application Development Start
+                    Application Development Start <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -301,9 +266,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="applicationdevelopmentdeadline"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Application Development Deadline
+                    Application Development Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -320,34 +285,13 @@ const SDLCForm = () => {
                     
                 />
             </div>
-            {/* <div className="flex flex-col">
-                <label
-                    htmlFor="applicationdevelopment"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Application Development Acctual Done
-                </label>
-                <input
-                    type="date"
-                    id="applicationdevelopment"
-                    name="applicationdevelopment"
-                    value={formData.applicationdevelopmentdone}
-                    onChange={(e) =>
-                        setFormData({
-                            ...formData,
-                            applicationdevelopmentdone: e.target.value,
-                        })
-                    }
-                    className="input input-bordered mt-1"
-                    
-                />
-            </div> */}
+        
             <div className="flex flex-col">
                 <label
                     htmlFor="sitstart"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    SIT Start
+                    SIT Start <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -363,9 +307,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="sitdeadline"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    SIT Deadline
+                    SIT Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -378,28 +322,10 @@ const SDLCForm = () => {
                     className="input input-bordered mt-1"
                 />
             </div>
-            {/* <div className="flex flex-col">
-                <label
-                    htmlFor="sit"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    SIT Acctual Done
-                </label>
-                <input
-                    type="date"
-                    id="sit"
-                    name="sit"
-                    value={formData.sitdone}
-                    onChange={(e) =>
-                        setFormData({ ...formData, sitdone: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div> */}
             <div className="flex flex-col">
                 <label
                     htmlFor="uatstart"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
                     UAT Start
                 </label>
@@ -417,9 +343,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="uatdeadline"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    UAT Deadline
+                    UAT Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -432,30 +358,12 @@ const SDLCForm = () => {
                     className="input input-bordered mt-1"
                 />
             </div>
-            {/* <div className="flex flex-col">
-                <label
-                    htmlFor="uat"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    UAT Acctual Done
-                </label>
-                <input
-                    type="date"
-                    id="uat"
-                    name="uat"
-                    value={formData.uatdone}
-                    onChange={(e) =>
-                        setFormData({ ...formData, uatdone: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div> */}
             <div className="flex flex-col">
                 <label
                     htmlFor="implementationpreparestart"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Implementation Prepare Start
+                    Implementation Prepare Start <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -471,9 +379,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="implementationpreparedeadline"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Implementation Prepare Deadline
+                    Implementation Prepare Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -486,30 +394,12 @@ const SDLCForm = () => {
                     className="input input-bordered mt-1"
                 />
             </div>
-            {/* <div className="flex flex-col">
-                <label
-                    htmlFor="implementationprepare"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Implementation Prepare Acctual Done
-                </label>
-                <input
-                    type="date"
-                    id="implementationprepare"
-                    name="implementationprepare"
-                    value={formData.implementationpreparedone}
-                    onChange={(e) =>
-                        setFormData({ ...formData, implementationpreparedone: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div> */}
             <div className="flex flex-col">
                 <label
                     htmlFor="implementationmeetingstart"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Implementation Meeting Start
+                    Implementation Meeting Start <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -525,9 +415,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="implementationmeetingdeadline"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Implementation Meeting Deadline
+                    Implementation Meeting Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -540,30 +430,12 @@ const SDLCForm = () => {
                     className="input input-bordered mt-1"
                 />
             </div>
-            {/* <div className="flex flex-col">
-                <label
-                    htmlFor="implementationmeeting"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Implementation Meeting Acctual Done
-                </label>
-                <input
-                    type="date"
-                    id="implementationmeeting"
-                    name="implementationmeeting"
-                    value={formData.implementationmeetingdone}
-                    onChange={(e) =>
-                        setFormData({ ...formData, implementationmeetingdone: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div> */}
             <div className="flex flex-col">
                 <label
                     htmlFor="implementationstart"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Implementation Start
+                    Implementation Start <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -579,9 +451,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="implementationdeadline"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Implementation Deadline
+                    Implementation Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -594,30 +466,12 @@ const SDLCForm = () => {
                     className="input input-bordered mt-1"
                 />
             </div>
-            {/* <div className="flex flex-col">
-                <label
-                    htmlFor="implementation"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Implementation Acctual Done
-                </label>
-                <input
-                    type="date"
-                    id="implementation"
-                    name="implementation"
-                    value={formData.implementationdone}
-                    onChange={(e) =>
-                        setFormData({ ...formData, implementationdone: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div> */}
             <div className="flex flex-col">
                 <label
                     htmlFor="postimplementationreviewstart"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Post Implementation Review Start
+                    Post Implementation Review Start <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -633,9 +487,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="postimplementationreviewdeadline"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Post Implementation Review Deadline
+                    Post Implementation Review Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -648,39 +502,21 @@ const SDLCForm = () => {
                     className="input input-bordered mt-1"
                 />
             </div>
-            {/* <div className="flex flex-col">
-                <label
-                    htmlFor="postimplementationreview"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Post Implementation Review Acctual Done
-                </label>
-                <input
-                    type="date"
-                    id="postimplementationreview"
-                    name="postimplementationreview"
-                    value={formData.postimplementationreviewdone}
-                    onChange={(e) =>
-                        setFormData({ ...formData, postimplementationreviewdone: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div> */}
             {/* Status dropdown */}
             <div className="flex flex-col">
                 <label
                     htmlFor="status"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Status
+                    Status <span className="text-red-500">*</span>
                 </label>
-                <div className="dropdown mt-1">
-                    <div tabIndex={0} role="button" className="btn m-1">
-                        {formData.status}
+                <div className="dropdown mt-1 ">
+                    <div tabIndex={0} role="button" className="btn m-1 w-52 bg-white hover:bg-gray text-gray-600">
+                        {formData.status ? formData.status : "Select Status"}
                     </div>
                     <ul
                         tabIndex={0}
-                        className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
+                        className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 mb-4"
                     >
                         <li>
                             <a
@@ -724,9 +560,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="deadlineproject"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Deadline Project
+                    Deadline Project <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -748,6 +584,10 @@ const SDLCForm = () => {
                 Create Project
             </button>
         </form>
+            </div>
+            
+        </div>
+       
     );
 };
 
