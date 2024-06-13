@@ -57,6 +57,7 @@ const Page = () => {
         postimplementationreviewdone: "",
         status: "",
         deadlineproject: "",
+        projectdone: "",
     });
     useEffect(() => {
         const getCurrentData = async () => {
@@ -87,6 +88,12 @@ const Page = () => {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        if (dataAllProject) {
+            setSelectedDept(dataAllProject.departement);
+        }
+    }, [dataAllProject]);
 
     const handleEditedData = async () => {
         setIsLoading(true);
@@ -208,6 +215,7 @@ const Page = () => {
                     Kick Off Start
                 </label>
                 <input
+                disabled
                     type="date"
                     id="kickoffstart"
                     name="kickoffstart"
@@ -230,6 +238,7 @@ const Page = () => {
                     Kick Off Deadline
                 </label>
                 <input
+                disabled
                     type="date"
                     id="kickoffdeadline"
                     name="kickoffdeadline"
@@ -274,6 +283,7 @@ const Page = () => {
                     User Requierement Start
                 </label>
                 <input
+                disabled
                     type="date"
                     id="userrequirementstart"
                     name="userrequirementstart"
@@ -296,6 +306,7 @@ const Page = () => {
                     User Requierement Deadline
                 </label>
                 <input
+                disabled
                     type="date"
                     id="userrequirementdeadline"
                     name="userrequirementdeadline"
@@ -339,6 +350,7 @@ const Page = () => {
                     Application Development Start
                 </label>
                 <input
+                disabled
                     type="date"
                     id="applicationdevelopmentstart"
                     name="applicationdevelopmentstart"
@@ -361,6 +373,7 @@ const Page = () => {
                     Application Development Deadline
                 </label>
                 <input
+                disabled
                     type="date"
                     id="applicationdevelopmentdeadline"
                     name="applicationdevelopmentdeadline"
@@ -405,6 +418,7 @@ const Page = () => {
                     SIT Start
                 </label>
                 <input
+                disabled
                     type="date"
                     id="sitstart"
                     name="sitstart"
@@ -423,6 +437,7 @@ const Page = () => {
                     SIT Deadline
                 </label>
                 <input
+                disabled
                     type="date"
                     id="sitdeadline"
                     name="sitdeadline"
@@ -459,6 +474,7 @@ const Page = () => {
                     UAT Start
                 </label>
                 <input
+                disabled
                     type="date"
                     id="uatstart"
                     name="uatstart"
@@ -477,6 +493,7 @@ const Page = () => {
                     UAT Deadline
                 </label>
                 <input
+                disabled
                     type="date"
                     id="uatdeadline"
                     name="uatdeadline"
@@ -513,6 +530,7 @@ const Page = () => {
                     Implementation Prepare Start
                 </label>
                 <input
+                disabled
                     type="date"
                     id="implementationpreparestart"
                     name="implementationpreparestart"
@@ -531,6 +549,7 @@ const Page = () => {
                     Implementation Prepare Deadline
                 </label>
                 <input
+                disabled
                     type="date"
                     id="implementationpreparedeadline"
                     name="implementationpreparedeadline"
@@ -567,6 +586,7 @@ const Page = () => {
                     Implementation Meeting Start
                 </label>
                 <input
+                disabled
                     type="date"
                     id="implementationmeetingstart"
                     name="implementationmeetingstart"
@@ -585,6 +605,7 @@ const Page = () => {
                     Implementation Meeting Deadline
                 </label>
                 <input
+                disabled
                     type="date"
                     id="implementationmeetingdeadline"
                     name="implementationmeetingdeadline"
@@ -621,6 +642,7 @@ const Page = () => {
                     Implementation Start
                 </label>
                 <input
+                disabled
                     type="date"
                     id="implementationstart"
                     name="implementationstart"
@@ -639,6 +661,7 @@ const Page = () => {
                     Implementation Deadline
                 </label>
                 <input
+                disabled
                     type="date"
                     id="implementationdeadline"
                     name="implementationdeadline"
@@ -675,6 +698,7 @@ const Page = () => {
                     Post Implementation Review Start
                 </label>
                 <input
+                disabled
                     type="date"
                     id="postimplementationreviewstart"
                     name="postimplementationreviewstart"
@@ -693,6 +717,7 @@ const Page = () => {
                     Post Implementation Review Deadline
                 </label>
                 <input
+                disabled
                     type="date"
                     id="postimplementationreviewdeadline"
                     name="postimplementationreviewdeadline"
@@ -784,12 +809,31 @@ const Page = () => {
                     Deadline Project
                 </label>
                 <input
+                disabled
                     type="date"
                     id="deadlineproject"
                     name="deadlineproject"
                     value={dataAllProject.deadlineproject}
                     onChange={(e) =>
                         setDataAllProject({ ...dataAllProject, deadlineproject: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="projectdone"
+                    className="text-sm font-semibold text-gray-600"
+                >
+                    Project Finished
+                </label>
+                <input
+                    type="date"
+                    id="projectdone"
+                    name="projectdone"
+                    value={dataAllProject.projectdone}
+                    onChange={(e) =>
+                        setDataAllProject({ ...dataAllProject, projectdone: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />

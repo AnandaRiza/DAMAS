@@ -41,8 +41,8 @@ const SDLCForm = () => {
         status: "",
         deadlineproject: "",
     });
-
   
+    
 
     const getDataAllPic = async () => {
         setDataAllPic(null);
