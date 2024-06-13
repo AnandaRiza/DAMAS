@@ -14,7 +14,7 @@ const page = () => {
     const [dataAllProject, setDataAllProject] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
-    const [perPage, setPerPage] = useState(10);
+    const [perPage, setPerPage] = useState(8);
 
     useEffect(() => {
         getDataAllProject();
@@ -38,6 +38,8 @@ const page = () => {
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allproject/getproject?input=${searchInput}`
             );
             setSearchResult(response.data.data);
+            setCurrentPage(1);
+            setStartIndex(0);
         }catch (error) {
             console.log(error);
         }
@@ -98,14 +100,14 @@ const page = () => {
 
 
 
-            {dataAllProject && !searchResult && (
+            {dataAllProject && (
                 <div className="w-full flex justify-end items-center gap-3">
                     <button
                     type="button"
                         disabled={currentPage === 1 || startIndex === 0}
                         onClick={() => {
                             setCurrentPage(currentPage - 1);
-                            setStartIndex(startIndex - 10);
+                            setStartIndex(startIndex - 8);
                         }}
                         className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
                     >
@@ -119,7 +121,7 @@ const page = () => {
                         }
                         onClick={() => {
                             setCurrentPage(currentPage + 1);
-                            setStartIndex(startIndex + 10);
+                            setStartIndex(startIndex + 8);
                         }}
                         className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
                     >

@@ -3,17 +3,39 @@
 import PleaseWait from "@/components/PleaseWait";
 import axios from "axios";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
-const SDLC_form_edit = () => {
+const Page = () => {
+    const userid = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("DAMAS-USERID="))
+        ?.split("=")[1];
+
     const params = useParams();
+    const router = useRouter();
+    const [selectedDept, setSelectedDept] = useState("");
+    const [dataAllPic, setDataAllPic] = useState(null);
     const [dataAllProject, setDataAllProject] = useState({
+        submitter: "",
+        authorizer: "",
+        submitAt: "",
+        deadlineApprovement: "",
+        statusApprovement: "",
         projectname: "",
         pic: "",
-        deadline: "",
+        departement: "",
+        kickoff: "",
+        userrequirement: "",
+        applicationdevelopment: "",
+        sit: "",
+        uat: "",
+        implementationprepare: "",
+        implementationmeeting: "",
+        implementation: "",
+        postimplementationreview: "",
         status: "",
     });
     useEffect(() => {
@@ -27,8 +49,23 @@ const SDLC_form_edit = () => {
                 console.log(error);
             }
         };
+        getDataAllPic();
         getCurrentData();
+        console.log(dataAllProject);
     }, [params.id]);
+
+    const getDataAllPic = async () => {
+        setDataAllPic(null);
+        try {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
+            );
+            setDataAllPic(response.data.data);
+            console.log(response.data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const handleEditedData = async () => {
         try {
@@ -36,7 +73,7 @@ const SDLC_form_edit = () => {
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allproject/editedproject?input=${params.id}`,
                 dataAllProject
             );
-            console.log(response.data);
+            // console.log(response.data);
             alert("Edit Success");
         } catch (error) {
             console.log(error);
@@ -66,6 +103,7 @@ const SDLC_form_edit = () => {
                             className="input input-bordered mt-1"
                         />
                     </div>
+
                     <div className="flex flex-col">
                         <label
                             htmlFor="pic"
@@ -73,37 +111,249 @@ const SDLC_form_edit = () => {
                         >
                             PIC
                         </label>
+                        {dataAllPic && (
+                            <select
+                                type="text"
+                                className="input input-bordered mt-1"
+                                value={dataAllProject.name}
+                                onChange={(e) => {
+                                    const selectedPic = JSON.parse(
+                                        e.target.value
+                                    );
+                                    setDataAllProject({
+                                        ...dataAllProject,
+                                        pic: selectedPic.nama,
+                                        departement: selectedPic.departemen,
+                                    });
+                                    setSelectedDept(selectedPic.departemen);
+                                }}
+                            >
+                                <option
+                                    // disabled
+                                    // selected
+                                    className="text-sm text-gray-600 opacity-50"
+                                    value={dataAllProject.pic}
+                                >
+                                    {dataAllProject.pic}
+                                </option>
+                                {dataAllPic.map((item, index) => (
+                                    <option
+                                        key={index}
+                                        value={JSON.stringify(item)}
+                                    >
+                                        {item.nama}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="departemen"
+                            className="text-sm font-semibold"
+                        >
+                            Departemen
+                        </label>
                         <input
+                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             type="text"
-                            className="input input-bordered mt-1"
-                            value={dataAllProject.pic}
+                            value={selectedDept}
+                            disabled
+                        />
+                    </div>
+                    
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="kickoff"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Kick Off
+                        </label>
+                        <input
+                            type="date"
+                            id="kickoff"
+                            name="kickoff"
+                            value={dataAllProject.kickoff}
                             onChange={(e) =>
                                 setDataAllProject({
                                     ...dataAllProject,
-                                    pic: e.target.value,
+                                    kickoff: e.target.value,
                                 })
                             }
+                            className="input input-bordered mt-1"
                         />
                     </div>
                     <div className="flex flex-col">
                         <label
-                            htmlFor="deadline"
+                            htmlFor="userrequirement"
                             className="text-sm font-semibold text-gray-600"
                         >
-                            Deadline
+                            User Requierement
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
-                            value={dataAllProject.deadline}
+                            id="userrequirement"
+                            name="userrequirement"
+                            value={dataAllProject.userrequirement}
                             onChange={(e) =>
                                 setDataAllProject({
                                     ...dataAllProject,
-                                    deadline: e.target.value,
+                                    userrequirement: e.target.value,
                                 })
                             }
+                            className="input input-bordered mt-1"
                         />
                     </div>
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="applicationdevelopment"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Application Development
+                        </label>
+                        <input
+                            type="date"
+                            id="applicationdevelopment"
+                            name="applicationdevelopment"
+                            value={dataAllProject.applicationdevelopment}
+                            onChange={(e) =>
+                                setDataAllProject({
+                                    ...dataAllProject,
+                                    applicationdevelopment: e.target.value,
+                                })
+                            }
+                            className="input input-bordered mt-1"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="sit"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            SIT
+                        </label>
+                        <input
+                            type="date"
+                            id="sit"
+                            name="sit"
+                            value={dataAllProject.sit}
+                            onChange={(e) =>
+                                setDataAllProject({
+                                    ...dataAllProject,
+                                    sit: e.target.value,
+                                })
+                            }
+                            className="input input-bordered mt-1"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="uat"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            UAT
+                        </label>
+                        <input
+                            type="date"
+                            id="uat"
+                            name="uat"
+                            value={dataAllProject.uat}
+                            onChange={(e) =>
+                                setDataAllProject({
+                                    ...dataAllProject,
+                                    uat: e.target.value,
+                                })
+                            }
+                            className="input input-bordered mt-1"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="implementationprepare"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Implementation Prepare
+                        </label>
+                        <input
+                            type="date"
+                            id="implementationprepare"
+                            name="implementationprepare"
+                            value={dataAllProject.implementationprepare}
+                            onChange={(e) =>
+                                setDataAllProject({
+                                    ...dataAllProject,
+                                    implementationprepare: e.target.value,
+                                })
+                            }
+                            className="input input-bordered mt-1"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="implementationmeeting"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Implementation Meeting
+                        </label>
+                        <input
+                            type="date"
+                            id="implementationmeeting"
+                            name="implementationmeeting"
+                            value={dataAllProject.implementationmeeting}
+                            onChange={(e) =>
+                                setDataAllProject({
+                                    ...dataAllProject,
+                                    implementationmeeting: e.target.value,
+                                })
+                            }
+                            className="input input-bordered mt-1"
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="implementation"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Implementation
+                        </label>
+                        <input
+                            type="date"
+                            id="implementation"
+                            name="implementation"
+                            value={dataAllProject.implementation}
+                            onChange={(e) =>
+                                setDataAllProject({
+                                    ...dataAllProject,
+                                    implementation: e.target.value,
+                                })
+                            }
+                            className="input input-bordered mt-1"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="postimplementationreview"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Post Implementation Review
+                        </label>
+                        <input
+                            type="date"
+                            id="postimplementationreview"
+                            name="postimplementationreview"
+                            value={dataAllProject.postimplementationreview}
+                            onChange={(e) =>
+                                setDataAllProject({
+                                    ...dataAllProject,
+                                    postimplementationreview: e.target.value,
+                                })
+                            }
+                            className="input input-bordered mt-1"
+                        />
+                    </div>
+
                     <div className="flex flex-col">
                         <label
                             htmlFor="status"
@@ -166,7 +416,7 @@ const SDLC_form_edit = () => {
                             </button>
                         </Link>
                         <button
-                        type="button"
+                            type="button"
                             className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center"
                             onClick={handleEditedData}
                         >
@@ -182,4 +432,4 @@ const SDLC_form_edit = () => {
     );
 };
 
-export default page;
+export default Page;

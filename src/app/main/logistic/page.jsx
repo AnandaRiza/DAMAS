@@ -7,6 +7,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 
+
 const Page = () => {
     const [searchInput, setSearchInput] = useState("");
     const [searchResult, setSearchResult] = useState(null);
@@ -19,6 +20,7 @@ const Page = () => {
     useEffect(() => {
         getDataAllMemo();
     }, [startIndex]);
+
 
     const getDataAllMemo = async () => {
         setDataAllMemo(null);
@@ -155,4 +157,6 @@ const Page = () => {
     );
 };
 
+
 export default Page;
+

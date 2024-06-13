@@ -1,10 +1,12 @@
 'use client';
 
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const NetworkForm = () => {
   // State to manage form data
+  const [dataAllPic, setDataAllPic] = useState(null);
+  const [selectedDept, setSelectedDept] = useState("");
   const [formData, setFormData] = useState({
     network_perihal: "",
     network_pic: "",
@@ -23,6 +25,24 @@ const handleSubmit = async () => {
         alert("Create Project Failed!");
     }
 };
+
+const getDataAllPic = async () => {
+    setDataAllPic(null);
+    try {
+        const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
+        );
+        setDataAllPic(response.data.data);
+        // console.log(response.data.data);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+useEffect(() => {
+    getDataAllPic();
+}, []);
+
 
 return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
@@ -51,56 +71,70 @@ return (
                 className="input input-bordered mt-1"
             />
         </div>
+
+        <div className="flex flex-col">
+                <label
+                    htmlFor="pic"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    PIC
+                </label>
+                {dataAllPic && (
+                    <select
+                        name="pic"
+                        id="pic"
+                        className="input input-bordered mt-1"
+                        value={formData.nama}
+                        onChange={(e) => {
+                            const selectedPic = JSON.parse(e.target.value);
+                            setFormData({ ...formData, network_pic: selectedPic.nama, departement:selectedPic.departemen });
+                            setSelectedDept(selectedPic.departemen)
+                        }
+                        }
+                    >
+                        <option
+                            disabled
+                            selected
+                            className="text-sm text-gray-600 opacity-50"
+                        >
+                            Select PIC...
+                        </option>
+                        {dataAllPic.map((item, index) => (
+                            <option key={index} value={JSON.stringify(item)}>
+                                    {item.nama}
+                            </option>
+                        ))}
+                    </select>
+                )}
+            </div>
+
+            <div className="flex flex-col">
+                <label
+                    htmlFor="departemen"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Departement
+                </label>
+                <input 
+                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                type="text" 
+                value={selectedDept} disabled />
+            </div>
+
         <div className="flex flex-col">
             <label
-                htmlFor="pic"
+                htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                PIC
+                Kick Off Start
             </label>
             <input
-                type="text"
-                id="pic"
-                name="pic"
-                value={formData.network_pic}
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_kickoff_start}
                 onChange={(e) =>
-                    setFormData({ ...formData, network_pic: e.target.value })
-                }
-                className="input input-bordered mt-1"
-            />
-        </div>
-        <div className="flex flex-col">
-            <label
-                htmlFor="pic"
-                className="text-sm font-semibold text-[#0066AE]"
-            >
-                Departement
-            </label>
-            <input
-                type="text"
-                id="pic"
-                name="pic"
-                value={formData.network_pic}
-                onChange={(e) =>
-                    setFormData({ ...formData, network_pic: e.target.value })
-                }
-                className="input input-bordered mt-1"
-            />
-        </div>
-        <div className="flex flex-col">
-            <label
-                htmlFor="pic"
-                className="text-sm font-semibold text-[#0066AE]"
-            >
-                Team
-            </label>
-            <input
-                type="text"
-                id="pic"
-                name="pic"
-                value={formData.network_pic}
-                onChange={(e) =>
-                    setFormData({ ...formData, network_pic: e.target.value })
+                    setFormData({ ...formData, network_kickoff_start: e.target.value })
                 }
                 className="input input-bordered mt-1"
             />
@@ -111,15 +145,15 @@ return (
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Kick Off
+                Kick Off Deadline
             </label>
             <input
                 type="date"
                 id="deadline"
                 name="deadline"
-                value={formData.network_deadline}
+                value={formData.network_kickoff_deadline}
                 onChange={(e) =>
-                    setFormData({ ...formData, network_deadline: e.target.value })
+                    setFormData({ ...formData, network_kickoff_deadline: e.target.value })
                 }
                 className="input input-bordered mt-1"
             />
@@ -130,15 +164,15 @@ return (
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                MOP
+                Kick Off Done
             </label>
             <input
                 type="date"
                 id="deadline"
                 name="deadline"
-                value={formData.network_deadline}
+                value={formData.network_kickoff_done}
                 onChange={(e) =>
-                    setFormData({ ...formData, network_deadline: e.target.value })
+                    setFormData({ ...formData, network_kickoff_done: e.target.value })
                 }
                 className="input input-bordered mt-1"
             />
@@ -149,15 +183,15 @@ return (
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Demo MOP
+                MOP Start
             </label>
             <input
                 type="date"
                 id="deadline"
                 name="deadline"
-                value={formData.network_deadline}
+                value={formData.network_mop_start}
                 onChange={(e) =>
-                    setFormData({ ...formData, network_deadline: e.target.value })
+                    setFormData({ ...formData, network_mop_start: e.target.value })
                 }
                 className="input input-bordered mt-1"
             />
@@ -168,15 +202,15 @@ return (
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Implementasi
+                MOP Deadline
             </label>
             <input
                 type="date"
                 id="deadline"
                 name="deadline"
-                value={formData.network_deadline}
+                value={formData.network_mop_deadline}
                 onChange={(e) =>
-                    setFormData({ ...formData, network_deadline: e.target.value })
+                    setFormData({ ...formData, network_mop_deadline: e.target.value })
                 }
                 className="input input-bordered mt-1"
             />
@@ -187,15 +221,15 @@ return (
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                SK/SE
+                MOP Done
             </label>
             <input
                 type="date"
                 id="deadline"
                 name="deadline"
-                value={formData.network_deadline}
+                value={formData.network_mop_done}
                 onChange={(e) =>
-                    setFormData({ ...formData, network_deadline: e.target.value })
+                    setFormData({ ...formData, network_mop_done: e.target.value })
                 }
                 className="input input-bordered mt-1"
             />
@@ -206,20 +240,251 @@ return (
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                UAT
+                Demo MOP Start
             </label>
             <input
                 type="date"
                 id="deadline"
                 name="deadline"
-                value={formData.network_deadline}
+                value={formData.network_demomop_start}
                 onChange={(e) =>
-                    setFormData({ ...formData, network_deadline: e.target.value })
+                    setFormData({ ...formData, network_demomop_start: e.target.value })
                 }
                 className="input input-bordered mt-1"
             />
         </div>
+
+        <div className="flex flex-col">
+            <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+            >
+                Demo MOP Deadline
+            </label>
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_demomop_deadline}
+                onChange={(e) =>
+                    setFormData({ ...formData, network_demomop_deadline: e.target.value })
+                }
+                className="input input-bordered mt-1"
+            />
+        </div>
+
+        <div className="flex flex-col">
+            <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+            >
+                Demo MOP Done
+            </label>
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_demomop_done}
+                onChange={(e) =>
+                    setFormData({ ...formData, network_demomop_done: e.target.value })
+                }
+                className="input input-bordered mt-1"
+            />
+        </div>
+
+        <div className="flex flex-col">
+            <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+            >
+                Implementasi Start
+            </label>
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_implementasi_start}
+                onChange={(e) =>
+                    setFormData({ ...formData, network_implementasi_start: e.target.value })
+                }
+                className="input input-bordered mt-1"
+            />
+        </div>
+
+        <div className="flex flex-col">
+            <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+            >
+                Implementasi Deadline
+            </label>
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_implementasi_deadline}
+                onChange={(e) =>
+                    setFormData({ ...formData, network_implementasi_deadline: e.target.value })
+                }
+                className="input input-bordered mt-1"
+            />
+        </div>
+
+        <div className="flex flex-col">
+            <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+            >
+                Implementasi Done
+            </label>
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_implementasi_done}
+                onChange={(e) =>
+                    setFormData({ ...formData, network_implementasi_done: e.target.value })
+                }
+                className="input input-bordered mt-1"
+            />
+        </div>
+
+        <div className="flex flex-col">
+            <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+            >
+                SK/SE Start
+            </label>
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_skse_start}
+                onChange={(e) =>
+                    setFormData({ ...formData, network_skse_start: e.target.value })
+                }
+                className="input input-bordered mt-1"
+            />
+        </div>
+
+        <div className="flex flex-col">
+            <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+            >
+                SK/SE Deadline
+            </label>
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_skse_deadline}
+                onChange={(e) =>
+                    setFormData({ ...formData, network_skse_deadline: e.target.value })
+                }
+                className="input input-bordered mt-1"
+            />
+        </div>
+
+        <div className="flex flex-col">
+            <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+            >
+                SK/SE Done
+            </label>
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_skse_done}
+                onChange={(e) =>
+                    setFormData({ ...formData, network_skse_done: e.target.value })
+                }
+                className="input input-bordered mt-1"
+            />
+        </div>
+
+        <div className="flex flex-col">
+            <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+            >
+                UAT Start
+            </label>
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_uat_start}
+                onChange={(e) =>
+                    setFormData({ ...formData, network_uat_start: e.target.value })
+                }
+                className="input input-bordered mt-1"
+            />
+        </div>
+
+        <div className="flex flex-col">
+            <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+            >
+                UAT Deadline
+            </label>
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_uat_deadline}
+                onChange={(e) =>
+                    setFormData({ ...formData, network_uat_deadline: e.target.value })
+                }
+                className="input input-bordered mt-1"
+            />
+        </div>
+
+        <div className="flex flex-col">
+            <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+            >
+                UAT Done
+            </label>
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_uat_done}
+                onChange={(e) =>
+                    setFormData({ ...formData, network_uat_done: e.target.value })
+                }
+                className="input input-bordered mt-1"
+            />
+        </div>
+
+        <div className="flex flex-col">
+            <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+            >
+                Project Deadline
+            </label>
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.network_deadline_project}
+                onChange={(e) =>
+                    setFormData({ ...formData, network_deadline_project: e.target.value })
+                }
+                className="input input-bordered mt-1"
+            />
+        </div>
+
         {/* Status dropdown */}
+
+
         <div className="flex flex-col">
             <label
                 htmlFor="status"

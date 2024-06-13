@@ -14,8 +14,8 @@ const page = () => {
   
   return (
     <>
-      <div className="flex-grow justify-center items-center bg-white rounded-xl bg-[#FFFFFF] shadow-md">
-        <div>
+     <div className="flex-grow justify-center w-full items-center bg-white rounded-xl bg-[#FFFFFF] shadow-md">
+
         <div className="text-[#0066AE] font-semibold ml-12 mt-3 py-2">
             My Project
           </div>
@@ -29,15 +29,20 @@ const page = () => {
                   <li>
                     <a>Operation</a>
                   </li>
-                  <li>My Project</li>
+                  <li>
+                    <a>Network</a>
+                  </li>
+                  <li>
+                    <a>My Project</a>
+                  </li>
                 </ul>
               </div>
             </span>
           </div>
         </div>
-      </div>
     </>
   );
 };
 
 export default page
+
