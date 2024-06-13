@@ -1,8 +1,4 @@
 "use client";
-import NetworkForm from '@/components/operation/network/body/operation_network_form';
-import Headertesting from '@/components/Headertesting';
-import Testingform from '@/components/testingform';
-import Listtesting from '@/components/Listtesting';
 import NetworkTable from '@/components/operation/network/body/operation_network_table';
 import Header from '@/components/operation/network/header/header_all_project';
 
