@@ -1,5 +1,5 @@
 "use client";
- 
+
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -9,8 +9,12 @@ const MemoForm = () => {
     memo_num: "",
     memo_perihal: "",
     memo_pic: "",
+    memo_department: "",
+    memo_createdBy: "",
+    memo_reviewer: "",
     memo_deadline: "",
-    memo_status: "",
+    memo_status: "WAITING FOR APPROVAL", // Initialize with desired value
+    memo_notes: "", // Ensure this is not null
   });
 
   const [error, setError] = useState("");
@@ -18,48 +22,58 @@ const MemoForm = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post(
+      console.log("Sending data:", formData);
+
+      // Add check for date format
+      const regex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD format
+      if (!regex.test(formData.memo_deadline)) {
+        setError("Date must be in the format YYYY-MM-DD");
+        return;
+      }
+
+      const response = await axios.post(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo`,
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       alert("Create Memo Success");
-      router.push('/main/logistic');
+      router.push("/main/logistic"); // Assuming you want to navigate after success
     } catch (error) {
-      console.log(error);
+      console.error("Error response:", error.response);
+      if (error.response) {
+        console.log("Error data:", error.response.data);
+        console.log("Error status:", error.response.status);
+        console.log("Error headers:", error.response.headers);
+      } else {
+        console.log("Error message:", error.message);
+      }
       alert("Create Memo Failed!");
     }
   };
 
-  const validateDate = (date) => {
-    const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
-    return regex.test(date);
-  };
-
   const handleDateChange = (e) => {
     const { value } = e.target;
-    const regex = /^[0-9\/]*$/; // Allow only numbers and "/"
+    const regex = /^[0-9-]*$/; // Allows only numbers and hyphens
+
     if (regex.test(value)) {
       setFormData({
         ...formData,
         memo_deadline: value,
       });
-      if (!validateDate(value)) {
-        setError("Date must be in the format dd/mm/yyyy");
-      } else {
-        setError("");
-      }
+      setError("");
     } else {
-      setError("Only numbers and '/' are allowed");
+      setError("Only numeric values allowed");
     }
   };
 
   return (
     <form className="space-y-4">
       <div className="flex flex-col">
-        <label
-          htmlFor="memo_num"
-          className="text-sm font-semibold text-gray-600"
-        >
+        <label htmlFor="memo_num" className="text-sm font-semibold text-gray-600">
           Nomor Memo
         </label>
         <input
@@ -78,10 +92,7 @@ const MemoForm = () => {
       </div>
 
       <div className="flex flex-col">
-        <label
-          htmlFor="memo_perihal"
-          className="text-sm font-semibold text-gray-600"
-        >
+        <label htmlFor="memo_perihal" className="text-sm font-semibold text-gray-600">
           Perihal Memo
         </label>
         <input
@@ -108,16 +119,75 @@ const MemoForm = () => {
           id="memo_pic"
           name="memo_pic"
           value={formData.memo_pic}
-          onChange={(e) => setFormData({ ...formData, memo_pic: e.target.value })}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              memo_pic: e.target.value,
+            })
+          }
           className="input input-bordered mt-1"
         />
       </div>
 
       <div className="flex flex-col">
-        <label
-          htmlFor="memo_deadline"
-          className="text-sm font-semibold text-gray-600"
-        >
+        <label htmlFor="memo_department" className="text-sm font-semibold text-gray-600">
+          Department
+        </label>
+        <input
+          type="text"
+          id="memo_department"
+          name="memo_department"
+          value={formData.memo_department}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              memo_department: e.target.value,
+            })
+          }
+          className="input input-bordered mt-1"
+        />
+      </div>
+
+      <div className="flex flex-col">
+        <label htmlFor="memo_createdBy" className="text-sm font-semibold text-gray-600">
+          Created By
+        </label>
+        <input
+          type="text"
+          id="memo_createdBy"
+          name="memo_createdBy"
+          value={formData.memo_createdBy}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              memo_createdBy: e.target.value,
+            })
+          }
+          className="input input-bordered mt-1"
+        />
+      </div>
+
+      <div className="flex flex-col">
+        <label htmlFor="memo_reviewer" className="text-sm font-semibold text-gray-600">
+          Reviewer
+        </label>
+        <input
+          type="text"
+          id="memo_reviewer"
+          name="memo_reviewer"
+          value={formData.memo_reviewer}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              memo_reviewer: e.target.value,
+            })
+          }
+          className="input input-bordered mt-1"
+        />
+      </div>
+
+      <div className="flex flex-col">
+        <label htmlFor="memo_deadline" className="text-sm font-semibold text-gray-600">
           Deadline
         </label>
         <input
@@ -125,12 +195,20 @@ const MemoForm = () => {
           id="memo_deadline"
           name="memo_deadline"
           value={formData.memo_deadline}
-          onChange={handleDateChange} // Use the validation handler
+          onChange={handleDateChange}
           className="input input-bordered mt-1"
-          placeholder="dd/mm/yyyy"
+          placeholder="YYYY-MM-DD"
         />
         {error && <span className="text-red-600 text-xs mt-1">{error}</span>}
       </div>
+
+      {/* Hidden memo_notes field */}
+      <input
+        type="hidden"
+        id="memo_notes"
+        name="memo_notes"
+        value={formData.memo_notes}
+      />
 
       {/* Status dropdown */}
       <div className="flex flex-col">
@@ -148,10 +226,9 @@ const MemoForm = () => {
             })
           }
           name="memo_status"
+          disabled
         >
-          <option value="Ongoing">Ongoing</option>
-          <option value="Finished">Finished</option>
-          <option value="Past Deadline">Past Deadline</option>
+          <option value="WAITING FOR APPROVAL">Waiting for Approval</option>
         </select>
       </div>
 
@@ -168,4 +245,3 @@ const MemoForm = () => {
 };
 
 export default MemoForm;
-

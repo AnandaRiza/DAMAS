@@ -41,33 +41,19 @@ const EditMemoPage = () => {
                 console.log(error);
                 setLoading(false);
             }
+            
         };
         if (params.memoId) {
             getCurrentData();
         }
     }, [params.memoId]);
 
-    const validateDate = (date) => {
-        const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
-        return regex.test(date);
-    };
-
     const handleDateChange = (e) => {
         const { value } = e.target;
-        const regex = /^[0-9\/]*$/; // Allow only numbers and "/"
-        if (regex.test(value)) {
-            setDataAllMemo({
-                ...dataAllMemo,
-                memo_deadline: value,
-            });
-            if (!validateDate(value)) {
-                setError("Date must be in the format dd/mm/yyyy");
-            } else {
-                setError("");
-            }
-        } else {
-            setError("Only numbers and '/' are allowed");
-        }
+        setDataAllMemo({
+            ...dataAllMemo,
+            memo_deadline: value,
+        });
     };
 
     const handleEditedData = async () => {
@@ -76,10 +62,10 @@ const EditMemoPage = () => {
         try {
             const response = await axios.put(
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${memoId}`, dataAllMemo, {
-                    headers: {
-                        "USER-ID": userid,
-                    }
+                headers: {
+                    "USER-ID": userid,
                 }
+            }
             );
             console.log(response.data);
             alert("Edit Success");
@@ -91,11 +77,36 @@ const EditMemoPage = () => {
 
     const fetchOrCreateApproval = async () => {
         const memoId = params.memoId;
-        const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
+        const userId = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
+
         try {
-            const response = await axios.get(`${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memo-approval/memo-or-create/${memoId}?userId=${userid}`);
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memo-approval/memo-or-create/${memoId}?userId=${userId}`);
             setApprovalData(response.data);
             setShowApprovalForm(true); // Show the approval form
+
+            const approvalId = response.data.approvalId;
+
+            if (!approvalId) {
+                // Add query
+                await axios.post(`${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memo-approval/save-or-update`, {
+                    memo_id: memoId,
+                    approval_status: 'pending', // or other default status
+                    approval_notes: '', // or other default notes
+                    userId: userId
+                });
+                alert('Approval added successfully');
+            } else {
+                // Update query
+                await axios.post(`${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memo-approval/save-or-update`, {
+                    approval_id: approvalId,
+                    memo_id: memoId,
+                    approval_status: response.data.approvalStatus,
+                    approval_notes: response.data.approvalNotes,
+                    userId: userId
+                });
+                alert('Approval updated successfully');
+            }
+
         } catch (error) {
             console.log("Error fetching or creating approval:", error);
             if (error.response) {
@@ -192,10 +203,10 @@ const EditMemoPage = () => {
                             })
                         }
                         name="memo_status"
+                        disabled
                     >
                         <option value="Ongoing">Ongoing</option>
-                        <option value="Finished">Finished</option>
-                        <option value="Past Deadline">Past Deadline</option>
+                        <option value="REQUEST APPROVAL SENT">Request Approval Sent</option>
                     </select>
                 </div>
 
@@ -204,13 +215,12 @@ const EditMemoPage = () => {
                         Deadline
                     </label>
                     <input
-                        type="text"
+                        type="date"
                         id="memo_deadline"
                         className="input input-bordered mt-1"
                         value={dataAllMemo.memo_deadline}
                         onChange={handleDateChange}
                         name="memo_deadline"
-                        placeholder="dd/mm/yyyy"
                     />
                     {error && <span className="text-red-600 text-xs mt-1">{error}</span>}
                 </div>
@@ -218,7 +228,7 @@ const EditMemoPage = () => {
                 <div className="flex gap-2 items-center text-white ml-3 mt-3">
                     <Link href="/main/logistic">
                         <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
-                    <IoMdArrowRoundBack />
+                            <IoMdArrowRoundBack />
                             <span>Back</span>
                         </button>
                     </Link>
@@ -228,7 +238,7 @@ const EditMemoPage = () => {
                         onClick={handleEditedData}
                     >
                         <FiSave />
-                        <span>Edit</span>
+                        <span>Save Edit</span>
                     </button>
                     <button
                         type="button"
@@ -236,11 +246,11 @@ const EditMemoPage = () => {
                         onClick={fetchOrCreateApproval}
                     >
                         <FaPenNib />
-                        <span>Approval</span>
+                        <span>Request Approval</span>
                     </button>
                 </div>
             </form>
-            {showApprovalForm && <MemoApprovalForm memoId={params.memoId} approvalData={approvalData} />} 
+            {showApprovalForm && <MemoApprovalForm memoId={params.memoId} approvalData={approvalData} />}
         </>
     );
 };
