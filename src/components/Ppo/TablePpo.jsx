@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 
-const TableSDLC = ({ headers, data, action, link }) => {
+const TablePpo= ({ headers, data, action, link }) => {
     const router = useRouter();
 
     const handleEdit = (id) => {
@@ -49,7 +49,6 @@ const TableSDLC = ({ headers, data, action, link }) => {
             status: "Status",
             deadlineproject: "Deadline Project",
             projectdone: "Project Done"
-            
         };
 
         const displayName = displayNames[header] || header;
@@ -127,4 +126,4 @@ const TableSDLC = ({ headers, data, action, link }) => {
     );
 };
 
-export default TableSDLC;
+export default TablePpo;

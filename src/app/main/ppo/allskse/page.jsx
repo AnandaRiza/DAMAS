@@ -3,6 +3,7 @@ import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
 import TableSKSE from "@/components/skse/TableSKSE";
+import HeaderSkse from "@/components/skse/header/HeaderSkse";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -44,22 +45,19 @@ const page = () => {
     };
     return (
         <div>
-            <div className="w-full px-5 py-5 mt-4">
-                <div className="w-full flex justify-between items-center">
-                    <span className="text-[#0066AE] font-semibold">
-                        All SKSE
-                    </span>
-                    <span className="text-end flex">
-                        {" "}
-                        sort by <MdArrowDropDown className="ml-1 mt-auto" />
-                    </span>
-                </div>
+            <HeaderSkse title="All SK/SE" />
+
+            <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch
-                    placeholder="Find SK/SE"
+                    placeholder="Find Project"
                     setState={setSearchInput}
                     handleSubmit={handleSearch}
                 />
             </div>
+            <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl px-3">
+                <div className=" bw-full px-5 py-2 mt-4">
+                    <div className="w-full flex justify-between items-center"></div>
+                </div>
             {dataAllSkse && (!searchResult || searchInput == "") ? (
                 <div className="mt-4">
                     <TableSKSE
@@ -97,7 +95,7 @@ const page = () => {
             {dataAllSkse && !searchResult && (
                 <div className="w-full flex justify-end items-center gap-3">
                     <button
-                    type="button"
+                        type="button"
                         disabled={currentPage === 1 || startIndex === 0}
                         onClick={() => {
                             setCurrentPage(currentPage - 1);
@@ -109,7 +107,7 @@ const page = () => {
                     </button>
                     <h5 className="font-semibold">{currentPage}</h5>
                     <button
-                    type="button"
+                        type="button"
                         disabled={
                             startIndex + perPage >= dataAllSkse[0].maxSize
                         }
@@ -123,6 +121,7 @@ const page = () => {
                     </button>
                 </div>
             )}
+        </div>
         </div>
     );
 };

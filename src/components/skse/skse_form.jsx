@@ -36,6 +36,12 @@ const SKSEForm = () => {
 
     const handleSubmit = async () => {
         try {
+            const requiredFields = ["nosurat, perihal, pic, deadline, status"];
+            const emptyFields = requiredFields.filter(field => !formData[field]);
+            if (emptyFields.length > 0) {
+                alert(`Please fill in the following fields: ${emptyFields.join(", ")}`);
+                return;
+            }
             await axios.post(`${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/newskse`, formData);
             alert("Create SK/SE Success");
         } catch (error) {
@@ -45,6 +51,8 @@ const SKSEForm = () => {
     };
 
     return (
+        <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl">
+            <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
         <form className="space-y-4">
             {/* Input fields for memo attributes */}
             <div className="flex flex-col">
@@ -52,7 +60,7 @@ const SKSEForm = () => {
                     htmlFor="nosurat"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    No Surat
+                    No Surat  <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="text"
@@ -73,7 +81,7 @@ const SKSEForm = () => {
                     htmlFor="perihal"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    Perihal
+                    Perihal <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="text"
@@ -94,7 +102,7 @@ const SKSEForm = () => {
                     htmlFor="pic"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    PIC
+                    PIC <span className="text-red-500">*</span>
                 </label>
                 {dataAllPic && (
                     <select
@@ -143,7 +151,7 @@ const SKSEForm = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
@@ -162,15 +170,15 @@ const SKSEForm = () => {
                     htmlFor="status"
                     className="text-sm font-semibold text-gray-600"
                 >
-                    Status
+                    Status <span className="text-red-500">*</span>
                 </label>
                 <div className="dropdown mt-1">
-                    <div tabIndex={0} role="button" className="btn m-1">
-                        {formData.status}
+                    <div tabIndex={0} role="button" className="btn m-1 w-52 bg-white hover:bg-gray text-gray-600">
+                    {formData.status ? formData.status : "Select Status"}
                     </div>
                     <ul
                         tabIndex={0}
-                        className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
+                        className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 mb-4"
                     >
                         <li>
                             <a
@@ -220,6 +228,8 @@ const SKSEForm = () => {
                 Create SK/SE
             </button>
         </form>
+        </div>
+        </div>
     );
 };
 

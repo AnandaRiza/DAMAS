@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const SDLCForm = () => {
+const PpoForm = () => {
     const [dataAllPic, setDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
     // State to manage form data
@@ -591,4 +591,4 @@ const SDLCForm = () => {
     );
 };
 
-export default SDLCForm;
+export default PpoForm;

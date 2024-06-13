@@ -5,7 +5,6 @@ import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 
 const TableSKSE = ({headers, data, action, link}) => {
-
   const router = useRouter();
 
   const handleEdit = (id) => {

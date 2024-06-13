@@ -4,7 +4,7 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const SDLCDetail = () => {
+const PpoDetail = () => {
     const userid = document.cookie
         .split("; ")
         .find((row) => row.startsWith("DAMAS-USERID="))
@@ -102,7 +102,6 @@ const SDLCDetail = () => {
                                 Project Name
                             </label>
                             <input
-                            disabled
                                 type="text"
                                 value={dataAllProject.projectname}
                                 onChange={(e) =>
@@ -913,4 +912,4 @@ const SDLCDetail = () => {
     );
 };
 
-export default SDLCDetail;
+export default PpoDetail;
