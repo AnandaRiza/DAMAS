@@ -11,16 +11,35 @@ const SDLCForm = () => {
         projectname: "",
         pic: "",
         departement:"",
-        kickoff: "",
-        userrequirement: "",
-        applicationdevelopment: "",
-        sit: "",
-        uat: "",
-        implementationprepare: "",
-        implementationmeeting: "",
-        implementation: "",
-        postimplementationreview: "",
+        kickoffstart: "",
+        kickoffdeadline: "",
+        kickoffdone: "",
+        userrequirementstart: "",
+        userrequirementdeadline: "",
+        userrequirementdone: "",
+        applicationdevelopmentstart: "",
+        applicationdevelopmentdeadline: "",
+        applicationdevelopmentdone: "",
+        sitstart: "",
+        sitdeadline: "",
+        sitdone: "",
+        uatstart: "",
+        uatdeadline: "",
+        uatdone: "",
+        implementationpreparestart: "",
+        implementationpreparedeadline: "",
+        implementationpreparedone: "",
+        implementationmeetingstart: "",
+        implementationmeetingdeadline: "",
+        implementationmeetingdone: "",
+        implementationstart: "",
+        implementationdeadline: "",
+        implementationdone: "",
+        postimplementationreviewstart: "",
+        postimplementationreviewdeadline: "",
+        postimplementationreviewdone: "",
         status: "",
+        deadlineproject: "",
     });
 
   
@@ -44,8 +63,15 @@ const SDLCForm = () => {
 
     const handleSubmit = async () => {
         try {
+            const requiredFields = ["projectname", "pic", "kickoffstart", "kickoffdeadline", "userrequirementstart","userrequirementdeadline","applicationdevelopmentstart","applicationdevelopmentdeadline", "sitstart", "sitdeadline", "uatstart", "uatdeadline", "implementationpreparestart", "implementationpreparedeadline", "implementationmeetingstart", "implementationmeetingdeadline", "implementationstart", "implementationdeadline", "postimplementationreviewstart", "postimplementationreviewdeadline", "status", "deadlineproject"];
+            const emptyFields = requiredFields.filter(field => !formData[field]);
+            if (emptyFields.length > 0) {
+                alert(`Please fill in the following fields: ${emptyFields.join(", ")}`);
+                return;
+            }
             await axios.post("http://localhost:8081/api/projectdev", formData);
             alert("Create Project Success");
+
         } catch (error) {
             console.log(error);
             alert("Create Project Failed!");
@@ -53,13 +79,16 @@ const SDLCForm = () => {
     };
 
     return (
-        <form className="space-y-4">
+        <div  className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
+            <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
+
+            <form className="space-y-4 ">
             <div className="flex flex-col">
                 <label
                     htmlFor="namaproject"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Project Name
+                    Project Name <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="text"
@@ -78,9 +107,9 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="pic"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    PIC
+                    PIC <span className="text-red-500">*</span>
                 </label>
                 {dataAllPic && (
                     <select
@@ -114,7 +143,7 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="departemen"
-                    className="text-sm font-semibold"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
                     Departement
                 </label>
@@ -126,20 +155,20 @@ const SDLCForm = () => {
 
             <div className="flex flex-col">
                 <label
-                    htmlFor="kickoff"
-                    className="text-sm font-semibold text-gray-600"
+                    htmlFor="kickoffstart"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Kick Off
+                    Kick Off Start <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
-                    id="kickoff"
-                    name="kickoff"
-                    value={formData.kickoff}
+                    id="kickoffstart"
+                    name="kickoffstart"
+                    value={formData.kickoffstart}
                     onChange={(e) =>
                         setFormData({
                             ...formData,
-                            kickoff: e.target.value,
+                            kickoffstart: e.target.value,
                         })
                     }
                     className="input input-bordered mt-1"
@@ -148,20 +177,20 @@ const SDLCForm = () => {
             </div>
             <div className="flex flex-col">
                 <label
-                    htmlFor="userrequirement"
-                    className="text-sm font-semibold text-gray-600"
+                    htmlFor="kickoffdeadline"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    User Requierement
+                    Kick Off Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
-                    id="userrequirement"
-                    name="userrequirement"
-                    value={formData.userrequirement}
+                    id="kickoffdeadline"
+                    name="kickoffdeadline"
+                    value={formData.kickoffdeadline}
                     onChange={(e) =>
                         setFormData({
                             ...formData,
-                            userrequirement: e.target.value,
+                            kickoffdeadline: e.target.value,
                         })
                     }
                     className="input input-bordered mt-1"
@@ -170,20 +199,20 @@ const SDLCForm = () => {
             </div>
             <div className="flex flex-col">
                 <label
-                    htmlFor="applicationdevelopment"
-                    className="text-sm font-semibold text-gray-600"
+                    htmlFor="userrequirementstart"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Application Development
+                    User Requierement Start <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
-                    id="applicationdevelopment"
-                    name="applicationdevelopment"
-                    value={formData.applicationdevelopment}
+                    id="userrequirementstart"
+                    name="userrequirementstart"
+                    value={formData.userrequirementstart}
                     onChange={(e) =>
                         setFormData({
                             ...formData,
-                            applicationdevelopment: e.target.value,
+                            userrequirementstart: e.target.value,
                         })
                     }
                     className="input input-bordered mt-1"
@@ -192,108 +221,283 @@ const SDLCForm = () => {
             </div>
             <div className="flex flex-col">
                 <label
-                    htmlFor="sit"
-                    className="text-sm font-semibold text-gray-600"
+                    htmlFor="userrequirementdeadline"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    SIT
+                    User Requierement Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
-                    id="sit"
-                    name="sit"
-                    value={formData.sit}
+                    id="userrequirementdeadline"
+                    name="userrequirementdeadline"
+                    value={formData.userrequirementdeadline}
                     onChange={(e) =>
-                        setFormData({ ...formData, sit: e.target.value })
+                        setFormData({
+                            ...formData,
+                            userrequirementdeadline: e.target.value,
+                        })
+                    }
+                    className="input input-bordered mt-1"
+                    
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="applicationdevelopmentstart"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Application Development Start <span className="text-red-500">*</span>
+                </label>
+                <input
+                    type="date"
+                    id="applicationdevelopmentstart"
+                    name="applicationdevelopmentstart"
+                    value={formData.applicationdevelopmentstart}
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            applicationdevelopmentstart: e.target.value,
+                        })
+                    }
+                    className="input input-bordered mt-1"
+                    
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="applicationdevelopmentdeadline"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Application Development Deadline <span className="text-red-500">*</span>
+                </label>
+                <input
+                    type="date"
+                    id="applicationdevelopmentdeadline"
+                    name="applicationdevelopmentdeadline"
+                    value={formData.applicationdevelopmentdeadline}
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            applicationdevelopmentdeadline: e.target.value,
+                        })
+                    }
+                    className="input input-bordered mt-1"
+                    
+                />
+            </div>
+        
+            <div className="flex flex-col">
+                <label
+                    htmlFor="sitstart"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    SIT Start <span className="text-red-500">*</span>
+                </label>
+                <input
+                    type="date"
+                    id="sitstart"
+                    name="sitstart"
+                    value={formData.sitstart}
+                    onChange={(e) =>
+                        setFormData({ ...formData, sitstart: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
             </div>
             <div className="flex flex-col">
                 <label
-                    htmlFor="uat"
-                    className="text-sm font-semibold text-gray-600"
+                    htmlFor="sitdeadline"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    UAT
+                    SIT Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
-                    id="uat"
-                    name="uat"
-                    value={formData.uat}
+                    id="sitdeadline"
+                    name="sitdeadline"
+                    value={formData.sitdeadline}
                     onChange={(e) =>
-                        setFormData({ ...formData, uat: e.target.value })
+                        setFormData({ ...formData, sitdeadline: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
             </div>
             <div className="flex flex-col">
                 <label
-                    htmlFor="implementationprepare"
-                    className="text-sm font-semibold text-gray-600"
+                    htmlFor="uatstart"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Implementation Prepare
+                    UAT Start
                 </label>
                 <input
                     type="date"
-                    id="implementationprepare"
-                    name="implementationprepare"
-                    value={formData.implementationprepare}
+                    id="uatstart"
+                    name="uatstart"
+                    value={formData.uatstart}
                     onChange={(e) =>
-                        setFormData({ ...formData, implementationprepare: e.target.value })
+                        setFormData({ ...formData, uatstart: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
             </div>
             <div className="flex flex-col">
                 <label
-                    htmlFor="implementationmeeting"
-                    className="text-sm font-semibold text-gray-600"
+                    htmlFor="uatdeadline"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Implementation Meeting
+                    UAT Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
-                    id="implementationmeeting"
-                    name="implementationmeeting"
-                    value={formData.implementationmeeting}
+                    id="uatdeadline"
+                    name="uatdeadline"
+                    value={formData.uatdeadline}
                     onChange={(e) =>
-                        setFormData({ ...formData, implementationmeeting: e.target.value })
+                        setFormData({ ...formData, uatdeadline: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
             </div>
             <div className="flex flex-col">
                 <label
-                    htmlFor="implementation"
-                    className="text-sm font-semibold text-gray-600"
+                    htmlFor="implementationpreparestart"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Implementation
+                    Implementation Prepare Start <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
-                    id="implementation"
-                    name="implementation"
-                    value={formData.implementation}
+                    id="implementationpreparestart"
+                    name="implementationpreparestart"
+                    value={formData.implementationpreparestart}
                     onChange={(e) =>
-                        setFormData({ ...formData, implementation: e.target.value })
+                        setFormData({ ...formData, implementationpreparestart: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
             </div>
             <div className="flex flex-col">
                 <label
-                    htmlFor="postimplementationreview"
-                    className="text-sm font-semibold text-gray-600"
+                    htmlFor="implementationpreparedeadline"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Post Implementation Review
+                    Implementation Prepare Deadline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="date"
-                    id="postimplementationreview"
-                    name="postimplementationreview"
-                    value={formData.postimplementationreview}
+                    id="implementationpreparedeadline"
+                    name="implementationpreparedeadline"
+                    value={formData.implementationpreparedeadline}
                     onChange={(e) =>
-                        setFormData({ ...formData, postimplementationreview: e.target.value })
+                        setFormData({ ...formData, implementationpreparedeadline: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementationmeetingstart"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Implementation Meeting Start <span className="text-red-500">*</span>
+                </label>
+                <input
+                    type="date"
+                    id="implementationmeetingstart"
+                    name="implementationmeetingstart"
+                    value={formData.implementationmeetingstart}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementationmeetingstart: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementationmeetingdeadline"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Implementation Meeting Deadline <span className="text-red-500">*</span>
+                </label>
+                <input
+                    type="date"
+                    id="implementationmeetingdeadline"
+                    name="implementationmeetingdeadline"
+                    value={formData.implementationmeetingdeadline}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementationmeetingdeadline: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementationstart"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Implementation Start <span className="text-red-500">*</span>
+                </label>
+                <input
+                    type="date"
+                    id="implementationstart"
+                    name="implementationstart"
+                    value={formData.implementationstart}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementationstart: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="implementationdeadline"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Implementation Deadline <span className="text-red-500">*</span>
+                </label>
+                <input
+                    type="date"
+                    id="implementationdeadline"
+                    name="implementationdeadline"
+                    value={formData.implementationdeadline}
+                    onChange={(e) =>
+                        setFormData({ ...formData, implementationdeadline: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="postimplementationreviewstart"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Post Implementation Review Start <span className="text-red-500">*</span>
+                </label>
+                <input
+                    type="date"
+                    id="postimplementationreviewstart"
+                    name="postimplementationreviewstart"
+                    value={formData.postimplementationreviewstart}
+                    onChange={(e) =>
+                        setFormData({ ...formData, postimplementationreviewstart: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="postimplementationreviewdeadline"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Post Implementation Review Deadline <span className="text-red-500">*</span>
+                </label>
+                <input
+                    type="date"
+                    id="postimplementationreviewdeadline"
+                    name="postimplementationreviewdeadline"
+                    value={formData.postimplementationreviewdeadline}
+                    onChange={(e) =>
+                        setFormData({ ...formData, postimplementationreviewdeadline: e.target.value })
                     }
                     className="input input-bordered mt-1"
                 />
@@ -302,17 +506,17 @@ const SDLCForm = () => {
             <div className="flex flex-col">
                 <label
                     htmlFor="status"
-                    className="text-sm font-semibold text-gray-600"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                    Status
+                    Status <span className="text-red-500">*</span>
                 </label>
-                <div className="dropdown mt-1">
-                    <div tabIndex={0} role="button" className="btn m-1">
-                        {formData.status}
+                <div className="dropdown mt-1 ">
+                    <div tabIndex={0} role="button" className="btn m-1 w-52 bg-white hover:bg-gray text-gray-600">
+                        {formData.status ? formData.status : "Select Status"}
                     </div>
                     <ul
                         tabIndex={0}
-                        className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
+                        className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 mb-4"
                     >
                         <li>
                             <a
@@ -353,6 +557,24 @@ const SDLCForm = () => {
                     </ul>
                 </div>
             </div>
+            <div className="flex flex-col">
+                <label
+                    htmlFor="deadlineproject"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Deadline Project <span className="text-red-500">*</span>
+                </label>
+                <input
+                    type="date"
+                    id="deadlineproject"
+                    name="deadlineproject"
+                    value={formData.deadlineproject}
+                    onChange={(e) =>
+                        setFormData({ ...formData, deadlineproject: e.target.value })
+                    }
+                    className="input input-bordered mt-1"
+                />
+            </div>
             {/* Submit button */}
             <button
                 type="button"
@@ -362,6 +584,10 @@ const SDLCForm = () => {
                 Create Project
             </button>
         </form>
+            </div>
+            
+        </div>
+       
     );
 };
 
