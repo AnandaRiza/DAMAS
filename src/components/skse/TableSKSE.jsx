@@ -11,6 +11,10 @@ const TableSKSE = ({headers, data, action, link}) => {
     router.push(`${link}/edit/${id}`);
 };
 
+const handleDoubleClick = (id) => {
+  router.push(`${link}/detail/${id}`);
+};
+
 const getDisplayName = (header) => {
   const displayNames = {
       nosurat: 'No Surat',
@@ -47,6 +51,7 @@ const getDisplayName = (header) => {
                             className={`${
                                 index % 2 === 0 ? "bg-white" : "bg-[#00A6B4]/[0.5]"
                             } hover:bg-gray-100 text-xs leading-5`}
+                            onDoubleClick={() => handleDoubleClick(item.id)}
                         >
                            
 

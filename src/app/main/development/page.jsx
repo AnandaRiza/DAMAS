@@ -6,8 +6,8 @@ import TableSDLC from "@/components/sdlc/TableSDLC";
 import HeaderDev from "@/components/sdlc/header/HeaderDev";
 
 import axios from "axios";
+import moment from "moment";
 import { useEffect, useState } from "react";
-
 
 const page = () => {
     const [searchInput, setSearchInput] = useState("");
@@ -33,6 +33,9 @@ const page = () => {
         }
     };
 
+
+
+    
     const handleSearch = async () => {
         try {
             const response = await axios.get(
@@ -90,6 +93,8 @@ const page = () => {
                                 data={searchResult}
                                 action={true}
                                 link={"/main/development/"}
+                                rowClass={(item) => rowClass(item.deadlineproject)}
+                                
                             />
                         </div>
                     )}
@@ -113,7 +118,7 @@ const page = () => {
                         </button>
                         <h5 className="font-semibold">{currentPage}</h5>
                         <button
-                            typr="button"
+                            type="button"
                             disabled={
                                 startIndex + perPage >=
                                 dataAllProject[0].maxSize

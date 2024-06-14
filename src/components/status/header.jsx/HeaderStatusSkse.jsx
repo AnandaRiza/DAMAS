@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const HeaderSkse = ({title}) => {
+const HeaderStatusSkse = ({title}) => {
   return (
     <>
       <div className="flex-grow justify-center items-center rounded-xl bg-[#FFFFFF] shadow-md">
@@ -19,12 +19,7 @@ const HeaderSkse = ({title}) => {
                     </Link>
                   </li>
                   <li>
-                  <Link href="/main/ppo/allskse">
-                    PPO
-                    </Link>
-                  </li>
-                  <li>
-                  <Link href="/main/ppo/allskse">
+                  <Link href="/main/status/approveprojectdev">
                     SKSE
                     </Link>
                   </li>
@@ -42,4 +37,4 @@ const HeaderSkse = ({title}) => {
   )
 }
 
-export default HeaderSkse
+export default HeaderStatusSkse

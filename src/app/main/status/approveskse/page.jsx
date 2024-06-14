@@ -3,7 +3,7 @@ import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
 import TableApproveSkse from "@/components/status/TableApproveSkse";
-import HeaderStatus from "@/components/status/header.jsx/HeaderStatus";
+import HeaderStatusSkse from "@/components/status/header.jsx/HeaderStatusSkse";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -18,7 +18,7 @@ const Page = () => {
 
     useEffect(() => {
         getAllDataLog();
-    }, [startIndex]);
+    }, [startIndex], [refresh]);
 
     const getAllDataLog = async () => {
         setDataLog(null);
@@ -45,9 +45,14 @@ const Page = () => {
         }
     };
 
+    const handleRefresh = () => {
+        setRefresh(!refresh);
+        getAllDataLog();
+    };
+
     return (
         <div>
-            <HeaderStatus title="Approvement" />
+            <HeaderStatusSkse title="Approvement" />
 
             <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch
@@ -69,6 +74,7 @@ const Page = () => {
                         data={dataLog}
                         parameter={"skse"}
                         action={true}
+                        isRefresh={handleRefresh}
                     />
                 ) : (
                     !(searchResult && searchInput != "") && <PleaseWait />
@@ -85,6 +91,7 @@ const Page = () => {
                                 data={searchResult}
                                 parameter={"skse"}
                                 action={true}
+                                isRefresh={handleRefresh}
                             />
                         </div>
                     )}

@@ -7,7 +7,6 @@ import HeaderSkse from "@/components/skse/header/HeaderSkse";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import { MdArrowDropDown } from "react-icons/md";
 
 const page = () => {
     const [searchInput, setSearchInput] = useState("");

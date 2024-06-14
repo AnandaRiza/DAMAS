@@ -3,7 +3,7 @@ import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
 import TableApprove from "@/components/status/TableApprove";
-import HeaderStatus from "@/components/status/header.jsx/HeaderStatus";
+import HeaderStatusSdlc from "@/components/status/header.jsx/HeaderStatusSdlc";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -52,7 +52,7 @@ const Page = () => {
 
     return (
         <div>
-            <HeaderStatus title="Approvement" />
+            <HeaderStatusSdlc title="Approvement" />
 
             <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch

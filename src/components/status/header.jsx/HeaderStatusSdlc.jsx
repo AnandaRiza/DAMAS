@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const HeaderStatus = ({title}) => {
+const HeaderStatusSdlc = ({title}) => {
   return (
     <>
       <div className="flex-grow justify-center items-center rounded-xl bg-[#FFFFFF] shadow-md">
@@ -37,4 +37,4 @@ const HeaderStatus = ({title}) => {
   )
 }
 
-export default HeaderStatus
+export default HeaderStatusSdlc
