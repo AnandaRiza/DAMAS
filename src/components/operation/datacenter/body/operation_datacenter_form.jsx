@@ -925,11 +925,11 @@ const page = () => {
                 type="date"
                 id="deadline"
                 name="deadline"
-                value={formData.server_deadline_project}
+                value={formData.dacen_deadline_project}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    server_deadline_project: e.target.value,
+                    dacen_deadline_project: e.target.value,
                   })
                 }
                 className="input input-bordered mt-1"
@@ -951,7 +951,7 @@ const page = () => {
                   role="button"
                   className="btn m-1 w-52 bg-gray hover:bg-gray"
                 >
-                  {formData.server_status}
+                  {formData.dacen_status}
                 </div>
                 <ul
                   tabIndex={0}
@@ -962,7 +962,7 @@ const page = () => {
                       onClick={() =>
                         setFormData({
                           ...formData,
-                          server_status: "Ongoing",
+                          dacen_status: "Ongoing",
                         })
                       }
                     >
@@ -974,7 +974,7 @@ const page = () => {
                       onClick={() =>
                         setFormData({
                           ...formData,
-                          server_status: "Finished",
+                          dacen_status: "Finished",
                         })
                       }
                     >
@@ -986,7 +986,7 @@ const page = () => {
                       onClick={() =>
                         setFormData({
                           ...formData,
-                          server_status: "Past-Deadline",
+                          dacen_status: "Past-Deadline",
                         })
                       }
                     >

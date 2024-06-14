@@ -9,10 +9,6 @@ const page = () => {
 const [dataAllPic, setDataAllPic] = useState(null);
   const [selectedDept, setSelectedDept] = useState("");
   const [formData, setFormData] = useState({
-    server_perihal: "",
-    server_pic: "",
-    server_deadline: "",
-    server_status: "",
   });
 
   const [showPhase, setShowPhase] = useState(0);
@@ -926,11 +922,11 @@ return (
                 type="date"
                 id="deadline"
                 name="deadline"
-                value={formData.server_deadline_project}
+                value={formData.itsupport_deadline_project}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    server_deadline_project: e.target.value,
+                    itsupport_deadline_project: e.target.value,
                   })
                 }
                 className="input input-bordered mt-1"
@@ -952,7 +948,7 @@ return (
                   role="button"
                   className="btn m-1 w-52 bg-gray hover:bg-gray"
                 >
-                  {formData.server_status}
+                  {formData.itsupport_status}
                 </div>
                 <ul
                   tabIndex={0}
@@ -963,7 +959,7 @@ return (
                       onClick={() =>
                         setFormData({
                           ...formData,
-                          server_status: "Ongoing",
+                          itsupport_status: "Ongoing",
                         })
                       }
                     >
@@ -975,7 +971,7 @@ return (
                       onClick={() =>
                         setFormData({
                           ...formData,
-                          server_status: "Finished",
+                          itsupport_status: "Finished",
                         })
                       }
                     >
@@ -987,7 +983,7 @@ return (
                       onClick={() =>
                         setFormData({
                           ...formData,
-                          server_status: "Past-Deadline",
+                          itsupport_status: "Past-Deadline",
                         })
                       }
                     >

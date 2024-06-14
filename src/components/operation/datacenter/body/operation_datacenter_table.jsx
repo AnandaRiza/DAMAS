@@ -5,7 +5,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 
-const page = ( {headers, data, action, link}) => {
+const page = ( {headers, data, action, link} ) => {
     const router = useRouter();
 
     const handleEdit = (dacen_id) => {

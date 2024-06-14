@@ -397,7 +397,7 @@ const Sidebar = () => {
 
                                         <hr className="my-4 border-gray-300" />
 
-                                        <Link href="/main/operation/itmo/createnewproject">
+                                        <Link href="/main/operation/itmo/createnewprogress">
                                         <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                                             <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
                                                 Create New  Project
