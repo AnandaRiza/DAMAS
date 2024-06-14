@@ -41,7 +41,7 @@ const Header = ({ title }) => {
       <li>
         <details className="mr-10">
           <summary className="font-bold text-[#0066AE]">
-            Welcome User
+            Welcome Riza Ganteng
           </summary>
           <ul className="rounded-t-none text-black absolute top-full right-10 z-10 shadow-md">
             <li>
