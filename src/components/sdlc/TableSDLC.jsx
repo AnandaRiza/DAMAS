@@ -67,6 +67,21 @@ const TableSDLC = ({ headers, data, action, link }) => {
         return daysLeft;
     };
 
+
+    const getStatus = (item) => {
+        const daysLeft = calculateTimeLeft(item.deadlineproject);
+        
+        if (daysLeft < 0) {
+            return "Past Deadline";
+        } else if (daysLeft <= 3) {
+            return "Within 3 days";
+        } else if (daysLeft <= 7) {
+            return "Within 7 days";
+        } else {
+            return "On Track";
+        }
+    };
+
     const rowClass = (inputDate) => {
         const daysLeft = calculateTimeLeft(inputDate);
         // console.log(daysLeft)
@@ -134,82 +149,71 @@ const TableSDLC = ({ headers, data, action, link }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
-                        <tr
-                            key={index}
-                            className={`
-                                ${rowClass(item.deadlineproject) && rowClass(item.deadlineproject)}
-                             hover:bg-gray-100 text-xs leading-5 `}
-                            onDoubleClick={() => handleDoubleClick(item.id)}
-                        >
-                            {headers.map((header, headerIndex) => (
-                                <td
-                                    key={headerIndex}
-                                    className={`py-3 px-6 ${
-                                        header === "id" ||
-                                        header === "kickoffstart" ||
-                                        header === "kickoffdeadline" ||
-                                        header === "kickoffdone" ||
-                                        header === "userrequirementstart" ||
-                                        header === "userrequirementdeadline" ||
-                                        header === "userrequirementdone" ||
-                                        header ===
-                                            "applicationdevelopmentstart" ||
-                                        header ===
-                                            "applicationdevelopmentdeadline" ||
-                                        header ===
-                                            "applicationdevelopmentdone" ||
-                                        header === "sitstart" ||
-                                        header === "sitdeadline" ||
-                                        header === "sitdone" ||
-                                        header === "uatstart" ||
-                                        header === "uatdeadline" ||
-                                        header === "uatdone" ||
-                                        header ===
-                                            "implementationpreparestart" ||
-                                        header ===
-                                            "implementationpreparedeadline" ||
-                                        header ===
-                                            "implementationpreparedone" ||
-                                        header ===
-                                            "implementationmeetingstart" ||
-                                        header ===
-                                            "implementationmeetingdeadline" ||
-                                        header ===
-                                            "implementationmeetingdone" ||
-                                        header === "implementationstart" ||
-                                        header === "implementationdeadline" ||
-                                        header === "implementationdone" ||
-                                        header ===
-                                            "postimplementationreviewstart" ||
-                                        header ===
-                                            "postimplementationreviewdeadline" ||
-                                        header ===
-                                            "postimplementationreviewdone" ||
-                                        header === "projectdone"
-                                            ? "hidden"
-                                            : ""
-                                    }`}
-                                >
-                                    {item[header]}
-                                </td>
-                            ))}
+                    {data.map((item, index) => {
+                        const status = getStatus(item.status);
+                        const rowClassName = rowClass(item.deadlineproject);
 
-                            {action && (
-                                <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            handleEdit(item[headers[0]])
-                                        }
-                                        className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2 "
+                        return (
+                            <tr
+                                key={index}
+                                className={`${rowClassName} hover:bg-gray-100 text-xs leading-5`}
+                                onDoubleClick={() => handleDoubleClick(item.id)}
+                            >
+                                {headers.map((header, headerIndex) => (
+                                    <td
+                                        key={headerIndex}
+                                        className={`py-3 px-6 ${
+                                            header === "id" ||
+                                            header === "kickoffstart" ||
+                                            header === "kickoffdeadline" ||
+                                            header === "kickoffdone" ||
+                                            header === "userrequirementstart" ||
+                                            header === "userrequirementdeadline" ||
+                                            header === "userrequirementdone" ||
+                                            header === "applicationdevelopmentstart" ||
+                                            header === "applicationdevelopmentdeadline" ||
+                                            header === "applicationdevelopmentdone" ||
+                                            header === "sitstart" ||
+                                            header === "sitdeadline" ||
+                                            header === "sitdone" ||
+                                            header === "uatstart" ||
+                                            header === "uatdeadline" ||
+                                            header === "uatdone" ||
+                                            header === "implementationpreparestart" ||
+                                            header === "implementationpreparedeadline" ||
+                                            header === "implementationpreparedone" ||
+                                            header === "implementationmeetingstart" ||
+                                            header === "implementationmeetingdeadline" ||
+                                            header === "implementationmeetingdone" ||
+                                            header === "implementationstart" ||
+                                            header === "implementationdeadline" ||
+                                            header === "implementationdone" ||
+                                            header === "postimplementationreviewstart" ||
+                                            header === "postimplementationreviewdeadline" ||
+                                            header === "postimplementationreviewdone" ||
+                                            header === "projectdone"
+                                                ? "hidden"
+                                                : ""
+                                        }`}
                                     >
-                                        <AiOutlineEdit size={20} />
-                                    </button>
-                                </td>
-                            )}
-                        </tr>
-                    ))}
+                                        {item[header]}
+                                    </td>
+                                ))}
+
+                                {action && (
+                                    <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                                        <button
+                                            type="button"
+                                            onClick={() => handleEdit(item[headers[0]])}
+                                            className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2"
+                                        >
+                                            <AiOutlineEdit size={20} />
+                                        </button>
+                                    </td>
+                                )}
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </table>
         </div>
