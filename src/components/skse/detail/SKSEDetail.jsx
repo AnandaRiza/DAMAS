@@ -1,22 +1,17 @@
 "use client";
 import PleaseWait from "@/components/PleaseWait";
 import axios from "axios";
-import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { FiSave } from "react-icons/fi";
-import { MdOutlineCancel } from "react-icons/md";
 
-const Page = () => {
+const SKSEDetail = () => {
     const userid = document.cookie
         .split("; ")
         .find((row) => row.startsWith("DAMAS-USERID="))
         ?.split("=")[1];
 
     const params = useParams();
-    const router = useRouter();
     const [selectedDept, setSelectedDept] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
     const [dataAllPic, setDataAllPic] = useState(null);
     const [dataAllSkse, setDataAllSkse] = useState({
         submitter: "",
@@ -54,7 +49,7 @@ const Page = () => {
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
             );
             setDataAllPic(response.data.data);
-            console.log(response.data.data);
+            // console.log(response.data.data);
         } catch (error) {
             console.log(error);
         }
@@ -65,34 +60,6 @@ const Page = () => {
             setSelectedDept(dataAllSkse.departement);
         }
     }, [dataAllSkse]);
-
-    const handleEditedData = async () => {
-            setIsLoading(true);
-            try {
-                await axios.post(
-                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/skse/log`,
-                    {
-                        ...dataAllSkse,
-                        submitter: userid,
-                        authorizer: "Kadev",
-                        submitAt: "123",
-                        deadline: "123",
-                        statusApprovement: "PENDING",
-                        idskse: dataAllSkse.id
-                    },
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            "USER-ID": userid,
-                        },
-                    }
-                );
-                router.push("/main/ppo/allskse")
-                setIsLoading(false)
-            } catch (error) {
-                console.log(error);
-            }
-    };
 
     return (
         <div  className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl">
@@ -107,6 +74,7 @@ const Page = () => {
                             No Surat
                         </label>
                         <input
+                        disabled
                             type="text"
                             value={dataAllSkse.nosurat}
                             onChange={(e) =>
@@ -115,7 +83,7 @@ const Page = () => {
                                     nosurat: e.target.value,
                                 })
                             }
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                         />
                     </div>
 
@@ -127,6 +95,7 @@ const Page = () => {
                             Perihal
                         </label>
                         <input
+                        disabled
                             type="text"
                             value={dataAllSkse.perihal}
                             onChange={(e) =>
@@ -135,7 +104,7 @@ const Page = () => {
                                     perihal: e.target.value,
                                 })
                             }
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                         />
                     </div>
                     <div className="flex flex-col">
@@ -147,8 +116,9 @@ const Page = () => {
                         </label>
                         {dataAllPic && (
                             <select
+                            disabled
                                 type="text"
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                                 value={dataAllSkse.name}
                                 onChange={(e) => {
                                     const selectedPic = JSON.parse(
@@ -225,14 +195,14 @@ const Page = () => {
                             Status
                         </label>
                         <div className="dropdown mt-1">
-                            <div tabIndex={0} role="button" className="btn m-1">
+                            <div className="btn m-1 disabled:text-black">
                                 {dataAllSkse.status}
                             </div>
                             <ul
                                 tabIndex={0}
                                 className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
                             >
-                                <li>
+                                <li className="  disabled:text-black">
                                     <a
                                         onClick={(e) =>
                                             setDataAllSkse({
@@ -271,30 +241,7 @@ const Page = () => {
                             </ul>
                         </div>
                     </div>
-                    <div className="flex gap-2 items-center text-white ml-3 mt-3">
-                        <Link href="/main/ppo/allskse">
-                            <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
-                                <MdOutlineCancel />
-                                <span>Cancel</span>
-                            </button>
-                        </Link>
-                        <button
-                            type="button"
-                            className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center"
-                            onClick={handleEditedData}
-                        >
-                            <FiSave />
-                            {isLoading ? (
-                                <div className="flex justify-center gap-3">
-                                <p>Please wait</p>
-                                <span className="loading loading-spinner"></span>
-                            </div>
-                            
-                        ) : (
-                            <span>Edit</span>
-                        )}
-                        </button>
-                    </div>
+                    
                 </form>
             ) : (
                 <PleaseWait />
@@ -304,4 +251,4 @@ const Page = () => {
     );
 };
 
-export default Page;
+export default SKSEDetail;
