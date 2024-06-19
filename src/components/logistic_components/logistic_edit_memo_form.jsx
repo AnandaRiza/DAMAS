@@ -110,7 +110,7 @@ const EditMemoPage = () => {
                     }
                 }
             );
-            alert("Edit Success");
+            alert("Memo Update Success");
             router.push('/main/logistic');
         } catch (error) {
             console.log(error);

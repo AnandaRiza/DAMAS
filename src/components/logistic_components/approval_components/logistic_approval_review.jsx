@@ -94,7 +94,8 @@ const ReviewMemoPage = () => {
     const handleApprove = () => {
         setDataAllMemo(prevState => ({
             ...prevState,
-            memo_status: 'MEMO APPROVED'
+            memo_status: 'MEMO APPROVED',
+            memo_notes: ''
         }));
     };
 
@@ -124,7 +125,7 @@ const ReviewMemoPage = () => {
                     }
                 }
             );
-            alert("Edit Success");
+            alert("Approval Update Success ");
             router.push('/main/status/approvelogistic');
         } catch (error) {
             console.log(error);
