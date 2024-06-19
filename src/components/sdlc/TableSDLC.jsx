@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
-import moment from "moment";
 
 const TableSDLC = ({ headers, data, action, link }) => {
     const router = useRouter();
@@ -86,11 +85,11 @@ const TableSDLC = ({ headers, data, action, link }) => {
         const daysLeft = calculateTimeLeft(inputDate);
         // console.log(daysLeft)
         if (daysLeft <= 3) {
-            return "bg-red-200";
+            return "bg-red-200 hover:bg-red-300";
         } else if (daysLeft <= 7) {
-            return "bg-yellow-200";
+            return "bg-yellow-200 hover:bg-yellow-300";
         } else {
-            return "bg-green-200";
+            return "bg-green-200 hover:bg-green-300";
         }
     };
 
@@ -150,13 +149,13 @@ const TableSDLC = ({ headers, data, action, link }) => {
                 </thead>
                 <tbody>
                     {data.map((item, index) => {
-                        const status = getStatus(item.status);
+                        const status = getStatus(item);
                         const rowClassName = rowClass(item.deadlineproject);
 
                         return (
                             <tr
                                 key={index}
-                                className={`${rowClassName} hover:bg-gray-100 text-xs leading-5`}
+                                className={`${rowClassName}  text-xs leading-5`}
                                 onDoubleClick={() => handleDoubleClick(item.id)}
                             >
                                 {headers.map((header, headerIndex) => (
@@ -196,7 +195,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
                                                 : ""
                                         }`}
                                     >
-                                        {item[header]}
+                                       {header === "status" ? status : item[header]}
                                     </td>
                                 ))}
 
