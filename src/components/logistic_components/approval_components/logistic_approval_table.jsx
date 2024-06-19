@@ -4,7 +4,7 @@ import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
-const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
+const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     const router = useRouter();
 
     const getDisplayName = (header) => {
@@ -24,8 +24,10 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     };
 
     const handleEditClick = (memoId) => {
-        router.push(`${link}mymemo/editmemo/${memoId}`);
+        router.push(`${link}logisticreview/${memoId}`);
+        
     };
+    
 
     const userId = document.cookie
         .split("; ")
@@ -63,7 +65,7 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
+                    {data.filter(item => item.memo_status === "APPROVAL REQUEST SENT").map((item, index) => (
                         <tr
                             key={index}
                             className={`${
@@ -109,4 +111,4 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     );
 };
 
-export default LogisticTable;
+export default ApprovalTable;

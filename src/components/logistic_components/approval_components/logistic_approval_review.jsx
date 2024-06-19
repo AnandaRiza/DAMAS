@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PleaseWait from "@/components/PleaseWait";
@@ -10,7 +11,7 @@ import { FaPenNib } from "react-icons/fa";
 import LogisticSignature from "@/components/logistic_components/logistic_signature";
 import MemoApprovalForm from "@/components/logistic_components/approval_components/memo_approval"; // Make sure this is the correct import path
 
-const EditMemoPage = () => {
+const ReviewMemoPage = () => {
     const [dataAllMemo, setDataAllMemo] = useState({
         memo_id: "",
         memo_num: "",
@@ -44,7 +45,6 @@ const EditMemoPage = () => {
             console.log(error);
         }
     };
-
 
     useEffect(() => {
         const getCurrentData = async () => {
@@ -91,6 +91,21 @@ const EditMemoPage = () => {
         }));
     };
 
+    const handleApprove = () => {
+        setDataAllMemo(prevState => ({
+            ...prevState,
+            memo_status: 'MEMO APPROVED',
+            memo_notes: ''
+        }));
+    };
+
+    const handleReject = () => {
+        setDataAllMemo(prevState => ({
+            ...prevState,
+            memo_status: 'REQUEST HAS BEEN REJECTED'
+        }));
+    };
+
     const handleEditedData = async () => {
         const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
         const memoId = params.memoId;
@@ -110,14 +125,12 @@ const EditMemoPage = () => {
                     }
                 }
             );
-            alert("Memo Update Success");
-            router.push('/main/logistic');
+            alert("Approval Update Success ");
+            router.push('/main/status/approvelogistic');
         } catch (error) {
             console.log(error);
         }
     };
-    
-
 
     if (loading) {
         return <PleaseWait />;
@@ -169,22 +182,21 @@ const EditMemoPage = () => {
                         PIC <span className="text-red-500">*</span>
                     </label>
                     {dataAllPic && (
-                       <select
-                       name="memo_pic"
-                       id="memo_pic"
-                       className="input input-bordered mt-1"
-                       value={JSON.stringify(dataAllPic.find(item => item.nama === dataAllMemo.memo_pic))} 
-                       onChange={(e) => {
-                           const selectedPic = JSON.parse(e.target.value);
-                           setDataAllMemo({
-                               ...dataAllMemo,
-                               memo_pic: selectedPic.nama,
-                               memo_department: selectedPic.departemen
-                           });
-                           setSelectedDept(selectedPic.departemen);
-                       }}
-                   >
-                   
+                        <select
+                            name="memo_pic"
+                            id="memo_pic"
+                            className="input input-bordered mt-1"
+                            value={JSON.stringify(dataAllPic.find(item => item.nama === dataAllMemo.memo_pic))} 
+                            onChange={(e) => {
+                                const selectedPic = JSON.parse(e.target.value);
+                                setDataAllMemo({
+                                    ...dataAllMemo,
+                                    memo_pic: selectedPic.nama,
+                                    memo_department: selectedPic.departemen
+                                });
+                                setSelectedDept(selectedPic.departemen);
+                            }}
+                        >
                             <option disabled selected className="text-sm text-gray-600 opacity-50">
                                 Select PIC...
                             </option>
@@ -295,7 +307,7 @@ const EditMemoPage = () => {
                             })
                         }
                         className="input input-bordered mt-1"
-                        disabled
+                        disabled={dataAllMemo.memo_status !== 'REQUEST HAS BEEN REJECTED'} // Make notes editable if status is 'REQUEST HAS BEEN REJECTED'
                     />
                 </div>
 
@@ -317,10 +329,18 @@ const EditMemoPage = () => {
                     <button
                         type="button"
                         className="py-2 px-4 rounded-xl bg-green-500 flex gap-1 items-center"
-                        onClick={handleStatusChange}
+                        onClick={handleApprove}
                     >
                         <FaPenNib />
-                        <span>Request Approval</span>
+                        <span>Approve</span>
+                    </button>
+                    <button
+                        type="button"
+                        className="py-2 px-4 rounded-xl bg-red-500 flex gap-1 items-center"
+                        onClick={handleReject}
+                    >
+                        <FaPenNib />
+                        <span>Reject</span>
                     </button>
                 </div>
 
@@ -331,4 +351,4 @@ const EditMemoPage = () => {
     );
 };
 
-export default EditMemoPage;
+export default ReviewMemoPage;
