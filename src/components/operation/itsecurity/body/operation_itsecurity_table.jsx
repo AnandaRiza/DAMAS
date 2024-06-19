@@ -13,6 +13,10 @@ const page = ({headers, data, action, link}) => {
         router.push(`${link}/itsecurity/itsecurityedit/${itsecurity_id}`);
     };
 
+    const handleDoubleClick = (itsecurity_id) => {
+        router.push(`${link}/itsecurity/detail/${itsecurity_id}`);
+    };
+
     const getDisplayName = (header) => {
         const displayNames = {
             itsecurity_id: "IT MO ID",
@@ -50,8 +54,45 @@ const page = ({headers, data, action, link}) => {
             itsecurity_status : "Status",
             itsecurity_deadline_project : "Deadline Project"
         };
-        return displayNames[header] || header;
+        const displayName = displayNames[header] || header;
+        // console.log(`Header: ${header}, DisplayName: ${displayName}`);
+        return displayName;
     }
+
+    const calculateTimeLeft = (date) => {
+        const now = new Date();
+        const deadline = new Date(date);
+        const difference = deadline.getTime() - now.getTime();
+        const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+    
+        return daysLeft;
+    };
+
+    const getStatus = (item) => {
+        const daysLeft = calculateTimeLeft(item.itsecurity_deadline_project);
+        
+        if (daysLeft < 0) {
+            return "Past Deadline";
+        } else if (daysLeft <= 3) {
+            return "Within 3 days";
+        } else if (daysLeft <= 7) {
+            return "Within 7 days";
+        } else {
+            return "On Track";
+        }
+    };
+
+    const rowClass = (inputDate) => {
+        const daysLeft = calculateTimeLeft(inputDate);
+        // console.log(daysLeft)
+        if (daysLeft <= 3) {
+            return "bg-red-200 hover:bg-red-300";
+        } else if (daysLeft <= 7) {
+            return "bg-yellow-200 hover:bg-yellow-300";
+        } else {
+            return "bg-green-200 hover:bg-green-300";
+        }
+    };
 
 return (
     <div className="overflow-x-auto">
@@ -59,8 +100,40 @@ return (
         <thead>
             <tr className="border-b-2 bg-[#00A6B4] text-sm">
                 {headers.map((item, index) => (
-                    <th key={index} 
-                    className={`py-3 px-6 uppercase font-bold ${item === 'itsecurity_id' ? 'hidden' : ''}`}
+                    <th 
+                    key={index} 
+                    className={`py-3 px-6 uppercase font-bold ${
+                        item === 'itsecurity_id' ||
+                        item === 'itsecurity_phase1' ||
+                        item === 'itsecurity_phase1_start' ||
+                        item === 'itsecurity_phase1_deadline' ||
+                        item === 'itsecurity_phase1_done' ||
+                        item === 'itsecurity_phase2' ||
+                        item === 'itsecurity_phase2_start' ||
+                        item === 'itsecurity_phase2_deadline' ||
+                        item === 'itsecurity_phase2_done' ||
+                        item === 'itsecurity_phase3' ||
+                        item === 'itsecurity_phase3_start' ||
+                        item === 'itsecurity_phase3_deadline' ||
+                        item === 'itsecurity_phase3_done' ||
+                        item === 'itsecurity_phase4' ||
+                        item === 'itsecurity_phase4_start' ||
+                        item === 'itsecurity_phase4_deadline' ||
+                        item === 'itsecurity_phase4_done' ||
+                        item === 'itsecurity_phase5' ||
+                        item === 'itsecurity_phase5_start' ||
+                        item === 'itsecurity_phase5_deadline' ||
+                        item === 'itsecurity_phase5_done' ||
+                        item === 'itsecurity_phase6' ||
+                        item === 'itsecurity_phase6_start' ||
+                        item === 'itsecurity_phase6_deadline' ||
+                        item === 'itsecurity_phase6_done' ||
+                        item === 'itsecurity_phase7' ||
+                        item === 'itsecurity_phase7_start' ||
+                        item === 'itsecurity_phase7_deadline' ||
+                        item === 'itsecurity_phase7_done' 
+                        ? 'hidden' : ''
+                    }`}
                     >
                         {getDisplayName(item)}
                     </th>
@@ -73,18 +146,53 @@ return (
             </tr>
         </thead>
         <tbody>
-            {data.map((item, index) => (
+            {data.map((item, index) => {
+            const itsecurity_status = getStatus(item);
+            // console.log(itsecurity_status)
+            const rowClassName = rowClass(item.itsecurity_deadline_project);
+            
+            return (
                 <tr
                     key={index}
-                    className={`${
-                        index % 2 === 0
-                            ? "bg-white hover:bg-gray-100 text-xs leading-5"
-                            : "bg-[#00A6B4]/[0.5] hover:bg-[#00A6B4]/[0.75] text-xs leading-5"
-                    }`}
+                    className={`${rowClassName}  text-xs leading-5`}
+                    onDoubleClick={() => handleDoubleClick(item.itsecurity_id)}
                 >
                     {headers.map((header, headerIndex) => (
-                        <td key={headerIndex} className={`py-3 px-6 ${header === 'itsecurity_id' ? 'hidden' : ''}`}>
-                            {item[header]}
+                        <td key={headerIndex} className={`py-3 px-6 ${
+                            header === 'itsecurity_id' ||
+                            header === 'itsecurity_phase1' ||
+                            header === 'itsecurity_phase1_start' ||
+                            header === 'itsecurity_phase1_deadline' ||
+                            header === 'itsecurity_phase1_done' ||
+                            header === 'itsecurity_phase2' ||
+                            header === 'itsecurity_phase2_start' ||
+                            header === 'itsecurity_phase2_deadline' ||
+                            header === 'itsecurity_phase2_done' ||
+                            header === 'itsecurity_phase3' ||
+                            header === 'itsecurity_phase3_start' ||
+                            header === 'itsecurity_phase3_deadline' ||
+                            header === 'itsecurity_phase3_done' ||
+                            header === 'itsecurity_phase4' ||
+                            header === 'itsecurity_phase4_start' ||
+                            header === 'itsecurity_phase4_deadline' ||
+                            header === 'itsecurity_phase4_done' ||
+                            header === 'itsecurity_phase5' ||
+                            header === 'itsecurity_phase5_start' ||
+                            header === 'itsecurity_phase5_deadline' ||
+                            header === 'itsecurity_phase5_done' ||
+                            header === 'itsecurity_phase6' ||
+                            header === 'itsecurity_phase6_start' ||
+                            header === 'itsecurity_phase6_deadline' ||
+                            header === 'itsecurity_phase6_done' ||
+                            header === 'itsecurity_phase7' ||
+                            header === 'itsecurity_phase7_start' ||
+                            header === 'itsecurity_phase7_deadline' ||
+                            header === 'itsecurity_phase7_done'  
+                                ? 'hidden'
+                                 : ''
+                            }`}
+                        >
+                            {header === "itsecurity_status" ? itsecurity_status : item[header]}
                         </td>
                     ))}
 
@@ -96,7 +204,7 @@ return (
                                     handleEdit(item[headers[0]])
                                 }
                                 className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2 "
-                                style={{ minHeight: "60px" }}
+                                // style={{ minHeight: "60px" }}
                                 // style={{ minWidth: "fit-content" }}
                             >
                                 <AiOutlineEdit size={20} />
@@ -104,7 +212,8 @@ return (
                         </td>
                     )}
                 </tr>
-            ))}
+                );
+                })}
         </tbody>
     </table>
 </div>

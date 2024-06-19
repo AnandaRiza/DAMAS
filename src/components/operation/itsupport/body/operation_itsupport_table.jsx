@@ -13,6 +13,10 @@ const page = ({headers, data, action, link}) => {
         router.push(`${link}/itsupport/itsupportedit/${itsupport_id}`);
     };
 
+    const handleDoubleClick = (itsupport_id) => {
+        router.push(`${link}/itsupport/detail/${itsupport_id}`);
+    };
+
     const getDisplayName = (header) => {
         const displayNames = {
             itsupport_id: "IT Support ID",
@@ -50,64 +54,169 @@ const page = ({headers, data, action, link}) => {
             itsupport_status : "Status",
             itsupport_deadline_project : "Deadline Project"
         };
-        return displayNames[header] || header;
+        const displayName = displayNames[header] || header;
+        // console.log(`Header: ${header}, DisplayName: ${displayName}`);
+        return displayName;
     }
+
+    const calculateTimeLeft = (date) => {
+        const now = new Date();
+        const deadline = new Date(date);
+        const difference = deadline.getTime() - now.getTime();
+        const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+    
+        return daysLeft;
+    };
+
+    const getStatus = (item) => {
+        const daysLeft = calculateTimeLeft(item.itsupport_deadline_project);
+        
+        if (daysLeft < 0) {
+            return "Past Deadline";
+        } else if (daysLeft <= 3) {
+            return "Within 3 days";
+        } else if (daysLeft <= 7) {
+            return "Within 7 days";
+        } else {
+            return "On Track";
+        }
+    };
+
+    const rowClass = (inputDate) => {
+        const daysLeft = calculateTimeLeft(inputDate);
+        // console.log(daysLeft)
+        if (daysLeft <= 3) {
+            return "bg-red-200 hover:bg-red-300";
+        } else if (daysLeft <= 7) {
+            return "bg-yellow-200 hover:bg-yellow-300";
+        } else {
+            return "bg-green-200 hover:bg-green-300";
+        }
+    };
 
 return (
     <div className="overflow-x-auto">
-            <table className="table">
-                <thead>
-                    <tr className="border-b-2 bg-[#00A6B4] text-sm">
-                        {headers.map((item, index) => (
-                            <th key={index} 
-                            className={`py-3 px-6 uppercase font-bold ${item === 'itsupport_id' ? 'hidden' : ''}`}
-                            >
-                                {getDisplayName(item)}
-                            </th>
-                        ))}
-                        {action && 
-                            <th className="py-3 px-6 w-32 flex items-center justify-center gap-3 uppercase">
-                                Edit
-                            </th>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((item, index) => (
-                        <tr
-                            key={index}
-                            className={`${
-                                index % 2 === 0
-                                    ? "bg-white hover:bg-gray-100 text-xs leading-5"
-                                    : "bg-[#00A6B4]/[0.5] hover:bg-[#00A6B4]/[0.75] text-xs leading-5"
+    <table className="table">
+        <thead>
+            <tr className="border-b-2 bg-[#00A6B4] text-sm">
+                {headers.map((item, index) => (
+                    <th 
+                    key={index} 
+                    className={`py-3 px-6 uppercase font-bold ${
+                        item === 'itsupport_id' ||
+                        item === 'itsupport_phase1' ||
+                        item === 'itsupport_phase1_start' ||
+                        item === 'itsupport_phase1_deadline' ||
+                        item === 'itsupport_phase1_done' ||
+                        item === 'itsupport_phase2' ||
+                        item === 'itsupport_phase2_start' ||
+                        item === 'itsupport_phase2_deadline' ||
+                        item === 'itsupport_phase2_done' ||
+                        item === 'itsupport_phase3' ||
+                        item === 'itsupport_phase3_start' ||
+                        item === 'itsupport_phase3_deadline' ||
+                        item === 'itsupport_phase3_done' ||
+                        item === 'itsupport_phase4' ||
+                        item === 'itsupport_phase4_start' ||
+                        item === 'itsupport_phase4_deadline' ||
+                        item === 'itsupport_phase4_done' ||
+                        item === 'itsupport_phase5' ||
+                        item === 'itsupport_phase5_start' ||
+                        item === 'itsupport_phase5_deadline' ||
+                        item === 'itsupport_phase5_done' ||
+                        item === 'itsupport_phase6' ||
+                        item === 'itsupport_phase6_start' ||
+                        item === 'itsupport_phase6_deadline' ||
+                        item === 'itsupport_phase6_done' ||
+                        item === 'itsupport_phase7' ||
+                        item === 'itsupport_phase7_start' ||
+                        item === 'itsupport_phase7_deadline' ||
+                        item === 'itsupport_phase7_done' 
+                        ? 'hidden' : ''
+                    }`}
+                    >
+                        {getDisplayName(item)}
+                    </th>
+                ))}
+                {action && 
+                    <th className="py-3 px-6 w-32 flex items-center justify-center gap-3 uppercase">
+                        Edit
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            {data.map((item, index) => {
+            const itsupport_status = getStatus(item);
+            // console.log(itsupport_status)
+            const rowClassName = rowClass(item.itsupport_deadline_project);
+            
+            return (
+                <tr
+                    key={index}
+                    className={`${rowClassName}  text-xs leading-5`}
+                    onDoubleClick={() => handleDoubleClick(item.itsupport_id)}
+                >
+                    {headers.map((header, headerIndex) => (
+                        <td key={headerIndex} className={`py-3 px-6 ${
+                            header === 'itsupport_id' ||
+                            header === 'itsupport_phase1' ||
+                            header === 'itsupport_phase1_start' ||
+                            header === 'itsupport_phase1_deadline' ||
+                            header === 'itsupport_phase1_done' ||
+                            header === 'itsupport_phase2' ||
+                            header === 'itsupport_phase2_start' ||
+                            header === 'itsupport_phase2_deadline' ||
+                            header === 'itsupport_phase2_done' ||
+                            header === 'itsupport_phase3' ||
+                            header === 'itsupport_phase3_start' ||
+                            header === 'itsupport_phase3_deadline' ||
+                            header === 'itsupport_phase3_done' ||
+                            header === 'itsupport_phase4' ||
+                            header === 'itsupport_phase4_start' ||
+                            header === 'itsupport_phase4_deadline' ||
+                            header === 'itsupport_phase4_done' ||
+                            header === 'itsupport_phase5' ||
+                            header === 'itsupport_phase5_start' ||
+                            header === 'itsupport_phase5_deadline' ||
+                            header === 'itsupport_phase5_done' ||
+                            header === 'itsupport_phase6' ||
+                            header === 'itsupport_phase6_start' ||
+                            header === 'itsupport_phase6_deadline' ||
+                            header === 'itsupport_phase6_done' ||
+                            header === 'itsupport_phase7' ||
+                            header === 'itsupport_phase7_start' ||
+                            header === 'itsupport_phase7_deadline' ||
+                            header === 'itsupport_phase7_done'  
+                                ? 'hidden'
+                                 : ''
                             }`}
                         >
-                            {headers.map((header, headerIndex) => (
-                                <td key={headerIndex} className={`py-3 px-6 ${header === 'itsupport_id' ? 'hidden' : ''}`}>
-                                    {item[header]}
-                                </td>
-                            ))}
-
-                            {action && (
-                                <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            handleEdit(item[headers[0]])
-                                        }
-                                        className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2 "
-                                        style={{ minHeight: "60px" }}
-                                        // style={{ minWidth: "fit-content" }}
-                                    >
-                                        <AiOutlineEdit size={20} />
-                                    </button>
-                                </td>
-                            )}
-                        </tr>
+                            {header === "itsupport_status" ? itsupport_status : item[header]}
+                        </td>
                     ))}
-                </tbody>
-            </table>
-        </div>
+
+                    {action && (
+                        <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    handleEdit(item[headers[0]])
+                                }
+                                className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2 "
+                                // style={{ minHeight: "60px" }}
+                                // style={{ minWidth: "fit-content" }}
+                            >
+                                <AiOutlineEdit size={20} />
+                            </button>
+                        </td>
+                    )}
+                </tr>
+                );
+                })}
+        </tbody>
+    </table>
+</div>
 );
 };
 
