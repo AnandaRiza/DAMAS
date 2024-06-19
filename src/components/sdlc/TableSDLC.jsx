@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
-import moment from "moment";
 
 const TableSDLC = ({ headers, data, action, link }) => {
     const router = useRouter();

@@ -939,62 +939,58 @@ const page = () => {
             {/* Status dropdown */}
 
             <div className="flex flex-col">
-              <label
-                htmlFor="status"
-                className="text-sm font-semibold text-[#0066AE]"
-              >
-                Status
-              </label>
-              <div className="dropdown mt-1">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn m-1 w-52 bg-gray hover:bg-gray"
+                <label
+                    htmlFor="status"
+                    className="text-sm font-semibold text-[#0066AE]"
                 >
-                  {formData.dacen_status}
+                    Status <span className="text-red-500">*</span>
+                </label>
+                <div className="dropdown mt-1 ">
+                    <div tabIndex={0} role="button" className="btn m-1 w-52 bg-white hover:bg-gray text-gray-600">
+                        {formData.dacen_status ? formData.dacen_status : "Select Status"}
+                    </div>
+                    <ul
+                        tabIndex={0}
+                        className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 mb-4"
+                    >
+                        <li>
+                            <a
+                                onClick={() =>
+                                    setFormData({
+                                        ...formData,
+                                        dacen_status: "Ongoing",
+                                    })
+                                }
+                            >
+                                Ongoing
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                onClick={() =>
+                                    setFormData({
+                                        ...formData,
+                                        dacen_status: "Finished",
+                                    })
+                                }
+                            >
+                                Finished
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                onClick={() =>
+                                    setFormData({
+                                        ...formData,
+                                        dacen_status: "Past-Deadline",
+                                    })
+                                }
+                            >
+                                Past Deadline
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content z-[1] menu p-2 shadow bg-gray-300 rounded-box w-52 mb-4"
-                >
-                  <li>
-                    <a
-                      onClick={() =>
-                        setFormData({
-                          ...formData,
-                          dacen_status: "Ongoing",
-                        })
-                      }
-                    >
-                      Ongoing
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      onClick={() =>
-                        setFormData({
-                          ...formData,
-                          dacen_status: "Finished",
-                        })
-                      }
-                    >
-                      Finished
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      onClick={() =>
-                        setFormData({
-                          ...formData,
-                          dacen_status: "Past-Deadline",
-                        })
-                      }
-                    >
-                      Past Deadline
-                    </a>
-                  </li>
-                </ul>
-              </div>
             </div>
             {/* Submit button */}
             <button
