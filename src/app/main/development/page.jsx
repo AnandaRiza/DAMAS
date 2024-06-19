@@ -6,7 +6,7 @@ import TableSDLC from "@/components/sdlc/TableSDLC";
 import HeaderDev from "@/components/sdlc/header/HeaderDev";
 
 import axios from "axios";
-import moment from "moment";
+// import moment from "moment";
 import { useEffect, useState } from "react";
 
 const page = () => {
