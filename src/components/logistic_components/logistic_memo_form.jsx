@@ -1,41 +1,125 @@
 "use client";
- 
+
 import axios from "axios";
-import React, { useState } from "react";
- 
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+
 const MemoForm = () => {
-  // State to manage form data
+  const [dataAllPic, setDataAllPic] = useState(null);
+  const [filteredDataAllPic, setFilteredDataAllPic] = useState(null);
+  const [selectedDept, setSelectedDept] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [formData, setFormData] = useState({
+    memo_num: "",
     memo_perihal: "",
     memo_pic: "",
+    memo_department: "",
+    memo_createdBy: "",
+    memo_reviewer: "",
     memo_deadline: "",
-    memo_status: "",
+    memo_status: "WAITING FOR APPROVAL",
+    memo_notes: "",
   });
- 
-  const handleSubmit = async () => {
+
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const getDataAllPic = async () => {
+    setDataAllPic(null);
     try {
-      await axios.post(
+        const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
+        );
+        setDataAllPic(response.data.data);
+        setFilteredDataAllPic(response.data.data); // Initialize filtered data
+    } catch (error) {
+        console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDataAllPic();
+    const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
+    setFormData(prevState => ({ ...prevState, memo_createdBy: userid }));
+  }, []);
+
+  const handleSubmit = async () => {
+    const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
+    try {
+      console.log("Sending data:", formData);
+
+      const regex = /^\d{4}-\d{2}-\d{2}$/;
+      if (!regex.test(formData.memo_deadline)) {
+        setError("Date must be in the format YYYY-MM-DD");
+        return;
+      }
+
+      const payload = {
+        ...formData,
+        memo_department: selectedDept,
+        memo_createdBy: userid,
+      };
+      console.log('Payload:', payload);
+
+      const response = await axios.post(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo`,
-        formData
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "USER-ID": userid
+          },
+        }
       );
       alert("Create Memo Success");
+      router.push("/main/logistic");
     } catch (error) {
-      console.log(error);
+      console.error("Error response:", error.response);
+      if (error.response) {
+        console.log("Error data:", error.response.data);
+        console.log("Error status:", error.response.status);
+        console.log("Error headers:", error.response.headers);
+      } else {
+        console.log("Error message:", error.message);
+      }
       alert("Create Memo Failed!");
     }
   };
- 
+
+  const handleDateChange = (e) => {
+    const { value } = e.target;
+    const regex = /^[0-9-]*$/;
+
+    if (regex.test(value)) {
+      setFormData({
+        ...formData,
+        memo_deadline: value,
+      });
+      setError("");
+    } else {
+      setError("Only numeric values allowed");
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query === "") {
+      setFilteredDataAllPic(dataAllPic);
+    } else {
+      const filtered = dataAllPic.filter((pic) =>
+        pic.nama.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredDataAllPic(filtered);
+    }
+  };
+
   return (
     <form className="space-y-4">
- 
- 
- 
-<div className="flex flex-col">
-        <label
-          htmlFor="memo_perihal"
-          className="text-sm font-semibold text-gray-600"
-        >
-          Memo Number
+      <div className="flex flex-col">
+        <label htmlFor="memo_num" className="text-sm font-semibold text-gray-600">
+          Nomor Memo
         </label>
         <input
           type="text"
@@ -51,16 +135,9 @@ const MemoForm = () => {
           className="input input-bordered mt-1"
         />
       </div>
- 
- 
- 
- 
-      {/* Input fields for memo attributes */}
+
       <div className="flex flex-col">
-        <label
-          htmlFor="memo_perihal"
-          className="text-sm font-semibold text-gray-600"
-        >
+        <label htmlFor="memo_perihal" className="text-sm font-semibold text-gray-600">
           Perihal Memo
         </label>
         <input
@@ -77,99 +154,147 @@ const MemoForm = () => {
           className="input input-bordered mt-1"
         />
       </div>
-     
- 
- 
+
       <div className="flex flex-col">
-        <label htmlFor="memo_pic" className="text-sm font-semibold text-gray-600">
-          PIC
+        <label htmlFor="memo_pic" className="text-sm font-semibold text-[#0066AE]">
+          PIC <span className="text-red-500">*</span>
+        </label>
+        {dataAllPic && (
+          <>
+            <input
+              type="text"
+              placeholder="Search PIC..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="input input-bordered mt-1"
+            />
+            <select
+              name="memo_pic"
+              id="memo_pic"
+              className="input input-bordered mt-1"
+              value={JSON.stringify(dataAllPic.find(item => item.nama === formData.memo_pic))}
+              onChange={(e) => {
+                const selectedPic = JSON.parse(e.target.value);
+                setFormData({ ...formData, memo_pic: selectedPic.nama, memo_department: selectedPic.departemen });
+                setSelectedDept(selectedPic.departemen);
+              }}
+            >
+              <option disabled selected className="text-sm text-gray-600 opacity-50">
+                Select PIC...
+              </option>
+              {filteredDataAllPic.map((item, index) => (
+                <option key={index} value={JSON.stringify(item)}>
+                  {item.nama}
+                </option>
+              ))}
+            </select>
+          </>
+        )}
+      </div>
+
+      <div className="flex flex-col">
+        <label htmlFor="memo_department" className="text-sm font-semibold">
+          Department
+        </label>
+        <input
+          className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+          type="text"
+          value={selectedDept} disabled />
+      </div>
+
+      <div className="flex flex-col">
+        <label htmlFor="memo_createdBy" className="text-sm font-semibold text-gray-600" hidden>
+          Created By
         </label>
         <input
           type="text"
-          id="memo_pic"
-          name="memo_pic"
-          value={formData.memo_pic}
-          onChange={(e) => setFormData({ ...formData, memo_pic: e.target.value })}
+          id="memo_createdBy"
+          name="memo_createdBy"
+          value={formData.memo_createdBy}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              memo_createdBy: e.target.value,
+            })
+          }
           className="input input-bordered mt-1"
+          hidden
         />
       </div>
- 
- 
+
       <div className="flex flex-col">
-        <label
-          htmlFor="memo_deadline"
-          className="text-sm font-semibold text-gray-600"
-        >
+        <label htmlFor="memo_reviewer" className="text-sm font-semibold text-gray-600">
+          Reviewer
+        </label>
+        {dataAllPic && (
+          <select
+            name="memo_reviewer"
+            id="memo_reviewer"
+            className="input input-bordered mt-1"
+            value={formData.memo_reviewer}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                memo_reviewer: e.target.value,
+              })
+            }
+          >
+            <option disabled value="">
+              Select Reviewer...
+            </option>
+            {dataAllPic.map((item, index) => (
+              <option key={index} value={item.nama}>
+                {item.nama}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
+      
+      <div className="flex flex-col">
+        <label htmlFor="memo_deadline" className="text-sm font-semibold text-gray-600">
           Deadline
         </label>
         <input
-          type="date"
+          type="text"
           id="memo_deadline"
           name="memo_deadline"
           value={formData.memo_deadline}
-          onChange={(e) =>
-            setFormData({ ...formData, memo_deadline: e.target.value })
-          }
+          onChange={handleDateChange}
           className="input input-bordered mt-1"
+          placeholder="YYYY-MM-DD"
         />
+        {error && <span className="text-red-600 text-xs mt-1">{error}</span>}
       </div>
- 
- 
-      {/* Status dropdown */}
+
+      <input
+        type="hidden"
+        id="memo_notes"
+        name="memo_notes"
+        value={formData.memo_notes}
+      />
+
       <div className="flex flex-col">
         <label htmlFor="memo_status" className="text-sm font-semibold text-gray-600">
           Status
         </label>
-        <div className="dropdown mt-1">
-          <div tabIndex={0} role="button" className="btn m-1">
-            {formData.memo_status}
-          </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
-          >
-            <li>
-              <a
-                onClick={() =>
-                  setFormData({
-                    ...formData,
-                    memo_status: "Ongoing",
-                  })
-                }
-              >
-                Ongoing
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() =>
-                  setFormData({
-                    ...formData,
-                    memo_status: "Finished",
-                  })
-                }
-              >
-                Finished
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() =>
-                  setFormData({
-                    ...formData,
-                    memo_status: "Past-Deadline",
-                  })
-                }
-              >
-                Past Deadline
-              </a>
-            </li>
-          </ul>
-        </div>
+        <select
+          id="memo_status"
+          className="input input-bordered mt-1"
+          value={formData.memo_status}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              memo_status: e.target.value,
+            })
+          }
+          name="memo_status"
+          disabled
+        >
+          <option value="WAITING FOR APPROVAL">Waiting for Approval</option>
+        </select>
       </div>
- 
- 
-      {/* Submit button */}
+      
       <button
         type="button"
         className="btn btn-primary mt-4"
@@ -180,5 +305,5 @@ const MemoForm = () => {
     </form>
   );
 };
- 
+
 export default MemoForm;

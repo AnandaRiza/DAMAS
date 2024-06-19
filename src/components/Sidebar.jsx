@@ -555,7 +555,7 @@ const Sidebar = () => {
                                 <div className="mr-2">
                                 <MdApproval />
                                 </div>
-                                Approvement
+                                Approval 
                             </div>
 
                             <div className="collapse-content">
