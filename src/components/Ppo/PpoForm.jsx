@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const SDLCForm = () => {
+const PpoForm = () => {
     const [dataAllPic, setDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
     // State to manage form data
@@ -41,16 +41,6 @@ const SDLCForm = () => {
         status: "",
         deadlineproject: "",
     });
-
-    // const formatDate = (date) => {
-    //     const d = new Date(date);
-    //     const day = d.getDate();
-    //     const month = d.getMonth() + 1;
-    //     const year = d.getFullYear();
-        
-    //     // Menggunakan template string untuk menghasilkan format DD-MM-YYYY
-    //     return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
-    // };
   
     
 
@@ -178,7 +168,7 @@ const SDLCForm = () => {
                     onChange={(e) =>
                         setFormData({
                             ...formData,
-                            kickoffstart: (e.target.value),
+                            kickoffstart: e.target.value,
                         })
                     }
                     className="input input-bordered mt-1"
@@ -601,4 +591,4 @@ const SDLCForm = () => {
     );
 };
 
-export default SDLCForm;
+export default PpoForm;

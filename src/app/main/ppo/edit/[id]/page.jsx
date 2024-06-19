@@ -1,14 +1,15 @@
-import HeaderDev from "@/components/sdlc/header/HeaderDev";
-import SDLCFormEdit from "@/components/sdlc/sdlc_form_edit";
+
+import PpoFormEdit from "@/components/Ppo/PpoFormEdit";
+import HeaderPpo from "@/components/sdlc/header/HeaderPpo";
 import React from "react";
 
 const page = () => {
     return (
         <div className="flex-grow justify-center items-center min-h-screen">
         <div>
-          <HeaderDev title="Edit Project"/>
+          <HeaderPpo title="Edit"/>
           <div>
-            <SDLCFormEdit />
+            <PpoFormEdit />
           </div>
         </div>
       </div>

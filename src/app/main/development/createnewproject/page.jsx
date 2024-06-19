@@ -1,36 +1,20 @@
-import SDLCForm from '@/components/sdlc/sdlc_form';
-import React from 'react'
+import HeaderDev from "@/components/sdlc/header/HeaderDev";
+import SDLCForm from "@/components/sdlc/sdlc_form";
+import React from "react";
 
 const page = () => {
-  return (
-    <>
-      <div className="flex-grow justify-center items-center min-h-screen">
-        <div>
-          <div className="text-[#0066AE] font-semibold ml-10 mt-4">
-            Create New SDLC
-          </div>
-          {/* <div>
-            <span className="flex text-[#0066AE] ml-10 mt-2">
-              <div className="text-sm breadcrumbs">
-                <ul>
-                  <li>
-                    <a>Home</a>
-                  </li>
-                  <li>
-                    <a>Documents</a>
-                  </li>
-                  <li>Add Document</li>
-                </ul>
-              </div>
-            </span>
-          </div> */}
-          <div className="px-10 grid grid-cols-2 gap-3 mt-10 w-full">
-            <SDLCForm />
-          </div>
-        </div>
-      </div>
-    </>
-  );
+    return (
+        <>
+            <div>
+               <div>
+               <HeaderDev title="Create New Project" />
+               </div>                   
+                <div>
+                    <SDLCForm />
+                </div>
+            </div>
+        </>
+    );
 };
 
-export default page
+export default page;
