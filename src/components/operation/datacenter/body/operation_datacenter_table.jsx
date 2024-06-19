@@ -12,6 +12,11 @@ const page = ( {headers, data, action, link} ) => {
         router.push(`${link}/datacenter/dacenedit/${dacen_id}`);
     };
 
+    const handleDoubleClick = (id) => {
+        router.push(`${link}/dacen/detail/${id}`);
+    };
+
+
     const getDisplayName = (header) => {
         const displayNames = {
             dacen_id: "Data Center ID",
@@ -51,6 +56,15 @@ const page = ( {headers, data, action, link} ) => {
         };
         return displayNames[header] || header;
     }
+
+    const calculateTimeLeft = (date) => {
+        const now = new Date();
+        const deadline = new Date(date);
+        const difference = deadline.getTime() - now.getTime();
+        const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+    
+        return daysLeft;
+    };
 
 return (
     <div className="overflow-x-auto">
