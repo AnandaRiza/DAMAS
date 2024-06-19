@@ -6,10 +6,9 @@ import TableSDLC from "@/components/sdlc/TableSDLC";
 import HeaderDev from "@/components/sdlc/header/HeaderDev";
 
 import axios from "axios";
-// import moment from "moment";
 import { useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
     const [searchInput, setSearchInput] = useState("");
     const [searchResult, setSearchResult] = useState(null);
     const [dataAllProject, setDataAllProject] = useState(null);
@@ -33,9 +32,6 @@ const page = () => {
         }
     };
 
-
-
-    
     const handleSearch = async () => {
         try {
             const response = await axios.get(
@@ -62,10 +58,10 @@ const page = () => {
             </div>
 
             <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl px-3">
-                <div className=" bw-full px-5 py-2 mt-4">
+                <div className="w-full px-5 py-2 mt-4">
                     <div className="w-full flex justify-between items-center"></div>
                 </div>
-                {dataAllProject && (!searchResult || searchInput == "") ? (
+                {dataAllProject && (!searchResult || searchInput === "") ? (
                     <div>
                         <TableSDLC
                             headers={Object.keys(dataAllProject[0]).slice(
@@ -78,11 +74,11 @@ const page = () => {
                         />
                     </div>
                 ) : (
-                    !(searchResult && searchInput != "") && <PleaseWait />
+                    !(searchResult && searchInput !== "") && <PleaseWait />
                 )}
 
                 {searchResult &&
-                    searchInput != "" &&
+                    searchInput !== "" &&
                     searchResult.length !== 0 && (
                         <div className="mt-4">
                             <TableSDLC
@@ -94,13 +90,12 @@ const page = () => {
                                 action={true}
                                 link={"/main/development/"}
                                 rowClass={(item) => rowClass(item.deadlineproject)}
-                                
                             />
                         </div>
                     )}
 
                 {searchResult &&
-                    searchInput != "" &&
+                    searchInput !== "" &&
                     searchResult.length === 0 && <NotFound />}
 
                 {dataAllProject && (
@@ -138,4 +133,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

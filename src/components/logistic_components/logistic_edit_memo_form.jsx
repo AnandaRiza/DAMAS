@@ -30,7 +30,7 @@ const EditMemoPage = () => {
     const [loading, setLoading] = useState(true);
     const [showApprovalForm, setShowApprovalForm] = useState(false); // State to show or hide the approval form
     const [approvalData, setApprovalData] = useState(null); // State to store approval data
-    const params = useParams(); 
+    const params = useParams();
     const router = useRouter();
 
     const getDataAllPic = async () => {
@@ -44,7 +44,6 @@ const EditMemoPage = () => {
             console.log(error);
         }
     };
-
 
     useEffect(() => {
         const getCurrentData = async () => {
@@ -102,8 +101,8 @@ const EditMemoPage = () => {
         console.log('Payload:', payload); // Log the payload to verify its content
         try {
             await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${memoId}`, 
-                payload, 
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${memoId}`,
+                payload,
                 {
                     headers: {
                         "USER-ID": userid,
@@ -116,12 +115,12 @@ const EditMemoPage = () => {
             console.log(error);
         }
     };
-    
-
 
     if (loading) {
         return <PleaseWait />;
     }
+
+    const isReadOnly = dataAllMemo.memo_status === "MEMO APPROVED";
 
     return (
         <>
@@ -142,6 +141,7 @@ const EditMemoPage = () => {
                             })
                         }
                         name="memo_num"
+                        readOnly={isReadOnly}
                     />
                 </div>
 
@@ -161,6 +161,7 @@ const EditMemoPage = () => {
                             })
                         }
                         name="memo_perihal"
+                        readOnly={isReadOnly}
                     />
                 </div>
 
@@ -169,22 +170,22 @@ const EditMemoPage = () => {
                         PIC <span className="text-red-500">*</span>
                     </label>
                     {dataAllPic && (
-                       <select
-                       name="memo_pic"
-                       id="memo_pic"
-                       className="input input-bordered mt-1"
-                       value={JSON.stringify(dataAllPic.find(item => item.nama === dataAllMemo.memo_pic))} 
-                       onChange={(e) => {
-                           const selectedPic = JSON.parse(e.target.value);
-                           setDataAllMemo({
-                               ...dataAllMemo,
-                               memo_pic: selectedPic.nama,
-                               memo_department: selectedPic.departemen
-                           });
-                           setSelectedDept(selectedPic.departemen);
-                       }}
-                   >
-                   
+                        <select
+                            name="memo_pic"
+                            id="memo_pic"
+                            className="input input-bordered mt-1"
+                            value={JSON.stringify(dataAllPic.find(item => item.nama === dataAllMemo.memo_pic))}
+                            onChange={(e) => {
+                                const selectedPic = JSON.parse(e.target.value);
+                                setDataAllMemo({
+                                    ...dataAllMemo,
+                                    memo_pic: selectedPic.nama,
+                                    memo_department: selectedPic.departemen
+                                });
+                                setSelectedDept(selectedPic.departemen);
+                            }}
+                            disabled={isReadOnly}
+                        >
                             <option disabled selected className="text-sm text-gray-600 opacity-50">
                                 Select PIC...
                             </option>
@@ -222,7 +223,6 @@ const EditMemoPage = () => {
                     hidden
                 />
 
-
                 <div className="flex flex-col">
                     <label htmlFor="memo_reviewer" className="text-sm font-semibold text-gray-600">
                         Reviewer
@@ -239,6 +239,7 @@ const EditMemoPage = () => {
                                     memo_reviewer: e.target.value,
                                 })
                             }
+                            disabled={isReadOnly}
                         >
                             <option disabled selected className="text-sm text-gray-600 opacity-50">
                                 Select Reviewer...
@@ -263,6 +264,7 @@ const EditMemoPage = () => {
                         className="input input-bordered mt-1"
                         value={dataAllMemo.memo_deadline}
                         onChange={handleDateChange}
+                        readOnly={isReadOnly}
                     />
                     {error && <p className="text-red-500">{error}</p>}
                 </div>
@@ -295,6 +297,7 @@ const EditMemoPage = () => {
                             })
                         }
                         className="input input-bordered mt-1"
+                        readOnly={isReadOnly}
                         disabled
                     />
                 </div>
@@ -310,6 +313,7 @@ const EditMemoPage = () => {
                         type="button"
                         className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center"
                         onClick={handleEditedData}
+                        disabled={isReadOnly}
                     >
                         <FiSave />
                         <span>Save Edit</span>
@@ -318,6 +322,7 @@ const EditMemoPage = () => {
                         type="button"
                         className="py-2 px-4 rounded-xl bg-green-500 flex gap-1 items-center"
                         onClick={handleStatusChange}
+                        disabled={isReadOnly}
                     >
                         <FaPenNib />
                         <span>Request Approval</span>

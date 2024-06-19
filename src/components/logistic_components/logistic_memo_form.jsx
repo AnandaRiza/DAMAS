@@ -256,7 +256,7 @@ const MemoForm = () => {
           Deadline
         </label>
         <input
-          type="text"
+          type="date"
           id="memo_deadline"
           name="memo_deadline"
           value={formData.memo_deadline}
