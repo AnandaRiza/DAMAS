@@ -1,4 +1,3 @@
-
 "use client";
 import PleaseWait from "@/components/PleaseWait";
 import axios from "axios";
@@ -96,6 +95,10 @@ const Page = () => {
     }, [dataAllProject]);
 
     const handleEditedData = async () => {
+        if (dataAllProject.status === "Finished" && !dataAllProject.projectdone) {
+            alert("Please fill in Project Finished date.");
+            return;
+        }
         setIsLoading(true);
         try {
             await axios.post(
@@ -834,9 +837,13 @@ const Page = () => {
                     name="projectdone"
                     value={dataAllProject.projectdone}
                     onChange={(e) =>
-                        setDataAllProject({ ...dataAllProject, projectdone: e.target.value })
+                        setDataAllProject({
+                            ...dataAllProject,
+                            projectdone: e.target.value,
+                        })
                     }
                     className="input input-bordered mt-1"
+                    required={dataAllProject.status === "Finished"}
                 />
             </div>
                     <div className="flex gap-2 items-center text-white ml-3 mt-3">
