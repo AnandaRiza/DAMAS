@@ -1,5 +1,5 @@
-import Header from "@/components/operation/datacenter/header/header_detail"
-import Body from "@/components/operation/datacenter/body/operation_datacenter_detail"
+import Header from "@/components/operation/network/header/header_detail"
+import Body from "@/components/operation/network/body/operation_network_detail"
 import React from "react";
 
 const page = () => {

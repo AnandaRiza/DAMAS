@@ -13,7 +13,7 @@ const page = ( {headers, data, action, link} ) => {
     };
 
     const handleDoubleClick = (dacen_id) => {
-        router.push(`${link}/dacen/detail/${dacen_id}`);
+        router.push(`${link}/datacenter/detail/${dacen_id}`);
     };
 
 

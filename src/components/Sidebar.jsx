@@ -579,6 +579,17 @@ const Sidebar = () => {
 
                                 <hr className="my-4 border-gray-300" />
 
+                                <Link href="/main/status/approveoperation">
+                                    <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                            Operation
+                                        </button>
+                                    </div>
+                                </Link>
+
+                                <hr className="my-4 border-gray-300" />
+
+
                                 <Link href="/main/status/approvelogistic">
                                     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -587,15 +598,7 @@ const Sidebar = () => {
                                     </div>
                                 </Link>
 
-                                <hr className="my-4 border-gray-300" />
-
-                                <Link href="/main/status/approveoperation">
-                                    <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                            Operation
-                                        </button>
-                                    </div>
-                                </Link>
+                                
                                 
                             </div>
                         </div>

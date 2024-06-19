@@ -1,24 +1,15 @@
 'use client';
 
 import PleaseWait from "@/components/PleaseWait";
-import Link from "next/link";
-import { useParams } from "next/navigation";
 import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { DiVim } from "react-icons/di";
-import { FiSave } from "react-icons/fi";
-import { MdOutlineCancel } from "react-icons/md";
 
 const Page = () => {
     const params = useParams();
     const [selectedDept, setSelectedDept] = useState("");
     const [dataAllPic, setDataAllPic] = useState(null);
     const [dataAllServer, setDataAllServer] = useState({
-        network_perihal: "",
-        network_pic: "",
-        departement: "",
-        network_deadline: "",
-        network_status: "",
     });
     useEffect(() => {
         const getCurrentData = async () => {
@@ -48,20 +39,6 @@ const Page = () => {
         }
     };
 
-    const handleEditedData = async () => {
-        try {
-            const response = await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/servershow/editedserver?input=${params.server_id}`,
-                dataAllServer
-            );
-            console.log(response.data);
-            alert("Edit Success");
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-
 return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl ">
     <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
@@ -76,6 +53,7 @@ return (
                             Nama Project
                         </label>
                         <input
+                        disabled
                             type="text"
                             value={dataAllServer.server_perihal}
                             onChange={(e) =>
@@ -84,7 +62,7 @@ return (
                                     server_perihal: e.target.value,
                                 })
                             }
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                         />
                     </div>
                     
@@ -97,7 +75,7 @@ return (
                         </label>
                         <input
                             type="text"
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             value={dataAllServer.network_pic}
                             onChange={(e) =>
                                 setDataAllServer({
@@ -117,8 +95,9 @@ return (
                         </label>
                         {dataAllPic && (
                             <select
+                            disabled
                                 type="text"
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                                 value={dataAllServer.name}
                                 onChange={(e) => {
                                     const selectedPic = JSON.parse(
@@ -218,8 +197,9 @@ return (
                             Kick Off Done
                         </label>
                         <input
+                        disabled
                             type="date"
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             value={dataAllServer.server_kickoff_done}
                             onChange={(e) =>
                                 setDataAllServer({
@@ -281,7 +261,7 @@ return (
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 font-semibold"
                             value={dataAllServer.server_peyiapanserver_done}
                             onChange={(e) =>
                                 setDataAllServer({
@@ -289,6 +269,7 @@ return (
                                     server_peyiapanserver_done: e.target.value,
                                 })
                             }
+                            disabled
                         />
                     </div>
 
@@ -343,7 +324,7 @@ return (
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 font-semibold"
                             value={dataAllServer.server_instalasiaplikasi_done}
                             onChange={(e) =>
                                 setDataAllServer({
@@ -351,6 +332,7 @@ return (
                                     server_instalasiaplikasi_done: e.target.value,
                                 })
                             }
+                            disabled
                         />
                     </div>
 
@@ -405,7 +387,7 @@ return (
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 font-semibold"
                             value={dataAllServer.server_instalcheckpoint_done}
                             onChange={(e) =>
                                 setDataAllServer({
@@ -413,6 +395,7 @@ return (
                                     server_instalcheckpoint_done: e.target.value,
                                 })
                             }
+                            disabled
                         />
                     </div>
 
@@ -467,7 +450,7 @@ return (
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 font-semibold"
                             value={dataAllServer.server_testingkoneksi_done}
                             onChange={(e) =>
                                 setDataAllServer({
@@ -475,6 +458,7 @@ return (
                                     server_testingkoneksi_done: e.target.value,
                                 })
                             }
+                            disabled
                         />
                     </div>
 
@@ -529,7 +513,7 @@ return (
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 font-semibold"
                             value={dataAllServer.server_serahterimaserver_done}
                             onChange={(e) =>
                                 setDataAllServer({
@@ -537,6 +521,7 @@ return (
                                     server_serahterimaserver_done: e.target.value,
                                 })
                             }
+                            disabled
                         />
                     </div>
 
@@ -549,7 +534,7 @@ return (
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 font-semibold"
                             value={dataAllServer.server_implementasi_start}
                             onChange={(e) =>
                                 setDataAllServer({
@@ -570,7 +555,7 @@ return (
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 font-semibold"
                             value={dataAllServer.server_implementasi_deadline}
                             onChange={(e) =>
                                 setDataAllServer({
@@ -591,7 +576,7 @@ return (
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 font-semibold"
                             value={dataAllServer.server_implementasi_done}
                             onChange={(e) =>
                                 setDataAllServer({
@@ -599,6 +584,7 @@ return (
                                     server_implementasi_done: e.target.value,
                                 })
                             }
+                            disabled
                         />
                     </div>
 
@@ -612,7 +598,7 @@ return (
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 font-semibold"
                             value={dataAllServer.server_deadline_project}
                             onChange={(e) =>
                                 setDataAllServer({
@@ -622,77 +608,6 @@ return (
                             }
                             disabled
                         />
-                    </div>
-                    
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="status"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Status
-                        </label>
-                        <div className="dropdown mt-1">
-                            <div tabIndex={0} role="button" className="btn m-1">
-                                {dataAllServer.server_status}
-                            </div>
-                            <ul
-                                tabIndex={0}
-                                className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
-                            >
-                                <li>
-                                    <a
-                                        onClick={(e) =>
-                                            setDataAllServer({
-                                                ...dataAllServer,
-                                                server_status: e.target.value,
-                                            })
-                                        }
-                                    >
-                                        <option value="Ongoing">Ongoing</option>
-                                    </a>
-                                    <a
-                                        onClick={(e) =>
-                                            setDataAllServer({
-                                                ...dataAllServer,
-                                                server_status: e.target.value,
-                                            })
-                                        }
-                                    >
-                                        <option value="Finished">
-                                            Finished
-                                        </option>
-                                    </a>
-                                    <a
-                                        onClick={(e) =>
-                                            setDataAllServer({
-                                                ...dataAllServer,
-                                                server_status: e.target.value,
-                                            })
-                                        }
-                                    >
-                                        <option value="Past Deadline">
-                                            Past Deadline
-                                        </option>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="flex gap-2 items-center text-white ml-3 mt-3">
-                        <Link href="/main/operation/server/allprogress">
-                            <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
-                                <MdOutlineCancel />
-                                <span>Cancel</span>
-                            </button>
-                        </Link>
-                        <button
-                        type="button"
-                            className="py-2 px-4 rounded-xl bg-green-500 flex gap-1 items-center"
-                            onClick={handleEditedData}
-                        >
-                            <FiSave />
-                            <span>Edit</span>
-                        </button>
                     </div>
                 </form>
             ) : (

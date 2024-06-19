@@ -1,19 +1,17 @@
-'use client';
-
+"use client"
 import PleaseWait from "@/components/PleaseWait";
+import axios from "axios";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { DiVim } from "react-icons/di";
 import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
-const Page = () => {
+const page = () => {
     const params = useParams();
     const [selectedDept, setSelectedDept] = useState("");
     const [dataAllPic, setDataAllPic] = useState(null);
-    const [dataAllServer, setDataAllServer] = useState({
+    const [dataAllNetwork, setDataAllNetwork] = useState({
         network_perihal: "",
         network_pic: "",
         departement: "",
@@ -24,16 +22,16 @@ const Page = () => {
         const getCurrentData = async () => {
             try {
                 const response = await axios.get(
-                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/servershow/getserver?input=${params.server_id}`
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/networkshow/getnetwork?input=${params.network_id}`
                 );
-                setDataAllServer(response.data.data[0]);
+                setDataAllNetwork(response.data.data[0]);
             } catch (error) {
                 console.log(error);
             }
         };getDataAllPic();
-        console.log(dataAllServer);
+        console.log(dataAllNetwork);
         getCurrentData();
-    }, [params.server_id]);
+    }, [params.network_id]);
 
     const getDataAllPic = async () => {
         setDataAllPic(null);
@@ -48,25 +46,11 @@ const Page = () => {
         }
     };
 
-    const handleEditedData = async () => {
-        try {
-            const response = await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/servershow/editedserver?input=${params.server_id}`,
-                dataAllServer
-            );
-            console.log(response.data);
-            alert("Edit Success");
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-
-return (
-    <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl ">
+    return (
+<div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl ">
     <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
         <div className="space-y">
-            {dataAllServer ? (
+            {dataAllNetwork ? (
                 <form className="space-y-4">
                     <div className="flex flex-col">
                         <label
@@ -76,15 +60,16 @@ return (
                             Nama Project
                         </label>
                         <input
+                        disabled
                             type="text"
-                            value={dataAllServer.server_perihal}
+                            value={dataAllNetwork.network_perihal}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_perihal: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_perihal: e.target.value,
                                 })
                             }
-                            className="input input-bordered mt-1"
+                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                         />
                     </div>
                     
@@ -97,11 +82,11 @@ return (
                         </label>
                         <input
                             type="text"
-                            className="input input-bordered mt-1"
-                            value={dataAllServer.network_pic}
+                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                            value={dataAllNetwork.network_pic}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
                                     network_pic: e.target.value,
                                 })
                             }
@@ -117,16 +102,17 @@ return (
                         </label>
                         {dataAllPic && (
                             <select
+                            disabled
                                 type="text"
-                                className="input input-bordered mt-1"
-                                value={dataAllServer.name}
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                                value={dataAllNetwork.name}
                                 onChange={(e) => {
                                     const selectedPic = JSON.parse(
                                         e.target.value
                                     );
-                                    dataAllServer({
+                                    dataAllNetwork({
                                         ...dataAllProject,
-                                        server_pic: selectedPic.nama,
+                                        network_pic: selectedPic.nama,
                                         departement: selectedPic.departemen,
                                     });
                                     setSelectedDept(selectedPic.departemen);
@@ -136,9 +122,9 @@ return (
                                     // disabled
                                     // selected
                                     className="text-sm text-gray-600 opacity-50"
-                                    value={dataAllServer.server_pic}
+                                    value={dataAllNetwork.network_pic}
                                 >
-                                    {dataAllServer.server_pic}
+                                    {dataAllNetwork.network_pic}
                                 </option>
                                 {dataAllPic.map((item, index) => (
                                     <option
@@ -178,11 +164,11 @@ return (
                         <input
                             type="date"
                             className="input input-bordered mt-1 font-semibold"
-                            value={dataAllServer.server_kickoff_start}
+                            value={dataAllNetwork.network_kickoff_start}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_kickoff_start: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_kickoff_start: e.target.value,
                                 })
                             }
                             disabled
@@ -199,11 +185,11 @@ return (
                         <input
                             type="date"
                             className="input input-bordered mt-1 font-semibold"
-                            value={dataAllServer.server_kickoff_deadline}
+                            value={dataAllNetwork.network_kickoff_deadline}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_kickoff_deadline: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_kickoff_deadline: e.target.value,
                                 })
                             }
                             disabled
@@ -219,32 +205,12 @@ return (
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
-                            value={dataAllServer.server_kickoff_done}
-                            onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_kickoff_done: e.target.value,
-                                })
-                            }
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="deadline"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Penyiapan Server Start
-                        </label>
-                        <input
-                            type="date"
                             className="input input-bordered mt-1 font-semibold"
-                            value={dataAllServer.server_peyiapanserver_start}
+                            value={dataAllNetwork.network_kickoff_done}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_peyiapanserver_start: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_kickoff_done: e.target.value,
                                 })
                             }
                             disabled
@@ -256,16 +222,16 @@ return (
                             htmlFor="deadline"
                             className="text-sm font-semibold text-[#0066AE]"
                         >
-                            Penyiapan Server Deadline
+                            MOP Start
                         </label>
                         <input
                             type="date"
                             className="input input-bordered mt-1 font-semibold"
-                            value={dataAllServer.server_peyiapanserver_deadline}
+                            value={dataAllNetwork.network_mop_start}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_peyiapanserver_deadline: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_mop_start: e.target.value,
                                 })
                             }
                             disabled
@@ -277,36 +243,16 @@ return (
                             htmlFor="deadline"
                             className="text-sm font-semibold text-[#0066AE]"
                         >
-                            Penyiapan Server Done
-                        </label>
-                        <input
-                            type="date"
-                            className="input input-bordered mt-1"
-                            value={dataAllServer.server_peyiapanserver_done}
-                            onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_peyiapanserver_done: e.target.value,
-                                })
-                            }
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="deadline"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Instalasi Aplikasi Start
+                            MOP Deadline
                         </label>
                         <input
                             type="date"
                             className="input input-bordered mt-1 font-semibold"
-                            value={dataAllServer.server_instalasiaplikasi_start}
+                            value={dataAllNetwork.network_mop_deadline}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_instalasiaplikasi_start: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_mop_deadline: e.target.value,
                                 })
                             }
                             disabled
@@ -318,16 +264,37 @@ return (
                             htmlFor="deadline"
                             className="text-sm font-semibold text-[#0066AE]"
                         >
-                            Instalasi Aplikasi Deadline
+                            MOP Done
+                        </label>
+                        <input
+                        disabled
+                            type="date"
+                            className="input input-bordered mt-1 font-semibold"
+                            value={dataAllNetwork.network_mop_done}
+                            onChange={(e) =>
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_mop_done: e.target.value,
+                                })
+                            }
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="deadline"
+                            className="text-sm font-semibold text-[#0066AE]"
+                        >
+                            Demo MOP Start
                         </label>
                         <input
                             type="date"
                             className="input input-bordered mt-1 font-semibold"
-                            value={dataAllServer.server_instalasiaplikasi_deadline}
+                            value={dataAllNetwork.network_demomop_start}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_instalasiaplikasi_deadline: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_demomop_start: e.target.value,
                                 })
                             }
                             disabled
@@ -339,36 +306,16 @@ return (
                             htmlFor="deadline"
                             className="text-sm font-semibold text-[#0066AE]"
                         >
-                            Instalasi Aplikasi Done
-                        </label>
-                        <input
-                            type="date"
-                            className="input input-bordered mt-1"
-                            value={dataAllServer.server_instalasiaplikasi_done}
-                            onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_instalasiaplikasi_done: e.target.value,
-                                })
-                            }
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="deadline"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Install Checkpoint Start
+                            Demo MOP Deadline
                         </label>
                         <input
                             type="date"
                             className="input input-bordered mt-1 font-semibold"
-                            value={dataAllServer.server_instalcheckpoint_start}
+                            value={dataAllNetwork.network_demomop_deadline}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_instalcheckpoint_start: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_demomop_deadline: e.target.value,
                                 })
                             }
                             disabled
@@ -380,163 +327,19 @@ return (
                             htmlFor="deadline"
                             className="text-sm font-semibold text-[#0066AE]"
                         >
-                            Install Checkpoint Deadline
+                            Demo MOP Done
                         </label>
                         <input
                             type="date"
                             className="input input-bordered mt-1 font-semibold"
-                            value={dataAllServer.server_instalcheckpoint_deadline}
+                            value={dataAllNetwork.network_demomop_done}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_instalcheckpoint_deadline: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_demomop_done: e.target.value,
                                 })
                             }
                             disabled
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="deadline"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Install Checkpoint Done
-                        </label>
-                        <input
-                            type="date"
-                            className="input input-bordered mt-1"
-                            value={dataAllServer.server_instalcheckpoint_done}
-                            onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_instalcheckpoint_done: e.target.value,
-                                })
-                            }
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="deadline"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Testing Koneksi Start
-                        </label>
-                        <input
-                            type="date"
-                            className="input input-bordered mt-1 font-semibold"
-                            value={dataAllServer.server_testingkoneksi_start}
-                            onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_testingkoneksi_start: e.target.value,
-                                })
-                            }
-                            disabled
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="deadline"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Testing Koneksi Deadline
-                        </label>
-                        <input
-                            type="date"
-                            className="input input-bordered mt-1 font-semibold"
-                            value={dataAllServer.server_testingkoneksi_deadline}
-                            onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_testingkoneksi_deadline: e.target.value,
-                                })
-                            }
-                            disabled
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="deadline"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Testing Koneksi Done
-                        </label>
-                        <input
-                            type="date"
-                            className="input input-bordered mt-1"
-                            value={dataAllServer.server_testingkoneksi_done}
-                            onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_testingkoneksi_done: e.target.value,
-                                })
-                            }
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="deadline"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Serah Terima Server Start
-                        </label>
-                        <input
-                            type="date"
-                            className="input input-bordered mt-1 font-semibold"
-                            value={dataAllServer.server_serahterimaserver_start}
-                            onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_serahterimaserver_start: e.target.value,
-                                })
-                            }
-                            disabled
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="deadline"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Serah Terima Server Deadline
-                        </label>
-                        <input
-                            type="date"
-                            className="input input-bordered mt-1 font-semibold"
-                            value={dataAllServer.server_serahterimaserver_deadline}
-                            onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_serahterimaserver_deadline: e.target.value,
-                                })
-                            }
-                            disabled
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="deadline"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Serah Terima Server Done
-                        </label>
-                        <input
-                            type="date"
-                            className="input input-bordered mt-1"
-                            value={dataAllServer.server_serahterimaserver_done}
-                            onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_serahterimaserver_done: e.target.value,
-                                })
-                            }
                         />
                     </div>
 
@@ -549,12 +352,12 @@ return (
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
-                            value={dataAllServer.server_implementasi_start}
+                            className="input input-bordered mt-1 font-semibold"
+                            value={dataAllNetwork.network_implementasi_start}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_implementasi_start: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_implementasi_start: e.target.value,
                                 })
                             }
                             disabled
@@ -570,12 +373,12 @@ return (
                         </label>
                         <input
                             type="date"
-                            className="input input-bordered mt-1"
-                            value={dataAllServer.server_implementasi_deadline}
+                            className="input input-bordered mt-1 font-semibold"
+                            value={dataAllNetwork.network_implementasi_deadline}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_implementasi_deadline: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_implementasi_deadline: e.target.value,
                                 })
                             }
                             disabled
@@ -590,18 +393,144 @@ return (
                             Implementasi Done
                         </label>
                         <input
+                        disabled
                             type="date"
-                            className="input input-bordered mt-1"
-                            value={dataAllServer.server_implementasi_done}
+                            className="input input-bordered mt-1 font-semibold"
+                            value={dataAllNetwork.network_implementasi_done}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_implementasi_done: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_implementasi_done: e.target.value,
                                 })
                             }
                         />
                     </div>
 
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="deadline"
+                            className="text-sm font-semibold text-[#0066AE]"
+                        >
+                            SK/SE Start
+                        </label>
+                        <input
+                            type="date"
+                            className="input input-bordered mt-1 font-semibold"
+                            value={dataAllNetwork.network_skse_start}
+                            onChange={(e) =>
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_skse_start: e.target.value,
+                                })
+                            }
+                            disabled
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="deadline"
+                            className="text-sm font-semibold text-[#0066AE]"
+                        >
+                            SK/SE Deadline
+                        </label>
+                        <input
+                            type="date"
+                            className="input input-bordered mt-1 font-semibold"
+                            value={dataAllNetwork.network_skse_deadline}
+                            onChange={(e) =>
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_skse_deadline: e.target.value,
+                                })
+                            }
+                            disabled
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="deadline"
+                            className="text-sm font-semibold text-[#0066AE]"
+                        >
+                            SK/SE Done
+                        </label>
+                        <input
+                        disabled
+                            type="date"
+                            className="input input-bordered mt-1 font-semibold"
+                            value={dataAllNetwork.network_skse_done}
+                            onChange={(e) =>
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_skse_done: e.target.value,
+                                })
+                            }
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="deadline"
+                            className="text-sm font-semibold text-[#0066AE]"
+                        >
+                            UAT Start
+                        </label>
+                        <input
+                            type="date"
+                            className="input input-bordered mt-1 font-semibold"
+                            value={dataAllNetwork.network_uat_start}
+                            onChange={(e) =>
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_uat_start: e.target.value,
+                                })
+                            }
+                            disabled
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="deadline"
+                            className="text-sm font-semibold text-[#0066AE]"
+                        >
+                            UAT Deadline
+                        </label>
+                        <input
+                            type="date"
+                            className="input input-bordered mt-1 font-semibold"
+                            value={dataAllNetwork.network_uat_deadline}
+                            onChange={(e) =>
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_uat_deadline: e.target.value,
+                                })
+                            }
+                            disabled
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="deadline"
+                            className="text-sm font-semibold text-[#0066AE]"
+                        >
+                            UAT Done
+                        </label>
+                        <input
+                        disabled
+                            type="date"
+                            className="input input-bordered mt-1 font-semibold"
+                            value={dataAllNetwork.network_uat_done}
+                            onChange={(e) =>
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_uat_done: e.target.value,
+                                })
+                            }
+                        />
+                    </div>
 
                     <div className="flex flex-col">
                         <label
@@ -611,88 +540,17 @@ return (
                             Deadline Project
                         </label>
                         <input
+                        disabled
                             type="date"
-                            className="input input-bordered mt-1"
-                            value={dataAllServer.server_deadline_project}
+                            className="input input-bordered mt-1 font-semibold"
+                            value={dataAllNetwork.network_deadline_project}
                             onChange={(e) =>
-                                setDataAllServer({
-                                    ...dataAllServer,
-                                    server_deadline_project: e.target.value,
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_deadline_project: e.target.value,
                                 })
                             }
-                            disabled
                         />
-                    </div>
-                    
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="status"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Status
-                        </label>
-                        <div className="dropdown mt-1">
-                            <div tabIndex={0} role="button" className="btn m-1">
-                                {dataAllServer.server_status}
-                            </div>
-                            <ul
-                                tabIndex={0}
-                                className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
-                            >
-                                <li>
-                                    <a
-                                        onClick={(e) =>
-                                            setDataAllServer({
-                                                ...dataAllServer,
-                                                server_status: e.target.value,
-                                            })
-                                        }
-                                    >
-                                        <option value="Ongoing">Ongoing</option>
-                                    </a>
-                                    <a
-                                        onClick={(e) =>
-                                            setDataAllServer({
-                                                ...dataAllServer,
-                                                server_status: e.target.value,
-                                            })
-                                        }
-                                    >
-                                        <option value="Finished">
-                                            Finished
-                                        </option>
-                                    </a>
-                                    <a
-                                        onClick={(e) =>
-                                            setDataAllServer({
-                                                ...dataAllServer,
-                                                server_status: e.target.value,
-                                            })
-                                        }
-                                    >
-                                        <option value="Past Deadline">
-                                            Past Deadline
-                                        </option>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="flex gap-2 items-center text-white ml-3 mt-3">
-                        <Link href="/main/operation/server/allprogress">
-                            <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
-                                <MdOutlineCancel />
-                                <span>Cancel</span>
-                            </button>
-                        </Link>
-                        <button
-                        type="button"
-                            className="py-2 px-4 rounded-xl bg-green-500 flex gap-1 items-center"
-                            onClick={handleEditedData}
-                        >
-                            <FiSave />
-                            <span>Edit</span>
-                        </button>
                     </div>
                 </form>
             ) : (
@@ -701,7 +559,7 @@ return (
         </div>
         </div>
         </div>
-);
+    );
 };
 
-export default Page;
+export default page;

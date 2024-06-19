@@ -340,7 +340,7 @@ return (
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                Phase 2
+                Phase 3
               </label>
               <div
                 className="border rounded-xl"

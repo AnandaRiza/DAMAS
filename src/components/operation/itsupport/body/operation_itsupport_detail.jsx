@@ -1,41 +1,36 @@
-'use client';
+"use client";
 
 import PleaseWait from "@/components/PleaseWait";
-import Link from "next/link";
-import { useParams } from "next/navigation";
 import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { DiVim } from "react-icons/di";
-import { FiSave } from "react-icons/fi";
-import { MdOutlineCancel } from "react-icons/md";
 
 const page = () => {
+    const userid = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("DAMAS-USERID="))
+        ?.split("=")[1];
 
   const params = useParams();
   const [selectedDept, setSelectedDept] = useState("");
   const [dataAllPic, setDataAllPic] = useState(null);
-  const [dataAllItmo, setDataAllItmo] = useState({
-    network_perihal: "",
-    network_pic: "",
-    departement: "",
-    network_deadline: "",
-    network_status: "",
+  const [dataAllItsupport, setDataAllItsupport] = useState({
   });
   useEffect(() => {
     const getCurrentData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/itmoshow/getitmo?input=${params.itmo_id}`
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/itsupportshow/getitsupport?input=${params.itsupport_id}`
         );
-        setDataAllItmo(response.data.data[0]);
+        setDataAllItsupport(response.data.data[0]);
       } catch (error) {
         console.log(error);
       }
     };
     getDataAllPic();
-    console.log(dataAllItmo);
+    console.log(dataAllItsupport);
     getCurrentData();
-  }, [params.itmo_id]);
+  }, [params.itsupport_id]);
 
   const getDataAllPic = async () => {
     setDataAllPic(null);
@@ -50,24 +45,11 @@ const page = () => {
     }
   };
 
-  const handleEditedData = async () => {
-    try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/itmoshow/editeditmo?input=${params.itmo_id}`,
-        dataAllItmo
-      );
-      console.log(response.data);
-      alert("Edit Success");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-return (
+  return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl ">
       <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
         <div className="space-y">
-          {dataAllItmo ? (
+          {dataAllItsupport ? (
             <form className="space-y-4">
               <div className="flex flex-col">
                 <label
@@ -77,15 +59,16 @@ return (
                   Nama Project
                 </label>
                 <input
+                disabled
                   type="text"
-                  value={dataAllItmo.itmo_perihal}
+                  value={dataAllItsupport.itsupport_perihal}
                   onChange={(e) =>
-                    setDataAllItmo({
-                      ...dataAllItmo,
-                      itmo_perihal: e.target.value,
+                    setDataAllItsupport({
+                      ...dataAllItsupport,
+                      itsupport_perihal: e.target.value,
                     })
                   }
-                  className="input input-bordered mt-1"
+                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                 />
               </div>
 
@@ -98,14 +81,15 @@ return (
                 </label>
                 {dataAllPic && (
                   <select
+                  disabled
                     type="text"
-                    className="input input-bordered mt-1"
-                    value={dataAllItmo.name}
+                    className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                    value={dataAllItsupport.name}
                     onChange={(e) => {
                       const selectedPic = JSON.parse(e.target.value);
-                      dataAllItmo({
+                      dataAllItsupport({
                         ...dataAllProject,
-                        itmo_pic: selectedPic.nama,
+                        itsupport_pic: selectedPic.nama,
                         departement: selectedPic.departemen,
                       });
                       setSelectedDept(selectedPic.departemen);
@@ -115,9 +99,9 @@ return (
                       // disabled
                       // selected
                       className="text-sm text-gray-600 opacity-50"
-                      value={dataAllItmo.itmo_pic}
+                      value={dataAllItsupport.itsupport_pic}
                     >
-                      {dataAllItmo.itmo_pic}
+                      {dataAllItsupport.itsupport_pic}
                     </option>
                     {dataAllPic.map((item, index) => (
                       <option key={index} value={JSON.stringify(item)}>
@@ -151,6 +135,7 @@ return (
                   Phase 1
                 </label>
                 <div
+                disabled
                   className="border rounded-xl"
                   style={{ borderColor: "#DADADA" }}
                 >
@@ -163,11 +148,11 @@ return (
                     </label>
                     <input
                       type="text"
-                      value={dataAllItmo.itmo_phase1}
+                      value={dataAllItsupport.itsupport_phase1}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase1: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase1: e.target.value,
                         })
                       }
                       disabled
@@ -185,11 +170,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase1_start}
+                      value={dataAllItsupport.itsupport_phase1_start}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase1_start: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase1_start: e.target.value,
                         })
                       }
                       disabled
@@ -206,11 +191,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase1_deadline}
+                      value={dataAllItsupport.itsupport_phase1_deadline}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase1_deadline: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase1_deadline: e.target.value,
                         })
                       }
                       disabled
@@ -225,13 +210,14 @@ return (
                       Phase 1 Done
                     </label>
                     <input
+                    disabled
                       type="date"
-                      className="input input-bordered mt-1"
-                      value={dataAllItmo.itmo_phase1_done}
+                      className="input font-semibold input-bordered mt-1"
+                      value={dataAllItsupport.itsupport_phase1_done}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase1_done: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase1_done: e.target.value,
                         })
                       }
                     />
@@ -259,11 +245,11 @@ return (
                     </label>
                     <input
                       type="text"
-                      value={dataAllItmo.itmo_phase2}
+                      value={dataAllItsupport.itsupport_phase2}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase2: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase2: e.target.value,
                         })
                       }
                       disabled
@@ -281,11 +267,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase2_start}
+                      value={dataAllItsupport.itsupport_phase2_start}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase2_start: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase2_start: e.target.value,
                         })
                       }
                       disabled
@@ -302,11 +288,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase2_deadline}
+                      value={dataAllItsupport.itsupport_phase2_deadline}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase2_deadline: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase2_deadline: e.target.value,
                         })
                       }
                       disabled
@@ -321,13 +307,14 @@ return (
                       Phase 2 Done
                     </label>
                     <input
+                    disabled
                       type="date"
-                      className="input input-bordered mt-1"
-                      value={dataAllItmo.itmo_phase2_done}
+                      className="input font-semibold input-bordered mt-1"
+                      value={dataAllItsupport.itsupport_phase2_done}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase2_done: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase2_done: e.target.value,
                         })
                       }
                     />
@@ -355,11 +342,11 @@ return (
                     </label>
                     <input
                       type="text"
-                      value={dataAllItmo.itmo_phase3}
+                      value={dataAllItsupport.itsupport_phase3}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase3: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase3: e.target.value,
                         })
                       }
                       disabled
@@ -377,11 +364,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase3_start}
+                      value={dataAllItsupport.itsupport_phase3_start}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase3_start: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase3_start: e.target.value,
                         })
                       }
                       disabled
@@ -398,11 +385,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase3_deadline}
+                      value={dataAllItsupport.itsupport_phase3_deadline}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase3_deadline: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase3_deadline: e.target.value,
                         })
                       }
                       disabled
@@ -417,13 +404,14 @@ return (
                       Phase 3 Done
                     </label>
                     <input
+                    disabled
                       type="date"
-                      className="input input-bordered mt-1"
-                      value={dataAllItmo.itmo_phase3_done}
+                      className="input font-semibold input-bordered mt-1"
+                      value={dataAllItsupport.itsupport_phase3_done}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase3_done: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase3_done: e.target.value,
                         })
                       }
                     />
@@ -451,11 +439,11 @@ return (
                     </label>
                     <input
                       type="text"
-                      value={dataAllItmo.itmo_phase4}
+                      value={dataAllItsupport.itsupport_phase4}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase4: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase4: e.target.value,
                         })
                       }
                       disabled
@@ -473,11 +461,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase4_start}
+                      value={dataAllItsupport.itsupport_phase4_start}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase4_start: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase4_start: e.target.value,
                         })
                       }
                       disabled
@@ -494,11 +482,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase4_deadline}
+                      value={dataAllItsupport.itsupport_phase4_deadline}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase4_deadline: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase4_deadline: e.target.value,
                         })
                       }
                       disabled
@@ -513,13 +501,14 @@ return (
                       Phase 4 Done
                     </label>
                     <input
+                    disabled
                       type="date"
-                      className="input input-bordered mt-1"
-                      value={dataAllItmo.itmo_phase4_done}
+                      className="input font-semibold input-bordered mt-1"
+                      value={dataAllItsupport.itsupport_phase4_done}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase4_done: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase4_done: e.target.value,
                         })
                       }
                     />
@@ -547,11 +536,11 @@ return (
                     </label>
                     <input
                       type="text"
-                      value={dataAllItmo.itmo_phase5}
+                      value={dataAllItsupport.itsupport_phase5}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase5: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase5: e.target.value,
                         })
                       }
                       disabled
@@ -569,11 +558,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase5_start}
+                      value={dataAllItsupport.itsupport_phase5_start}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase5_start: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase5_start: e.target.value,
                         })
                       }
                       disabled
@@ -590,11 +579,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase5_deadline}
+                      value={dataAllItsupport.itsupport_phase5_deadline}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase5_deadline: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase5_deadline: e.target.value,
                         })
                       }
                       disabled
@@ -609,13 +598,14 @@ return (
                       Phase 5 Done
                     </label>
                     <input
+                    disabled
                       type="date"
-                      className="input input-bordered mt-1"
-                      value={dataAllItmo.itmo_phase5_done}
+                      className="input font-semibold input-bordered mt-1"
+                      value={dataAllItsupport.itsupport_phase5_done}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase5_done: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase5_done: e.target.value,
                         })
                       }
                     />
@@ -643,11 +633,11 @@ return (
                     </label>
                     <input
                       type="text"
-                      value={dataAllItmo.itmo_phase6}
+                      value={dataAllItsupport.itsupport_phase6}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase6: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase6: e.target.value,
                         })
                       }
                       disabled
@@ -665,11 +655,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase6_start}
+                      value={dataAllItsupport.itsupport_phase6_start}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase6_start: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase6_start: e.target.value,
                         })
                       }
                       disabled
@@ -686,11 +676,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase6_deadline}
+                      value={dataAllItsupport.itsupport_phase6_deadline}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase6_deadline: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase6_deadline: e.target.value,
                         })
                       }
                       disabled
@@ -705,13 +695,14 @@ return (
                       Phase 6 Done
                     </label>
                     <input
+                    disabled
                       type="date"
-                      className="input input-bordered mt-1"
-                      value={dataAllItmo.itmo_phase6_done}
+                      className="input font-semibold input-bordered mt-1"
+                      value={dataAllItsupport.itsupport_phase6_done}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase6_done: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase6_done: e.target.value,
                         })
                       }
                     />
@@ -739,11 +730,11 @@ return (
                     </label>
                     <input
                       type="text"
-                      value={dataAllItmo.itmo_phase7}
+                      value={dataAllItsupport.itsupport_phase7}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase7: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase7: e.target.value,
                         })
                       }
                       disabled
@@ -761,11 +752,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase7_start}
+                      value={dataAllItsupport.itsupport_phase7_start}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase7_start: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase7_start: e.target.value,
                         })
                       }
                       disabled
@@ -782,11 +773,11 @@ return (
                     <input
                       type="date"
                       className="input input-bordered mt-1 font-semibold"
-                      value={dataAllItmo.itmo_phase7_deadline}
+                      value={dataAllItsupport.itsupport_phase7_deadline}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase7_deadline: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase7_deadline: e.target.value,
                         })
                       }
                       disabled
@@ -801,13 +792,14 @@ return (
                       Phase 7 Done
                     </label>
                     <input
+                    disabled
                       type="date"
-                      className="input input-bordered mt-1"
-                      value={dataAllItmo.itmo_phase7_done}
+                      className="input font-semibold input-bordered mt-1"
+                      value={dataAllItsupport.itsupport_phase7_done}
                       onChange={(e) =>
-                        setDataAllItmo({
-                          ...dataAllItmo,
-                          itmo_phase7_done: e.target.value,
+                        setDataAllItsupport({
+                          ...dataAllItsupport,
+                          itsupport_phase7_done: e.target.value,
                         })
                       }
                     />
@@ -823,83 +815,17 @@ return (
                   Deadline Project
                 </label>
                 <input
+                disabled
                   type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllItmo.itmo_deadline_project}
+                  className="input font-semibold input-bordered mt-1"
+                  value={dataAllItsupport.itsupport_deadline_project}
                   onChange={(e) =>
-                    setDataAllItmo({
-                      ...dataAllItmo,
-                      itmo_deadline_project: e.target.value,
+                    setDataAllItsupport({
+                      ...dataAllItsupport,
+                      itsupport_deadline_project: e.target.value,
                     })
                   }
                 />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="status"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Status
-                </label>
-                <div className="dropdown mt-1">
-                  <div tabIndex={0} role="button" className="btn m-1">
-                    {dataAllItmo.itmo_status}
-                  </div>
-                  <ul
-                    tabIndex={0}
-                    className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
-                  >
-                    <li>
-                      <a
-                        onClick={(e) =>
-                          setDataAllItmo({
-                            ...dataAllItmo,
-                            itmo_status: e.target.value,
-                          })
-                        }
-                      >
-                        <option value="Ongoing">Ongoing</option>
-                      </a>
-                      <a
-                        onClick={(e) =>
-                          setDataAllItmo({
-                            ...dataAllItmo,
-                            itmo_status: e.target.value,
-                          })
-                        }
-                      >
-                        <option value="Finished">Finished</option>
-                      </a>
-                      <a
-                        onClick={(e) =>
-                          setDataAllItmo({
-                            ...dataAllItmo,
-                            itmo_status: e.target.value,
-                          })
-                        }
-                      >
-                        <option value="Past Deadline">Past Deadline</option>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="flex gap-2 items-center text-white ml-3 mt-3">
-                <Link href="/main/operation/datacenter/allprogress">
-                  <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
-                    <MdOutlineCancel />
-                    <span>Cancel</span>
-                  </button>
-                </Link>
-                <button
-                  type="button"
-                  className="py-2 px-4 rounded-xl bg-green-500 flex gap-1 items-center"
-                  onClick={handleEditedData}
-                >
-                  <FiSave />
-                  <span>Edit</span>
-                </button>
               </div>
             </form>
           ) : (
@@ -908,7 +834,7 @@ return (
         </div>
       </div>
     </div>
-);
+  );
 };
 
 export default page;
