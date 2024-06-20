@@ -30,7 +30,8 @@ const EditMemoPage = () => {
     const [loading, setLoading] = useState(true);
     const [showApprovalForm, setShowApprovalForm] = useState(false); // State to show or hide the approval form
     const [approvalData, setApprovalData] = useState(null); // State to store approval data
-    const params = useParams(); 
+    const [file, setFile] = useState(null); // State to hold uploaded file
+    const params = useParams();
     const router = useRouter();
 
     const getDataAllPic = async () => {
@@ -44,7 +45,6 @@ const EditMemoPage = () => {
             console.log(error);
         }
     };
-
 
     useEffect(() => {
         const getCurrentData = async () => {
@@ -91,37 +91,76 @@ const EditMemoPage = () => {
         }));
     };
 
-    const handleEditedData = async () => {
-        const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
-        const memoId = params.memoId;
-        const payload = {
-            ...dataAllMemo,
-            memo_createdBy: userid,
-            memo_department: selectedDept // Ensure memo_department is included
-        };
-        console.log('Payload:', payload); // Log the payload to verify its content
+
+      // Function to handle file upload
+      const handleFileUpload = async (event) => {
+        const fileToUpload = event.target.files[0];
+        const formData = new FormData();
+        formData.append("file", fileToUpload);
+
         try {
-            await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${memoId}`, 
-                payload, 
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/upload/${params.memoId}`,
+                formData,
                 {
                     headers: {
-                        "USER-ID": userid,
+                        "Content-Type": "multipart/form-data"
                     }
                 }
+            );
+            setDataAllMemo(prevState => ({
+                ...prevState,
+                memo_upload: response.data.fileName // Update state with uploaded file name
+            }));
+        } catch (error) {
+            console.error("Error uploading file: ", error);
+            setError("Failed to upload file");
+        }
+    };
+
+    // Function to handle file download
+    const handleFileDownload = async () => {
+        const { memo_upload } = dataAllMemo;
+        try {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/download/${memo_upload}`,
+                {
+                    responseType: "blob" // Important to specify blob response type
+                }
+            );
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", memo_upload);
+            document.body.appendChild(link);
+            link.click();
+        } catch (error) {
+            console.error("Error downloading file: ", error);
+            setError("Failed to download file");
+        }
+    };
+
+    // Function to handle form submission after edits
+    const handleEditedData = async () => {
+        try {
+            await axios.put(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
+                dataAllMemo
             );
             alert("Memo Update Success");
             router.push('/main/logistic');
         } catch (error) {
-            console.log(error);
+            console.error("Error updating memo: ", error);
+            setError("Failed to update memo");
         }
     };
-    
 
 
     if (loading) {
         return <PleaseWait />;
     }
+
+    const isReadOnly = dataAllMemo.memo_status === "MEMO APPROVED";
 
     return (
         <>
@@ -142,6 +181,7 @@ const EditMemoPage = () => {
                             })
                         }
                         name="memo_num"
+                        readOnly={isReadOnly}
                     />
                 </div>
 
@@ -161,6 +201,7 @@ const EditMemoPage = () => {
                             })
                         }
                         name="memo_perihal"
+                        readOnly={isReadOnly}
                     />
                 </div>
 
@@ -169,22 +210,22 @@ const EditMemoPage = () => {
                         PIC <span className="text-red-500">*</span>
                     </label>
                     {dataAllPic && (
-                       <select
-                       name="memo_pic"
-                       id="memo_pic"
-                       className="input input-bordered mt-1"
-                       value={JSON.stringify(dataAllPic.find(item => item.nama === dataAllMemo.memo_pic))} 
-                       onChange={(e) => {
-                           const selectedPic = JSON.parse(e.target.value);
-                           setDataAllMemo({
-                               ...dataAllMemo,
-                               memo_pic: selectedPic.nama,
-                               memo_department: selectedPic.departemen
-                           });
-                           setSelectedDept(selectedPic.departemen);
-                       }}
-                   >
-                   
+                        <select
+                            name="memo_pic"
+                            id="memo_pic"
+                            className="input input-bordered mt-1"
+                            value={JSON.stringify(dataAllPic.find(item => item.nama === dataAllMemo.memo_pic))}
+                            onChange={(e) => {
+                                const selectedPic = JSON.parse(e.target.value);
+                                setDataAllMemo({
+                                    ...dataAllMemo,
+                                    memo_pic: selectedPic.nama,
+                                    memo_department: selectedPic.departemen
+                                });
+                                setSelectedDept(selectedPic.departemen);
+                            }}
+                            disabled={isReadOnly}
+                        >
                             <option disabled selected className="text-sm text-gray-600 opacity-50">
                                 Select PIC...
                             </option>
@@ -222,7 +263,6 @@ const EditMemoPage = () => {
                     hidden
                 />
 
-
                 <div className="flex flex-col">
                     <label htmlFor="memo_reviewer" className="text-sm font-semibold text-gray-600">
                         Reviewer
@@ -239,6 +279,7 @@ const EditMemoPage = () => {
                                     memo_reviewer: e.target.value,
                                 })
                             }
+                            disabled={isReadOnly}
                         >
                             <option disabled selected className="text-sm text-gray-600 opacity-50">
                                 Select Reviewer...
@@ -263,6 +304,7 @@ const EditMemoPage = () => {
                         className="input input-bordered mt-1"
                         value={dataAllMemo.memo_deadline}
                         onChange={handleDateChange}
+                        readOnly={isReadOnly}
                     />
                     {error && <p className="text-red-500">{error}</p>}
                 </div>
@@ -295,9 +337,43 @@ const EditMemoPage = () => {
                             })
                         }
                         className="input input-bordered mt-1"
+                        readOnly={isReadOnly}
                         disabled
                     />
                 </div>
+                      {/* File Upload Field */}
+                <div className="flex flex-col">
+                    <label htmlFor="fileUpload" className="text-sm font-semibold text-gray-600">
+                        Upload File
+                    </label>
+                    <input
+                        type="file"
+                        id="fileUpload"
+                        onChange={handleFileUpload}
+                        accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.png"
+                        disabled={isReadOnly}
+                    />
+                </div>
+
+                {/* Download Link */}
+                {dataAllMemo.memo_upload && (
+                    <div>
+                        <label className="text-sm font-semibold text-gray-600">Uploaded File:</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <span>{dataAllMemo.memo_upload}</span>
+                            <button
+                                type="button"
+                                className="bg-blue-500 text-white py-1 px-3 rounded-md"
+                                onClick={handleFileDownload}
+                            >
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                {/* Error Handling */}
+                {error && <p className="text-red-500">{error}</p>}
 
                 <div className="flex gap-2 items-center text-white ml-3 mt-3 justify-between">
                     <Link href="/main/logistic">
@@ -310,6 +386,7 @@ const EditMemoPage = () => {
                         type="button"
                         className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center"
                         onClick={handleEditedData}
+                        disabled={isReadOnly}
                     >
                         <FiSave />
                         <span>Save Edit</span>
@@ -318,6 +395,7 @@ const EditMemoPage = () => {
                         type="button"
                         className="py-2 px-4 rounded-xl bg-green-500 flex gap-1 items-center"
                         onClick={handleStatusChange}
+                        disabled={isReadOnly}
                     >
                         <FaPenNib />
                         <span>Request Approval</span>

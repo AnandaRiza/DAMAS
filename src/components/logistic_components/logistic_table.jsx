@@ -40,7 +40,7 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                         {headers.map((item, index) => (
                             <th
                                 key={index}
-                                className={`py-3 px-6 uppercase ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes'].includes(item) ? 'hidden' : ''}`}
+                                className={`py-3 px-6 uppercase ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes','memo_upload'].includes(item) ? 'hidden' : ''}`}
                                 onClick={() => onSort(item)}
                             >
                                 <div className="flex items-center cursor-pointer">
@@ -75,7 +75,7 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                             {headers.map((header, headerIndex) => (
                                 <td
                                     key={headerIndex}
-                                    className={`py-3 px-6 ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes'].includes(header) ? 'hidden' : ''}`}
+                                    className={`py-3 px-6 ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes','memo_upload'].includes(header) ? 'hidden' : ''}`}
                                 >
                                     {item[header]}
                                 </td>

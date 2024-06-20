@@ -147,6 +147,7 @@ const ReviewMemoPage = () => {
                         type="text"
                         id="memo_num"
                         className="input input-bordered mt-1"
+                        disabled
                         value={dataAllMemo.memo_num}
                         onChange={(e) =>
                             setDataAllMemo({
@@ -166,6 +167,7 @@ const ReviewMemoPage = () => {
                         type="text"
                         id="memo_perihal"
                         className="input input-bordered mt-1"
+                        disabled
                         value={dataAllMemo.memo_perihal}
                         onChange={(e) =>
                             setDataAllMemo({
@@ -179,13 +181,14 @@ const ReviewMemoPage = () => {
 
                 <div className="flex flex-col">
                     <label htmlFor="memo_pic" className="text-sm font-semibold text-gray-600">
-                        PIC <span className="text-red-500">*</span>
+                        PIC 
                     </label>
                     {dataAllPic && (
                         <select
                             name="memo_pic"
                             id="memo_pic"
                             className="input input-bordered mt-1"
+                            disabled
                             value={JSON.stringify(dataAllPic.find(item => item.nama === dataAllMemo.memo_pic))} 
                             onChange={(e) => {
                                 const selectedPic = JSON.parse(e.target.value);
@@ -244,6 +247,7 @@ const ReviewMemoPage = () => {
                             name="memo_reviewer"
                             id="memo_reviewer"
                             className="input input-bordered mt-1"
+                            disabled
                             value={dataAllMemo.memo_reviewer}
                             onChange={(e) =>
                                 setDataAllMemo({
@@ -273,6 +277,7 @@ const ReviewMemoPage = () => {
                         id="memo_deadline"
                         name="memo_deadline"
                         className="input input-bordered mt-1"
+                        disabled
                         value={dataAllMemo.memo_deadline}
                         onChange={handleDateChange}
                     />
@@ -312,7 +317,7 @@ const ReviewMemoPage = () => {
                 </div>
 
                 <div className="flex gap-2 items-center text-white ml-3 mt-3 justify-between">
-                    <Link href="/main/logistic">
+                    <Link href="/main/status/approvelogistic">
                         <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
                             <IoMdArrowRoundBack />
                             <span>Back</span>

@@ -19,6 +19,7 @@ const MemoForm = () => {
     memo_deadline: "",
     memo_status: "WAITING FOR APPROVAL",
     memo_notes: "",
+    memo_upload: null, // New state for file upload
   });
 
   const [error, setError] = useState("");
@@ -27,47 +28,56 @@ const MemoForm = () => {
   const getDataAllPic = async () => {
     setDataAllPic(null);
     try {
-        const response = await axios.get(
-            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
-        );
-        setDataAllPic(response.data.data);
-        setFilteredDataAllPic(response.data.data); // Initialize filtered data
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
+      );
+      setDataAllPic(response.data.data);
+      setFilteredDataAllPic(response.data.data); // Initialize filtered data
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 
   useEffect(() => {
     getDataAllPic();
-    const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
-    setFormData(prevState => ({ ...prevState, memo_createdBy: userid }));
+    const userid = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("DAMAS-USERID="))
+      ?.split("=")[1];
+    setFormData((prevState) => ({ ...prevState, memo_createdBy: userid }));
   }, []);
 
   const handleSubmit = async () => {
-    const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
+    const userid = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("DAMAS-USERID="))
+      ?.split("=")[1];
     try {
-      console.log("Sending data:", formData);
-
       const regex = /^\d{4}-\d{2}-\d{2}$/;
       if (!regex.test(formData.memo_deadline)) {
         setError("Date must be in the format YYYY-MM-DD");
         return;
       }
 
-      const payload = {
-        ...formData,
-        memo_department: selectedDept,
-        memo_createdBy: userid,
-      };
-      console.log('Payload:', payload);
+      const formDataToSend = new FormData();
+      formDataToSend.append("memo_num", formData.memo_num);
+      formDataToSend.append("memo_perihal", formData.memo_perihal);
+      formDataToSend.append("memo_pic", formData.memo_pic);
+      formDataToSend.append("memo_department", selectedDept);
+      formDataToSend.append("memo_createdBy", userid);
+      formDataToSend.append("memo_reviewer", formData.memo_reviewer);
+      formDataToSend.append("memo_deadline", formData.memo_deadline);
+      formDataToSend.append("memo_status", formData.memo_status);
+      formDataToSend.append("memo_notes", formData.memo_notes);
+      formDataToSend.append("memo_upload", formData.memo_upload); // Append file
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo`,
-        payload,
+        formDataToSend,
         {
           headers: {
-            "Content-Type": "application/json",
-            "USER-ID": userid
+            "Content-Type": "multipart/form-data",
+            "USER-ID": userid,
           },
         }
       );
@@ -113,6 +123,14 @@ const MemoForm = () => {
       );
       setFilteredDataAllPic(filtered);
     }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      memo_upload: file,
+    });
   };
 
   return (
@@ -172,7 +190,7 @@ const MemoForm = () => {
               name="memo_pic"
               id="memo_pic"
               className="input input-bordered mt-1"
-              value={JSON.stringify(dataAllPic.find(item => item.nama === formData.memo_pic))}
+              value={JSON.stringify(dataAllPic.find((item) => item.nama === formData.memo_pic))}
               onChange={(e) => {
                 const selectedPic = JSON.parse(e.target.value);
                 setFormData({ ...formData, memo_pic: selectedPic.nama, memo_department: selectedPic.departemen });
@@ -199,7 +217,9 @@ const MemoForm = () => {
         <input
           className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
           type="text"
-          value={selectedDept} disabled />
+          value={selectedDept}
+          disabled
+        />
       </div>
 
       <div className="flex flex-col">
@@ -256,7 +276,7 @@ const MemoForm = () => {
           Deadline
         </label>
         <input
-          type="text"
+          type="date"
           id="memo_deadline"
           name="memo_deadline"
           value={formData.memo_deadline}
@@ -267,12 +287,24 @@ const MemoForm = () => {
         {error && <span className="text-red-600 text-xs mt-1">{error}</span>}
       </div>
 
-      <input
-        type="hidden"
-        id="memo_notes"
-        name="memo_notes"
-        value={formData.memo_notes}
-      />
+      <div className="flex flex-col">
+        <label htmlFor="memo_notes" className="text-sm font-semibold text-gray-600">
+          Notes
+        </label>
+        <textarea
+          id="memo_notes"
+          name="memo_notes"
+          value={formData.memo_notes}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              memo_notes: e.target.value,
+            })
+          }
+          className="input input-bordered mt-1"
+          rows={3}
+        />
+      </div>
 
       <div className="flex flex-col">
         <label htmlFor="memo_status" className="text-sm font-semibold text-gray-600">
@@ -293,6 +325,19 @@ const MemoForm = () => {
         >
           <option value="WAITING FOR APPROVAL">Waiting for Approval</option>
         </select>
+      </div>
+
+      <div className="flex flex-col">
+        <label htmlFor="memo_upload" className="text-sm font-semibold text-gray-600">
+          Upload File
+        </label>
+        <input
+          type="file"
+          id="memo_upload"
+          name="memo_upload"
+          onChange={handleFileChange}
+          className="mt-1"
+        />
       </div>
       
       <button
