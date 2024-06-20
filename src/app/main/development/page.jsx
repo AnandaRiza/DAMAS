@@ -124,6 +124,8 @@ const Page = () => {
                             }}
                             className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
                         >
+
+                            {/*  */}
                             Next
                         </button>
                     </div>
