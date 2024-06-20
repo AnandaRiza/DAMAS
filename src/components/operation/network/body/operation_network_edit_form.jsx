@@ -60,10 +60,10 @@ const page = () => {
   }, [dataAllNetwork]);
 
   const handleEditedData = async () => {
-    // if (dataAllNetwork.network_status === "Finished" && !dataAllNetwork.network_deadline_project) {
-    //     alert("Please fill in Project Finished date.");
-    //     return;
-    // }
+    if (dataAllNetwork.network_status === "Finished" && !dataAllNetwork.network_project_done) {
+      alert("Please fill in Project Finished date.");
+      return;
+    }
     setIsLoading(true);
     try {
       await axios.post(
@@ -74,8 +74,8 @@ const page = () => {
           authorizer: "Kadev",
           submitAt: "123",
           deadline: "123",
-          statusApprovement: "PENDING",
-          network_id: dataAllNetwork.network_id,
+          status_approvement: "PENDING",
+          server_id: dataAllNetwork.server_id,
         },
         {
           headers: {
@@ -633,6 +633,31 @@ const page = () => {
                   </ul>
                 </div>
               </div>
+
+              <div className="flex flex-col">
+              <label
+                htmlFor="projectdone"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Project Finished
+              </label>
+              <input
+                type="date"
+                id="projectdone"
+                name="projectdone"
+                value={dataAllNetwork.network_project_done}
+                onChange={(e) =>
+                  setDataAllNetwork({
+                    ...dataAllNetwork,
+                    network_project_done: e.target.value,
+                  })
+                }
+                className="input input-bordered mt-1"
+                required={dataAllNetwork.status === "Finished"}
+              />
+            </div>
+
+
               <div className="flex gap-2 items-center text-white ml-3 mt-3">
                 <Link href="/main/operation/network/allprogress">
                   <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">

@@ -3,7 +3,7 @@ import axios from "axios";
 import React from 'react'
 import { FiCheckSquare, FiXSquare } from "react-icons/fi";
 
-const page = ({ headers, data, parameter, action, isRefresh }) => {
+const Page = ({ headers, data, parameter, action, isRefresh }) => {
     const getDisplayName = (header) => {
         const displayNames = {
             submitter: "Submitter",
@@ -41,11 +41,11 @@ const page = ({ headers, data, parameter, action, isRefresh }) => {
         return displayName
     };
 
-    const handleStatusApprove = async (network_id, network_status) => {
+    const handleStatusApprove = async (id, network_status) => {
         isRefresh();
         try {
             await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/${parameter}/log?network_id=${network_id}&network_status=${network_status}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/${parameter}/log?id=${id}&network_status=${network_status}`
             );
         } catch (error) {
             console.log(error);
@@ -79,17 +79,15 @@ const page = ({ headers, data, parameter, action, isRefresh }) => {
                                         type="button"
                                         onClick={() =>
                                             handleStatusApprove(
-                                                item.network_id,
+                                                item.id,
                                                 "DECLINE"
                                             )
                                         }
                                         disabled={
-                                            item.status_approvement.toUpperCase() !==
-                                            "PENDING"
+                                            item.status_approvement && item.status_approvement.toUpperCase() !== "PENDING"
                                         }
                                         className={`flex flex-col gap-1 items-center justify-center pt-2 ${
-                                            item.status_approvement.toUpperCase() !==
-                                            "PENDING"
+                                            item.status_approvement && item.status_approvement.toUpperCase() !== "PENDING"
                                                 ? "text-gray-500 cursor-not-allowed"
                                                 : "text-red-400 cursor-pointer"
                                         }`}
@@ -101,17 +99,15 @@ const page = ({ headers, data, parameter, action, isRefresh }) => {
                                         type="button"
                                         onClick={() =>
                                             handleStatusApprove(
-                                                item.network_id,
+                                                item.id,
                                                 "APPROVED"
                                             )
                                         }
                                         disabled={
-                                            item.status_approvement.toUpperCase() !==
-                                            "PENDING"
+                                            item.status_approvement && item.status_approvement.toUpperCase() !== "PENDING"
                                         }
                                         className={`flex flex-col gap-1 items-center justify-center pt-2 ${
-                                            item.status_approvement.toUpperCase() !==
-                                            "PENDING"
+                                            item.status_approvement && item.status_approvement.toUpperCase() !== "PENDING"
                                                 ? "text-gray-500 cursor-not-allowed"
                                                 : "text-green-600 cursor-pointer"
                                         }`}
@@ -135,4 +131,4 @@ const page = ({ headers, data, parameter, action, isRefresh }) => {
     );
 };
 
-export default page
+export default Page
