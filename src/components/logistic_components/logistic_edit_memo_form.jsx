@@ -30,6 +30,7 @@ const EditMemoPage = () => {
     const [loading, setLoading] = useState(true);
     const [showApprovalForm, setShowApprovalForm] = useState(false); // State to show or hide the approval form
     const [approvalData, setApprovalData] = useState(null); // State to store approval data
+    const [file, setFile] = useState(null); // State to hold uploaded file
     const params = useParams();
     const router = useRouter();
 
@@ -90,31 +91,70 @@ const EditMemoPage = () => {
         }));
     };
 
-    const handleEditedData = async () => {
-        const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
-        const memoId = params.memoId;
-        const payload = {
-            ...dataAllMemo,
-            memo_createdBy: userid,
-            memo_department: selectedDept // Ensure memo_department is included
-        };
-        console.log('Payload:', payload); // Log the payload to verify its content
+
+      // Function to handle file upload
+      const handleFileUpload = async (event) => {
+        const fileToUpload = event.target.files[0];
+        const formData = new FormData();
+        formData.append("file", fileToUpload);
+
         try {
-            await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${memoId}`,
-                payload,
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/upload/${params.memoId}`,
+                formData,
                 {
                     headers: {
-                        "USER-ID": userid,
+                        "Content-Type": "multipart/form-data"
                     }
                 }
+            );
+            setDataAllMemo(prevState => ({
+                ...prevState,
+                memo_upload: response.data.fileName // Update state with uploaded file name
+            }));
+        } catch (error) {
+            console.error("Error uploading file: ", error);
+            setError("Failed to upload file");
+        }
+    };
+
+    // Function to handle file download
+    const handleFileDownload = async () => {
+        const { memo_upload } = dataAllMemo;
+        try {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/download/${memo_upload}`,
+                {
+                    responseType: "blob" // Important to specify blob response type
+                }
+            );
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", memo_upload);
+            document.body.appendChild(link);
+            link.click();
+        } catch (error) {
+            console.error("Error downloading file: ", error);
+            setError("Failed to download file");
+        }
+    };
+
+    // Function to handle form submission after edits
+    const handleEditedData = async () => {
+        try {
+            await axios.put(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
+                dataAllMemo
             );
             alert("Memo Update Success");
             router.push('/main/logistic');
         } catch (error) {
-            console.log(error);
+            console.error("Error updating memo: ", error);
+            setError("Failed to update memo");
         }
     };
+
 
     if (loading) {
         return <PleaseWait />;
@@ -301,6 +341,39 @@ const EditMemoPage = () => {
                         disabled
                     />
                 </div>
+                      {/* File Upload Field */}
+                <div className="flex flex-col">
+                    <label htmlFor="fileUpload" className="text-sm font-semibold text-gray-600">
+                        Upload File
+                    </label>
+                    <input
+                        type="file"
+                        id="fileUpload"
+                        onChange={handleFileUpload}
+                        accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.png"
+                        disabled={isReadOnly}
+                    />
+                </div>
+
+                {/* Download Link */}
+                {dataAllMemo.memo_upload && (
+                    <div>
+                        <label className="text-sm font-semibold text-gray-600">Uploaded File:</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <span>{dataAllMemo.memo_upload}</span>
+                            <button
+                                type="button"
+                                className="bg-blue-500 text-white py-1 px-3 rounded-md"
+                                onClick={handleFileDownload}
+                            >
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                {/* Error Handling */}
+                {error && <p className="text-red-500">{error}</p>}
 
                 <div className="flex gap-2 items-center text-white ml-3 mt-3 justify-between">
                     <Link href="/main/logistic">
