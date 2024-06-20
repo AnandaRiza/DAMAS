@@ -59,8 +59,23 @@ const Page = ({ headers, data, action, link}) => {
     };
 
     const getStatus = (item) => {
+        const calculateTimeLeft = (date) => {
+            const now = new Date();
+            const deadline = new Date(date);
+            const difference = deadline.getTime() - now.getTime();
+            const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+            return daysLeft;
+        };
+
+        const { status } = item;
+
+        if (status === "Finished") {
+            return "Finished";
+        }
+
         const daysLeft = calculateTimeLeft(item.server_deadline_project);
-        
+
         if (daysLeft < 0) {
             return "Past Deadline";
         } else if (daysLeft <= 3) {
@@ -68,21 +83,85 @@ const Page = ({ headers, data, action, link}) => {
         } else if (daysLeft <= 7) {
             return "Within 7 days";
         } else {
-            return "On Track";
+            return "Ongoing";
         }
     };
 
-    const rowClass = (inputDate) => {
+    const rowClass = (inputDate, status) => {
+        const calculateTimeLeft = (date) => {
+            const now = new Date();
+            const deadline = new Date(date);
+            const difference = deadline.getTime() - now.getTime();
+            const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+            return daysLeft;
+        };
+
+        if (status === "Finished") {
+            return "bg-green-200 hover:bg-green-300";
+        }
+
         const daysLeft = calculateTimeLeft(inputDate);
-        // console.log(daysLeft)
+
         if (daysLeft <= 3) {
             return "bg-red-200 hover:bg-red-300";
         } else if (daysLeft <= 7) {
             return "bg-yellow-200 hover:bg-yellow-300";
         } else {
-            return "bg-green-200 hover:bg-green-300";
+            return "bg-white-200 hover:bg-gray-300";
         }
     };
+
+    const sortedData = data.slice().sort((a, b) => {
+        const classA = rowClass(a.server_deadline_project, a.server_status);
+        const classB = rowClass(b.server_deadline_project, b.server_status);
+
+
+        const aIsFinished = a.server_status === "Finished";
+        const bIsFinished = b.server_status === "Finished";
+    
+        if (aIsFinished && bIsFinished) {
+            // Sort "Finished" items by classA and classB
+            return classA.localeCompare(classB);
+        }
+    
+        if (aIsFinished) {
+            return 1; // Move "Finished" (a) to the bottom
+        }
+    
+        if (bIsFinished) {
+            return -1; // Move "Finished" (b) to the bottom
+        }
+    
+        if (a.server_status === "Finished" && b.server_status === "Finished") {
+            return classA.localeCompare(classB);
+        }
+    
+        if (a.server_status === "Finished") {
+            return 1; // Move 'Finished' projects to the bottom
+        }
+    
+        if (b.server_status === "Finished") {
+            return -1; // Move 'Finished' projects to the bottom
+        }
+    
+        // Jika keduanya tidak selesai, tetapi memiliki status "Ongoing"
+        if (a.server_status === "Ongoing" && b.server_status === "Ongoing") {
+            // Urutkan berdasarkan server_deadline_project
+            return new Date(a.server_deadline_project) - new Date(b.server_deadline_project);
+        }
+    
+        // Jika hanya salah satu memiliki status "Ongoing", letakkan yang lain di atas
+        if (a.server_status === "Ongoing") {
+            return 1; // Letakkan a di bawah b
+        }
+    
+        if (b.server_status === "Ongoing") {
+            return -1; // Letakkan b di atas a
+        }
+    
+        // Jika keduanya tidak selesai dan tidak ada yang "Ongoing", urutkan berdasarkan classA dan classB
+        return classA.localeCompare(classB);
+    });
 
 
 return (
@@ -130,10 +209,9 @@ return (
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => {
+                    {sortedData.map((item, index) => {
                     const server_status = getStatus(item);
-                    // console.log(server_status)
-                    const rowClassName = rowClass(item.server_deadline_project);
+                    const rowClassName = rowClass(item.server_deadline_project, item.server_status);
                     
                     return (
                         <tr
