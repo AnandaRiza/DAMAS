@@ -15,6 +15,7 @@ const SKSEForm = () => {
         deadline: "",
         status: "",
     });
+    console.log(formData)
 
     const getDataAllPic = async () => {
         setDataAllPic(null);
@@ -43,7 +44,7 @@ const SKSEForm = () => {
                 return;
             }
             await axios.post(`${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/newskse`, formData);
-            alert("Create SK/SE Success");
+            router.push("/main/ppo/allskse") 
         } catch (error) {
             console.log(error);
             alert("Create SK/SE Failed!");
