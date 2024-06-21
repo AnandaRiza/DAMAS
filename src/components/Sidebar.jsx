@@ -35,18 +35,17 @@ import {
 } from "@/validation/validateGroupAkses";
 
 const Sidebar = () => {
-    const [isSdlcShow, setIsSdlcShow] = useState(false);
-    const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
-    const [isPpoSkseShow, setIsPpoSkseShow] = useState(false);
-    const [IsOpsMonitorSystemShow, setIsOpsMonitorSystemShow] = useState(false);
-    const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] =
-        useState(false);
-    const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSdlcShow, setIsSdlcShow] = useState(false);
+  const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
+  const [isPpoSkseShow, setIsPpoSkseShow] = useState(false);
+  const [IsOpsMonitorSystemShow, setIsOpsMonitorSystemShow] = useState(false);
+  const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] = useState(false);
+  const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
     return (
         <div className="bg-[#00A6B4]/[0.5] text-w w-full h-full p-4 ml-4 mt-3 rounded-xl shadow-r-md">
