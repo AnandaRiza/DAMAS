@@ -1,5 +1,7 @@
 "use client";
-const { createContext, useContext, useState } = require("react");
+
+import { createContext, useContext, useState } from "react";
+
 
 export const stateContext = createContext();
 
@@ -7,7 +9,8 @@ export const ContexProvider = ({ children }) => {
     
     const [showSideBar, setShowSideBar] = useState(true);
     const [header, setHeader] = useState("Home");
-    const { user } = useStateContext();
+    const { user } = useState();
+    const [userAplikasi, setUserAplikasi] = useState(null);
 
     return (
         <stateContext.Provider
@@ -17,6 +20,8 @@ export const ContexProvider = ({ children }) => {
                 header,
                 setHeader,
                 user,
+                userAplikasi,
+                setUserAplikasi,
             }}
         >
             {children}

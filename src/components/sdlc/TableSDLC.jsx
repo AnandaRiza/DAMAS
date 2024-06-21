@@ -1,3 +1,4 @@
+import { IsDacenOperator, IsDevOperator, IsItmoOperator, IsItsecurityOperator, IsItsupportOperator, IsLogisticOperator, IsNetworkOperator, IsOperator, IsPpoOperator, IsServerOperator, IsSkseOperator } from "@/validation/validateGroupAkses";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -217,11 +218,10 @@ const TableSDLC = ({ headers, data, action, link }) => {
                                 {getDisplayName(item)}
                             </th>
                         ))}
-                        {action && (
+                        {(IsOperator() || IsDevOperator() || IsPpoOperator() || IsSkseOperator() || IsNetworkOperator() || IsServerOperator() || IsDacenOperator() || IsItsupportOperator() || IsItmoOperator() || IsItsecurityOperator() || IsLogisticOperator()) && action && 
                             <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                 Edit
-                            </th>
-                        )}
+                            </th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -278,7 +278,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
                                             : item[header]}
                                     </td>
                                 ))}
-                                {action && (
+                                 {(IsOperator() || IsDevOperator() || IsPpoOperator() || IsSkseOperator() || IsNetworkOperator() || IsServerOperator() || IsDacenOperator() || IsItsupportOperator() || IsItmoOperator() || IsItsecurityOperator() || IsLogisticOperator()) && action && 
                                     <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                         <button
                                             type="button"
@@ -288,7 +288,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
                                             <AiOutlineEdit size={20} />
                                         </button>
                                     </td>
-                                )}
+                                }
                             </tr>
                         );
                     })}

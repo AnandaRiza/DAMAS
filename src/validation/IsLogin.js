@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiLoader, FiRefreshCw } from "react-icons/fi";
 import PleaseWait from '@/components/PleaseWait';
+import { useStateContext } from '@/context/ContextProvider';
  
 export const IsLogin = ({ children }) => {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
+    const { setUserAplikasi } = useStateContext();
  
     useEffect(() => {
         const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
@@ -26,7 +28,20 @@ export const IsLogin = ({ children }) => {
                 }
             }
 
+            const getUserAplikasi = async () => {
+                const response = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/secure/usraplikasi`,
+                    {
+                        headers: {
+                            "USER-ID": userid,
+                        },
+                    }
+                );
+                setUserAplikasi(response.data.data);
+            };
+
             getUserInfo();
+            getUserAplikasi();
             
             axios.defaults.headers.common['USER-ID'] = userid;
         } else {
