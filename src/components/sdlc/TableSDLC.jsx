@@ -83,6 +83,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
             status: "Status",
             deadlineproject: "Deadline Project",
             projectdone: "Project Done",
+            createdby: "Created By",
         };
 
         return displayNames[header] || header;
@@ -121,7 +122,6 @@ const TableSDLC = ({ headers, data, action, link }) => {
     const sortedData = data.slice().sort((a, b) => {
         const classA = rowClass(a.deadlineproject, a.status);
         const classB = rowClass(b.deadlineproject, b.status);
-
 
         const aIsFinished = a.status === "Finished";
         const bIsFinished = b.status === "Finished";
@@ -228,7 +228,6 @@ const TableSDLC = ({ headers, data, action, link }) => {
                     {sortedData.map((item, index) => {
                         const status = getStatus(item);
                         const rowClassName = rowClass(item.deadlineproject, item.status);
-
                         return (
                             <tr
                                 key={index}

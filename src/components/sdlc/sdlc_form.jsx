@@ -1,11 +1,19 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const SDLCForm = () => {
+    const userid = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("DAMAS-USERID="))
+    ?.split("=")[1];
+
     const [dataAllPic, setDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
+    const router = useRouter();
+    
     // State to manage form data
     const [formData, setFormData] = useState({
         projectname: "",
@@ -40,17 +48,8 @@ const SDLCForm = () => {
         postimplementationreviewdone: "",
         status: "",
         deadlineproject: "",
+        createdby: "",
     });
-
-    // const formatDate = (date) => {
-    //     const d = new Date(date);
-    //     const day = d.getDate();
-    //     const month = d.getMonth() + 1;
-    //     const year = d.getFullYear();
-        
-    //     // Menggunakan template string untuk menghasilkan format DD-MM-YYYY
-    //     return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
-    // };
   
     
 
@@ -69,6 +68,7 @@ const SDLCForm = () => {
 
     useEffect(() => {
         getDataAllPic();
+        const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
     }, []);
 
     const handleSubmit = async () => {
@@ -79,9 +79,21 @@ const SDLCForm = () => {
                 alert(`Please fill in the following fields: ${emptyFields.join(", ")}`);
                 return;
             }
-            await axios.post("http://localhost:8081/api/projectdev", formData);
-            alert("Create Project Success");
-
+            await axios.post( `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/projectdev`,
+            {
+                ...formData,
+                createdby: userid,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "USER-ID": userid,
+                },
+            }
+            
+        );
+        router.push("/main/development")
+        // console.log(createdby)
         } catch (error) {
             console.log(error);
             alert("Create Project Failed!");
