@@ -1,3 +1,4 @@
+import { IsDacenOperator, IsDevOperator, IsItmoOperator, IsItsecurityOperator, IsItsupportOperator, IsLogisticOperator, IsNetworkOperator, IsOperator, IsPpoOperator, IsServerOperator, IsSkseOperator } from "@/validation/validateGroupAkses";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -84,6 +85,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
             status: "Status",
             deadlineproject: "Deadline Project",
             projectdone: "Project Done",
+            createdby: "Created By",
         };
 
         return displayNames[header] || header;
@@ -122,7 +124,6 @@ const TableSDLC = ({ headers, data, action, link }) => {
     const sortedData = data.slice().sort((a, b) => {
         const classA = rowClass(a.deadlineproject, a.status);
         const classB = rowClass(b.deadlineproject, b.status);
-
 
         const aIsFinished = a.status === "Finished";
         const bIsFinished = b.status === "Finished";
@@ -218,18 +219,16 @@ const TableSDLC = ({ headers, data, action, link }) => {
                                 {getDisplayName(item)}
                             </th>
                         ))}
-                        {action && (
+                        {(IsOperator() || IsDevOperator() || IsPpoOperator() || IsSkseOperator() || IsNetworkOperator() || IsServerOperator() || IsDacenOperator() || IsItsupportOperator() || IsItmoOperator() || IsItsecurityOperator() || IsLogisticOperator()) && action && 
                             <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                 Edit
-                            </th>
-                        )}
+                            </th>}
                     </tr>
                 </thead>
                 <tbody>
                     {sortedData.map((item, index) => {
                         const status = getStatus(item);
                         const rowClassName = rowClass(item.deadlineproject, item.status);
-
                         return (
                             <tr
                                 key={index}
@@ -280,7 +279,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
                                             : item[header]}
                                     </td>
                                 ))}
-                                {action && (
+                                 {(IsOperator() || IsDevOperator() || IsPpoOperator() || IsSkseOperator() || IsNetworkOperator() || IsServerOperator() || IsDacenOperator() || IsItsupportOperator() || IsItmoOperator() || IsItsecurityOperator() || IsLogisticOperator()) && action && 
                                     <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                         <button
                                             type="button"
@@ -290,7 +289,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
                                             <AiOutlineEdit size={20} />
                                         </button>
                                     </td>
-                                )}
+                                }
                             </tr>
                         );
                     })}

@@ -15,7 +15,7 @@ const page = () => {
     const [dataAllProject, setDataAllProject] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
-    const [perPage, setPerPage] = useState(8);
+    const [perPage, setPerPage] = useState(20);
 
     useEffect(() => {
         getDataAllProject();
@@ -102,7 +102,7 @@ const page = () => {
                         disabled={currentPage === 1 || startIndex === 0}
                         onClick={() => {
                             setCurrentPage(currentPage - 1);
-                            setStartIndex(startIndex - 8);
+                            setStartIndex(startIndex - 20);
                         }}
                         className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
                     >
@@ -116,7 +116,7 @@ const page = () => {
                         }
                         onClick={() => {
                             setCurrentPage(currentPage + 1);
-                            setStartIndex(startIndex + 8);
+                            setStartIndex(startIndex + 20);
                         }}
                         className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
                     >
