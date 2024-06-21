@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Router } from "next/router";
 import React, { useEffect, useState } from "react";
 
 const SKSEForm = () => {
@@ -18,7 +17,6 @@ const SKSEForm = () => {
         deadline: "",
         status: "",
     });
-    console.log(formData);
 
     const getDataAllPic = async () => {
         setDataAllPic(null);
@@ -196,56 +194,6 @@ const SKSEForm = () => {
                             Status <span className="text-red-500">*</span>
                         </label>
                         <div className="dropdown mt-1">
-                            {/* <div
-                                tabIndex={0}
-                                role="button"
-                                className="btn m-1 w-52 bg-white hover:bg-gray text-gray-600"
-                            >
-                                {formData.status
-                                    ? formData.status
-                                    : "Select Status"}
-                            </div>
-                            <ul
-                                tabIndex={0}
-                                className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 mb-4"
-                            >
-                                <li>
-                                    <a
-                                        onClick={() =>
-                                            setFormData({
-                                                ...formData,
-                                                status: "Ongoing",
-                                            })
-                                        }
-                                    >
-                                        Ongoing
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        onClick={() =>
-                                            setFormData({
-                                                ...formData,
-                                                status: "Finished",
-                                            })
-                                        }
-                                    >
-                                        Finished
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        onClick={() =>
-                                            setFormData({
-                                                ...formData,
-                                                status: "Past-Deadline",
-                                            })
-                                        }
-                                    >
-                                        Past Deadline
-                                    </a>
-                                </li>
-                            </ul> */}
                             <select
                                 name="status"
                                 id="status"

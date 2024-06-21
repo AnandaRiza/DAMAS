@@ -15,7 +15,7 @@ import { BiSupport } from "react-icons/bi";
 import { GrUserManager } from "react-icons/gr";
 import { MdOutlineSecurity } from "react-icons/md";
 import { MdApproval } from "react-icons/md";
-
+ 
 const Sidebar = () => {
   const [isSdlcShow, setIsSdlcShow] = useState(false);
   const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
@@ -24,11 +24,11 @@ const Sidebar = () => {
   const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] = useState(false);
   const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
+ 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
+ 
   return (
     <div className="bg-[#00A6B4]/[0.5] text-w w-full h-full p-4 ml-4 mt-3 rounded-xl shadow-r-md">
       <ul className="collapse collapse-arrow ">
@@ -39,7 +39,7 @@ const Sidebar = () => {
               className="collapse collapse-arrow border border-base-300 bg-base-200"
             >
               <input type="checkbox" className="peer" />
-
+ 
               {/* start button Dev */}
               <div className="collapse-title text-xl font-medium font-bold flex items-center">
                 <div className="mr-2">
@@ -47,7 +47,7 @@ const Sidebar = () => {
                 </div>
                 Development
               </div>
-
+ 
               <div className="collapse-content">
                 <Link href="/main/development/myproject">
                   <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -56,9 +56,9 @@ const Sidebar = () => {
                     </button>
                   </div>
                 </Link>
-
+ 
                 <hr className="my-4 border-gray-300" />
-
+ 
                 <Link href="/main/development">
                   <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -66,9 +66,9 @@ const Sidebar = () => {
                     </button>
                   </div>
                 </Link>
-
+ 
                 <hr className="my-4 border-gray-300" />
-
+ 
                 <Link href="/main/development/createnewproject">
                   <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -78,10 +78,10 @@ const Sidebar = () => {
                 </Link>
               </div>
             </div>
-
+ 
             <hr className="my-4 border-gray-300" />
             {/* End Button Dev */}
-
+ 
             {/* start button PPO */}
             <div
               tabIndex={0}
@@ -106,7 +106,7 @@ const Sidebar = () => {
                     </div>
                     SDLC
                   </div>
-
+ 
                   <div className="collapse-content">
                     <Link href="/main/ppo/myproject">
                       <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -115,9 +115,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/ppo">
                       <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -125,9 +125,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/ppo/createnewproject">
                       <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -148,7 +148,7 @@ const Sidebar = () => {
                     </div>
                     SK/SE
                   </div>
-
+ 
                   <div className="collapse-content">
                     <Link href="/main/ppo/myskse">
                       <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -157,9 +157,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/ppo/allskse">
                       <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -167,9 +167,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/ppo/createnewskse">
                       <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -182,9 +182,9 @@ const Sidebar = () => {
               </div>
             </div>
             {/* End Button PPO */}
-
+ 
             <hr className="my-4 border-gray-300" />
-
+ 
             {/* start button Operation */}
             <div
               tabIndex={0}
@@ -217,9 +217,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/operation/network/allprogress">
                       <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -227,9 +227,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/operation/network/createnewprogress">
                       <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -258,9 +258,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/operation/server/allserver">
                       <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -268,9 +268,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/operation/server/createnewserver">
                       <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -280,7 +280,7 @@ const Sidebar = () => {
                     </Link>
                   </div>
                 </div>
-
+ 
                 <div
                   tabIndex={0}
                   className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
@@ -300,9 +300,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/operation/datacenter/allprogress">
                       <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -310,9 +310,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/operation/datacenter/createnewprogress">
                       <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -322,7 +322,7 @@ const Sidebar = () => {
                     </Link>
                   </div>
                 </div>
-
+ 
                 <div
                   tabIndex={0}
                   className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
@@ -342,9 +342,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/operation/itsupport/allprogress">
                       <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -352,9 +352,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/operation/itsupport/createnewprogress">
                       <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -364,7 +364,7 @@ const Sidebar = () => {
                     </Link>
                   </div>
                 </div>
-
+ 
                 <div
                   tabIndex={0}
                   className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
@@ -384,9 +384,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/operation/itmo/allprogress">
                       <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -394,9 +394,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/operation/itmo/createnewprogress">
                       <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -406,7 +406,7 @@ const Sidebar = () => {
                     </Link>
                   </div>
                 </div>
-
+ 
                 <div
                   tabIndex={0}
                   className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
@@ -426,9 +426,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/operation/itsecurity/allprogress">
                       <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -436,9 +436,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/operation/itsecurity/createnewprogress">
                       <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -448,7 +448,7 @@ const Sidebar = () => {
                     </Link>
                   </div>
                 </div>
-
+ 
                 <div
                   tabIndex={0}
                   className="collapse collapse-arrow border border-base-300 bg-base-200"
@@ -460,7 +460,7 @@ const Sidebar = () => {
                     </div>
                     Monitoring
                   </div>
-
+ 
                   <div className="collapse-content">
                     <Link href="">
                       <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -469,9 +469,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="">
                       <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -479,9 +479,9 @@ const Sidebar = () => {
                         </button>
                       </div>
                     </Link>
-
+ 
                     {/* <hr className="my-4 border-gray-300" /> */}
-
+ 
                     {/* <Link href="/main/logistic/createnewmemo">
                                             <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                                                 <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -494,9 +494,9 @@ const Sidebar = () => {
               </div>
             </div>
             {/* end button Operation */}
-
+ 
             <hr className="my-4 border-gray-300" />
-
+ 
             {/* start button Logistic */}
             <div
               tabIndex={0}
@@ -517,9 +517,9 @@ const Sidebar = () => {
                     </button>
                   </div>
                 </Link>
-
+ 
                 <hr className="my-4 border-gray-300" />
-
+ 
                 <Link href="/main/logistic">
                   <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -527,9 +527,9 @@ const Sidebar = () => {
                     </button>
                   </div>
                 </Link>
-
+ 
                 <hr className="my-4 border-gray-300" />
-
+ 
                 <Link href="/main/logistic/createnewmemo">
                   <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -539,17 +539,17 @@ const Sidebar = () => {
                 </Link>
               </div>
             </div>
-
+ 
             <hr className="my-4 border-gray-300" />
             {/* end button Logistic */}
-
+ 
             {/* start button Approvement */}
             <div
               tabIndex={0}
               className="collapse collapse-arrow border border-base-300 bg-base-200"
             >
               <input type="checkbox" className="peer" />
-
+ 
               {/* start button Approval */}
               <div className="collapse-title text-xl font-medium font-bold flex items-center">
                 <div className="mr-2">
@@ -557,7 +557,7 @@ const Sidebar = () => {
                 </div>
                 Approval
               </div>
-
+ 
               <div className="collapse-content">
                 <Link href="/main/status/approveprojectdev">
                   <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -566,9 +566,9 @@ const Sidebar = () => {
                     </button>
                   </div>
                 </Link>
-
+ 
                 <hr className="my-4 border-gray-300" />
-
+ 
                 <Link href="/main/status/approveskse">
                   <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -576,9 +576,9 @@ const Sidebar = () => {
                     </button>
                   </div>
                 </Link>
-
+ 
                 <hr className="my-4 border-gray-300" />
-
+ 
                 {/* start button Operation */}
                 <div
                   tabIndex={0}
@@ -600,9 +600,9 @@ const Sidebar = () => {
                     Network
                   </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/status/approveoperation/server">
                     <div className="collapse-title font-bold flex items-center hover:bg-[#ACC8E5] rounded mb-2 bg-base-200 ">
                     <div className="mr-2">
@@ -611,9 +611,9 @@ const Sidebar = () => {
                     Server
                   </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/status/approveoperation/dacen">
                     <div className="collapse-title font-bold flex items-center hover:bg-[#ACC8E5] rounded mb-2 bg-base-200 ">
                     <div className="mr-2">
@@ -622,9 +622,9 @@ const Sidebar = () => {
                     Data Center
                   </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/status/approveoperation/itsupport">
                     <div className="collapse-title font-bold flex items-center hover:bg-[#ACC8E5] rounded mb-2 bg-base-200 ">
                     <div className="mr-2">
@@ -633,9 +633,9 @@ const Sidebar = () => {
                     IT Support
                   </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/status/approveoperation/itmo">
                     <div className="collapse-title font-bold flex items-center hover:bg-[#ACC8E5] rounded mb-2 bg-base-200 ">
                     <div className="mr-2">
@@ -644,9 +644,9 @@ const Sidebar = () => {
                     IT MO
                   </div>
                     </Link>
-
+ 
                     <hr className="my-4 border-gray-300" />
-
+ 
                     <Link href="/main/status/approveoperation/itsecurity">
                     <div className="collapse-title font-bold flex items-center hover:bg-[#ACC8E5] rounded mb-2 bg-base-200 ">
                     <div className="mr-2">
@@ -658,9 +658,9 @@ const Sidebar = () => {
                   </div>
                 </div>
                 {/* end button Operation */}
-
+ 
                 <hr className="my-4 border-gray-300" />
-
+ 
                 <Link href="/main/status/approvelogistic">
                   <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -677,5 +677,6 @@ const Sidebar = () => {
     </div>
   );
 };
-
+ 
 export default Sidebar;
+ 

@@ -35,17 +35,18 @@ import {
 } from "@/validation/validateGroupAkses";
 
 const Sidebar = () => {
-  const [isSdlcShow, setIsSdlcShow] = useState(false);
-  const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
-  const [isPpoSkseShow, setIsPpoSkseShow] = useState(false);
-  const [IsOpsMonitorSystemShow, setIsOpsMonitorSystemShow] = useState(false);
-  const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] = useState(false);
-  const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSdlcShow, setIsSdlcShow] = useState(false);
+    const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
+    const [isPpoSkseShow, setIsPpoSkseShow] = useState(false);
+    const [IsOpsMonitorSystemShow, setIsOpsMonitorSystemShow] = useState(false);
+    const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] =
+        useState(false);
+    const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
 
     return (
         <div className="bg-[#00A6B4]/[0.5] text-w w-full h-full p-4 ml-4 mt-3 rounded-xl shadow-r-md">
@@ -62,59 +63,60 @@ const Sidebar = () => {
                             >
                                 <input type="checkbox" className="peer" />
 
-                  {/* start button Dev */}
-                  <div className="collapse-title text-xl font-bold flex items-center">
-                    <div className="mr-2">
-                      <FaProjectDiagram />
-                    </div>
-                    Development
-                  </div>
+                                {/* start button Dev */}
+                                <div className="collapse-title text-xl font-bold flex items-center">
+                                    <div className="mr-2">
+                                        <FaProjectDiagram />
+                                    </div>
+                                    Development
+                                </div>
 
-                  <div className="collapse-content">
+                                <div className="collapse-content">
                                     {(IsDevOperator() || IsOperator()) && (
                                         <div>
-                            <Link href="/main/development/myproject">
-                              <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                  My Project
-                                </button>
-                              </div>
-                            </Link>
-                            <hr className="my-4 border-gray-300" />
+                                            <Link href="/main/development/myproject">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        My Project
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            <hr className="my-4 border-gray-300" />
                                         </div>
                                     )}
 
-                    <Link href="/main/development">
-                      <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                          All Project
-                        </button>
-                      </div>
-                    </Link>
+                                    <Link href="/main/development">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                All Project
+                                            </button>
+                                        </div>
+                                    </Link>
 
                                     {(IsDevOperator() || IsOperator()) && (
                                         <div>
-                            <hr className="my-4 border-gray-300" />
-                            <Link href="/main/development/createnewproject">
-                              <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                  Create New Project
-                                </button>
-                              </div>
-                            </Link>
+                                            <hr className="my-4 border-gray-300" />
+                                            <Link href="/main/development/createnewproject">
+                                                <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        Create New Project
+                                                    </button>
+                                                </div>
+                                            </Link>
                                         </div>
                                     )}
-                  </div>
-                </div>
+                                </div>
+                            </div>
                         )}
 
                         {/* End Button Dev */}
-                     
+
                         {/* start button PPO */}
                         {(IsPpoSupervisor() ||
                             IsPpoOperator() ||
                             IsSupervisor() ||
-                            IsSkseOperator() || IsOperator()) && (
+                            IsSkseOperator() ||
+                            IsOperator()) && (
                             <div
                                 tabIndex={0}
                                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
@@ -146,65 +148,65 @@ const Sidebar = () => {
                                                 SDLC
                                             </div>
 
-                          <div className="collapse-content">
+                                            <div className="collapse-content">
                                                 {(IsPpoOperator() ||
                                                     IsOperator()) && (
                                                     <div>
-                                    <Link href="/main/ppo/myproject">
-                                      <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                          My Project
-                                        </button>
-                                      </div>
-                                    </Link>
-                                    <hr className="my-4 border-gray-300" />
+                                                        <Link href="/main/ppo/myproject">
+                                                            <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                                    My Project
+                                                                </button>
+                                                            </div>
+                                                        </Link>
+                                                        <hr className="my-4 border-gray-300" />
                                                     </div>
                                                 )}
 
-                            <Link href="/main/ppo">
-                              <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                  All Project
-                                </button>
-                              </div>
-                            </Link>
+                                                <Link href="/main/ppo">
+                                                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            All Project
+                                                        </button>
+                                                    </div>
+                                                </Link>
 
                                                 {(IsPpoOperator() ||
                                                     IsOperator()) && (
                                                     <div>
-                                    <hr className="my-4 border-gray-300" />
-                                    <Link href="/main/ppo/createnewproject">
-                                      <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                          Create New
+                                                        <hr className="my-4 border-gray-300" />
+                                                        <Link href="/main/ppo/createnewproject">
+                                                            <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                                    Create New
                                                                     Project
-                                        </button>
-                                      </div>
-                                    </Link>
+                                                                </button>
+                                                            </div>
+                                                        </Link>
                                                     </div>
                                                 )}
-                          </div>
-                        </div>
+                                            </div>
+                                        </div>
                                     )}
                                     {(IsSkseOperator() ||
                                         IsSupervisor() ||
                                         IsOperator() ||
                                         IsPpoSupervisor() ||
                                         IsSkseOperator()) && (
-                        <div
-                          tabIndex={0}
-                          className="collapse collapse-arrow border border-base-300 bg-base-200"
-                        >
-                          <input
+                                        <div
+                                            tabIndex={0}
+                                            className="collapse collapse-arrow border border-base-300 bg-base-200"
+                                        >
+                                            <input
                                                 type="checkbox"
                                                 className="peer"
                                             />
-                          <div className="collapse-title text-xl  font-bold flex items-center">
-                            <div className="mr-2">
-                              <AiOutlineMail />
-                            </div>
-                            SK/SE
-                          </div>
+                                            <div className="collapse-title text-xl  font-bold flex items-center">
+                                                <div className="mr-2">
+                                                    <AiOutlineMail />
+                                                </div>
+                                                SK/SE
+                                            </div>
 
                                             <div className="collapse-content">
                                                 {(IsOperator() ||
@@ -221,18 +223,18 @@ const Sidebar = () => {
                                                     </div>
                                                 )}
 
-                            <Link href="/main/ppo/allskse">
-                              <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                  All SK/SE
-                                </button>
-                              </div>
-                            </Link>
+                                                <Link href="/main/ppo/allskse">
+                                                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            All SK/SE
+                                                        </button>
+                                                    </div>
+                                                </Link>
 
                                                 {(IsOperator() ||
                                                     IsSkseOperator()) && (
                                                     <div>
-                                    <hr className="my-4 border-gray-300" />
+                                                        <hr className="my-4 border-gray-300" />
 
                                                         <Link href="/main/ppo/createnewskse">
                                                             <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
@@ -251,7 +253,7 @@ const Sidebar = () => {
                             </div>
                         )}
                         {/* End Button PPO */}
-                        
+
                         {/* start button Operation */}
                         {(IsSupervisor() ||
                             IsOperationSupervisor() ||
@@ -260,7 +262,8 @@ const Sidebar = () => {
                             IsDacenOperator() ||
                             IsItmoOperator() ||
                             IsItsecurityOperator() ||
-                            IsItsupportOperator() || IsOperator()) && (
+                            IsItsupportOperator() ||
+                            IsOperator()) && (
                             <div
                                 tabIndex={0}
                                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
@@ -275,7 +278,8 @@ const Sidebar = () => {
                                 <div className="collapse-content">
                                     {(IsOperationSupervisor() ||
                                         IsNetworkOperator() ||
-                                        IsSupervisor() || IsOperator()) && (
+                                        IsSupervisor() ||
+                                        IsOperator()) && (
                                         <div
                                             tabIndex={0}
                                             className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
@@ -306,18 +310,18 @@ const Sidebar = () => {
                                                     </div>
                                                 )}
 
-                            <Link href="/main/operation/network/allprogress">
-                              <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                  All Network Project
-                                </button>
-                              </div>
-                            </Link>
+                                                <Link href="/main/operation/network/allprogress">
+                                                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            All Network Project
+                                                        </button>
+                                                    </div>
+                                                </Link>
 
                                                 {(IsOperator() ||
                                                     IsNetworkOperator()) && (
                                                     <div>
-                                    <hr className="my-4 border-gray-300" />
+                                                        <hr className="my-4 border-gray-300" />
 
                                                         <Link href="/main/operation/network/createnewprogress">
                                                             <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
@@ -334,7 +338,8 @@ const Sidebar = () => {
                                     )}
                                     {(IsOperationSupervisor() ||
                                         IsServerOperator() ||
-                                        IsSupervisor() || IsOperator()) && (
+                                        IsSupervisor() ||
+                                        IsOperator()) && (
                                         <div
                                             tabIndex={0}
                                             className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
@@ -376,23 +381,24 @@ const Sidebar = () => {
                                                     <div>
                                                         <hr className="my-4 border-gray-300" />
 
-                                    <Link href="/main/operation/server/createnewserver">
-                                          <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                              Create New
-                                                                   Project
-                                            </button>
-                                          </div>
-                                   </Link>
+                                                        <Link href="/main/operation/server/createnewserver">
+                                                            <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                                    Create New
+                                                                    Project
+                                                                </button>
+                                                            </div>
+                                                        </Link>
                                                     </div>
                                                 )}
-                          </div>
-                        </div>
+                                            </div>
+                                        </div>
                                     )}
 
                                     {(IsOperationSupervisor() ||
                                         IsDacenOperator() ||
-                                        IsSupervisor() || IsOperator()) && (
+                                        IsSupervisor() ||
+                                        IsOperator()) && (
                                         <div
                                             tabIndex={0}
                                             className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
@@ -433,25 +439,26 @@ const Sidebar = () => {
                                                 {(IsOperator() ||
                                                     IsDacenOperator()) && (
                                                     <div>
-                                    <hr className="my-4 border-gray-300" />
+                                                        <hr className="my-4 border-gray-300" />
 
-                                    <Link href="/main/operation/datacenter/createnewprogress">
-                                          <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                              Create New
-                                                                   Project
-                                            </button>
-                                          </div>
-                                   </Link>
+                                                        <Link href="/main/operation/datacenter/createnewprogress">
+                                                            <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                                    Create New
+                                                                    Project
+                                                                </button>
+                                                            </div>
+                                                        </Link>
                                                     </div>
                                                 )}
-                          </div>
-                        </div>
+                                            </div>
+                                        </div>
                                     )}
 
                                     {(IsOperationSupervisor() ||
                                         IsItsupportOperator() ||
-                                        IsSupervisor() || IsOperator()) && (
+                                        IsSupervisor() ||
+                                        IsOperator()) && (
                                         <div
                                             tabIndex={0}
                                             className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
@@ -492,25 +499,26 @@ const Sidebar = () => {
                                                 {(IsOperator() ||
                                                     IsItsupportOperator()) && (
                                                     <div>
-                                    <hr className="my-4 border-gray-300" />
+                                                        <hr className="my-4 border-gray-300" />
 
-                                    <Link href="/main/operation/itsupport/createnewprogress">
-                                          <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                              Create New
-                                                                   Project
-                                            </button>
-                                          </div>
-                                   </Link>
+                                                        <Link href="/main/operation/itsupport/createnewprogress">
+                                                            <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                                    Create New
+                                                                    Project
+                                                                </button>
+                                                            </div>
+                                                        </Link>
                                                     </div>
                                                 )}
-                          </div>
-                        </div>
+                                            </div>
+                                        </div>
                                     )}
 
                                     {(IsOperationSupervisor() ||
                                         IsItmoOperator() ||
-                                        IsSupervisor() || IsOperator()) && (
+                                        IsSupervisor() ||
+                                        IsOperator()) && (
                                         <div
                                             tabIndex={0}
                                             className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
@@ -550,24 +558,25 @@ const Sidebar = () => {
                                                 {(IsOperator() ||
                                                     IsItmoOperator()) && (
                                                     <div>
-                                    <hr className="my-4 border-gray-300" />
-                                    <Link href="/main/operation/itmo/createnewprogress">
-                                          <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                              Create New
-                                                                   Project
-                                            </button>
-                                          </div>
-                                   </Link>
+                                                        <hr className="my-4 border-gray-300" />
+                                                        <Link href="/main/operation/itmo/createnewprogress">
+                                                            <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                                    Create New
+                                                                    Project
+                                                                </button>
+                                                            </div>
+                                                        </Link>
                                                     </div>
                                                 )}
-                          </div>
-                        </div>
+                                            </div>
+                                        </div>
                                     )}
 
                                     {(IsOperationSupervisor() ||
                                         IsItsecurityOperator() ||
-                                        IsSupervisor() || IsOperator()) && (
+                                        IsSupervisor() ||
+                                        IsOperator()) && (
                                         <div
                                             tabIndex={0}
                                             className="collapse collapse-arrow border border-base-300 bg-base-200 mb-2"
@@ -609,56 +618,57 @@ const Sidebar = () => {
                                                     <div>
                                                         <hr className="my-4 border-gray-300" />
 
-                                    <Link href="/main/operation/itsecurity/createnewprogress">
-                                          <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                              Create New
-                                                                   Project
-                                            </button>
-                                          </div>
-                                   </Link>
+                                                        <Link href="/main/operation/itsecurity/createnewprogress">
+                                                            <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                                    Create New
+                                                                    Project
+                                                                </button>
+                                                            </div>
+                                                        </Link>
                                                     </div>
                                                 )}
-                          </div>
-                        </div>
+                                            </div>
+                                        </div>
                                     )}
                                     {(IsOperationSupervisor() ||
                                         IsNetworkOperator() ||
                                         IsServerOperator() ||
-                                        IsSupervisor() || IsOperator()) && (
-                        <div
-                          tabIndex={0}
-                          className="collapse collapse-arrow border border-base-300 bg-base-200"
-                        >
-                          <input
+                                        IsSupervisor() ||
+                                        IsOperator()) && (
+                                        <div
+                                            tabIndex={0}
+                                            className="collapse collapse-arrow border border-base-300 bg-base-200"
+                                        >
+                                            <input
                                                 type="checkbox"
                                                 className="peer"
                                             />
-                          <div className="collapse-title text-xl  font-bold flex items-center">
-                            <div className="mr-2">
-                              <MdMonitor />
-                            </div>
-                            Monitoring
-                          </div>
+                                            <div className="collapse-title text-xl  font-bold flex items-center">
+                                                <div className="mr-2">
+                                                    <MdMonitor />
+                                                </div>
+                                                Monitoring
+                                            </div>
 
-                          <div className="collapse-content">
-                            <Link href="">
-                              <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                  Grafana
-                                </button>
-                              </div>
-                            </Link>
+                                            <div className="collapse-content">
+                                                <Link href="">
+                                                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            Grafana
+                                                        </button>
+                                                    </div>
+                                                </Link>
 
-                            <hr className="my-4 border-gray-300" />
+                                                <hr className="my-4 border-gray-300" />
 
-                            <Link href="">
-                              <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                  SNMP
-                                </button>
-                              </div>
-                            </Link>
+                                                <Link href="">
+                                                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            SNMP
+                                                        </button>
+                                                    </div>
+                                                </Link>
 
                                                 {/* <hr className="my-4 border-gray-300" /> */}
 
@@ -671,23 +681,22 @@ const Sidebar = () => {
                                         </Link> */}
                                             </div>
                                         </div>
-                                        
                                     )}
-                </div>
-              </div>
-            )}
+                                </div>
+                            </div>
+                        )}
 
-            {/* end button Operation */}
+                        {/* end button Operation */}
 
-                       
-                        
                         {/* start button Logistic */}
-                        {(IsLogisticSupervisor() || IsLogisticOperator() || IsOperator() || IsSupervisor()) && (
+                        {(IsLogisticSupervisor() ||
+                            IsLogisticOperator() ||
+                            IsOperator() ||
+                            IsSupervisor()) && (
                             <div
                                 tabIndex={0}
                                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
                             >
-                                
                                 <input type="checkbox" className="peer" />
 
                                 <div className="collapse-title text-xl  font-bold flex items-center">
@@ -698,20 +707,18 @@ const Sidebar = () => {
                                 </div>
 
                                 <div className="collapse-content">
-                                {IsLogisticOperator() && (
+                                    {IsLogisticOperator() && (
                                         <div>
-                                    <Link href="/main/logistic/mymemo">
-                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                                My Memo
-                                            </button>
+                                            <Link href="/main/logistic/mymemo">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        My Memo
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            <hr className="my-4 border-gray-300" />
                                         </div>
-                                    </Link>
-                                    <hr className="my-4 border-gray-300" />
-                                    </div>
-                                )}
-
-                                    
+                                    )}
 
                                     <Link href="/main/logistic">
                                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -739,7 +746,6 @@ const Sidebar = () => {
                         )}
                         {/* end button Logistic */}
 
-                       
                         {/* start button Approvement */}
 
                         {(IsSupervisor() ||
@@ -793,7 +799,7 @@ const Sidebar = () => {
                                     {(IsLogisticSupervisor() ||
                                         IsSupervisor()) && (
                                         <div>
-                            <hr className="my-4 border-gray-300" />
+                                            <hr className="my-4 border-gray-300" />
 
                                             <Link href="/main/status/approvelogistic">
                                                 <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -802,23 +808,124 @@ const Sidebar = () => {
                                                     </button>
                                                 </div>
                                             </Link>
-                                        </div>
-                                    )}
-
-                                    {(IsOperationSupervisor() ||
-                                        IsSupervisor()) && (
-                                        <div>
                                             <hr className="my-4 border-gray-300" />
-
-                                            <Link href="/main/status/approveoperation">
-                                                <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                                        Operation
-                                                    </button>
-                                                </div>
-                                            </Link>
                                         </div>
                                     )}
+
+                                    {/* start button Operation */}
+                                    {(IsSupervisor() ||
+                                        IsOperationSupervisor()) && (
+                                        <div
+                                            tabIndex={0}
+                                            className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                className="peer"
+                                            />
+                                            <div className="collapse-title text-xl  font-bold flex items-center">
+                                                <div className="mr-2">
+                                                    <FaUsersGear />
+                                                </div>
+                                                Operation
+                                            </div>
+                                            <div className="collapse-content">
+                                                {(IsNetworkOperator() || IsSupervisor() ||
+                                                    IsOperationSupervisor() ) && (
+                                                    <div>
+                                                        <Link href="/main/status/approveoperation/network">
+                                                            <div className="collapse-title font-bold flex items-center hover:bg-[#ACC8E5] rounded mb-2 bg-base-200 ">
+                                                                <div className="mr-2">
+                                                                    <IoIosGitNetwork />
+                                                                </div>
+                                                                Network
+                                                            </div>
+                                                        </Link>
+                                                    </div>
+                                                )}
+                                                {(IsServerOperator() || IsSupervisor() ||
+                                                    IsOperationSupervisor() ) && (
+                                                    <div>
+                                                        <hr className="my-4 border-gray-300" />
+
+                                                        <Link href="/main/status/approveoperation/server">
+                                                            <div className="collapse-title font-bold flex items-center hover:bg-[#ACC8E5] rounded mb-2 bg-base-200 ">
+                                                                <div className="mr-2">
+                                                                    <FaServer />
+                                                                </div>
+                                                                Server
+                                                            </div>
+                                                        </Link>
+                                                    </div>
+                                                )}
+
+                                                {(IsDacenOperator() || IsSupervisor() ||
+                                                    IsOperationSupervisor() ) && (
+                                                    <div>
+                                                        <hr className="my-4 border-gray-300" />
+
+                                                        <Link href="/main/status/approveoperation/dacen">
+                                                            <div className="collapse-title font-bold flex items-center hover:bg-[#ACC8E5] rounded mb-2 bg-base-200 ">
+                                                                <div className="mr-2">
+                                                                    <FaDatabase />
+                                                                </div>
+                                                                Data Center
+                                                            </div>
+                                                        </Link>
+                                                    </div>
+                                                )}
+
+                                                {(IsItsupportOperator() || IsSupervisor() ||
+                                                    IsOperationSupervisor() ) && (
+                                                    <div>
+                                                        <hr className="my-4 border-gray-300" />
+
+                                                        <Link href="/main/status/approveoperation/itsupport">
+                                                            <div className="collapse-title font-bold flex items-center hover:bg-[#ACC8E5] rounded mb-2 bg-base-200 ">
+                                                                <div className="mr-2">
+                                                                    <BiSupport />
+                                                                </div>
+                                                                IT Support
+                                                            </div>
+                                                        </Link>
+                                                    </div>
+                                                )}
+
+                                                {(IsItmoOperator() || IsSupervisor() ||
+                                                    IsOperationSupervisor() ) && (
+                                                    <div>
+                                                        <hr className="my-4 border-gray-300" />
+
+                                                        <Link href="/main/status/approveoperation/itmo">
+                                                            <div className="collapse-title font-bold flex items-center hover:bg-[#ACC8E5] rounded mb-2 bg-base-200 ">
+                                                                <div className="mr-2">
+                                                                    <GrUserManager />
+                                                                </div>
+                                                                IT MO
+                                                            </div>
+                                                        </Link>
+                                                    </div>
+                                                )}
+
+                                                {(IsItsecurityOperator() || IsSupervisor() ||
+                                                    IsOperationSupervisor() ) && (
+                                                    <div>
+                                                        <hr className="my-4 border-gray-300" />
+
+                                                        <Link href="/main/status/approveoperation/itsecurity">
+                                                            <div className="collapse-title font-bold flex items-center hover:bg-[#ACC8E5] rounded mb-2 bg-base-200 ">
+                                                                <div className="mr-2">
+                                                                    <MdOutlineSecurity />
+                                                                </div>
+                                                                IT Security
+                                                            </div>
+                                                        </Link>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                    {/* end button Operation */}
                                 </div>
                             </div>
                         )}
