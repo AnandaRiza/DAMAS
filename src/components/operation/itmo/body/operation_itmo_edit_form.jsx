@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
 import PleaseWait from "@/components/PleaseWait";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DiVim } from "react-icons/di";
@@ -10,17 +10,25 @@ import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
 const page = () => {
+  const userid = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("DAMAS-USERID="))
+    ?.split("=")[1];
 
   const params = useParams();
+  const router = useRouter();
   const [selectedDept, setSelectedDept] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [dataAllPic, setDataAllPic] = useState(null);
   const [dataAllItmo, setDataAllItmo] = useState({
-    network_perihal: "",
-    network_pic: "",
+    itmo_id: "",
+    itmo_perihal: "",
+    itmo_pic: "",
     departement: "",
-    network_deadline: "",
-    network_status: "",
+    itmo_deadline: "",
+    itmo_status: "",
   });
+
   useEffect(() => {
     const getCurrentData = async () => {
       try {
@@ -51,19 +59,41 @@ const page = () => {
   };
 
   const handleEditedData = async () => {
+    if (
+      dataAllItmo.itmo_status === "Finished" &&
+      !dataAllItmo.itmo_project_done
+    ) {
+      alert("Please fill in Project Finished date.");
+      return;
+    }
+    setIsLoading(true);
     try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/itmoshow/editeditmo?input=${params.itmo_id}`,
-        dataAllItmo
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationitmo/log`,
+        {
+          ...dataAllItmo,
+          submitter: userid,
+          authorizer: "Kadev",
+          submitAt: "123",
+          deadline: "123",
+          status_approvement: "PENDING",
+          itmo_id: dataAllItmo.itmo_id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "USER-ID": userid,
+          },
+        }
       );
-      console.log(response.data);
-      alert("Edit Success");
+      router.push("/main/operation");
+      setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
-return (
+  return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl ">
       <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
         <div className="space-y">
@@ -104,7 +134,7 @@ return (
                     onChange={(e) => {
                       const selectedPic = JSON.parse(e.target.value);
                       dataAllItmo({
-                        ...dataAllProject,
+                        ...dataAllItmo,
                         itmo_pic: selectedPic.nama,
                         departement: selectedPic.departemen,
                       });
@@ -885,6 +915,30 @@ return (
                   </ul>
                 </div>
               </div>
+
+              <div className="flex flex-col">
+                <label
+                  htmlFor="projectdone"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Project Finished
+                </label>
+                <input
+                  type="date"
+                  id="projectdone"
+                  name="projectdone"
+                  value={dataAllItmo.itmo_project_done}
+                  onChange={(e) =>
+                    setDataAllItmo({
+                      ...dataAllItmo,
+                      itmo_project_done: e.target.value,
+                    })
+                  }
+                  className="input input-bordered mt-1"
+                  required={dataAllItmo.itmo_status === "Finished"}
+                />
+              </div>
+
               <div className="flex gap-2 items-center text-white ml-3 mt-3">
                 <Link href="/main/operation/datacenter/allprogress">
                   <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
@@ -908,7 +962,7 @@ return (
         </div>
       </div>
     </div>
-);
+  );
 };
 
 export default page;

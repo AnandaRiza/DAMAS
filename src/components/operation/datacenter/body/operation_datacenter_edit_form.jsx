@@ -2,7 +2,7 @@
 
 import PleaseWait from "@/components/PleaseWait";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DiVim } from "react-icons/di";
@@ -10,16 +10,25 @@ import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
 const page = () => {
+  const userid = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("DAMAS-USERID="))
+    ?.split("=")[1];
+
   const params = useParams();
+  const router = useRouter();
   const [selectedDept, setSelectedDept] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [dataAllPic, setDataAllPic] = useState(null);
   const [dataAllDacen, setDataAllDacen] = useState({
-    network_perihal: "",
-    network_pic: "",
+    dacen_id: "",
+    dacen_perihal: "",
+    dacen_pic: "",
     departement: "",
-    network_deadline: "",
-    network_status: "",
+    dacen_deadline: "",
+    dacen_status: "",
   });
+
   useEffect(() => {
     const getCurrentData = async () => {
       try {
@@ -50,15 +59,37 @@ const page = () => {
   };
 
   const handleEditedData = async () => {
+    if (
+      dataAllDacen.dacen_status === "Finished" &&
+      !dataAllDacen.dacen_project_done
+    ) {
+      alert("Please fill in Project Finished date.");
+      return;
+    }
+    setIsLoading(true);
     try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/dacenshow/editeddacen?input=${params.dacen_id}`,
-        dataAllDacen
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationdacen/log`,
+        {
+          ...dataAllDacen,
+          submitter: userid,
+          authorizer: "Kadev",
+          submitAt: "123",
+          deadline: "123",
+          status_approvement: "PENDING",
+          dacen_id: dataAllDacen.dacen_id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "USER-ID": userid,
+          },
+        }
       );
-      console.log(response.data);
-      alert("Edit Success");
+      router.push("/main/operation");
+      setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -103,7 +134,7 @@ const page = () => {
                     onChange={(e) => {
                       const selectedPic = JSON.parse(e.target.value);
                       dataAllDacen({
-                        ...dataAllProject,
+                        ...dataAllDacen,
                         dacen_pic: selectedPic.nama,
                         departement: selectedPic.departemen,
                       });
@@ -884,6 +915,30 @@ const page = () => {
                   </ul>
                 </div>
               </div>
+
+              <div className="flex flex-col">
+                <label
+                  htmlFor="projectdone"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Project Finished
+                </label>
+                <input
+                  type="date"
+                  id="projectdone"
+                  name="projectdone"
+                  value={dataAllDacen.dacen_project_done}
+                  onChange={(e) =>
+                    setDataAllDacen({
+                      ...dataAllDacen,
+                      dacen_project_done: e.target.value,
+                    })
+                  }
+                  className="input input-bordered mt-1"
+                  required={dataAllDacen.dacen_status === "Finished"}
+                />
+              </div>
+
               <div className="flex gap-2 items-center text-white ml-3 mt-3">
                 <Link href="/main/operation/datacenter/allprogress">
                   <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">

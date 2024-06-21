@@ -2,7 +2,7 @@
 
 import PleaseWait from "@/components/PleaseWait";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DiVim } from "react-icons/di";
@@ -10,17 +10,25 @@ import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
 const page = () => {
+  const userid = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("DAMAS-USERID="))
+    ?.split("=")[1];
 
 const params = useParams();
+const router = useRouter();
   const [selectedDept, setSelectedDept] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [dataAllPic, setDataAllPic] = useState(null);
   const [dataAllItsupport, setDataAllItsupport] = useState({
-    network_perihal: "",
-    network_pic: "",
+    itsupport_id: "",
+    itsupport_perihal: "",
+    itsupport_pic: "",
     departement: "",
-    network_deadline: "",
-    network_status: "",
+    itsupport_deadline: "",
+    itsupport_status: "",
   });
+
   useEffect(() => {
     const getCurrentData = async () => {
       try {
@@ -50,14 +58,36 @@ const params = useParams();
     }
   };
 
-  const handleEditedData = async () => {
+   const handleEditedData = async () => {
+    if (
+      dataAllItsupport.itsupport_status === "Finished" &&
+      !dataAllItsupport.itsupport_project_done
+    ) {
+      alert("Please fill in Project Finished date.");
+      return;
+    }
+    setIsLoading(true);
     try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/itsupportshow/editeditsupport?input=${params.itsupport_id}`,
-        dataAllItsupport
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationitsupport/log`,
+        {
+          ...dataAllItsupport,
+          submitter: userid,
+          authorizer: "Kadev",
+          submitAt: "123",
+          deadline: "123",
+          status_approvement: "PENDING",
+          itsupport_id: dataAllItsupport.itsupport_id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "USER-ID": userid,
+          },
+        }
       );
-      console.log(response.data);
-      alert("Edit Success");
+      router.push("/main/operation");
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -80,7 +110,7 @@ return (
                 type="text"
                 value={dataAllItsupport.itsupport_perihal}
                 onChange={(e) =>
-                  setdataAllItsupport({
+                  setDataAllItsupport({
                     ...dataAllItsupport,
                     itsupport_perihal: e.target.value,
                   })
@@ -165,7 +195,7 @@ return (
                     type="text"
                     value={dataAllItsupport.itsupport_phase1}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase1: e.target.value,
                       })
@@ -187,7 +217,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase1_start}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase1_start: e.target.value,
                       })
@@ -208,7 +238,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase1_deadline}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase1_deadline: e.target.value,
                       })
@@ -229,7 +259,7 @@ return (
                     className="input input-bordered mt-1"
                     value={dataAllItsupport.itsupport_phase1_done}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase1_done: e.target.value,
                       })
@@ -261,7 +291,7 @@ return (
                     type="text"
                     value={dataAllItsupport.itsupport_phase2}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase2: e.target.value,
                       })
@@ -283,7 +313,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase2_start}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase2_start: e.target.value,
                       })
@@ -304,7 +334,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase2_deadline}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase2_deadline: e.target.value,
                       })
@@ -325,7 +355,7 @@ return (
                     className="input input-bordered mt-1"
                     value={dataAllItsupport.itsupport_phase2_done}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase2_done: e.target.value,
                       })
@@ -357,7 +387,7 @@ return (
                     type="text"
                     value={dataAllItsupport.itsupport_phase3}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase3: e.target.value,
                       })
@@ -379,7 +409,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase3_start}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase3_start: e.target.value,
                       })
@@ -400,7 +430,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase3_deadline}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase3_deadline: e.target.value,
                       })
@@ -421,7 +451,7 @@ return (
                     className="input input-bordered mt-1"
                     value={dataAllItsupport.itsupport_phase3_done}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase3_done: e.target.value,
                       })
@@ -453,7 +483,7 @@ return (
                     type="text"
                     value={dataAllItsupport.itsupport_phase4}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase4: e.target.value,
                       })
@@ -475,7 +505,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase4_start}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase4_start: e.target.value,
                       })
@@ -496,7 +526,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase4_deadline}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase4_deadline: e.target.value,
                       })
@@ -517,7 +547,7 @@ return (
                     className="input input-bordered mt-1"
                     value={dataAllItsupport.itsupport_phase4_done}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase4_done: e.target.value,
                       })
@@ -549,7 +579,7 @@ return (
                     type="text"
                     value={dataAllItsupport.itsupport_phase5}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase5: e.target.value,
                       })
@@ -571,7 +601,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase5_start}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase5_start: e.target.value,
                       })
@@ -592,7 +622,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase5_deadline}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase5_deadline: e.target.value,
                       })
@@ -613,7 +643,7 @@ return (
                     className="input input-bordered mt-1"
                     value={dataAllItsupport.itsupport_phase5_done}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase5_done: e.target.value,
                       })
@@ -645,7 +675,7 @@ return (
                     type="text"
                     value={dataAllItsupport.itsupport_phase6}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase6: e.target.value,
                       })
@@ -667,7 +697,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase6_start}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase6_start: e.target.value,
                       })
@@ -688,7 +718,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase6_deadline}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase6_deadline: e.target.value,
                       })
@@ -709,7 +739,7 @@ return (
                     className="input input-bordered mt-1"
                     value={dataAllItsupport.itsupport_phase6_done}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase6_done: e.target.value,
                       })
@@ -741,7 +771,7 @@ return (
                     type="text"
                     value={dataAllItsupport.itsupport_phase7}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase7: e.target.value,
                       })
@@ -763,7 +793,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase7_start}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase7_start: e.target.value,
                       })
@@ -784,7 +814,7 @@ return (
                     className="input input-bordered mt-1 font-semibold"
                     value={dataAllItsupport.itsupport_phase7_deadline}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase7_deadline: e.target.value,
                       })
@@ -805,7 +835,7 @@ return (
                     className="input input-bordered mt-1"
                     value={dataAllItsupport.itsupport_phase7_done}
                     onChange={(e) =>
-                      setdataAllItsupport({
+                      setDataAllItsupport({
                         ...dataAllItsupport,
                         itsupport_phase7_done: e.target.value,
                       })
@@ -827,7 +857,7 @@ return (
                 className="input input-bordered mt-1"
                 value={dataAllItsupport.itsupport_deadline_project}
                 onChange={(e) =>
-                  setdataAllItsupport({
+                  setDataAllItsupport({
                     ...dataAllItsupport,
                     itsupport_deadline_project: e.target.value,
                   })
@@ -853,7 +883,7 @@ return (
                   <li>
                     <a
                       onClick={(e) =>
-                        setdataAllItsupport({
+                        setDataAllItsupport({
                           ...dataAllItsupport,
                           itsupport_status: e.target.value,
                         })
@@ -863,7 +893,7 @@ return (
                     </a>
                     <a
                       onClick={(e) =>
-                        setdataAllItsupport({
+                        setDataAllItsupport({
                           ...dataAllItsupport,
                           itsupport_status: e.target.value,
                         })
@@ -873,7 +903,7 @@ return (
                     </a>
                     <a
                       onClick={(e) =>
-                        setdataAllItsupport({
+                        setDataAllItsupport({
                           ...dataAllItsupport,
                           itsupport_status: e.target.value,
                         })
@@ -885,6 +915,30 @@ return (
                 </ul>
               </div>
             </div>
+
+            <div className="flex flex-col">
+                <label
+                  htmlFor="projectdone"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Project Finished
+                </label>
+                <input
+                  type="date"
+                  id="projectdone"
+                  name="projectdone"
+                  value={dataAllItsupport.itsupport_project_done}
+                  onChange={(e) =>
+                    setDataAllItsupport({
+                      ...dataAllItsupport,
+                      itsupport_project_done: e.target.value,
+                    })
+                  }
+                  className="input input-bordered mt-1"
+                  required={dataAllItsupport.itsupport_status === "Finished"}
+                />
+              </div>
+
             <div className="flex gap-2 items-center text-white ml-3 mt-3">
               <Link href="/main/operation/datacenter/allprogress">
                 <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">

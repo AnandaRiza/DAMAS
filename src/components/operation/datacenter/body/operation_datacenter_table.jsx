@@ -9,8 +9,15 @@ const page = ( {headers, data, action, link} ) => {
     const router = useRouter();
 
     const handleEdit = (dacen_id) => {
-        router.push(`${link}/datacenter/dacenedit/${dacen_id}`);
+        const updatedData = data.map((item) => {
+            if (item.dacen_id === dacen_id) {
+                item.status = "Finish";
+                router.push(`${link}/datacenter/dacenedit/${dacen_id}`);
+            }
+            return item;
+        });
     };
+
 
     const handleDoubleClick = (dacen_id) => {
         router.push(`${link}/datacenter/detail/${dacen_id}`);
@@ -59,18 +66,24 @@ const page = ( {headers, data, action, link} ) => {
         return displayName;
     }
 
-    const calculateTimeLeft = (date) => {
-        const now = new Date();
-        const deadline = new Date(date);
-        const difference = deadline.getTime() - now.getTime();
-        const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
-    
-        return daysLeft;
-    };
-
     const getStatus = (item) => {
+        const calculateTimeLeft = (date) => {
+            const now = new Date();
+            const deadline = new Date(date);
+            const difference = deadline.getTime() - now.getTime();
+            const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+            return daysLeft;
+        };
+
+        const { dacen_status } = item;
+
+        if (dacen_status === "Finished") {
+            return "Finished";
+        }
+
         const daysLeft = calculateTimeLeft(item.dacen_deadline_project);
-        
+
         if (daysLeft < 0) {
             return "Past Deadline";
         } else if (daysLeft <= 3) {
@@ -78,21 +91,85 @@ const page = ( {headers, data, action, link} ) => {
         } else if (daysLeft <= 7) {
             return "Within 7 days";
         } else {
-            return "On Track";
+            return "Ongoing";
         }
     };
 
-    const rowClass = (inputDate) => {
+    const rowClass = (inputDate, dacen_status) => {
+        const calculateTimeLeft = (date) => {
+            const now = new Date();
+            const deadline = new Date(date);
+            const difference = deadline.getTime() - now.getTime();
+            const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+            return daysLeft;
+        };
+
+        if (dacen_status === "Finished") {
+            return "bg-green-200 hover:bg-green-300";
+        }
+
         const daysLeft = calculateTimeLeft(inputDate);
-        // console.log(daysLeft)
+
         if (daysLeft <= 3) {
             return "bg-red-200 hover:bg-red-300";
         } else if (daysLeft <= 7) {
             return "bg-yellow-200 hover:bg-yellow-300";
         } else {
-            return "bg-green-200 hover:bg-green-300";
+            return "bg-white-200 hover:bg-gray-300";
         }
     };
+
+    const sortedData = data.slice().sort((a, b) => {
+        const classA = rowClass(a.dacen_deadline_project, a.dacen_status);
+        const classB = rowClass(b.dacen_deadline_project, b.dacen_status);
+
+
+        const aIsFinished = a.dacen_status === "Finished";
+        const bIsFinished = b.dacen_status === "Finished";
+    
+        if (aIsFinished && bIsFinished) {
+            // Sort "Finished" items by classA and classB
+            return classA.localeCompare(classB);
+        }
+    
+        if (aIsFinished) {
+            return 1; // Move "Finished" (a) to the bottom
+        }
+    
+        if (bIsFinished) {
+            return -1; // Move "Finished" (b) to the bottom
+        }
+    
+        if (a.dacen_status === "Finished" && b.dacen_status === "Finished") {
+            return classA.localeCompare(classB);
+        }
+    
+        if (a.dacen_status === "Finished") {
+            return 1; // Move 'Finished' projects to the bottom
+        }
+    
+        if (b.dacen_status === "Finished") {
+            return -1; // Move 'Finished' projects to the bottom
+        }
+    
+        // Jika keduanya tidak selesai, tetapi memiliki status "Ongoing"
+        if (a.dacen_status === "Ongoing" && b.dacen_status === "Ongoing") {
+            // Urutkan berdasarkan deadlineproject
+            return new Date(a.dacen_deadline_project) - new Date(b.dacen_deadline_project);
+        }
+    
+        // Jika hanya salah satu memiliki status "Ongoing", letakkan yang lain di atas
+        if (a.dacen_status === "Ongoing") {
+            return 1; // Letakkan a di bawah b
+        }
+    
+        if (b.dacen_status === "Ongoing") {
+            return -1; // Letakkan b di atas a
+        }
+    
+        // Jika keduanya tidak selesai dan tidak ada yang "Ongoing", urutkan berdasarkan classA dan classB
+        return classA.localeCompare(classB);
+    });
 
 return (
     <div className="overflow-x-auto">
@@ -146,10 +223,10 @@ return (
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => {
+                    {sortedData.map((item, index) => {
                     const dacen_status = getStatus(item);
                     // console.log(dacen_status)
-                    const rowClassName = rowClass(item.dacen_deadline_project);
+                    const rowClassName = rowClass(item.dacen_deadline_project, item.dacen_status);
                     
                     return (
                         <tr
@@ -198,17 +275,13 @@ return (
 
                             {action && (
                                 <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            handleEdit(item[headers[0]])
-                                        }
-                                        className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2 "
-                                        // style={{ minHeight: "60px" }}
-                                        // style={{ minWidth: "fit-content" }}
-                                    >
-                                        <AiOutlineEdit size={20} />
-                                    </button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleEdit(item.dacen_id)}
+                                    className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2 "
+                                >
+                                    <AiOutlineEdit size={20} />
+                                </button>
                                 </td>
                             )}
                         </tr>

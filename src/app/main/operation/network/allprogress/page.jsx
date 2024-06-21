@@ -98,7 +98,7 @@ const page = () => {
 
                 {searchResult &&
                     searchInput != "" &&
-                    searchResult.length === 0 && <NotFound />}
+                    searchResult.length === 0 && (<NotFound />)}
 
                 {dataAllNetwork && (
                     <div className="w-full flex justify-end items-center gap-3 mt-2">

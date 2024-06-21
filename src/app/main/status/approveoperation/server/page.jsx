@@ -2,8 +2,8 @@
 import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
-import Body from "@/components/operation/itsupport/body/operation_itsupport_log";
-import Header from "@/components/operation/itsupport/header/header_log";
+import Body from "@/components/operation/server/body/operation_server_log";
+import Header from "@/components/operation/server/header/header_log";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -24,7 +24,7 @@ const Page = () => {
         setDataLog(null);
         try {
             const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationitsupportlog?start=${startIndex}&size=${perPage}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationserverlog?start=${startIndex}&size=${perPage}`
             );
             setDataLog(response.data.data);
         } catch (error) {
@@ -35,7 +35,7 @@ const Page = () => {
     const handleSearch = async () => {
         try {
             const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationitsupport/getitsupportlog?input=${searchInput}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationserver/getserverlog?input=${searchInput}`
             );
             setSearchResult(response.data.data);
             setCurrentPage(1);
@@ -72,7 +72,7 @@ const Page = () => {
                             Object.keys(dataLog[0]).length - 1
                         )}
                         data={dataLog}
-                        parameter={"operationitsupport"}
+                        parameter={"operationserver"}
                         action={true}
                         isRefresh={handleRefresh}
                     />
@@ -89,7 +89,7 @@ const Page = () => {
                                     Object.keys(searchResult[0]).length - 1
                                 )}
                                 data={searchResult}
-                                parameter={"operationitsupport"}
+                                parameter={"operationserver"}
                                 action={true}
                                 isRefresh={handleRefresh}
                                 

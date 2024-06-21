@@ -41,7 +41,7 @@ const page = () => {
   const handleSearch = async () => {
       try {
           const response = await axios.get(
-              `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/servershow/getServer?input=${searchInput}`
+              `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/servershow/getserver?input=${searchInput}`
           );
           setSearchResult(response.data.data);
       }catch (error) {

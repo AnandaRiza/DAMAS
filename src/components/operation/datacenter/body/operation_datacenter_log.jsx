@@ -11,39 +11,39 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
             submit_at: "Submit At",
             deadline_approvement: " Deadline Approvement",
             status_approvement: "Status Approvement",
-            itsecurity_perihal: "Project Name",
-            itsecurity_pic: "PIC",
-            itsecuritytement: "Departement",
-            itsecurity_phase1: "",
-            itsecurity_phase1_start: "",
-            itsecurity_phase1_deadline: "",
-            itsecurity_phase1_done: "",
-            itsecurity_phase2: "",
-            itsecurity_phase2_start: "",
-            itsecurity_phase2_deadline: "",
-            itsecurity_phase2_done: "",
-            itsecurity_phase3: "",
-            itsecurity_phase3_start: "",
-            itsecurity_phase3_deadline: "",
-            itsecurity_phase3_done: "",
-            itsecurity_phase4: "",
-            itsecurity_phase4_start: "",
-            itsecurity_phase4_deadline: "",
-            itsecurity_phase4_done: "",
-            itsecurity_phase5: "",
-            itsecurity_phase5_start: "",
-            itsecurity_phase5_deadline: "",
-            itsecurity_phase5_done: "",
-            itsecurity_phase6: "",
-            itsecurity_phase6_start: "",
-            itsecurity_phase6_deadline: "",
-            itsecurity_phase6_done: "",
-            itsecurity_phase7: "",
-            itsecurity_phase7_start: "",
-            itsecurity_phase7_deadline: "",
-            itsecurity_phase7_done: "",
-            itsecurity_status: "Status",
-            itsecurity_deadline_project: "Project Deadline",
+            dacen_perihal: "Project Name",
+            dacen_pic: "PIC",
+            departement: "Departement",
+            dacen_phase1: "",
+            dacen_phase1_start: "",
+            dacen_phase1_deadline: "",
+            dacen_phase1_done: "",
+            dacen_phase2: "",
+            dacen_phase2_start: "",
+            dacen_phase2_deadline: "",
+            dacen_phase2_done: "",
+            dacen_phase3: "",
+            dacen_phase3_start: "",
+            dacen_phase3_deadline: "",
+            dacen_phase3_done: "",
+            dacen_phase4: "",
+            dacen_phase4_start: "",
+            dacen_phase4_deadline: "",
+            dacen_phase4_done: "",
+            dacen_phase5: "",
+            dacen_phase5_start: "",
+            dacen_phase5_deadline: "",
+            dacen_phase5_done: "",
+            dacen_phase6: "",
+            dacen_phase6_start: "",
+            dacen_phase6_deadline: "",
+            dacen_phase6_done: "",
+            dacen_phase7: "",
+            dacen_phase7_start: "",
+            dacen_phase7_deadline: "",
+            dacen_phase7_done: "",
+            dacen_status: "Status",
+            dacen_deadline_project: "Project Deadline",
         };
 
         const displayName = displayNames[header] || header;
@@ -51,11 +51,11 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
         return displayName
     };
 
-    const handleStatusApprove = async (id, itsecurity_status) => {
+    const handleStatusApprove = async (id, dacen_status) => {
         isRefresh();
         try {
             await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/${parameter}/log?id=${id}&itsecurity_status=${itsecurity_status}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/${parameter}/log?id=${id}&dacen_status=${dacen_status}`
             );
         } catch (error) {
             console.log(error);

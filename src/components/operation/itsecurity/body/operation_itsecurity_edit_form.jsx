@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
 import PleaseWait from "@/components/PleaseWait";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DiVim } from "react-icons/di";
@@ -10,16 +10,22 @@ import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
 const page = () => {
+  const userid = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("DAMAS-USERID="))
+    ?.split("=")[1];
 
   const params = useParams();
+  const router = useRouter();
   const [selectedDept, setSelectedDept] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [dataAllPic, setDataAllPic] = useState(null);
   const [dataAllItsecurity, setDataAllItsecurity] = useState({
-    Itsecurity_perihal: "",
-    Itsecurity_pic: "",
+    itsecurity_perihal: "",
+    itsecurity_pic: "",
     departement: "",
-    Itsecurity_deadline: "",
-    Itsecurity_status: "",
+    itsecurity_deadline: "",
+    itsecurity_status: "",
   });
   useEffect(() => {
     const getCurrentData = async () => {
@@ -51,19 +57,41 @@ const page = () => {
   };
 
   const handleEditedData = async () => {
+    if (
+      dataAllItsecurity.itsecurity_status === "Finished" &&
+      !dataAllItsecurity.itsecurity_project_done
+    ) {
+      alert("Please fill in Project Finished date.");
+      return;
+    }
+    setIsLoading(true);
     try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/itsecurityshow/editeditsecurity?input=${params.itsecurity_id}`,
-        dataAllItsecurity
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationitsecurity/log`,
+        {
+          ...dataAllItsecurity,
+          submitter: userid,
+          authorizer: "Kadev",
+          submitAt: "123",
+          deadline: "123",
+          status_approvement: "PENDING",
+          itsecurity_id: dataAllItsecurity.itsecurity_id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "USER-ID": userid,
+          },
+        }
       );
-      console.log(response.data);
-      alert("Edit Success");
+      router.push("/main/operation");
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
 
-return (
+  return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl ">
       <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
         <div className="space-y">
@@ -836,79 +864,79 @@ return (
               </div>
 
               <div className="flex flex-col">
-                        <label
-                            htmlFor="deadline"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Deadline Project
-                        </label>
-                        <input
-                            type="date"
-                            className="input input-bordered mt-1"
-                            value={dataAllItsecurity.Itsecurity_deadline_project}
-                            onChange={(e) =>
-                                setDataAllItsecurity({
-                                    ...dataAllItsecurity,
-                                    Itsecurity_deadline_project: e.target.value,
-                                })
-                            }
-                        />
-                    </div>
-                    
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="status"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            Status
-                        </label>
-                        <div className="dropdown mt-1">
-                            <div tabIndex={0} role="button" className="btn m-1">
-                                {dataAllItsecurity.Itsecurity_status}
-                            </div>
-                            <ul
-                                tabIndex={0}
-                                className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
-                            >
-                                <li>
-                                    <a
-                                        onClick={(e) =>
-                                            setDataAllItsecurity({
-                                                ...dataAllItsecurity,
-                                                Itsecurity_status: e.target.value,
-                                            })
-                                        }
-                                    >
-                                        <option value="Ongoing">Ongoing</option>
-                                    </a>
-                                    <a
-                                        onClick={(e) =>
-                                            setDataAllItsecurity({
-                                                ...dataAllItsecurity,
-                                                Itsecurity_status: e.target.value,
-                                            })
-                                        }
-                                    >
-                                        <option value="Finished">
-                                            Finished
-                                        </option>
-                                    </a>
-                                    <a
-                                        onClick={(e) =>
-                                            setDataAllItsecurity({
-                                                ...dataAllItsecurity,
-                                                Itsecurity_status: e.target.value,
-                                            })
-                                        }
-                                    >
-                                        <option value="Past Deadline">
-                                            Past Deadline
-                                        </option>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                <label
+                  htmlFor="status"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Status
+                </label>
+                <div className="dropdown mt-1">
+                  <div tabIndex={0} role="button" className="btn m-1">
+                    {dataAllItsecurity.itsecurity_status}
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
+                  >
+                    <li>
+                      <a
+                        onClick={(e) =>
+                          setDataAllItsecurity({
+                            ...dataAllItsecurity,
+                            itsecurity_status: e.target.value,
+                          })
+                        }
+                      >
+                        <option value="Ongoing">Ongoing</option>
+                      </a>
+                      <a
+                        onClick={(e) =>
+                          setDataAllItsecurity({
+                            ...dataAllItsecurity,
+                            itsecurity_status: e.target.value,
+                          })
+                        }
+                      >
+                        <option value="Finished">Finished</option>
+                      </a>
+                      <a
+                        onClick={(e) =>
+                          setDataAllItsecurity({
+                            ...dataAllItsecurity,
+                            itsecurity_status: e.target.value,
+                          })
+                        }
+                      >
+                        <option value="Past Deadline">Past Deadline</option>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="flex flex-col">
+                <label
+                  htmlFor="projectdone"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Project Finished
+                </label>
+                <input
+                  type="date"
+                  id="projectdone"
+                  name="projectdone"
+                  value={dataAllItsecurity.itsecurity_project_done}
+                  onChange={(e) =>
+                    setDataAllItsecurity({
+                      ...dataAllItsecurity,
+                      itsecurity_project_done: e.target.value,
+                    })
+                  }
+                  className="input input-bordered mt-1"
+                  required={dataAllItsecurity.itsecurity_status === "Finished"}
+                />
+              </div>
+
               <div className="flex gap-2 items-center text-white ml-3 mt-3">
                 <Link href="/main/operation/datacenter/allprogress">
                   <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
@@ -932,7 +960,7 @@ return (
         </div>
       </div>
     </div>
-);
+  );
 };
 
 export default page;

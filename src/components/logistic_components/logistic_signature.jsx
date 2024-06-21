@@ -7,7 +7,7 @@
 
 
 import React, { useRef } from 'react';
-import SignaturePad from 'react-signature-canvas';
+// import SignaturePad from 'react-signature-canvas';
 
 const LogisticSignature = ({ onSave, onCancel }) => {
   const sigCanvas = useRef({});

@@ -23,7 +23,9 @@ const page = () => {
     network_pic: "",
     departement: "",
     network_status: "",
+    network_id: "",
   });
+  
   useEffect(() => {
     const getCurrentData = async () => {
       try {
@@ -75,7 +77,7 @@ const page = () => {
           submitAt: "123",
           deadline: "123",
           status_approvement: "PENDING",
-          server_id: dataAllNetwork.server_id,
+          network_id: dataAllNetwork.network_id,
         },
         {
           headers: {
@@ -117,25 +119,6 @@ const page = () => {
                 />
               </div>
 
-              {/* <div className="flex flex-col">
-                        <label
-                            htmlFor="pic"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            PIC
-                        </label>
-                        <input
-                            type="text"
-                            className="input input-bordered mt-1"
-                            value={dataAllNetwork.network_pic}
-                            onChange={(e) =>
-                                setDataAllNetwork({
-                                    ...dataAllNetwork,
-                                    network_pic: e.target.value,
-                                })
-                            }
-                        />
-                    </div> */}
 
               <div className="flex flex-col">
                 <label
@@ -580,6 +563,7 @@ const page = () => {
                       network_deadline_project: e.target.value,
                     })
                   }
+                  disabled
                 />
               </div>
 
@@ -653,12 +637,12 @@ const page = () => {
                   })
                 }
                 className="input input-bordered mt-1"
-                required={dataAllNetwork.status === "Finished"}
+                required={dataAllNetwork.network_status === "Finished"}
               />
             </div>
 
 
-              <div className="flex gap-2 items-center text-white ml-3 mt-3">
+            <div className="flex gap-2 items-center text-white ml-3 mt-3">
                 <Link href="/main/operation/network/allprogress">
                   <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
                     <MdOutlineCancel />
@@ -671,14 +655,7 @@ const page = () => {
                   onClick={handleEditedData}
                 >
                   <FiSave />
-                  {isLoading ? (
-                    <div className="flex justify-center gap-3">
-                      <p>Please wait</p>
-                      <span className="loading loading-spinner"></span>
-                    </div>
-                  ) : (
-                    <span>Edit</span>
-                  )}
+                  <span>Edit</span>
                 </button>
               </div>
             </form>

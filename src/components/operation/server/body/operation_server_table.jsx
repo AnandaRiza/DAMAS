@@ -7,7 +7,13 @@ const Page = ({ headers, data, action, link}) => {
     const router = useRouter();
 
     const handleEdit = (server_id) => {
-        router.push(`${link}/server/serveredit/${server_id}`);
+        const updatedData = data.map((item) => {
+            if (item.server_id === server_id) {
+                item.status = "Finish";
+                router.push(`${link}/server/serveredit/${server_id}`);
+            }
+            return item;
+        });
     };
 
     const handleDoubleClick = (server_id) => {
@@ -42,21 +48,13 @@ const Page = ({ headers, data, action, link}) => {
             server_implementasi_deadline: "Implementasi Deadline",
             server_implementasi_done: "Implementasi Done",
             server_status: "Status",
-            server_deadline_project: "Deadline Project"
+            server_deadline_project: "Deadline Project",
+            server_project_done: "Project Done"
         };
         const displayName = displayNames[header] || header;
         // console.log(`Header: ${header}, DisplayName: ${displayName}`);
         return displayName;
     }
-
-    const calculateTimeLeft = (date) => {
-        const now = new Date();
-        const deadline = new Date(date);
-        const difference = deadline.getTime() - now.getTime();
-        const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
-    
-        return daysLeft;
-    };
 
     const getStatus = (item) => {
         const calculateTimeLeft = (date) => {
@@ -68,9 +66,9 @@ const Page = ({ headers, data, action, link}) => {
             return daysLeft;
         };
 
-        const { status } = item;
+        const { server_status } = item;
 
-        if (status === "Finished") {
+        if (server_status === "Finished") {
             return "Finished";
         }
 
@@ -87,7 +85,7 @@ const Page = ({ headers, data, action, link}) => {
         }
     };
 
-    const rowClass = (inputDate, status) => {
+    const rowClass = (inputDate, server_status) => {
         const calculateTimeLeft = (date) => {
             const now = new Date();
             const deadline = new Date(date);
@@ -96,7 +94,7 @@ const Page = ({ headers, data, action, link}) => {
             return daysLeft;
         };
 
-        if (status === "Finished") {
+        if (server_status === "Finished") {
             return "bg-green-200 hover:bg-green-300";
         }
 
@@ -146,7 +144,7 @@ const Page = ({ headers, data, action, link}) => {
     
         // Jika keduanya tidak selesai, tetapi memiliki status "Ongoing"
         if (a.server_status === "Ongoing" && b.server_status === "Ongoing") {
-            // Urutkan berdasarkan server_deadline_project
+            // Urutkan berdasarkan deadlineproject
             return new Date(a.server_deadline_project) - new Date(b.server_deadline_project);
         }
     
@@ -162,6 +160,7 @@ const Page = ({ headers, data, action, link}) => {
         // Jika keduanya tidak selesai dan tidak ada yang "Ongoing", urutkan berdasarkan classA dan classB
         return classA.localeCompare(classB);
     });
+
 
 
 return (
