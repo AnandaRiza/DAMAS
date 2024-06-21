@@ -21,7 +21,8 @@ const EditMemoPage = () => {
         memo_reviewer: "",
         memo_deadline: "",
         memo_status: "", // Initialize with desired value
-        memo_notes: "", // Ensure this is not null
+        memo_notes: "",
+        memo_upload: "" // Ensure this is not null
     });
     const [dataAllPic, setDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
@@ -91,9 +92,8 @@ const EditMemoPage = () => {
         }));
     };
 
-
-      // Function to handle file upload
-      const handleFileUpload = async (event) => {
+    // Function to handle file upload
+    const handleFileUpload = async (event) => {
         const fileToUpload = event.target.files[0];
         const formData = new FormData();
         formData.append("file", fileToUpload);
@@ -112,6 +112,7 @@ const EditMemoPage = () => {
                 ...prevState,
                 memo_upload: response.data.fileName // Update state with uploaded file name
             }));
+            setFile(fileToUpload); // Update file state to track if a new file is uploaded
         } catch (error) {
             console.error("Error uploading file: ", error);
             setError("Failed to upload file");
@@ -140,12 +141,32 @@ const EditMemoPage = () => {
         }
     };
 
+    // Decode base64 string if necessary
+    const decodeBase64 = (encodedString) => {
+        try {
+            return atob(encodedString);
+        } catch (e) {
+            console.error("Error decoding base64 string: ", e);
+            return encodedString;
+        }
+    };
+
     // Function to handle form submission after edits
     const handleEditedData = async () => {
         try {
+            if (!file) {
+                setDataAllMemo(prevState => ({
+                    ...prevState,
+                    memo_upload: prevState.memo_upload // Keep existing file name if no new file is uploaded
+                }));
+            }
+            const updatedData = {
+                ...dataAllMemo,
+                memo_upload: decodeBase64(dataAllMemo.memo_upload) // Decode base64 before sending if necessary
+            };
             await axios.put(
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
-                dataAllMemo
+                updatedData
             );
             alert("Memo Update Success");
             router.push('/main/logistic');
@@ -154,7 +175,6 @@ const EditMemoPage = () => {
             setError("Failed to update memo");
         }
     };
-
 
     if (loading) {
         return <PleaseWait />;
@@ -244,15 +264,16 @@ const EditMemoPage = () => {
                     </label>
                     <input
                         type="text"
-                        className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                        value={selectedDept} disabled />
+                        id="memo_department"
+                        className="input input-bordered mt-1"
+                        value={selectedDept}
+                        readOnly
+                    />
                 </div>
 
                 <input
                     type="text"
-                    id="memo_createdBy"
-                    name="memo_createdBy"
-                    value={dataAllMemo.memo_createdBy} // Make sure this is using memo_createdBy
+                    value={dataAllMemo.memo_createdBy}
                     onChange={(e) =>
                         setDataAllMemo({
                             ...dataAllMemo,
@@ -360,7 +381,7 @@ const EditMemoPage = () => {
                     <div>
                         <label className="text-sm font-semibold text-gray-600">Uploaded File:</label>
                         <div className="flex items-center gap-2 mt-1">
-                            <span>{dataAllMemo.memo_upload}</span>
+                            <span>{decodeBase64(dataAllMemo.memo_upload)}</span> {/* Decode base64 before displaying */}
                             <button
                                 type="button"
                                 className="bg-blue-500 text-white py-1 px-3 rounded-md"

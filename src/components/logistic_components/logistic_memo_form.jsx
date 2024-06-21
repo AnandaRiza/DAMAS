@@ -52,6 +52,7 @@ const MemoForm = () => {
       .split("; ")
       .find((row) => row.startsWith("DAMAS-USERID="))
       ?.split("=")[1];
+    
     try {
       const regex = /^\d{4}-\d{2}-\d{2}$/;
       if (!regex.test(formData.memo_deadline)) {
@@ -59,28 +60,32 @@ const MemoForm = () => {
         return;
       }
 
-      const formDataToSend = new FormData();
-      formDataToSend.append("memo_num", formData.memo_num);
-      formDataToSend.append("memo_perihal", formData.memo_perihal);
-      formDataToSend.append("memo_pic", formData.memo_pic);
-      formDataToSend.append("memo_department", selectedDept);
-      formDataToSend.append("memo_createdBy", userid);
-      formDataToSend.append("memo_reviewer", formData.memo_reviewer);
-      formDataToSend.append("memo_deadline", formData.memo_deadline);
-      formDataToSend.append("memo_status", formData.memo_status);
-      formDataToSend.append("memo_notes", formData.memo_notes);
-      formDataToSend.append("memo_upload", formData.memo_upload); // Append file
+      // Create a JSON object with the form data
+      const formDataToSend = {
+        memo_num: formData.memo_num,
+        memo_perihal: formData.memo_perihal,
+        memo_pic: formData.memo_pic,
+        memo_department: selectedDept,
+        memo_createdBy: userid,
+        memo_reviewer: formData.memo_reviewer,
+        memo_deadline: formData.memo_deadline,
+        memo_status: formData.memo_status,
+        memo_notes: formData.memo_notes,
+        memo_upload: formData.memo_upload ? await toBase64(formData.memo_upload) : null // Convert file to Base64 if present
+      };
 
+      // Send JSON request
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo`,
         formDataToSend,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             "USER-ID": userid,
           },
         }
       );
+
       alert("Create Memo Success");
       router.push("/main/logistic");
     } catch (error) {
@@ -95,6 +100,15 @@ const MemoForm = () => {
       alert("Create Memo Failed!");
     }
   };
+
+// Helper function to convert file to Base64
+const toBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = error => reject(error);
+});
+  
 
   const handleDateChange = (e) => {
     const { value } = e.target;
@@ -288,7 +302,7 @@ const MemoForm = () => {
       </div>
 
       <div className="flex flex-col">
-        <label htmlFor="memo_notes" className="text-sm font-semibold text-gray-600">
+        <label htmlFor="memo_notes" hidden className="text-sm font-semibold text-gray-600">
           Notes
         </label>
         <textarea
@@ -303,6 +317,7 @@ const MemoForm = () => {
           }
           className="input input-bordered mt-1"
           rows={3}
+          hidden
         />
       </div>
 
@@ -336,17 +351,17 @@ const MemoForm = () => {
           id="memo_upload"
           name="memo_upload"
           onChange={handleFileChange}
-          className="mt-1"
+          className="mt-1"  
         />
       </div>
       
       <button
-        type="button"
-        className="btn btn-primary mt-4"
-        onClick={handleSubmit}
-      >
-        Create Memo
-      </button>
+          type="button"
+          onClick={handleSubmit}
+          className="bg-blue-500 text-white py-2 px-4 rounded-md"
+        >
+          Create Memo
+        </button>
     </form>
   );
 };
