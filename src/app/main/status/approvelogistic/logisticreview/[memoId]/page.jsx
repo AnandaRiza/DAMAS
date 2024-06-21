@@ -11,7 +11,7 @@ const ReviewMemo = () => {
         <div className="flex flex-col items-center justify-center min-h-screen">
             <div className="w-full max-w-4xl">
                 <div className="text-[#0066AE] font-semibold ml-10 mt-4">
-                    Edit Memo
+                    Review Memo
                 </div>
                 <LogisticBreadcrumbs />
                 <div className="px-10 mt-10">

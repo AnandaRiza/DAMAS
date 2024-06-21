@@ -7,7 +7,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 
-
 const Page = () => {
     const [searchInput, setSearchInput] = useState("");
     const [searchResult, setSearchResult] = useState(null);
@@ -15,12 +14,11 @@ const Page = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
     const [perPage, setPerPage] = useState(10);
-    const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
+    const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
 
     useEffect(() => {
         getDataAllMemo();
     }, [startIndex]);
-
 
     const getDataAllMemo = async () => {
         setDataAllMemo(null);
@@ -55,18 +53,18 @@ const Page = () => {
     };
 
     const handleSort = (key) => {
-        let direction = 'ascending';
-        if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-            direction = 'descending';
+        let direction = "ascending";
+        if (sortConfig.key === key && sortConfig.direction === "ascending") {
+            direction = "descending";
         }
         setSortConfig({ key, direction });
 
         const sortedData = [...dataAllMemo].sort((a, b) => {
             if (a[key] < b[key]) {
-                return direction === 'ascending' ? -1 : 1;
+                return direction === "ascending" ? -1 : 1;
             }
             if (a[key] > b[key]) {
-                return direction === 'ascending' ? 1 : -1;
+                return direction === "ascending" ? 1 : -1;
             }
             return 0;
         });
@@ -88,7 +86,13 @@ const Page = () => {
                     handleSubmit={handleSearch}
                 />
             </div>
-            {dataAllMemo && (!searchResult || searchInput === "") ? (
+            {dataAllMemo === null && <PleaseWait />}
+            {dataAllMemo && dataAllMemo.length === 0 && (
+                <div className="py-5 text-center text-red-500">
+                    No memos found. Please check back later.
+                </div>
+            )}
+            {dataAllMemo && dataAllMemo.length > 0 && (!searchResult || searchInput === "") && (
                 <div className="mt-4">
                     <LogisticTable
                         headers={Object.keys(dataAllMemo[0]).slice(
@@ -102,8 +106,6 @@ const Page = () => {
                         sortConfig={sortConfig}
                     />
                 </div>
-            ) : (
-                !(searchResult && searchInput !== "") && <PleaseWait />
             )}
 
             {searchResult && searchInput !== "" && searchResult.length !== 0 && (
@@ -126,14 +128,14 @@ const Page = () => {
                 <NotFound />
             )}
 
-            {dataAllMemo && !searchResult && (
+            {dataAllMemo && dataAllMemo.length > 0 && !searchResult && (
                 <div className="w-full flex justify-end items-center gap-3">
                     <button
                         type="button"
                         disabled={currentPage === 1 || startIndex === 0}
                         onClick={() => {
                             setCurrentPage(currentPage - 1);
-                            setStartIndex(startIndex - 10);
+                            setStartIndex(startIndex - perPage);
                         }}
                         className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
                     >
@@ -142,10 +144,10 @@ const Page = () => {
                     <h5 className="font-semibold">{currentPage}</h5>
                     <button
                         type="button"
-                        disabled={startIndex + perPage >= dataAllMemo[0].maxSize}
+                        disabled={dataAllMemo.length < perPage}
                         onClick={() => {
                             setCurrentPage(currentPage + 1);
-                            setStartIndex(startIndex + 10);
+                            setStartIndex(startIndex + perPage);
                         }}
                         className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
                     >
@@ -157,6 +159,4 @@ const Page = () => {
     );
 };
 
-
 export default Page;
-
