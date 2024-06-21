@@ -12,7 +12,7 @@ const Page = () => {
     const [searchInput, setSearchInput] = useState("");
     const [searchResult, setSearchResult] = useState(null);
     const [startIndex, setStartIndex] = useState(0);
-    const [perPage, setPerPage] = useState(8);
+    const [perPage, setPerPage] = useState(20);
     const [currentPage, setCurrentPage] = useState(1);
     const [refresh, setRefresh] = useState(false);
 
@@ -108,7 +108,7 @@ const Page = () => {
                             disabled={currentPage === 1 || startIndex === 0}
                             onClick={() => {
                                 setCurrentPage(currentPage - 1);
-                                setStartIndex(startIndex - 8);
+                                setStartIndex(startIndex - 20);
                             }}
                             className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
                         >
@@ -122,7 +122,7 @@ const Page = () => {
                             }
                             onClick={() => {
                                 setCurrentPage(currentPage + 1);
-                                setStartIndex(startIndex + 8);
+                                setStartIndex(startIndex + 20);
                             }}
                             className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
                         >
