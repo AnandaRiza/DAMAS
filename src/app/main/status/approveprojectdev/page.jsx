@@ -52,7 +52,7 @@ const Page = () => {
 
     return (
         <div>
-            <HeaderStatusSdlc title="Approvement" />
+            <HeaderStatusSdlc title="SDLC Approval Request" />
 
             <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch

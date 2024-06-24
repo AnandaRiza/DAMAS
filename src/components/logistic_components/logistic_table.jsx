@@ -90,7 +90,7 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                                         {userId && (item.memo_createdBy === userId || item.memo_pic === userId) ? (
                                             <button
                                                 type="button"
-                                                className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2"
+                                                className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
                                                 onClick={() => handleEditClick(item.memo_id)}
                                             >
                                                 <AiOutlineEdit size={20} />

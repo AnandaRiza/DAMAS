@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
+import { IoMdEye } from "react-icons/io";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
 const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
@@ -37,11 +38,23 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
             <table className="table">
                 <thead>
                     <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
+                        {action && (
+                            <th className="py-3 px-6 w-32 flex items-center justify-center gap-3 uppercase">
+                                Action
+                            </th>
+                        )}
                         {headers.map((item, index) => (
                             <th
                                 key={index}
                                 className={`py-3 px-6 uppercase ${
-                                    ["memo_id", "memo_department", "memo_createdBy", "memo_reviewer", "memo_notes", "memo_upload"].includes(item)
+                                    [
+                                        "memo_id",
+                                        "memo_department",
+                                        "memo_createdBy",
+                                        "memo_reviewer",
+                                        "memo_notes",
+                                        "memo_upload",
+                                    ].includes(item)
                                         ? "hidden"
                                         : ""
                                 }`}
@@ -49,54 +62,48 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                             >
                                 <div className="flex items-center cursor-pointer">
                                     {getDisplayName(item)}
-                                    {sortConfig.key === item && (
-                                        sortConfig.direction === "ascending" ? (
+                                    {sortConfig.key === item &&
+                                        (sortConfig.direction ===
+                                        "ascending" ? (
                                             <MdArrowDropUp className="ml-1" />
                                         ) : (
                                             <MdArrowDropDown className="ml-1" />
-                                        )
-                                    )}
+                                        ))}
                                 </div>
                             </th>
                         ))}
-                        {action && (
-                            <th className="py-3 px-6 w-32 flex items-center justify-center gap-3 uppercase">
-                                Edit
-                            </th>
-                        )}
                     </tr>
                 </thead>
                 <tbody>
                     {data
-                        .filter((item) => item.memo_status === "APPROVAL REQUEST SENT")
+                        .filter(
+                            (item) =>
+                                item.memo_status === "APPROVAL REQUEST SENT"
+                        )
                         .map((item, index) => (
                             <tr
                                 key={index}
                                 className={`${
-                                    index % 2 === 0 ? "bg-white" : "bg-[#00A6B4]/[0.5]"
+                                    index % 2 === 0
+                                        ? "bg-white"
+                                        : "bg-[#00A6B4]/[0.5]"
                                 } hover:bg-gray-100 text-xs leading-5`}
                             >
-                                {headers.map((header, headerIndex) => (
-                                    <td
-                                        key={headerIndex}
-                                        className={`py-3 px-6 ${
-                                            ["memo_id", "memo_department", "memo_createdBy", "memo_reviewer", "memo_notes", "memo_upload"].includes(header)
-                                                ? "hidden"
-                                                : ""
-                                        }`}
-                                    >
-                                        {item[header]}
-                                    </td>
-                                ))}
                                 {action && (
                                     <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                        {userId && (item.memo_createdBy === userId || item.memo_pic === userId) ? (
+                                        {userId &&
+                                        (item.memo_createdBy === userId ||
+                                            item.memo_pic === userId) ? (
                                             <button
                                                 type="button"
-                                                className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2"
-                                                onClick={() => handleEditClick(item.memo_id)}
+                                                className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
+                                                onClick={() =>
+                                                    handleEditClick(
+                                                        item.memo_id
+                                                    )
+                                                }
                                             >
-                                                <AiOutlineEdit size={20} />
+                                                <IoMdEye size={20} />
                                             </button>
                                         ) : (
                                             <button
@@ -104,11 +111,30 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                                                 className="text-gray-400 flex flex-col gap-1 items-center justify-center pt-2 cursor-not-allowed"
                                                 disabled
                                             >
-                                                <AiOutlineEdit size={20} />
+                                                <IoMdEye size={20} />
                                             </button>
                                         )}
                                     </td>
                                 )}
+                                {headers.map((header, headerIndex) => (
+                                    <td
+                                        key={headerIndex}
+                                        className={`py-3 px-6 ${
+                                            [
+                                                "memo_id",
+                                                "memo_department",
+                                                "memo_createdBy",
+                                                "memo_reviewer",
+                                                "memo_notes",
+                                                "memo_upload",
+                                            ].includes(header)
+                                                ? "hidden"
+                                                : ""
+                                        }`}
+                                    >
+                                        {item[header]}
+                                    </td>
+                                ))}
                             </tr>
                         ))}
                 </tbody>
