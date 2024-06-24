@@ -2,15 +2,13 @@
 
 import { createContext, useContext, useState } from "react";
 
-
 export const stateContext = createContext();
 
 export const ContexProvider = ({ children }) => {
-    
     const [showSideBar, setShowSideBar] = useState(true);
     const [header, setHeader] = useState("Home");
-    const { user } = useState();
     const [userAplikasi, setUserAplikasi] = useState(null);
+    const [user, setUser] = useState(null);
 
     return (
         <stateContext.Provider
@@ -20,6 +18,7 @@ export const ContexProvider = ({ children }) => {
                 header,
                 setHeader,
                 user,
+                setUser,
                 userAplikasi,
                 setUserAplikasi,
             }}

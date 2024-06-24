@@ -71,19 +71,19 @@ const EditMemoPage = () => {
         getDataAllPic();
     }, [params.memoId]);
 
-    const handleDateChange = (e) => {
-        const { value } = e.target;
-        const regex = /^[0-9-]*$/; // Allows only numbers and hyphens
-        if (regex.test(value)) {
-            setDataAllMemo({
-                ...dataAllMemo,
-                memo_deadline: value,
-            });
-            setError("");
-        } else {
-            setError("Only numeric values allowed");
-        }
-    };
+    // const handleDateChange = (e) => {
+    //     const { value } = e.target;
+    //     const regex = /^[0-9-]*$/; // Allows only numbers and hyphens
+    //     if (regex.test(value)) {
+    //         setDataAllMemo({
+    //             ...dataAllMemo,
+    //             memo_deadline: value,
+    //         });
+    //         setError("");
+    //     } else {
+    //         setError("Only numeric values allowed");
+    //     }
+    // };
 
     const handleStatusChange = () => {
         setDataAllMemo(prevState => ({
@@ -324,10 +324,10 @@ const EditMemoPage = () => {
                         name="memo_deadline"
                         className="input input-bordered mt-1"
                         value={dataAllMemo.memo_deadline}
-                        onChange={handleDateChange}
+                        // onChange={handleDateChange}
                         readOnly={isReadOnly}
                     />
-                    {error && <p className="text-red-500">{error}</p>}
+                    {/* {error && <p className="text-red-500">{error}</p>} */}
                 </div>
 
                 <div className="flex flex-col">

@@ -330,7 +330,7 @@ const TablePpo = ({ headers, data, action, link }) => {
                                                 onClick={() =>
                                                     handleEdit(item.id)
                                                 }
-                                                className="text-orange-600 flex flex-col gap-1 items-center justify-center pt-2"
+                                                className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
                                             >
                                                 <AiOutlineEdit size={20} />
                                             </button>

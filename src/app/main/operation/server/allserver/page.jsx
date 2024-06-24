@@ -59,7 +59,7 @@ const page = () => {
                     handleSubmit={handleSearch}
                 />
         </div>
-            <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl px-3">
+            <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl px-3">
             <div className=" bw-full px-5 py-2 mt-4">
                 <div className="w-full flex justify-between items-center">
                 </div>                
