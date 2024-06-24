@@ -91,9 +91,9 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                             >
                                 {action && (
                                     <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                        {userId &&
+                                        {/* {userId &&
                                         (item.memo_createdBy === userId ||
-                                            item.memo_pic === userId) ? (
+                                            item.memo_pic === userId) ? ( */}
                                             <button
                                                 type="button"
                                                 className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
@@ -105,7 +105,7 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                                             >
                                                 <IoMdEye size={20} />
                                             </button>
-                                        ) : (
+                                         {/* (
                                             <button
                                                 type="button"
                                                 className="text-gray-400 flex flex-col gap-1 items-center justify-center pt-2 cursor-not-allowed"
@@ -113,7 +113,7 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                                             >
                                                 <IoMdEye size={20} />
                                             </button>
-                                        )}
+                                        ) */}
                                     </td>
                                 )}
                                 {headers.map((header, headerIndex) => (

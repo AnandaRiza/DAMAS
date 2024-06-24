@@ -29,6 +29,7 @@ import {
     IsOperator,
     IsPpoOperator,
     IsPpoSupervisor,
+    IsReviewerSupervisor,
     IsServerOperator,
     IsSkseOperator,
     IsSupervisor,
@@ -692,7 +693,8 @@ const Sidebar = () => {
                         {(IsLogisticSupervisor() ||
                             IsLogisticOperator() ||
                             IsOperator() ||
-                            IsSupervisor()) && (
+                            IsSupervisor() ||
+                            IsReviewerSupervisor()) && (
                             <div
                                 tabIndex={0}
                                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
@@ -752,7 +754,8 @@ const Sidebar = () => {
                             IsDevSupervisor() ||
                             IsPpoSupervisor() ||
                             IsLogisticSupervisor() ||
-                            IsOperationSupervisor() || IsOperator()) && (
+                            IsOperationSupervisor() || IsOperator() ||
+                            IsReviewerSupervisor()) && (
                             <div
                                 tabIndex={0}
                                 className="collapse collapse-arrow border border-base-300 bg-base-200"
@@ -797,7 +800,8 @@ const Sidebar = () => {
                                     )}
 
                                     {(IsLogisticSupervisor() ||
-                                        IsSupervisor() || IsOperator()) && (
+                                        IsSupervisor() || IsOperator() ||
+                                        IsReviewerSupervisor()) && (
                                         <div>
                                             <hr className="my-4 border-gray-300" />
 
