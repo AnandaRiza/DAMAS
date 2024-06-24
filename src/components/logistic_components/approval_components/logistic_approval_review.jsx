@@ -30,6 +30,7 @@ const ReviewMemoPage = () => {
   const [showSignaturePad, setShowSignaturePad] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [file, setFile] = useState(null); // State to hold uploaded file
   const [showApprovalForm, setShowApprovalForm] = useState(false); // State to show or hide the approval form
   const [approvalData, setApprovalData] = useState(null); // State to store approval data
   const params = useParams();
@@ -114,24 +115,25 @@ const ReviewMemoPage = () => {
     formData.append("file", fileToUpload);
 
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/upload/${params.memoId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        }
-      );
-      setDataAllMemo(prevState => ({
-        ...prevState,
-        memo_upload: response.data.fileName // Update state with uploaded file name
-      }));
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/upload/${params.memoId}`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            }
+        );
+        setDataAllMemo(prevState => ({
+            ...prevState,
+            memo_upload: response.data.fileName // Update state with uploaded file name
+        }));
+        setFile(fileToUpload); // Update file state to track if a new file is uploaded
     } catch (error) {
-      console.error("Error uploading file: ", error);
-      setError("Failed to upload file");
+        console.error("Error uploading file: ", error);
+        setError("Failed to upload file");
     }
-  };
+};
 
   // Function to handle file download
   const handleFileDownload = async () => {
@@ -192,7 +194,7 @@ const ReviewMemoPage = () => {
   };
 
   if (loading) {
-    return <PleaseWait />;
+      return <PleaseWait />;
   }
 
   const isReadOnly = dataAllMemo.memo_status === "MEMO APPROVED";
