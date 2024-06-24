@@ -1,10 +1,6 @@
 "use client";
-import NetworkForm from "@/components/operation/network/body/operation_network_form";
-import Headertesting from "@/components/Headertesting";
-import Testingform from "@/components/testingform";
-import Listtesting from "@/components/Listtesting";
-import NetworkTable from "@/components/operation/network/body/operation_network_table";
-import Header from "@/components/operation/network/header/header_all_project";
+import NetworkTable from '@/components/operation/network/body/operation_network_table';
+import Header from '@/components/operation/network/header/header_all_project';
 
 import NotFound from "@/components/NotFound";
 import FormSearch from "@/components/FormSearch";
@@ -102,7 +98,7 @@ const page = () => {
 
                 {searchResult &&
                     searchInput != "" &&
-                    searchResult.length === 0 && <NotFound />}
+                    searchResult.length === 0 && (<NotFound />)}
 
                 {dataAllNetwork && (
                     <div className="w-full flex justify-end items-center gap-3 mt-2">

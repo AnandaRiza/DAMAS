@@ -1,10 +1,12 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const SKSEForm = () => {
     // State to manage form data
+    const router = useRouter();
     const [dataAllPic, setDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
     const [formData, setFormData] = useState({
@@ -33,17 +35,13 @@ const SKSEForm = () => {
         getDataAllPic();
     }, []);
 
-
     const handleSubmit = async () => {
         try {
-            const requiredFields = ["nosurat, perihal, pic, deadline, status"];
-            const emptyFields = requiredFields.filter(field => !formData[field]);
-            if (emptyFields.length > 0) {
-                alert(`Please fill in the following fields: ${emptyFields.join(", ")}`);
-                return;
-            }
-            await axios.post(`${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/newskse`, formData);
-            alert("Create SK/SE Success");
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/newskse`,
+                formData
+            );
+            router.push("/main/ppo/allskse");
         } catch (error) {
             console.log(error);
             alert("Create SK/SE Failed!");
@@ -53,182 +51,178 @@ const SKSEForm = () => {
     return (
         <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl">
             <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
-        <form className="space-y-4">
-            {/* Input fields for memo attributes */}
-            <div className="flex flex-col">
-                <label
-                    htmlFor="nosurat"
-                    className="text-sm font-semibold text-gray-600"
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSubmit();
+                    }}
+                    className="space-y-4"
                 >
-                    No Surat  <span className="text-red-500">*</span>
-                </label>
-                <input
-                    type="text"
-                    id="nosurat"
-                    name="nosurat"
-                    value={formData.nosurat}
-                    onChange={(e) =>
-                        setFormData({
-                            ...formData,
-                            nosurat: e.target.value,
-                        })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div>
-            <div className="flex flex-col">
-                <label
-                    htmlFor="perihal"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Perihal <span className="text-red-500">*</span>
-                </label>
-                <input
-                    type="text"
-                    id="perihal"
-                    name="perihal"
-                    value={formData.perihal}
-                    onChange={(e) =>
-                        setFormData({
-                            ...formData,
-                            perihal: e.target.value,
-                        })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div>
-            <div className="flex flex-col">
-                <label
-                    htmlFor="pic"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    PIC <span className="text-red-500">*</span>
-                </label>
-                {dataAllPic && (
-                    <select
-                        name="pic"
-                        id="pic"
-                        className="input input-bordered mt-1"
-                        value={formData.nama}
-                        onChange={(e) => {
-                            const selectedPic = JSON.parse(e.target.value);
-                            setFormData({ ...formData, pic: selectedPic.nama, departement:selectedPic.departemen });
-                            setSelectedDept(selectedPic.departemen)
-                        }
-                        }
-                    >
-                        <option
-                            disabled
-                            selected
-                            className="text-sm text-gray-600 opacity-50"
+                    {/* Input fields for memo attributes */}
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="nosurat"
+                            className="text-sm font-semibold text-gray-600"
                         >
-                            Select PIC...
-                        </option>
-                        {dataAllPic.map((item, index) => (
-                            <option key={index} value={JSON.stringify(item)}>
-                                    {item.nama}
-                            </option>
-                        ))}
-                    </select>
-                )}
-            </div>
-
-            <div className="flex flex-col">
-                <label
-                    htmlFor="departemen"
-                    className="text-sm font-semibold"
-                >
-                    Departement
-                </label>
-                <input 
-                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                type="text" 
-                value={selectedDept} disabled />
-            </div>
-
-            <div className="flex flex-col">
-                <label
-                    htmlFor="deadline"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Deadline <span className="text-red-500">*</span>
-                </label>
-                <input
-                    type="date"
-                    id="deadline"
-                    name="deadline"
-                    value={formData.deadline}
-                    onChange={(e) =>
-                        setFormData({ ...formData, deadline: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div>
-            {/* Status dropdown */}
-            <div className="flex flex-col">
-                <label
-                    htmlFor="status"
-                    className="text-sm font-semibold text-gray-600"
-                >
-                    Status <span className="text-red-500">*</span>
-                </label>
-                <div className="dropdown mt-1">
-                    <div tabIndex={0} role="button" className="btn m-1 w-52 bg-white hover:bg-gray text-gray-600">
-                    {formData.status ? formData.status : "Select Status"}
+                            No Surat <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="nosurat"
+                            name="nosurat"
+                            required
+                            value={formData.nosurat}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    nosurat: e.target.value,
+                                })
+                            }
+                            className="input input-bordered mt-1"
+                        />
                     </div>
-                    <ul
-                        tabIndex={0}
-                        className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 mb-4"
-                    >
-                        <li>
-                            <a
-                                onClick={() =>
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="perihal"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Perihal <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="perihal"
+                            name="perihal"
+                            required
+                            value={formData.perihal}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    perihal: e.target.value,
+                                })
+                            }
+                            className="input input-bordered mt-1"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="pic"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            PIC <span className="text-red-500">*</span>
+                        </label>
+                        {dataAllPic && (
+                            <select
+                                name="pic"
+                                required
+                                id="pic"
+                                className="input input-bordered mt-1"
+                                value={formData.nama}
+                                onChange={(e) => {
+                                    const selectedPic = JSON.parse(
+                                        e.target.value
+                                    );
                                     setFormData({
                                         ...formData,
-                                        status: "Ongoing",
+                                        pic: selectedPic.nama,
+                                        departement: selectedPic.departemen,
+                                    });
+                                    setSelectedDept(selectedPic.departemen);
+                                }}
+                            >
+                                <option
+                                    disabled
+                                    selected
+                                    className="text-sm text-gray-600 opacity-50"
+                                >
+                                    Select PIC...
+                                </option>
+                                {dataAllPic.map((item, index) => (
+                                    <option
+                                        key={index}
+                                        value={JSON.stringify(item)}
+                                    >
+                                        {item.nama}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="departemen"
+                            className="text-sm font-semibold"
+                        >
+                            Departement
+                        </label>
+                        <input
+                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                            type="text"
+                            value={selectedDept}
+                            disabled
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="deadline"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Deadline <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                            type="date"
+                            id="deadline"
+                            name="deadline"
+                            required
+                            value={formData.deadline}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    deadline: e.target.value,
+                                })
+                            }
+                            className="input input-bordered mt-1"
+                        />
+                    </div>
+                    {/* Status dropdown */}
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="status"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Status <span className="text-red-500">*</span>
+                        </label>
+                        <div className="dropdown mt-1">
+                            <select
+                                name="status"
+                                id="status"
+                                required
+                                value={formData.status}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        status: e.target.value,
                                     })
                                 }
                             >
-                                Ongoing
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                onClick={() =>
-                                    setFormData({
-                                        ...formData,
-                                        status: "Finished",
-                                    })
-                                }
-                            >
-                                Finished
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                onClick={() =>
-                                    setFormData({
-                                        ...formData,
-                                        status: "Past-Deadline",
-                                    })
-                                }
-                            >
-                                Past Deadline
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                                <option disabled value="">
+                                    --Select Status--
+                                </option>
+                                <option value="Ongoing">Ongoing</option>
+                                <option value="Finished">Finished</option>
+                                <option value="Past-Deadline">
+                                    Past Deadline
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    {/* Submit button */}
+                    <button type="submit" className="btn btn-primary mt-4">
+                        Create SK/SE
+                    </button>
+                </form>
             </div>
-            {/* Submit button */}
-            <button
-                type="button"
-                className="btn btn-primary mt-4"
-                onClick={handleSubmit}
-            >
-                Create SK/SE
-            </button>
-        </form>
-        </div>
         </div>
     );
 };
