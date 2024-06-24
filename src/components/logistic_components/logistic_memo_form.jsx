@@ -148,6 +148,8 @@ const toBase64 = (file) => new Promise((resolve, reject) => {
   };
 
   return (
+    <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl">
+            <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
     <form className="space-y-4">
       <div className="flex flex-col">
         <label htmlFor="memo_num" className="text-sm font-semibold text-gray-600">
@@ -363,6 +365,8 @@ const toBase64 = (file) => new Promise((resolve, reject) => {
           Create Memo
         </button>
     </form>
+    </div>
+    </div>
   );
 };
 
