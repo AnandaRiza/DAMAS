@@ -159,7 +159,7 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -176,7 +176,7 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
-        </div>
+        </div> */}
 
         <div className="flex flex-col">
             <label
@@ -216,7 +216,7 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -233,7 +233,7 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
-        </div>
+        </div> */}
 
         <div className="flex flex-col">
             <label
@@ -273,7 +273,7 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -290,7 +290,7 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
-        </div>
+        </div> */}
 
         <div className="flex flex-col">
             <label
@@ -330,7 +330,7 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -347,7 +347,7 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
-        </div>
+        </div> */}
 
         <div className="flex flex-col">
             <label
@@ -387,7 +387,7 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -404,7 +404,7 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
-        </div>
+        </div> */}
 
         <div className="flex flex-col">
             <label
@@ -444,7 +444,7 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -461,7 +461,7 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
-        </div>
+        </div> */}
 
         <div className="flex flex-col">
             <label
