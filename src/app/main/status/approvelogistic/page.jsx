@@ -3,9 +3,10 @@ import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
 import ApprovalTable from "@/components/logistic_components/approval_components/logistic_approval_table";
+import HeaderStatusLogistic from "@/components/logistic_components/header/HeaderStatusLogistic";
 import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
-import { MdArrowDropDown } from "react-icons/md";
+
 
 const ApprovalPage = () => {
     const [searchInput, setSearchInput] = useState("");
@@ -78,84 +79,89 @@ const ApprovalPage = () => {
 
     return (
         <div>
-            <div className="w-full px-5 py-5 mt-4">
-                <div className="w-full flex justify-between items-center">
-                    <span className="text-[#0066AE] font-semibold">Approval Requests</span>
-                    <span className="text-end flex">
-                        sort by <MdArrowDropDown className="ml-1 mt-auto" />
-                    </span>
-                </div>
+            <HeaderStatusLogistic title="Logistic Approval Request" />
+
+            <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch
-                    placeholder="Find Memo"
+                    placeholder="Find Project"
                     setState={setSearchInput}
                     handleSubmit={handleSearch}
                 />
             </div>
-            {dataAllMemo && (!searchResult || searchInput === "") ? (
-                <div className="mt-4">
-                    <ApprovalTable
-                        headers={Object.keys(dataAllMemo[0]).slice(
-                            0,
-                            Object.keys(dataAllMemo[0]).length - 1
-                        )}
-                        data={dataAllMemo}
-                        action={true}
-                        link={"/main/status/approvelogistic/"}
-                        onSort={handleSort}
-                        sortConfig={sortConfig}
-                    />
+            <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl px-3">
+                <div className="w-full px-5 py-2 mt-4">
+                    <div className="w-full flex justify-between items-center"></div>
                 </div>
-            ) : (
-                !(searchResult && searchInput !== "") && <PleaseWait />
-            )}
+                {dataAllMemo && (!searchResult || searchInput === "") ? (
+                    <div className="mt-4">
+                        <ApprovalTable
+                            headers={Object.keys(dataAllMemo[0]).slice(
+                                0,
+                                Object.keys(dataAllMemo[0]).length - 1
+                            )}
+                            data={dataAllMemo}
+                            action={true}
+                            link={"/main/status/approvelogistic/"}
+                            onSort={handleSort}
+                            sortConfig={sortConfig}
+                        />
+                    </div>
+                ) : (
+                    !(searchResult && searchInput !== "") && <PleaseWait />
+                )}
 
-            {searchResult && searchInput !== "" && searchResult.length !== 0 && (
-                <div className="mt-4">
-                    <ApprovalTable
-                        headers={Object.keys(searchResult[0]).slice(
-                            0,
-                            Object.keys(searchResult[0]).length - 1
-                        )}
-                        data={searchResult}
-                        action={true}
-                        link={"/main/status/approvelogistic/"}
-                        onSort={handleSort}
-                        sortConfig={sortConfig}
-                    />
-                </div>
-            )}
+                {searchResult &&
+                    searchInput !== "" &&
+                    searchResult.length !== 0 && (
+                        <div className="mt-4">
+                            <ApprovalTable
+                                headers={Object.keys(searchResult[0]).slice(
+                                    0,
+                                    Object.keys(searchResult[0]).length - 1
+                                )}
+                                data={searchResult}
+                                action={true}
+                                link={"/main/status/approvelogistic/"}
+                                onSort={handleSort}
+                                sortConfig={sortConfig}
+                            />
+                        </div>
+                    )}
 
-            {searchResult && searchInput !== "" && searchResult.length === 0 && (
-                <NotFound />
-            )}
+                {searchResult &&
+                    searchInput !== "" &&
+                    searchResult.length === 0 && <NotFound />}
 
-            {dataAllMemo && !searchResult && (
-                <div className="w-full flex justify-end items-center gap-3">
-                    <button
-                        type="button"
-                        disabled={currentPage === 1 || startIndex === 0}
-                        onClick={() => {
-                            setCurrentPage(currentPage - 1);
-                            setStartIndex(startIndex - 10);
-                        }}
-                        className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
-                    >
-                        Prev
-                    </button>
-                    <h5 className="font-semibold">{currentPage}</h5>
-                    <button
-                        type="button"
-                        disabled={startIndex + perPage >= dataAllMemo[0].maxSize}
-                        onClick={() => {
-                            setCurrentPage(currentPage + 1);
-                            setStartIndex(startIndex + 10);
-                        }}
-                        className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
-                    >
-                        Next
-                    </button>
-                </div>
-            )}
+                {dataAllMemo && !searchResult && (
+                    <div className="w-full flex justify-end items-center gap-3">
+                        <button
+                            type="button"
+                            disabled={currentPage === 1 || startIndex === 0}
+                            onClick={() => {
+                                setCurrentPage(currentPage - 1);
+                                setStartIndex(startIndex - 10);
+                            }}
+                            className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
+                        >
+                            Prev
+                        </button>
+                        <h5 className="font-semibold">{currentPage}</h5>
+                        <button
+                            type="button"
+                            disabled={
+                                startIndex + perPage >= dataAllMemo[0].maxSize
+                            }
+                            onClick={() => {
+                                setCurrentPage(currentPage + 1);
+                                setStartIndex(startIndex + 10);
+                            }}
+                            className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
