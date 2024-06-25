@@ -5,7 +5,7 @@ import HeaderLogin from "@/components/HeaderLogin";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import PleaseWait from "@/components/PleaseWait";
+
 
 const Page = () => {
     const router = useRouter();
@@ -17,6 +17,8 @@ const Page = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleLogin = async () => {
+        setIsLoading(true);
+        setErrors(null);
         try {
             const currentUserInfo = await axios.get(
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/secure/users`,
@@ -40,8 +42,26 @@ const Page = () => {
                 setIsLoading(false);
             }
         } catch (error) {
-            setErrors(error.response.data.errors);
-            setIsLoading(false);
+            if (error.response.data.errors === "userid already in use!") {
+                await axios.post(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/secure/logout?userid=${form.userid}`
+                );
+                try {
+                    await axios.post(
+                        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/secure/login`,
+                        form
+                    );
+                    document.cookie = `DAMAS-USERID=${form.userid}; expires=; path=/`;
+                    router.push("/main");
+                    setIsLoading(false);
+                } catch (error) {
+                    setErrors(error.response.data.errors);
+                    setIsLoading(false);
+                }
+            } else {
+                setErrors(error.response.data.errors);
+                setIsLoading(false);
+            }
         }
     };
 
@@ -69,7 +89,8 @@ const Page = () => {
                                 Username
                             </label>
                             <input
-                                type="username"
+                                type="text"
+                                placeholder="Username"
                                 id="username"
                                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 onChange={(e) =>
@@ -89,6 +110,7 @@ const Page = () => {
                             </label>
                             <input
                                 type="password"
+                                placeholder="Password"
                                 id="password"
                                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 onChange={(e) =>
@@ -107,13 +129,15 @@ const Page = () => {
                                     onClick={() => handleLogin()}
                                 >
                                     {isLoading ? (
-                                        <PleaseWait />
+                                        <div className="flex justify-center gap-3">
+                                        <p>Please wait</p>
+                                        <span className="loading loading-spinner"></span>
+                                    </div>
                                     ) : (
                                         <span className="text-sm font-semibold">
-                                             Login
+                                            Login
                                         </span>
                                     )}
-                                   
                                 </button>
                             </div>
                         </Link>

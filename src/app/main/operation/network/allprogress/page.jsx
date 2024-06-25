@@ -1,15 +1,11 @@
 "use client";
 import NetworkTable from '@/components/operation/network/body/operation_network_table';
 import Header from '@/components/operation/network/header/header_all_project';
-
 import NotFound from "@/components/NotFound";
 import FormSearch from "@/components/FormSearch";
 import PleaseWait from "@/components/PleaseWait";
 import axios from "axios";
-
 import { useEffect, useState } from "react";
-
-import { MdArrowDropDown } from "react-icons/md";
 
 import React from "react";
 
@@ -60,7 +56,7 @@ const page = () => {
                     handleSubmit={handleSearch}
                 />
             </div>
-            <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl px-3">
+            <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl px-3">
                 <div className=" bw-full px-5 py-2 mt-4">
                     <div className="w-full flex justify-between items-center"></div>
                 </div>
