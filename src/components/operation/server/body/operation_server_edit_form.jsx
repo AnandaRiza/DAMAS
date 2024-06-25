@@ -792,7 +792,7 @@ const Page = () => {
               </div>
 
               <div className="flex gap-2 items-center text-white ml-3 mt-3">
-                <Link href="/main/operation/server/allprogress">
+                <Link href="/main/operation/server/allserver">
                   <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
                     <MdOutlineCancel />
                     <span>Cancel</span>
