@@ -164,8 +164,8 @@ const operation_network_table = ({ headers, data, action, link }) => {
     });
 
     return (
-        <div className="overflow-x-auto">
-            <table className="table">
+        <div className="overflow-x-auto relative">
+        <table className="table min-w-full">
                 <thead>
                     <tr className="border-b-2 bg-[#00A6B4] text-sm">
                         {headers.map((item, index) => (
@@ -269,7 +269,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
                                             <button
                                                 type="button"
                                                 onClick={() =>
-                                                    handleEdit(item.id)
+                                                    handleEdit(item.network_id)
                                                 }
                                                 className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
                                             >

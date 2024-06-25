@@ -9,13 +9,13 @@ import React from "react";
 const layout = ({ children }) => {
     return (
         <IsLogin>
-            <div className="min-h-[100vh] bg-[#00A6B4] bg-opacity-25 ">
+            <div className="w-full h-full relative bg-[#00A6B4] bg-opacity-25 ">
                 <Header title="DAMAS" />
-                <div className="w-full relative pb-10 flex">
-                    <div className="w-[15%] relative">
+                <div className="w-full h-full relative pb-10 flex">
+                    <div className="relative">
                         <Sidebar />
                     </div>
-                    <div className="px-6 w-[85%] h-full">
+                    <div className="px-6 w-full h-full">
                         <div className="">{children}</div>
                     </div>
                     {/* <Footer /> */}

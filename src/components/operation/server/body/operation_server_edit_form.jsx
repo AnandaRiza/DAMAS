@@ -171,438 +171,529 @@ const Page = () => {
                 />
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  Kick Off Start
+                  Kick Off
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllServer.server_kickoff_start}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_kickoff_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                     Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllServer.server_kickoff_start}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_kickoff_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllServer.server_kickoff_deadline}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_kickoff_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllServer.server_kickoff_done}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_kickoff_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  Kick Off Deadline
+                  Penyiapan Server 
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllServer.server_kickoff_deadline}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_kickoff_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllServer.server_peyiapanserver_start}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_peyiapanserver_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllServer.server_peyiapanserver_deadline}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_peyiapanserver_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllServer.server_peyiapanserver_done}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_peyiapanserver_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  Kick Off Done
+                Instalasi Aplikasi 
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllServer.server_kickoff_done}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_kickoff_done: e.target.value,
-                    })
-                  }
-                />
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllServer.server_instalasiaplikasi_start}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_instalasiaplikasi_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllServer.server_instalasiaplikasi_deadline}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_instalasiaplikasi_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllServer.server_instalasiaplikasi_done}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_instalasiaplikasi_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  Penyiapan Server Start
+                    Install Checkpoint
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllServer.server_peyiapanserver_start}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_peyiapanserver_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllServer.server_instalcheckpoint_start}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_instalcheckpoint_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllServer.server_instalcheckpoint_deadline}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_instalcheckpoint_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllServer.server_instalcheckpoint_done}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_instalcheckpoint_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  Penyiapan Server Deadline
+                   Testing Koneksi
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllServer.server_peyiapanserver_deadline}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_peyiapanserver_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                     Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllServer.server_testingkoneksi_start}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_testingkoneksi_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                     Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllServer.server_testingkoneksi_deadline}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_testingkoneksi_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllServer.server_testingkoneksi_done}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_testingkoneksi_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  Penyiapan Server Done
+                Serah Terima Server 
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllServer.server_peyiapanserver_done}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_peyiapanserver_done: e.target.value,
-                    })
-                  }
-                />
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllServer.server_serahterimaserver_start}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_serahterimaserver_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllServer.server_serahterimaserver_deadline}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_serahterimaserver_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                    Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllServer.server_serahterimaserver_done}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_serahterimaserver_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  Instalasi Aplikasi Start
+                  Implementasi
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllServer.server_instalasiaplikasi_start}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_instalasiaplikasi_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllServer.server_implementasi_start}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_implementasi_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
 
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Instalasi Aplikasi Deadline
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllServer.server_instalasiaplikasi_deadline}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_instalasiaplikasi_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllServer.server_implementasi_deadline}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_implementasi_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
 
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Instalasi Aplikasi Done
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllServer.server_instalasiaplikasi_done}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_instalasiaplikasi_done: e.target.value,
-                    })
-                  }
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Install Checkpoint Start
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllServer.server_instalcheckpoint_start}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_instalcheckpoint_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Install Checkpoint Deadline
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllServer.server_instalcheckpoint_deadline}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_instalcheckpoint_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Install Checkpoint Done
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllServer.server_instalcheckpoint_done}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_instalcheckpoint_done: e.target.value,
-                    })
-                  }
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Testing Koneksi Start
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllServer.server_testingkoneksi_start}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_testingkoneksi_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Testing Koneksi Deadline
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllServer.server_testingkoneksi_deadline}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_testingkoneksi_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Testing Koneksi Done
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllServer.server_testingkoneksi_done}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_testingkoneksi_done: e.target.value,
-                    })
-                  }
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Serah Terima Server Start
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllServer.server_serahterimaserver_start}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_serahterimaserver_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Serah Terima Server Deadline
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllServer.server_serahterimaserver_deadline}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_serahterimaserver_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Serah Terima Server Done
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllServer.server_serahterimaserver_done}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_serahterimaserver_done: e.target.value,
-                    })
-                  }
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Implementasi Start
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllServer.server_implementasi_start}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_implementasi_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Implementasi Deadline
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllServer.server_implementasi_deadline}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_implementasi_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Implementasi Done
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllServer.server_implementasi_done}
-                  onChange={(e) =>
-                    setDataAllServer({
-                      ...dataAllServer,
-                      server_implementasi_done: e.target.value,
-                    })
-                  }
-                />
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllServer.server_implementasi_done}
+                      onChange={(e) =>
+                        setDataAllServer({
+                          ...dataAllServer,
+                          server_implementasi_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="flex flex-col">
@@ -678,27 +769,27 @@ const Page = () => {
               </div>
 
               <div className="flex flex-col">
-              <label
-                htmlFor="projectdone"
-                className="text-sm font-semibold text-[#0066AE]"
-              >
-                Project Finished
-              </label>
-              <input
-                type="date"
-                id="projectdone"
-                name="projectdone"
-                value={dataAllServer.server_project_done}
-                onChange={(e) =>
-                  setDataAllServer({
-                    ...dataAllServer,
-                    server_project_done: e.target.value,
-                  })
-                }
-                className="input input-bordered mt-1"
-                required={setDataAllServer.server_status === "Finished"}
-              />
-            </div>
+                <label
+                  htmlFor="projectdone"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Project Finished
+                </label>
+                <input
+                  type="date"
+                  id="projectdone"
+                  name="projectdone"
+                  value={dataAllServer.server_project_done}
+                  onChange={(e) =>
+                    setDataAllServer({
+                      ...dataAllServer,
+                      server_project_done: e.target.value,
+                    })
+                  }
+                  className="input input-bordered mt-1"
+                  required={setDataAllServer.server_status === "Finished"}
+                />
+              </div>
 
               <div className="flex gap-2 items-center text-white ml-3 mt-3">
                 <Link href="/main/operation/server/allprogress">

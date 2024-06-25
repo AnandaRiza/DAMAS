@@ -25,7 +25,7 @@ const page = () => {
     network_status: "",
     network_id: "",
   });
-  
+
   useEffect(() => {
     const getCurrentData = async () => {
       try {
@@ -49,7 +49,7 @@ const page = () => {
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
       );
       setDataAllPic(response.data.data);
-    //   console.log(response.data.data);
+      //   console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +62,10 @@ const page = () => {
   }, [dataAllNetwork]);
 
   const handleEditedData = async () => {
-    if (dataAllNetwork.network_status === "Finished" && !dataAllNetwork.network_project_done) {
+    if (
+      dataAllNetwork.network_status === "Finished" &&
+      !dataAllNetwork.network_project_done
+    ) {
       alert("Please fill in Project Finished date.");
       return;
     }
@@ -119,7 +122,6 @@ const page = () => {
                 />
               </div>
 
-
               <div className="flex flex-col">
                 <label
                   htmlFor="pic"
@@ -174,376 +176,454 @@ const page = () => {
                 />
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  Kick Off Start
+                  Kick Off
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllNetwork.network_kickoff_start}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_kickoff_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_kickoff_start}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_kickoff_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_kickoff_deadline}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_kickoff_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllNetwork.network_kickoff_done}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_kickoff_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  Kick Off Deadline
+                  MOP
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllNetwork.network_kickoff_deadline}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_kickoff_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_mop_start}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_mop_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_mop_deadline}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_mop_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllNetwork.network_mop_done}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_mop_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  Kick Off Done
+                  Demo MOP
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllNetwork.network_kickoff_done}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_kickoff_done: e.target.value,
-                    })
-                  }
-                />
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_demomop_start}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_demomop_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_demomop_deadline}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_demomop_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllNetwork.network_demomop_done}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_demomop_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  MOP Start
+                  Implementasi
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllNetwork.network_mop_start}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_mop_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_implementasi_start}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_implementasi_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_implementasi_deadline}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_implementasi_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllNetwork.network_implementasi_done}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_implementasi_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  MOP Deadline
+                  SK/SE
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllNetwork.network_mop_deadline}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_mop_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_skse_start}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_skse_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_skse_deadline}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_skse_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllNetwork.network_skse_done}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_skse_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="flex flex-col">
+              <div>
                 <label
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  MOP Done
+                  UAT
                 </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllNetwork.network_mop_done}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_mop_done: e.target.value,
-                    })
-                  }
-                />
-              </div>
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_uat_start}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_uat_start: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
 
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Demo MOP Start
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllNetwork.network_demomop_start}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_demomop_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_uat_deadline}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_uat_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
 
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Demo MOP Deadline
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllNetwork.network_demomop_deadline}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_demomop_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Demo MOP Done
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllNetwork.network_demomop_done}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_demomop_done: e.target.value,
-                    })
-                  }
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Implementasi Start
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllNetwork.network_implementasi_start}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_implementasi_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Implementasi Deadline
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllNetwork.network_implementasi_deadline}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_implementasi_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Implementasi Done
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllNetwork.network_implementasi_done}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_implementasi_done: e.target.value,
-                    })
-                  }
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  SK/SE Start
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllNetwork.network_skse_start}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_skse_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  SK/SE Deadline
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllNetwork.network_skse_deadline}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_skse_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  SK/SE Done
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllNetwork.network_skse_done}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_skse_done: e.target.value,
-                    })
-                  }
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  UAT Start
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllNetwork.network_uat_start}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_uat_start: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  UAT Deadline
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1 font-semibold"
-                  value={dataAllNetwork.network_uat_deadline}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_uat_deadline: e.target.value,
-                    })
-                  }
-                  disabled
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="deadline"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  UAT Done
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered mt-1"
-                  value={dataAllNetwork.network_uat_done}
-                  onChange={(e) =>
-                    setDataAllNetwork({
-                      ...dataAllNetwork,
-                      network_uat_done: e.target.value,
-                    })
-                  }
-                />
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Done
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1"
+                      value={dataAllNetwork.network_uat_done}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_uat_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="flex flex-col">
@@ -619,30 +699,29 @@ const page = () => {
               </div>
 
               <div className="flex flex-col">
-              <label
-                htmlFor="projectdone"
-                className="text-sm font-semibold text-[#0066AE]"
-              >
-                Project Finished
-              </label>
-              <input
-                type="date"
-                id="projectdone"
-                name="projectdone"
-                value={dataAllNetwork.network_project_done}
-                onChange={(e) =>
-                  setDataAllNetwork({
-                    ...dataAllNetwork,
-                    network_project_done: e.target.value,
-                  })
-                }
-                className="input input-bordered mt-1"
-                required={dataAllNetwork.network_status === "Finished"}
-              />
-            </div>
+                <label
+                  htmlFor="projectdone"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Project Finished
+                </label>
+                <input
+                  type="date"
+                  id="projectdone"
+                  name="projectdone"
+                  value={dataAllNetwork.network_project_done}
+                  onChange={(e) =>
+                    setDataAllNetwork({
+                      ...dataAllNetwork,
+                      network_project_done: e.target.value,
+                    })
+                  }
+                  className="input input-bordered mt-1"
+                  required={dataAllNetwork.network_status === "Finished"}
+                />
+              </div>
 
-
-            <div className="flex gap-2 items-center text-white ml-3 mt-3">
+              <div className="flex gap-2 items-center text-white ml-3 mt-3">
                 <Link href="/main/operation/network/allprogress">
                   <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
                     <MdOutlineCancel />

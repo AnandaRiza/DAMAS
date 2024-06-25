@@ -869,6 +869,7 @@ const page = () => {
                       itmo_deadline_project: e.target.value,
                     })
                   }
+                  disabled
                 />
               </div>
 

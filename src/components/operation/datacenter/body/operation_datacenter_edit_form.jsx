@@ -862,6 +862,7 @@ const page = () => {
                       dacen_deadline_project: e.target.value,
                     })
                   }
+                  disabled
                 />
               </div>
 

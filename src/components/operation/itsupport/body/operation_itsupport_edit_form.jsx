@@ -862,6 +862,7 @@ return (
                     itsupport_deadline_project: e.target.value,
                   })
                 }
+                disabled
               />
             </div>
 

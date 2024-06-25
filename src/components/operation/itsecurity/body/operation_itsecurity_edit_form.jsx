@@ -860,6 +860,7 @@ const page = () => {
                       itsecurity_deadline_project: e.target.value,
                     })
                   }
+                  disabled
                 />
               </div>
 
