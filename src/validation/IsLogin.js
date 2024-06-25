@@ -2,14 +2,13 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FiLoader, FiRefreshCw } from "react-icons/fi";
 import PleaseWait from '@/components/PleaseWait';
 import { useStateContext } from '@/context/ContextProvider';
  
 export const IsLogin = ({ children }) => {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
-    const { setUserAplikasi } = useStateContext();
+    const { setUserAplikasi, setUser } = useStateContext();
  
     useEffect(() => {
         const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
@@ -23,6 +22,7 @@ export const IsLogin = ({ children }) => {
                         'USER-ID': userid
                     }
                 });
+                setUser(response.data.data);
                 if (response.data.data.status != 1) {
                     router.push("/login")
                 }

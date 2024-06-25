@@ -1,4 +1,8 @@
 "use client";
+import {
+    IsLogisticOperator,
+    IsOperator,
+} from "@/validation/validateGroupAkses";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -9,16 +13,16 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
 
     const getDisplayName = (header) => {
         const displayNames = {
-            memo_id: 'Memo ID',
-            memo_num: 'Nomor Memo',
-            memo_perihal: 'Perihal Memo',
-            memo_pic: 'PIC',
-            memo_department: 'Department',
-            memo_createdBy: 'Created By',
-            memo_reviewer: 'Reviewer',
-            memo_deadline: 'Deadline',
-            memo_status: 'Status Memo',
-            memo_notes: 'Notes'
+            memo_id: "Memo ID",
+            memo_num: "Nomor Memo",
+            memo_perihal: "Perihal Memo",
+            memo_pic: "PIC",
+            memo_department: "Department",
+            memo_createdBy: "Created By",
+            memo_reviewer: "Reviewer",
+            memo_deadline: "Deadline",
+            memo_status: "Status Memo",
+            memo_notes: "Notes",
         };
         return displayNames[header] || header;
     };
@@ -45,26 +49,38 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                             {headers.map((item, index) => (
                                 <th
                                     key={index}
-                                    className={`py-3 px-6 uppercase ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes', 'memo_upload'].includes(item) ? 'hidden' : ''}`}
+                                    className={`py-3 px-6 uppercase ${
+                                        [
+                                            "memo_id",
+                                            "memo_department",
+                                            "memo_createdBy",
+                                            "memo_reviewer",
+                                            "memo_notes",
+                                            "memo_upload",
+                                        ].includes(item)
+                                            ? "hidden"
+                                            : ""
+                                    }`}
                                     onClick={() => onSort(item)}
                                 >
                                     <div className="flex items-center cursor-pointer">
                                         {getDisplayName(item)}
-                                        {sortConfig.key === item && (
-                                            sortConfig.direction === 'ascending' ? (
+                                        {sortConfig.key === item &&
+                                            (sortConfig.direction ===
+                                            "ascending" ? (
                                                 <MdArrowDropUp className="ml-1" />
                                             ) : (
                                                 <MdArrowDropDown className="ml-1" />
-                                            )
-                                        )}
+                                            ))}
                                     </div>
                                 </th>
                             ))}
-                            {action && (
-                                <th className="py-3 px-6 w-32 flex items-center justify-center gap-3 uppercase">
-                                    Edit
-                                </th>
-                            )}
+                            {(IsOperator() || IsLogisticOperator()) &&
+                                action && (
+                                    <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                                        Edit
+                                    </th>
+                                )}
                         </tr>
                     </thead>
                     <tbody>
@@ -80,32 +96,50 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                                 {headers.map((header, headerIndex) => (
                                     <td
                                         key={headerIndex}
-                                        className={`py-3 px-6 ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes', 'memo_upload'].includes(header) ? 'hidden' : ''}`}
+                                        className={`py-3 px-6 ${
+                                            [
+                                                "memo_id",
+                                                "memo_department",
+                                                "memo_createdBy",
+                                                "memo_reviewer",
+                                                "memo_notes",
+                                                "memo_upload",
+                                            ].includes(header)
+                                                ? "hidden"
+                                                : ""
+                                        }`}
                                     >
                                         {item[header]}
                                     </td>
                                 ))}
-                                {action && (
-                                    <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                        {userId && (item.memo_createdBy === userId || item.memo_pic === userId) ? (
-                                            <button
-                                                type="button"
-                                                className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
-                                                onClick={() => handleEditClick(item.memo_id)}
-                                            >
-                                                <AiOutlineEdit size={20} />
-                                            </button>
-                                        ) : (
-                                            <button
-                                                type="button"
-                                                className="text-gray-400 flex flex-col gap-1 items-center justify-center pt-2 cursor-not-allowed"
-                                                disabled
-                                            >
-                                                <AiOutlineEdit size={20} />
-                                            </button>
-                                        )}
-                                    </td>
-                                )}
+                                {(IsOperator() ||IsLogisticOperator()) &&
+                                    action && (
+                                        <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                                            {/* {userId &&
+                                            (item.memo_createdBy === userId ||
+                                                item.memo_pic === userId) ? ( */}
+                                                <button
+                                                    type="button"
+                                                    className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
+                                                    onClick={() =>
+                                                        handleEditClick(
+                                                            item.memo_id
+                                                        )
+                                                    }
+                                                >
+                                                    <AiOutlineEdit size={20} />
+                                                </button>
+                                            {/* ) : (
+                                                <button
+                                                    type="button"
+                                                    className="text-gray-400 flex flex-col gap-1 items-center justify-center pt-2 cursor-not-allowed"
+                                                    disabled
+                                                >
+                                                    <AiOutlineEdit size={20} />
+                                                </button>
+                                            )} */}
+                                        </td>
+                                    )}
                             </tr>
                         ))}
                     </tbody>
