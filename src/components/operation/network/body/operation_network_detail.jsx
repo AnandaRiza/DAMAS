@@ -625,6 +625,29 @@ const page = () => {
                   }
                 />
               </div>
+
+              <div className="flex flex-col">
+                <label
+                  htmlFor="projectdone"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Project Finished
+                </label>
+                <input
+                  type="date"
+                  id="projectdone"
+                  name="projectdone"
+                  value={dataAllNetwork.network_project_done}
+                  className="input input-bordered mt-1 font-semibold"
+                  onChange={(e) =>
+                    setDataAllNetwork({
+                      ...dataAllNetwork,
+                      network_project_done: e.target.value,
+                    })
+                  }
+                  disabled
+                />
+              </div>
             </form>
           ) : (
             <PleaseWait />

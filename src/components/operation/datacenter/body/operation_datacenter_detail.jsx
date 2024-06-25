@@ -6,16 +6,15 @@ import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = () => {
-    const userid = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("DAMAS-USERID="))
-        ?.split("=")[1];
+  const userid = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("DAMAS-USERID="))
+    ?.split("=")[1];
 
   const params = useParams();
   const [selectedDept, setSelectedDept] = useState("");
   const [dataAllPic, setDataAllPic] = useState(null);
-  const [dataAllDacen, setDataAllDacen] = useState({
-  });
+  const [dataAllDacen, setDataAllDacen] = useState({});
   useEffect(() => {
     const getCurrentData = async () => {
       try {
@@ -59,7 +58,7 @@ const page = () => {
                   Nama Project
                 </label>
                 <input
-                disabled
+                  disabled
                   type="text"
                   value={dataAllDacen.dacen_perihal}
                   onChange={(e) =>
@@ -81,7 +80,7 @@ const page = () => {
                 </label>
                 {dataAllPic && (
                   <select
-                  disabled
+                    disabled
                     type="text"
                     className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                     value={dataAllDacen.name}
@@ -135,7 +134,7 @@ const page = () => {
                   Phase 1
                 </label>
                 <div
-                disabled
+                  disabled
                   className="border rounded-xl"
                   style={{ borderColor: "#DADADA" }}
                 >
@@ -210,7 +209,7 @@ const page = () => {
                       Phase 1 Done
                     </label>
                     <input
-                    disabled
+                      disabled
                       type="date"
                       className="input font-semibold input-bordered mt-1"
                       value={dataAllDacen.dacen_phase1_done}
@@ -307,7 +306,7 @@ const page = () => {
                       Phase 2 Done
                     </label>
                     <input
-                    disabled
+                      disabled
                       type="date"
                       className="input font-semibold input-bordered mt-1"
                       value={dataAllDacen.dacen_phase2_done}
@@ -404,7 +403,7 @@ const page = () => {
                       Phase 3 Done
                     </label>
                     <input
-                    disabled
+                      disabled
                       type="date"
                       className="input font-semibold input-bordered mt-1"
                       value={dataAllDacen.dacen_phase3_done}
@@ -501,7 +500,7 @@ const page = () => {
                       Phase 4 Done
                     </label>
                     <input
-                    disabled
+                      disabled
                       type="date"
                       className="input font-semibold input-bordered mt-1"
                       value={dataAllDacen.dacen_phase4_done}
@@ -598,7 +597,7 @@ const page = () => {
                       Phase 5 Done
                     </label>
                     <input
-                    disabled
+                      disabled
                       type="date"
                       className="input font-semibold input-bordered mt-1"
                       value={dataAllDacen.dacen_phase5_done}
@@ -695,7 +694,7 @@ const page = () => {
                       Phase 6 Done
                     </label>
                     <input
-                    disabled
+                      disabled
                       type="date"
                       className="input font-semibold input-bordered mt-1"
                       value={dataAllDacen.dacen_phase6_done}
@@ -792,7 +791,7 @@ const page = () => {
                       Phase 7 Done
                     </label>
                     <input
-                    disabled
+                      disabled
                       type="date"
                       className="input font-semibold input-bordered mt-1"
                       value={dataAllDacen.dacen_phase7_done}
@@ -815,7 +814,7 @@ const page = () => {
                   Deadline Project
                 </label>
                 <input
-                disabled
+                  disabled
                   type="date"
                   className="input font-semibold input-bordered mt-1"
                   value={dataAllDacen.dacen_deadline_project}
@@ -825,6 +824,28 @@ const page = () => {
                       dacen_deadline_project: e.target.value,
                     })
                   }
+                />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="projectdone"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Project Finished
+                </label>
+                <input
+                  type="date"
+                  id="projectdone"
+                  name="projectdone"
+                  value={dataAllDacen.dacen_project_done}
+                  className="input input-bordered mt-1 font-semibold"
+                  onChange={(e) =>
+                    setDataAllDacen({
+                      ...dataAllDacen,
+                      dacen_project_done: e.target.value,
+                    })
+                  }
+                  disabled
                 />
               </div>
             </form>
