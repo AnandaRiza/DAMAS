@@ -182,9 +182,9 @@ const TablePpo = ({ headers, data, action, link }) => {
 
     return (
         <div className="overflow-x-auto">
-            <table className="table">
+            <table className="table cursor-pointer text-center">
                 <thead>
-                    <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
+                    <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm text-center uppercase">
                         {headers.map((item, index) => (
                             <th
                                 key={index}

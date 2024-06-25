@@ -1,5 +1,6 @@
 "use client";
 
+import { useStateContext } from "@/context/ContextProvider";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -10,8 +11,11 @@ const SDLCForm = () => {
     .find((row) => row.startsWith("DAMAS-USERID="))
     ?.split("=")[1];
 
+    const {user}  = useStateContext();
+
     const [dataAllPic, setDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
+    const [selectedUserDomain, setSelectedUserDomain] = useState("");
     const router = useRouter();
     
     // State to manage form data
@@ -49,6 +53,8 @@ const SDLCForm = () => {
         status: "",
         deadlineproject: "",
         createdby: "",
+        userdomain:"",
+        userdomainpic: "",
     });
   
     
@@ -78,6 +84,8 @@ const SDLCForm = () => {
             {
                 ...formData,
                 createdby: userid,
+                userdomain: user.userdomain
+                
             },
             {
                 headers: {
@@ -141,8 +149,9 @@ const SDLCForm = () => {
                         value={formData.nama}
                         onChange={(e) => {
                             const selectedPic = JSON.parse(e.target.value);
-                            setFormData({ ...formData, pic: selectedPic.nama, departement:selectedPic.departemen });
+                            setFormData({ ...formData, pic: selectedPic.nama, departement:selectedPic.departemen, userdomainpic:selectedPic.userdomain});
                             setSelectedDept(selectedPic.departemen)
+                            setSelectedUserDomain(selectedPic.userdomain)
                         }
                         }
                     >
@@ -173,6 +182,19 @@ const SDLCForm = () => {
                 className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                 type="text" 
                 value={selectedDept} disabled />
+            </div>
+
+            <div className="flex flex-col">
+                <label
+                    htmlFor="departemen"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Userdomain pic
+                </label>
+                <input 
+                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                type="text" 
+                value={selectedUserDomain} disabled />
             </div>
 
             <div className="flex flex-col">

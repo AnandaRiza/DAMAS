@@ -4,7 +4,7 @@ import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 // import moment from "moment";
 
-const TableSDLC = ({ headers, data, action, link }) => {
+const MyProject = ({ headers, data, action, link }) => {
     const router = useRouter();
 
     const rowClass = (inputDate, status) => {
@@ -298,4 +298,4 @@ const TableSDLC = ({ headers, data, action, link }) => {
     );
 };
 
-export default TableSDLC;
+export default MyProject;
