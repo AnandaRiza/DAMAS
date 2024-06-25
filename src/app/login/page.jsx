@@ -5,7 +5,7 @@ import HeaderLogin from "@/components/HeaderLogin";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import PleaseWait from "@/components/PleaseWait";
+
 
 const Page = () => {
     const router = useRouter();
@@ -129,7 +129,10 @@ const Page = () => {
                                     onClick={() => handleLogin()}
                                 >
                                     {isLoading ? (
-                                        <PleaseWait />
+                                        <div className="flex justify-center gap-3">
+                                        <p>Please wait</p>
+                                        <span className="loading loading-spinner"></span>
+                                    </div>
                                     ) : (
                                         <span className="text-sm font-semibold">
                                             Login
