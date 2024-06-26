@@ -10,7 +10,7 @@ import { FaPenNib } from "react-icons/fa";
 import LogisticSignature from "@/components/logistic_components/logistic_signature";
 import MemoApprovalForm from "@/components/logistic_components/approval_components/memo_approval"; // Make sure this is the correct import path
 
-const EditMemoPage = () => {
+const DetailMemoPage = () => {
     const [dataAllMemo, setDataAllMemo] = useState({
         memo_id: "",
         memo_num: "",
@@ -202,7 +202,6 @@ const handleFileDownload = async () => {
                         </button>
                     </Link>
                 <div className="flex flex-col">
-                    
                     <label htmlFor="memo_num" className="text-sm font-semibold text-gray-600">
                         Nomor Memo
                     </label>
@@ -219,6 +218,7 @@ const handleFileDownload = async () => {
                         }
                         name="memo_num"
                         readOnly={isReadOnly}
+                        disabled
                     />
                 </div>
 
@@ -239,12 +239,12 @@ const handleFileDownload = async () => {
                         }
                         name="memo_perihal"
                         readOnly={isReadOnly}
+                        disabled
                     />
                 </div>
 
                 <div className="flex flex-col">
                     <label htmlFor="memo_pic" className="text-sm font-semibold text-gray-600">
-                        PIC <span className="text-red-500">*</span>
                     </label>
                     {dataAllPic && (
                         <select
@@ -261,7 +261,7 @@ const handleFileDownload = async () => {
                                 });
                                 setSelectedDept(selectedPic.departemen);
                             }}
-                            disabled={isReadOnly}
+                            disabled
                         >
                             <option disabled selected className="text-sm text-gray-600 opacity-50">
                                 Select PIC...
@@ -285,51 +285,41 @@ const handleFileDownload = async () => {
                         className="input input-bordered mt-1"
                         value={selectedDept}
                         readOnly
+                        disabled
                     />
                 </div>
 
-                <input
-                    type="text"
-                    value={dataAllMemo.memo_createdBy}
-                    onChange={(e) =>
-                        setDataAllMemo({
-                            ...dataAllMemo,
-                            memo_createdBy: e.target.value,
-                        })
-                    }
-                    className="input input-bordered mt-1"
-                    hidden
-                />
 
                 <div className="flex flex-col">
-                    <label htmlFor="memo_reviewer" className="text-sm font-semibold text-gray-600">
-                        Reviewer
-                    </label>
-                    {dataAllPic && (
-                        <select
-                            name="memo_reviewer"
-                            id="memo_reviewer"
-                            className="input input-bordered mt-1"
-                            value={dataAllMemo.memo_reviewer}
-                            onChange={(e) =>
-                                setDataAllMemo({
-                                    ...dataAllMemo,
-                                    memo_reviewer: e.target.value,
-                                })
-                            }
-                            disabled={isReadOnly}
-                        >
-                            <option disabled selected className="text-sm text-gray-600 opacity-50">
-                                Select Reviewer...
-                            </option>
-                            {dataAllPic.map((item, index) => (
-                                <option key={index} value={item.nama}>
-                                    {item.nama}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                </div>
+    <label htmlFor="memo_reviewer" className="text-sm font-semibold text-gray-600">
+        Reviewer
+    </label>
+    {dataAllPic && (
+        <select
+            name="memo_reviewer"
+            id="memo_reviewer"
+            className="input input-bordered mt-1"
+            value={dataAllMemo.memo_reviewer}
+            onChange={(e) =>
+                setDataAllMemo({
+                    ...dataAllMemo,
+                    memo_reviewer: e.target.value,
+                })
+            }
+            disabled // Correctly set the disabled attribute
+        >
+            <option disabled selected className="text-sm text-gray-600 opacity-50">
+                Select Reviewer...
+            </option>
+            {dataAllPic.map((item, index) => (
+                <option key={index} value={item.nama}>
+                    {item.nama}
+                </option>
+            ))}
+        </select>
+    )}
+</div>
+
 
                 <div className="flex flex-col">
                     <label htmlFor="memo_deadline" className="text-sm font-semibold text-gray-600">
@@ -342,7 +332,7 @@ const handleFileDownload = async () => {
                         className="input input-bordered mt-1"
                         value={dataAllMemo.memo_deadline}
                         onChange={handleDateChange}
-                        readOnly={isReadOnly}
+                        readOnly
                     />
                 </div>
 
@@ -358,15 +348,7 @@ const handleFileDownload = async () => {
                             value={dataAllMemo.memo_status}
                             disabled
                         />
-                        <button
-                            type="button"
-                            className="py-2 px-4 rounded-xl bg-blue-500 text-white flex gap-1 items-center ml-2 hover:bg-blue-600 transition-colors duration-300"
-                            onClick={handleStatusChange}
-                            disabled={isReadOnly}
-                        >
-                            <FaPenNib />
-                            <span>Request Approval</span>
-                        </button>
+                
                     </div>
                 </div>
 
@@ -386,7 +368,7 @@ const handleFileDownload = async () => {
                                 })
                             }
                             name="memo_notes"
-                            readOnly={isReadOnly}
+                            readOnly
                         />
                     </div>
                 )}
@@ -402,7 +384,7 @@ const handleFileDownload = async () => {
                         className="file-input file-input-bordered mt-1"
                         onChange={handleFileUpload}
                         name="memo_upload"
-                        disabled={isReadOnly}
+                        disabled
                     />
                     {dataAllMemo.memo_upload && (
                         <div>
@@ -418,20 +400,9 @@ const handleFileDownload = async () => {
           
 
                 {/* Error Handling */}
-                {error && <p className="text-red-500">{error}</p>}
+          
 
-                <div className="flex gap-2 items-center text-white ml-3 mt-3 justify-between">
-                  
-                    <button
-                        type="button"
-                        className="py-2 px-4 rounded-xl bg-green-500 flex gap-1 items-center"
-                        onClick={handleEditedData}
-                        disabled={isReadOnly}
-                    >
-                        <FiSave />
-                        <span>Save Edit</span>
-                    </button>
-                </div>
+            
 
                 {showApprovalForm && <MemoApprovalForm approvalData={approvalData} />} {/* Conditionally render the MemoApprovalForm component */}
             </form>
@@ -439,4 +410,4 @@ const handleFileDownload = async () => {
     );
 };
 
-export default EditMemoPage;
+export default DetailMemoPage;

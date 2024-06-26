@@ -202,6 +202,12 @@ const ReviewMemoPage = () => {
   return (
     <>
       <form className="space-y-4">
+      <Link href="/main/status/approvelogistic">
+            <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
+              <IoMdArrowRoundBack />
+              <span>Back</span>
+            </button>
+          </Link>
         <div className="flex flex-col">
           <label htmlFor="memo_num" className="text-sm font-semibold text-gray-600">
             Nomor Memo
@@ -374,19 +380,7 @@ const ReviewMemoPage = () => {
           />
         </div>
 
-        {/* File Upload Field */}
-        <div className="flex flex-col">
-          <label htmlFor="fileUpload" className="text-sm font-semibold text-gray-600">
-            Upload File
-          </label>
-          <input
-            type="file"
-            id="fileUpload"
-            onChange={handleFileUpload}
-            accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.png"
-          />
-        </div>
-
+        
         {/* Download Link */}
         {dataAllMemo.memo_upload && (
           <div>
@@ -404,13 +398,40 @@ const ReviewMemoPage = () => {
           </div>
         )}
 
+        {/* File Upload Field */}
+        <div className="flex flex-col">
+          <label htmlFor="fileUpload" className="text-sm font-semibold text-gray-600">
+            Upload File
+          </label>
+          <input
+            type="file"
+            id="fileUpload"
+            onChange={handleFileUpload}
+            accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.png"
+          />
+        </div>
+
+
         <div className="flex gap-2 items-center text-white ml-3 mt-3 justify-between">
-          <Link href="/main/status/approvelogistic">
-            <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
-              <IoMdArrowRoundBack />
-              <span>Back</span>
-            </button>
-          </Link>
+        <button
+            type="button"
+            className="py-2 px-4 rounded-xl bg-red-500 flex gap-1 items-center"
+            onClick={handleReject}
+          >
+            <FaPenNib />
+            <span>Reject</span>
+          </button>
+
+          <button
+            type="button"
+            className="py-2 px-2 rounded-xl bg-green-500 flex gap-1 items-center"
+            onClick={handleApprove}
+          >
+            <FaPenNib />
+            <span>Approve</span>
+          </button>
+
+
           <button
             type="button"
             className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center"
@@ -419,22 +440,8 @@ const ReviewMemoPage = () => {
             <FiSave />
             <span>Save Edit</span>
           </button>
-          <button
-            type="button"
-            className="py-2 px-4 rounded-xl bg-green-500 flex gap-1 items-center"
-            onClick={handleApprove}
-          >
-            <FaPenNib />
-            <span>Approve</span>
-          </button>
-          <button
-            type="button"
-            className="py-2 px-4 rounded-xl bg-red-500 flex gap-1 items-center"
-            onClick={handleReject}
-          >
-            <FaPenNib />
-            <span>Reject</span>
-          </button>
+          
+         
         </div>
 
         {showSignaturePad && <LogisticSignature />}
