@@ -1,5 +1,6 @@
 "use client";
 import PleaseWait from "@/components/PleaseWait";
+import { useStateContext } from "@/context/ContextProvider";
 import axios from "axios";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -13,9 +14,12 @@ const Page = () => {
     .find((row) => row.startsWith("DAMAS-USERID="))
     ?.split("=")[1];
 
+  const {user}  = useStateContext();
+
   const params = useParams();
   const router = useRouter();
   const [selectedDept, setSelectedDept] = useState("");
+  const [selectedUserDomain, setSelectedUserDomain] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [dataAllPic, setDataAllPic] = useState(null);
   const [dataAllProject, setDataAllProject] = useState({
@@ -57,6 +61,9 @@ const Page = () => {
     status: "",
     deadlineproject: "",
     projectdone: "",
+    userdomain: "",
+    userdomainpic: "",
+    createdby: "",
   });
   useEffect(() => {
     const getCurrentData = async () => {
@@ -111,6 +118,9 @@ const Page = () => {
           deadline: "123",
           statusApprovement: "PENDING",
           idproject: dataAllProject.id,
+          userdomain: dataAllProject.userdomain,
+          userdomainpic: dataAllProject.userdomainpic,
+
         },
         {
           headers: {
@@ -168,9 +178,10 @@ const Page = () => {
                     setDataAllProject({
                       ...dataAllProject,
                       pic: selectedPic.nama,
-                      departement: selectedPic.departemen,
+                      departement: selectedPic.departemen,userdomainpic:selectedPic.userdomain
                     });
                     setSelectedDept(selectedPic.departemen);
+                    setSelectedUserDomain(selectedPic.userdomain)
                   }}
                 >
                   <option
@@ -204,6 +215,19 @@ const Page = () => {
                 disabled
               />
             </div>
+
+            {/* <div className="flex flex-col">
+                <label
+                    htmlFor="departemen"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Userdomain pic
+                </label>
+                <input 
+                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                type="text" 
+                value={selectedUserDomain} disabled />
+            </div> */}
 
             <div className="flex flex-col">
               <label

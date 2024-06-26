@@ -45,6 +45,7 @@ const TableApprove = ({ headers, data, parameter, action, isRefresh }) => {
             postimplementationreviewdone: "Post Implementation Review Done",
             status: "Status",
             deadlineproject: "Deadline Project",
+            createdby: "",
         };
 
         const displayName = displayNames[header] || header;
