@@ -247,7 +247,7 @@ const page = () => {
                     />
                   </div>
 
-                  {/* <div className="flex flex-col mx-3 my-3">
+                  <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -265,7 +265,7 @@ const page = () => {
                         })
                       }
                     />
-                  </div> */}
+                  </div>
 
                 </div>
               </div>
@@ -344,7 +344,7 @@ const page = () => {
                     />
                   </div>
 
-                  {/* <div className="flex flex-col mx-3 my-3">
+                  <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -362,7 +362,7 @@ const page = () => {
                         })
                       }
                     />
-                  </div> */}
+                  </div>
 
                 </div>
               </div>
@@ -441,7 +441,7 @@ const page = () => {
                     />
                   </div>
 
-                  {/* <div className="flex flex-col mx-3 my-3">
+                  <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -459,7 +459,7 @@ const page = () => {
                         })
                       }
                     />
-                  </div> */}
+                  </div>
 
                 </div>
               </div>
@@ -538,7 +538,7 @@ const page = () => {
                     />
                   </div>
 
-                  {/* <div className="flex flex-col mx-3 my-3">
+                  <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -556,7 +556,7 @@ const page = () => {
                         })
                       }
                     />
-                  </div> */}
+                  </div>
 
                 </div>
               </div>
@@ -635,7 +635,7 @@ const page = () => {
                     />
                   </div>
 
-                  {/* <div className="flex flex-col mx-3 my-3">
+                  <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -653,7 +653,7 @@ const page = () => {
                         })
                       }
                     />
-                  </div> */}
+                  </div>
 
                 </div>
               </div>
@@ -732,7 +732,7 @@ const page = () => {
                     />
                   </div>
 
-                  {/* <div className="flex flex-col mx-3 my-3">
+                  <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -750,7 +750,7 @@ const page = () => {
                         })
                       }
                     />
-                  </div> */}
+                  </div>
 
                 </div>
               </div>
@@ -829,7 +829,7 @@ const page = () => {
                     />
                   </div>
 
-                  {/* <div className="flex flex-col mx-3 my-3">
+                  <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -847,7 +847,7 @@ const page = () => {
                         })
                       }
                     />
-                  </div> */}
+                  </div>
                   
                 </div>
               </div>
