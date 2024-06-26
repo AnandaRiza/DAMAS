@@ -92,8 +92,7 @@ const SDLCForm = () => {
                     "Content-Type": "application/json",
                     "USER-ID": userid,
                 },
-            }
-            
+            }  
         );
         router.push("/main/development")
         // console.log(createdby)

@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
-const Page = () => {
+const MySkseFormEdit = () => {
     const userid = document.cookie
         .split("; ")
         .find((row) => row.startsWith("DAMAS-USERID="))
@@ -317,4 +317,4 @@ const Page = () => {
     );
 };
 
-export default Page;
+export default MySkseFormEdit;

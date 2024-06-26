@@ -1,4 +1,16 @@
-import { IsDacenOperator, IsDevOperator, IsItmoOperator, IsItsecurityOperator, IsItsupportOperator, IsLogisticOperator, IsNetworkOperator, IsOperator, IsPpoOperator, IsServerOperator, IsSkseOperator } from "@/validation/validateGroupAkses";
+import {
+    IsDacenOperator,
+    IsDevOperator,
+    IsItmoOperator,
+    IsItsecurityOperator,
+    IsItsupportOperator,
+    IsLogisticOperator,
+    IsNetworkOperator,
+    IsOperator,
+    IsPpoOperator,
+    IsServerOperator,
+    IsSkseOperator,
+} from "@/validation/validateGroupAkses";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -31,7 +43,6 @@ const MyProjectPpo = ({ headers, data, action, link }) => {
         }
     };
 
-
     const handleEdit = (id) => {
         const updatedData = data.map((item) => {
             if (item.id === id) {
@@ -42,11 +53,9 @@ const MyProjectPpo = ({ headers, data, action, link }) => {
         });
     };
 
-
     const handleDoubleClick = (id) => {
         router.push(`${link}/detail/${id}`);
     };
-
 
     const getDisplayName = (header) => {
         const displayNames = {
@@ -90,7 +99,6 @@ const MyProjectPpo = ({ headers, data, action, link }) => {
         return displayNames[header] || header;
     };
 
-
     const getStatus = (item) => {
         const calculateTimeLeft = (date) => {
             const now = new Date();
@@ -126,47 +134,47 @@ const MyProjectPpo = ({ headers, data, action, link }) => {
 
         const aIsFinished = a.status === "Finished";
         const bIsFinished = b.status === "Finished";
-    
+
         if (aIsFinished && bIsFinished) {
             // Sort "Finished" items by classA and classB
             return classA.localeCompare(classB);
         }
-    
+
         if (aIsFinished) {
             return 1; // Move "Finished" (a) to the bottom
         }
-    
+
         if (bIsFinished) {
             return -1; // Move "Finished" (b) to the bottom
         }
-    
+
         if (a.status === "Finished" && b.status === "Finished") {
             return classA.localeCompare(classB);
         }
-    
+
         if (a.status === "Finished") {
             return 1; // Move 'Finished' projects to the bottom
         }
-    
+
         if (b.status === "Finished") {
             return -1; // Move 'Finished' projects to the bottom
         }
-    
+
         // Jika keduanya tidak selesai, tetapi memiliki status "Ongoing"
         if (a.status === "Ongoing" && b.status === "Ongoing") {
             // Urutkan berdasarkan deadlineproject
             return new Date(a.deadlineproject) - new Date(b.deadlineproject);
         }
-    
+
         // Jika hanya salah satu memiliki status "Ongoing", letakkan yang lain di atas
         if (a.status === "Ongoing") {
             return 1; // Letakkan a di bawah b
         }
-    
+
         if (b.status === "Ongoing") {
             return -1; // Letakkan b di atas a
         }
-    
+
         // Jika keduanya tidak selesai dan tidak ada yang "Ongoing", urutkan berdasarkan classA dan classB
         return classA.localeCompare(classB);
     });
@@ -209,6 +217,8 @@ const MyProjectPpo = ({ headers, data, action, link }) => {
                                         "postimplementationreviewstart",
                                         "postimplementationreviewdeadline",
                                         "postimplementationreviewdone",
+                                        "userdomain",
+                                        "userdomainpic",
                                         // "projectdone",
                                     ].includes(item)
                                         ? "hidden"
@@ -218,16 +228,31 @@ const MyProjectPpo = ({ headers, data, action, link }) => {
                                 {getDisplayName(item)}
                             </th>
                         ))}
-                        {(IsOperator() || IsDevOperator() || IsPpoOperator() || IsSkseOperator() || IsNetworkOperator() || IsServerOperator() || IsDacenOperator() || IsItsupportOperator() || IsItmoOperator() || IsItsecurityOperator() || IsLogisticOperator()) && action && 
-                            <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                Edit
-                            </th>}
+                        {(IsOperator() ||
+                            IsDevOperator() ||
+                            IsPpoOperator() ||
+                            IsSkseOperator() ||
+                            IsNetworkOperator() ||
+                            IsServerOperator() ||
+                            IsDacenOperator() ||
+                            IsItsupportOperator() ||
+                            IsItmoOperator() ||
+                            IsItsecurityOperator() ||
+                            IsLogisticOperator()) &&
+                            action && (
+                                <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                                    Edit
+                                </th>
+                            )}
                     </tr>
                 </thead>
                 <tbody>
                     {sortedData.map((item, index) => {
                         const status = getStatus(item);
-                        const rowClassName = rowClass(item.deadlineproject, item.status);
+                        const rowClassName = rowClass(
+                            item.deadlineproject,
+                            item.status
+                        );
                         return (
                             <tr
                                 key={index}
@@ -267,6 +292,8 @@ const MyProjectPpo = ({ headers, data, action, link }) => {
                                                 "postimplementationreviewstart",
                                                 "postimplementationreviewdeadline",
                                                 "postimplementationreviewdone",
+                                                "userdomain",
+                                                "userdomainpic",
                                                 // "projectdone",
                                             ].includes(header)
                                                 ? "hidden"
@@ -278,17 +305,30 @@ const MyProjectPpo = ({ headers, data, action, link }) => {
                                             : item[header]}
                                     </td>
                                 ))}
-                                 {(IsOperator() || IsDevOperator() || IsPpoOperator() || IsSkseOperator() || IsNetworkOperator() || IsServerOperator() || IsDacenOperator() || IsItsupportOperator() || IsItmoOperator() || IsItsecurityOperator() || IsLogisticOperator()) && action && 
-                                    <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                        <button
-                                            type="button"
-                                            onClick={() => handleEdit(item.id)}
-                                            className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
-                                        >
-                                            <AiOutlineEdit size={20} />
-                                        </button>
-                                    </td>
-                                }
+                                {(IsOperator() ||
+                                    IsDevOperator() ||
+                                    IsPpoOperator() ||
+                                    IsSkseOperator() ||
+                                    IsNetworkOperator() ||
+                                    IsServerOperator() ||
+                                    IsDacenOperator() ||
+                                    IsItsupportOperator() ||
+                                    IsItmoOperator() ||
+                                    IsItsecurityOperator() ||
+                                    IsLogisticOperator()) &&
+                                    action && (
+                                        <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    handleEdit(item.id)
+                                                }
+                                                className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
+                                            >
+                                                <AiOutlineEdit size={20} />
+                                            </button>
+                                        </td>
+                                    )}
                             </tr>
                         );
                     })}

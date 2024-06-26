@@ -86,7 +86,7 @@ const Page = () => {
                 )}
                 data={dataAllProject}
                 action={true}
-                link={"/main/development/myproject/"}
+                link={"/main/ppo/myproject"}
                 rowClass={rowClass} // Pass rowClass function as prop
               />
             ) : (
@@ -102,7 +102,7 @@ const Page = () => {
                   )}
                   data={searchResult}
                   action={true}
-                  link={"/main/development/myproject"}
+                  link={"/main/ppo/myproject"}
                   rowClass={rowClass} // Pass rowClass function as prop
                 />
               </div>

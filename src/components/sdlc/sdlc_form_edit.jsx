@@ -216,19 +216,6 @@ const Page = () => {
               />
             </div>
 
-            {/* <div className="flex flex-col">
-                <label
-                    htmlFor="departemen"
-                    className="text-sm font-semibold text-[#0066AE]"
-                >
-                    Userdomain pic
-                </label>
-                <input 
-                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                type="text" 
-                value={selectedUserDomain} disabled />
-            </div> */}
-
             <div className="flex flex-col">
               <label
                 htmlFor="kickoffstart"
