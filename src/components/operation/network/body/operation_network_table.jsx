@@ -11,7 +11,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
         const updatedData = data.map((item) => {
             if (item.network_id === network_id) {
                 item.status = "Finish";
-                router.push(`${link}/network/networkedit/${network_id}`);
+                router.push(`${link}network/networkedit/${network_id}`);
             }
             return item;
         });
@@ -269,7 +269,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
                                             <button
                                                 type="button"
                                                 onClick={() =>
-                                                    handleEdit(item.id)
+                                                    handleEdit(item.network_id)
                                                 }
                                                 className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
                                             >
