@@ -17,6 +17,7 @@ const Page = () => {
     const router = useRouter();
     const [selectedDept, setSelectedDept] = useState("");
     const [selectedUserDomain, setSelectedUserDomain] = useState("");
+    const [scheduleInput, setScheduleInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [dataAllPic, setDataAllPic] = useState(null);
     const [dataAllSkse, setDataAllSkse] = useState({
@@ -79,9 +80,9 @@ const Page = () => {
                 {
                     ...dataAllSkse,
                     submitter: userid,
-                    authorizer: "Kadev",
-                    submitAt: "123",
-                    deadline: "123",
+                    authorizer: "SUPERVISOR",
+                    submitAt: submitAtDate(),
+                    deadline: calculateDeadline(scheduleInput),
                     statusApprovement: "PENDING",
                     idskse: dataAllSkse.id,
                     userdomain: dataAllSkse.userdomain,

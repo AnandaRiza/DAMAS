@@ -17,6 +17,7 @@ const MySkseFormEdit = () => {
     const router = useRouter();
     const [selectedDept, setSelectedDept] = useState("");
     const [selectedUserDomain, setSelectedUserDomain] = useState("");
+    const [scheduleInput, setScheduleInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [dataAllPic, setDataAllPic] = useState(null);
     const [dataAllSkse, setDataAllSkse] = useState({
@@ -79,9 +80,9 @@ const MySkseFormEdit = () => {
                 {
                     ...dataAllSkse,
                     submitter: userid,
-                    authorizer: "Kadev",
-                    submitAt: "123",
-                    deadline: "123",
+                    authorizer: "SUPERVISOR",
+                    submitAt: submitAtDate(),
+                    deadline: calculateDeadline(scheduleInput),
                     statusApprovement: "PENDING",
                     idskse: dataAllSkse.id,
                     userdomain: dataAllSkse.userdomain,
@@ -99,6 +100,32 @@ const MySkseFormEdit = () => {
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const calculateDeadline = (date) => {
+        const d = new Date(date);
+        d.setDate(d.getDate() - 1);
+
+        const day = String(d.getDate()).padStart(2, "0");
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const year = d.getFullYear();
+        const hours = String(d.getHours()).padStart(2, "0");
+        const minutes = String(d.getMinutes()).padStart(2, "0");
+        const seconds = String(d.getSeconds()).padStart(2, "0");
+
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+    };
+
+    const submitAtDate = () => {
+        const d = new Date();
+        const day = String(d.getDate()).padStart(2, "0");
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const year = d.getFullYear();
+        const hours = String(d.getHours()).padStart(2, "0");
+        const minutes = String(d.getMinutes()).padStart(2, "0");
+        const seconds = String(d.getSeconds()).padStart(2, "0");
+
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
     };
 
     return (
