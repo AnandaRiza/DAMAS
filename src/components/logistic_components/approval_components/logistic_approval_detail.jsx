@@ -133,7 +133,7 @@ const ReviewMemoPage = () => {
         console.error("Error uploading file: ", error);
         setError("Failed to upload file");
     }
-  };
+};
 
   // Function to handle file download
   const handleFileDownload = async () => {
@@ -157,48 +157,44 @@ const ReviewMemoPage = () => {
     }
   };
 
-  // Decode base64 string if necessary
-  const decodeBase64 = (encodedString) => {
-    try {
-      return atob(encodedString);
-    } catch (e) {
-      console.error("Error decoding base64 string: ", e);
-      return encodedString;
-    }
-  };
+      // Decode base64 string if necessary
+      const decodeBase64 = (encodedString) => {
+        try {
+            return atob(encodedString);
+        } catch (e) {
+            console.error("Error decoding base64 string: ", e);
+            return encodedString;
+        }
+    };
 
-  // Function to handle form submission after edits
-  const handleEditedData = async () => {
-    const confirmation = window.confirm("Are you sure you want to save the changes?");
-    if (!confirmation) {
-      return;
-    }
 
-    try {
-      if (!file) {
-        setDataAllMemo(prevState => ({
-          ...prevState,
-          memo_upload: prevState.memo_upload // Keep existing file name if no new file is uploaded
-        }));
+    // Function to handle form submission after edits
+    const handleEditedData = async () => {
+      try {
+          if (!file) {
+              setDataAllMemo(prevState => ({
+                  ...prevState,
+                  memo_upload: prevState.memo_upload // Keep existing file name if no new file is uploaded
+              }));
+          }
+          const updatedData = {
+              ...dataAllMemo,
+              memo_upload: decodeBase64(dataAllMemo.memo_upload) // Decode base64 before sending if necessary
+          };
+          await axios.put(
+              `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
+              updatedData
+          );
+          alert("Memo Update Success");
+          router.push('/main/logistic');
+      } catch (error) {
+          console.error("Error updating memo: ", error);
+          setError("Failed to update memo");
       }
-      const updatedData = {
-        ...dataAllMemo,
-        memo_upload: decodeBase64(dataAllMemo.memo_upload) // Decode base64 before sending if necessary
-      };
-      await axios.put(
-        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
-        updatedData
-      );
-      alert("Memo Update Success");
-      router.push('/main/logistic');
-    } catch (error) {
-      console.error("Error updating memo: ", error);
-      alert(`Failed to update memo: ${error.message}`);
-    }
   };
 
   if (loading) {
-    return <PleaseWait />;
+      return <PleaseWait />;
   }
 
   const isReadOnly = dataAllMemo.memo_status === "MEMO APPROVED";
@@ -206,12 +202,12 @@ const ReviewMemoPage = () => {
   return (
     <>
       <form className="space-y-4">
-        <Link href="/main/status/approvelogistic">
-          <button className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 text-white flex gap-1 items-center">
-            <IoMdArrowRoundBack />
-            <span>Back</span>
-          </button>
-        </Link>
+      <Link href="/main/status/approvelogistic">
+            <button className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 text-white flex gap-1 items-center">
+              <IoMdArrowRoundBack />
+              <span>Back</span>
+            </button>
+          </Link>
         <div className="flex flex-col">
           <label htmlFor="memo_num" className="text-sm font-semibold text-gray-600">
             Nomor Memo
@@ -227,6 +223,7 @@ const ReviewMemoPage = () => {
                 ...dataAllMemo,
                 memo_num: e.target.value,
               })
+            
             }
             name="memo_num"
           />
@@ -349,7 +346,6 @@ const ReviewMemoPage = () => {
             value={dataAllMemo.memo_deadline}
             onChange={handleDateChange}
           />
-          {error && <p className="text-red-500">{error}</p>}
         </div>
 
         <div className="flex flex-col">
@@ -382,15 +378,18 @@ const ReviewMemoPage = () => {
             className="input input-bordered mt-1"
             disabled={dataAllMemo.memo_status !== 'REQUEST HAS BEEN REJECTED'} // Make notes editable if status is 'REQUEST HAS BEEN REJECTED'
           />
+                    {error && <p className="text-red-500">{error}</p>}
+
         </div>
 
+        
         {/* Download Link */}
         {dataAllMemo.memo_upload && (
           <div>
             <label className="text-sm font-semibold text-gray-600">Uploaded File:</label>
             <div className="flex items-center gap-2 mt-1">
-              <span>{decodeBase64(dataAllMemo.memo_upload)}</span> {/* Decode base64 before displaying */}
-              <button
+            <span>{decodeBase64(dataAllMemo.memo_upload)}</span> {/* Decode base64 before displaying */}
+            <button
                 type="button"
                 className="bg-blue-500 hover:bg-blue-800 text-white py-1 px-3 rounded-md"
                 onClick={handleFileDownload}
@@ -402,7 +401,7 @@ const ReviewMemoPage = () => {
         )}
 
         {/* File Upload Field */}
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <label htmlFor="fileUpload" className="text-sm font-semibold text-gray-600">
             Upload File
           </label>
@@ -412,10 +411,11 @@ const ReviewMemoPage = () => {
             onChange={handleFileUpload}
             accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.png"
           />
-        </div>
+        </div> */}
 
-        <div className="flex gap-2 items-center text-white ml-3 mt-3 justify-between">
-          <button
+
+        {/* <div className="flex gap-2 items-center text-white ml-3 mt-3 justify-between">
+        <button
             type="button"
             className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 flex gap-1 items-center"
             onClick={handleReject}
@@ -433,6 +433,7 @@ const ReviewMemoPage = () => {
             <span>Approve</span>
           </button>
 
+
           <button
             type="button"
             className="py-2 px-4 rounded-xl bg-green-500 hover:bg-green-800 flex gap-1 items-center"
@@ -441,7 +442,9 @@ const ReviewMemoPage = () => {
             <FiSave />
             <span>Save Edit</span>
           </button>
-        </div>
+          
+         
+        </div> */}
 
         {showSignaturePad && <LogisticSignature />}
         {showApprovalForm && <MemoApprovalForm approvalData={approvalData} />} {/* Conditionally render the MemoApprovalForm component */}

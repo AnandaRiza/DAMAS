@@ -119,38 +119,37 @@ const EditMemoPage = () => {
         }
     };
 
-  // Helper function to check if a string is Base64 encoded
-const isBase64 = (str) => {
-    try {
-        return btoa(atob(str)) === str;
-    } catch (err) {
-        return false;
-    }
-};
+    // Helper function to check if a string is Base64 encoded
+    const isBase64 = (str) => {
+        try {
+            return btoa(atob(str)) === str;
+        } catch (err) {
+            return false;
+        }
+    };
 
+    // Function to handle file download
+    const handleFileDownload = async () => {
+        const { memo_upload } = dataAllMemo;
+        try {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/download/${memo_upload}`,
+                {
+                    responseType: "blob" // Important to specify blob response type
+                }
+            );
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", memo_upload);
+            document.body.appendChild(link);
+            link.click();
+        } catch (error) {
+            console.error("Error downloading file: ", error);
+            setError("Failed to download file");
+        }
+    };
 
-
-// Function to handle file download
-const handleFileDownload = async () => {
-    const { memo_upload } = dataAllMemo;
-    try {
-        const response = await axios.get(
-            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/download/${memo_upload}`,
-            {
-                responseType: "blob" // Important to specify blob response type
-            }
-        );
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", memo_upload);
-        document.body.appendChild(link);
-        link.click();
-    } catch (error) {
-        console.error("Error downloading file: ", error);
-        setError("Failed to download file");
-    }
-};
     // Decode base64 string if necessary
     const decodeBase64 = (encodedString) => {
         try {
@@ -163,26 +162,28 @@ const handleFileDownload = async () => {
 
     // Function to handle form submission after edits
     const handleEditedData = async () => {
-        try {
-            if (!file) {
-                setDataAllMemo(prevState => ({
-                    ...prevState,
-                    memo_upload: prevState.memo_upload // Keep existing file name if no new file is uploaded
-                }));
+        if (window.confirm("Are you sure you want to save the changes?")) {
+            try {
+                if (!file) {
+                    setDataAllMemo(prevState => ({
+                        ...prevState,
+                        memo_upload: prevState.memo_upload // Keep existing file name if no new file is uploaded
+                    }));
+                }
+                const updatedData = {
+                    ...dataAllMemo,
+                    memo_upload: decodeBase64(dataAllMemo.memo_upload) // Decode base64 before sending if necessary
+                };
+                await axios.put(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
+                    updatedData
+                );
+                alert("Memo Update Success");
+                router.push('/main/logistic');
+            } catch (error) {
+                console.error("Error updating memo: ", error);
+                setError("Failed to update memo");
             }
-            const updatedData = {
-                ...dataAllMemo,
-                memo_upload: decodeBase64(dataAllMemo.memo_upload) // Decode base64 before sending if necessary
-            };
-            await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
-                updatedData
-            );
-            alert("Memo Update Success");
-            router.push('/main/logistic');
-        } catch (error) {
-            console.error("Error updating memo: ", error);
-            setError("Failed to update memo");
         }
     };
 
@@ -195,14 +196,13 @@ const handleFileDownload = async () => {
     return (
         <>
             <form className="space-y-4">
-            <Link href="/main/logistic">
-                        <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
-                            <IoMdArrowRoundBack />
-                            <span>Back</span>
-                        </button>
-                    </Link>
+                <Link href="/main/logistic">
+                    <button className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 flex gap-1 items-center">
+                        <IoMdArrowRoundBack />
+                        <span>Back</span>
+                    </button>
+                </Link>
                 <div className="flex flex-col">
-                    
                     <label htmlFor="memo_num" className="text-sm font-semibold text-gray-600">
                         Nomor Memo
                     </label>
@@ -288,7 +288,12 @@ const handleFileDownload = async () => {
                     />
                 </div>
 
-                <input
+
+                <div className="flex flex-col">
+                    <label htmlFor="memo_department" className="text-sm font-semibold text-gray-600">
+                        Created By
+                    </label>
+                    <input
                     type="text"
                     value={dataAllMemo.memo_createdBy}
                     onChange={(e) =>
@@ -298,8 +303,9 @@ const handleFileDownload = async () => {
                         })
                     }
                     className="input input-bordered mt-1"
-                    hidden
+                    disabled
                 />
+                </div>
 
                 <div className="flex flex-col">
                     <label htmlFor="memo_reviewer" className="text-sm font-semibold text-gray-600">
@@ -360,7 +366,7 @@ const handleFileDownload = async () => {
                         />
                         <button
                             type="button"
-                            className="py-2 px-4 rounded-xl bg-blue-500 text-white flex gap-1 items-center ml-2 hover:bg-blue-600 transition-colors duration-300"
+                            className="py-2 px-4 rounded-xl bg-blue-500 text-white flex gap-1 items-center ml-2 hover:bg-blue-800 transition-colors duration-300"
                             onClick={handleStatusChange}
                             disabled={isReadOnly}
                         >
@@ -370,7 +376,7 @@ const handleFileDownload = async () => {
                     </div>
                 </div>
 
-               {dataAllMemo.memo_notes && ( // Only render this section if memo_notes has data
+                {dataAllMemo.memo_notes && ( // Only render this section if memo_notes has data
                     <div className="flex flex-col">
                         <label htmlFor="memo_notes" className="text-sm font-semibold text-gray-600">
                             Memo Notes
@@ -413,18 +419,14 @@ const handleFileDownload = async () => {
                     )}
                 </div>
 
-
                 {/* Download Link */}
-          
-
                 {/* Error Handling */}
                 {error && <p className="text-red-500">{error}</p>}
 
                 <div className="flex gap-2 items-center text-white ml-3 mt-3 justify-between">
-                  
                     <button
                         type="button"
-                        className="py-2 px-4 rounded-xl bg-green-500 flex gap-1 items-center"
+                        className="py-2 px-4 rounded-xl bg-green-500 hover:bg-green-800 flex gap-1 items-center"
                         onClick={handleEditedData}
                         disabled={isReadOnly}
                     >
