@@ -86,7 +86,7 @@ const page = () => {
           },
         }
       );
-      router.push("/main/operation");
+      router.push("/main/operation/itmo/allprogress");
       setIsLoading(false);
     } catch (error) {
       // console.log(error);

@@ -89,7 +89,7 @@ const page = () => {
           },
         }
       );
-      router.push("/main/operation");
+      router.push("/main/operation/network/allprogress");
       setIsLoading(false);
     } catch (error) {
       console.log(error);
