@@ -70,7 +70,7 @@ const Header = ({ title }) => {
                     >
                         Welcome,{" "}
                         <span className="font-bold capitalize">
-                            {user.username}
+                            {user?.username}
                         </span>
                     </h3>
 

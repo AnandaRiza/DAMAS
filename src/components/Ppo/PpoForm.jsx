@@ -1,11 +1,24 @@
 "use client";
 
+import { useStateContext } from "@/context/ContextProvider";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const PpoForm = () => {
+
+    const userid = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("DAMAS-USERID="))
+    ?.split("=")[1];
+
+    const {user}  = useStateContext();
+
     const [dataAllPic, setDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
+    const [selectedUserDomain, setSelectedUserDomain] = useState("");
+    const router = useRouter();
+
     // State to manage form data
     const [formData, setFormData] = useState({
         projectname: "",
@@ -40,6 +53,9 @@ const PpoForm = () => {
         postimplementationreviewdone: "",
         status: "",
         deadlineproject: "",
+        userdomain:"",
+        userdomainpic: "",
+        createdby: "",
     });
   
     
@@ -59,19 +75,29 @@ const PpoForm = () => {
 
     useEffect(() => {
         getDataAllPic();
+        const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
     }, []);
 
     const handleSubmit = async () => {
         try {
-            const requiredFields = ["projectname", "pic", "kickoffstart", "kickoffdeadline", "userrequirementstart","userrequirementdeadline","applicationdevelopmentstart","applicationdevelopmentdeadline", "sitstart", "sitdeadline", "uatstart", "uatdeadline", "implementationpreparestart", "implementationpreparedeadline", "implementationmeetingstart", "implementationmeetingdeadline", "implementationstart", "implementationdeadline", "postimplementationreviewstart", "postimplementationreviewdeadline", "status", "deadlineproject"];
-            const emptyFields = requiredFields.filter(field => !formData[field]);
-            if (emptyFields.length > 0) {
-                alert(`Please fill in the following fields: ${emptyFields.join(", ")}`);
-                return;
+           
+            await axios.post( `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/projectdev`,
+            {
+                ...formData,
+                createdby: userid,
+                userdomain: user.userdomain
+                
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "USER-ID": userid,
+                },
             }
-            await axios.post("http://localhost:8081/api/projectdev", formData);
-            alert("Create Project Success");
-
+            
+        );
+        router.push("/main/ppo")
+        // console.log(createdby)
         } catch (error) {
             console.log(error);
             alert("Create Project Failed!");
@@ -82,7 +108,10 @@ const PpoForm = () => {
         <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl">
             <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
 
-            <form className="space-y-4 ">
+            <form onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSubmit();
+                    }} className="space-y-4 ">
             <div className="flex flex-col">
                 <label
                     htmlFor="namaproject"
@@ -94,6 +123,7 @@ const PpoForm = () => {
                     type="text"
                     id="namaproject"
                     name="namaproject"
+                    required
                     value={formData.projectname}
                     onChange={(e) =>
                         setFormData({
@@ -114,13 +144,15 @@ const PpoForm = () => {
                 {dataAllPic && (
                     <select
                         name="pic"
+                        required
                         id="pic"
                         className="input input-bordered mt-1"
                         value={formData.nama}
                         onChange={(e) => {
                             const selectedPic = JSON.parse(e.target.value);
-                            setFormData({ ...formData, pic: selectedPic.nama, departement:selectedPic.departemen });
+                            setFormData({ ...formData, pic: selectedPic.nama, departement:selectedPic.departemen, userdomainpic:selectedPic.userdomain});
                             setSelectedDept(selectedPic.departemen)
+                            setSelectedUserDomain(selectedPic.userdomain)
                         }
                         }
                     >
@@ -152,6 +184,19 @@ const PpoForm = () => {
                 type="text" 
                 value={selectedDept} disabled />
             </div>
+
+            {/* <div className="flex flex-col">
+                <label
+                    htmlFor="departemen"
+                    className="text-sm font-semibold text-[#0066AE]"
+                >
+                    Userdomain pic
+                </label>
+                <input 
+                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                type="text" 
+                value={selectedUserDomain} disabled />
+            </div> */}
 
             <div className="flex flex-col">
                 <label
@@ -186,6 +231,7 @@ const PpoForm = () => {
                     type="date"
                     id="kickoffdeadline"
                     name="kickoffdeadline"
+                    required
                     value={formData.kickoffdeadline}
                     onChange={(e) =>
                         setFormData({
@@ -208,6 +254,7 @@ const PpoForm = () => {
                     type="date"
                     id="userrequirementstart"
                     name="userrequirementstart"
+                    required
                     value={formData.userrequirementstart}
                     onChange={(e) =>
                         setFormData({
@@ -230,6 +277,7 @@ const PpoForm = () => {
                     type="date"
                     id="userrequirementdeadline"
                     name="userrequirementdeadline"
+                    required
                     value={formData.userrequirementdeadline}
                     onChange={(e) =>
                         setFormData({
@@ -252,6 +300,7 @@ const PpoForm = () => {
                     type="date"
                     id="applicationdevelopmentstart"
                     name="applicationdevelopmentstart"
+                    required
                     value={formData.applicationdevelopmentstart}
                     onChange={(e) =>
                         setFormData({
@@ -274,6 +323,7 @@ const PpoForm = () => {
                     type="date"
                     id="applicationdevelopmentdeadline"
                     name="applicationdevelopmentdeadline"
+                    required
                     value={formData.applicationdevelopmentdeadline}
                     onChange={(e) =>
                         setFormData({
@@ -297,6 +347,7 @@ const PpoForm = () => {
                     type="date"
                     id="sitstart"
                     name="sitstart"
+                    required
                     value={formData.sitstart}
                     onChange={(e) =>
                         setFormData({ ...formData, sitstart: e.target.value })
@@ -315,6 +366,7 @@ const PpoForm = () => {
                     type="date"
                     id="sitdeadline"
                     name="sitdeadline"
+                    required
                     value={formData.sitdeadline}
                     onChange={(e) =>
                         setFormData({ ...formData, sitdeadline: e.target.value })
@@ -333,6 +385,7 @@ const PpoForm = () => {
                     type="date"
                     id="uatstart"
                     name="uatstart"
+                    required
                     value={formData.uatstart}
                     onChange={(e) =>
                         setFormData({ ...formData, uatstart: e.target.value })
@@ -351,6 +404,7 @@ const PpoForm = () => {
                     type="date"
                     id="uatdeadline"
                     name="uatdeadline"
+                    required
                     value={formData.uatdeadline}
                     onChange={(e) =>
                         setFormData({ ...formData, uatdeadline: e.target.value })
@@ -369,6 +423,7 @@ const PpoForm = () => {
                     type="date"
                     id="implementationpreparestart"
                     name="implementationpreparestart"
+                    required
                     value={formData.implementationpreparestart}
                     onChange={(e) =>
                         setFormData({ ...formData, implementationpreparestart: e.target.value })
@@ -387,6 +442,7 @@ const PpoForm = () => {
                     type="date"
                     id="implementationpreparedeadline"
                     name="implementationpreparedeadline"
+                    required
                     value={formData.implementationpreparedeadline}
                     onChange={(e) =>
                         setFormData({ ...formData, implementationpreparedeadline: e.target.value })
@@ -405,6 +461,7 @@ const PpoForm = () => {
                     type="date"
                     id="implementationmeetingstart"
                     name="implementationmeetingstart"
+                    required
                     value={formData.implementationmeetingstart}
                     onChange={(e) =>
                         setFormData({ ...formData, implementationmeetingstart: e.target.value })
@@ -423,6 +480,7 @@ const PpoForm = () => {
                     type="date"
                     id="implementationmeetingdeadline"
                     name="implementationmeetingdeadline"
+                    required
                     value={formData.implementationmeetingdeadline}
                     onChange={(e) =>
                         setFormData({ ...formData, implementationmeetingdeadline: e.target.value })
@@ -441,6 +499,7 @@ const PpoForm = () => {
                     type="date"
                     id="implementationstart"
                     name="implementationstart"
+                    required
                     value={formData.implementationstart}
                     onChange={(e) =>
                         setFormData({ ...formData, implementationstart: e.target.value })
@@ -459,6 +518,7 @@ const PpoForm = () => {
                     type="date"
                     id="implementationdeadline"
                     name="implementationdeadline"
+                    required
                     value={formData.implementationdeadline}
                     onChange={(e) =>
                         setFormData({ ...formData, implementationdeadline: e.target.value })
@@ -477,6 +537,7 @@ const PpoForm = () => {
                     type="date"
                     id="postimplementationreviewstart"
                     name="postimplementationreviewstart"
+                    required
                     value={formData.postimplementationreviewstart}
                     onChange={(e) =>
                         setFormData({ ...formData, postimplementationreviewstart: e.target.value })
@@ -495,6 +556,7 @@ const PpoForm = () => {
                     type="date"
                     id="postimplementationreviewdeadline"
                     name="postimplementationreviewdeadline"
+                    required
                     value={formData.postimplementationreviewdeadline}
                     onChange={(e) =>
                         setFormData({ ...formData, postimplementationreviewdeadline: e.target.value })
@@ -568,6 +630,7 @@ const PpoForm = () => {
                     type="date"
                     id="deadlineproject"
                     name="deadlineproject"
+                    required
                     value={formData.deadlineproject}
                     onChange={(e) =>
                         setFormData({ ...formData, deadlineproject: e.target.value })
@@ -577,9 +640,9 @@ const PpoForm = () => {
             </div>
             {/* Submit button */}
             <button
-                type="button"
+                type="submit"
                 className="btn btn-primary mt-4"
-                onClick={handleSubmit}
+                
             >
                 Create Project
             </button>

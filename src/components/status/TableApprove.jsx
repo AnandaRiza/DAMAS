@@ -45,6 +45,7 @@ const TableApprove = ({ headers, data, parameter, action, isRefresh }) => {
             postimplementationreviewdone: "Post Implementation Review Done",
             status: "Status",
             deadlineproject: "Deadline Project",
+            createdby: "",
         };
 
         const displayName = displayNames[header] || header;
@@ -70,7 +71,33 @@ const TableApprove = ({ headers, data, parameter, action, isRefresh }) => {
                     <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
                         {action && <th className="py-2 px-4 w-32">Action</th>}
                         {headers.map((item, index) => (
-                            <th key={index} className={`py-3 px-6 capitalize ${item === 'id' || item === 'idproject' ? 'hidden' : ''}`}>
+                            <th key={index} className={`py-3 px-6 capitalize ${
+                                [
+                                    "id",
+                                    "idproject",
+                                    "kickoffstart",
+                                    "kickoffdeadline",
+                                    "userrequirementstart",
+                                    "userrequirementdeadline",
+                                    "applicationdevelopmentstart",
+                                    "applicationdevelopmentdeadline",
+                                    "sitstart",
+                                    "sitdeadline",
+                                    "uatstart",
+                                    "uatdeadline",
+                                    "implementationpreparestart",
+                                    "implementationpreparedeadline",
+                                    "implementationmeetingstart",
+                                    "implementationmeetingdeadline",
+                                    "implementationstart",
+                                    "implementationdeadline",
+                                    "postimplementationreviewstart",
+                                    "postimplementationreviewdeadline",
+                                    // "projectdone",
+                                ].includes(item)
+                                    ? "hidden"
+                                    : ""
+                            }`}>
                                 {getDisplayName(item)}
                             </th>
                         ))}
@@ -134,7 +161,33 @@ const TableApprove = ({ headers, data, parameter, action, isRefresh }) => {
                             )}
 
                             {headers.map((header, headerIndex) => (
-                                <td key={headerIndex} className={`py-3 px-6 ${header === 'id' || header === 'idproject' ? 'hidden' : ''}`}>
+                                <td key={headerIndex} className={`py-3 px-6  ${
+                                [
+                                    "id",
+                                    "idproject",
+                                    "kickoffstart",
+                                    "kickoffdeadline",
+                                    "userrequirementstart",
+                                    "userrequirementdeadline",
+                                    "applicationdevelopmentstart",
+                                    "applicationdevelopmentdeadline",
+                                    "sitstart",
+                                    "sitdeadline",
+                                    "uatstart",
+                                    "uatdeadline",
+                                    "implementationpreparestart",
+                                    "implementationpreparedeadline",
+                                    "implementationmeetingstart",
+                                    "implementationmeetingdeadline",
+                                    "implementationstart",
+                                    "implementationdeadline",
+                                    "postimplementationreviewstart",
+                                    "postimplementationreviewdeadline",
+                                    // "projectdone",
+                                ].includes(header)
+                                    ? "hidden"
+                                    : ""
+                            }`}>
                                     {item[header]}
                                 </td>
                             ))}
