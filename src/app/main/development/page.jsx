@@ -45,21 +45,6 @@ const Page = () => {
         }
     };
 
-
-    // const handleNextPage = () => {
-    //     if (startIndex + perPage < dataAllProject[0].maxSize) {
-    //         setStartIndex(startIndex + perPage);
-    //         setCurrentPage(currentPage + 1);
-    //     }
-    // };
-    
-    // const handlePrevPage = () => {
-    //     if (startIndex - perPage >= 0) {
-    //         setStartIndex(startIndex - perPage);
-    //         setCurrentPage(currentPage - 1);
-    //     }
-    // };
-
     return (
         <div>
             <HeaderDev title="All Project" />

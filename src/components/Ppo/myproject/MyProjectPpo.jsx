@@ -1,4 +1,3 @@
-"use client";
 import {
     IsDacenOperator,
     IsDevOperator,
@@ -15,8 +14,9 @@ import {
 import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
+// import moment from "moment";
 
-const TablePpo = ({ headers, data, action, link }) => {
+const MyProjectPpo = ({ headers, data, action, link }) => {
     const router = useRouter();
 
     const rowClass = (inputDate, status) => {
@@ -61,7 +61,7 @@ const TablePpo = ({ headers, data, action, link }) => {
         const displayNames = {
             projectname: "Project Name",
             pic: "PIC",
-            departement: "Departement",
+            departement: "Department",
             kickoffstart: "Kick Off Start",
             kickoffdeadline: "Kick Off Deadline",
             kickoffdone: "Kick off Done",
@@ -93,11 +93,10 @@ const TablePpo = ({ headers, data, action, link }) => {
             status: "Status",
             deadlineproject: "Deadline Project",
             projectdone: "Project Done",
+            createdby: "Created By",
         };
 
-        const displayName = displayNames[header] || header;
-        // console.log(`Header: ${header}, DisplayName: ${displayName}`);
-        return displayName;
+        return displayNames[header] || header;
     };
 
     const getStatus = (item) => {
@@ -182,45 +181,46 @@ const TablePpo = ({ headers, data, action, link }) => {
 
     return (
         <div className="overflow-x-auto">
-            <table className="table cursor-pointer text-center">
+            <table className="table cursor-pointer text-center ">
                 <thead>
                     <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm text-center uppercase">
                         {headers.map((item, index) => (
                             <th
                                 key={index}
-                                className={`py-3 px-6 ${
-                                    item === "id" ||
-                                    item === "kickoffstart" ||
-                                    item === "kickoffdeadline" ||
-                                    item === "kickoffdone" ||
-                                    item === "kickoffstart" ||
-                                    item === "userrequirementstart" ||
-                                    item === "userrequirementdeadline" ||
-                                    item === "userrequirementdone" ||
-                                    item === "applicationdevelopmentstart" ||
-                                    item === "applicationdevelopmentdeadline" ||
-                                    item === "applicationdevelopmentdone" ||
-                                    item === "sitstart" ||
-                                    item === "sitdeadline" ||
-                                    item === "sitdone" ||
-                                    item === "uatstart" ||
-                                    item === "uatdeadline" ||
-                                    item === "uatdone" ||
-                                    item === "implementationpreparestart" ||
-                                    item === "implementationpreparedeadline" ||
-                                    item === "implementationpreparedone" ||
-                                    item === "implementationmeetingstart" ||
-                                    item === "implementationmeetingdeadline" ||
-                                    item === "implementationmeetingdone" ||
-                                    item === "implementationstart" ||
-                                    item === "implementationdeadline" ||
-                                    item === "implementationdone" ||
-                                    item === "postimplementationreviewstart" ||
-                                    item ===
-                                        "postimplementationreviewdeadline" ||
-                                    item === "postimplementationreviewdone" ||
-                                    item === "userdomain" ||
-                                    item === "userdomainpic"
+                                className={`py-3 px-6  ${
+                                    [
+                                        "id",
+                                        "kickoffstart",
+                                        "kickoffdeadline",
+                                        "kickoffdone",
+                                        "userrequirementstart",
+                                        "userrequirementdeadline",
+                                        "userrequirementdone",
+                                        "applicationdevelopmentstart",
+                                        "applicationdevelopmentdeadline",
+                                        "applicationdevelopmentdone",
+                                        "sitstart",
+                                        "sitdeadline",
+                                        "sitdone",
+                                        "uatstart",
+                                        "uatdeadline",
+                                        "uatdone",
+                                        "implementationpreparestart",
+                                        "implementationpreparedeadline",
+                                        "implementationpreparedone",
+                                        "implementationmeetingstart",
+                                        "implementationmeetingdeadline",
+                                        "implementationmeetingdone",
+                                        "implementationstart",
+                                        "implementationdeadline",
+                                        "implementationdone",
+                                        "postimplementationreviewstart",
+                                        "postimplementationreviewdeadline",
+                                        "postimplementationreviewdone",
+                                        "userdomain",
+                                        "userdomainpic",
+                                        // "projectdone",
+                                    ].includes(item)
                                         ? "hidden"
                                         : ""
                                 }`}
@@ -262,53 +262,40 @@ const TablePpo = ({ headers, data, action, link }) => {
                                 {headers.map((header, headerIndex) => (
                                     <td
                                         key={headerIndex}
-                                        className={`py-3 px-6 ${
-                                            header === "id" ||
-                                            header === "kickoffstart" ||
-                                            header === "kickoffdeadline" ||
-                                            header === "kickoffdone" ||
-                                            header === "userrequirementstart" ||
-                                            header ===
-                                                "userrequirementdeadline" ||
-                                            header === "userrequirementdone" ||
-                                            header ===
-                                                "applicationdevelopmentstart" ||
-                                            header ===
-                                                "applicationdevelopmentdeadline" ||
-                                            header ===
-                                                "applicationdevelopmentdone" ||
-                                            header === "sitstart" ||
-                                            header === "sitdeadline" ||
-                                            header === "sitdone" ||
-                                            header === "uatstart" ||
-                                            header === "uatdeadline" ||
-                                            header === "uatdone" ||
-                                            header ===
-                                                "implementationpreparestart" ||
-                                            header ===
-                                                "implementationpreparedeadline" ||
-                                            header ===
-                                                "implementationpreparedone" ||
-                                            header ===
-                                                "implementationmeetingstart" ||
-                                            header ===
-                                                "implementationmeetingdeadline" ||
-                                            header ===
-                                                "implementationmeetingdone" ||
-                                            header === "implementationstart" ||
-                                            header ===
-                                                "implementationdeadline" ||
-                                            header === "implementationdone" ||
-                                            header ===
-                                                "postimplementationreviewstart" ||
-                                            header ===
-                                                "postimplementationreviewdeadline" ||
-                                            header ===
-                                                "postimplementationreviewdone" ||
-                                                header ===
-                                                    "userdomain" ||
-                                                    header ===
-                                                        "userdomainpic"
+                                        className={`py-3 px-6 text-center ${
+                                            [
+                                                "id",
+                                                "kickoffstart",
+                                                "kickoffdeadline",
+                                                "kickoffdone",
+                                                "userrequirementstart",
+                                                "userrequirementdeadline",
+                                                "userrequirementdone",
+                                                "applicationdevelopmentstart",
+                                                "applicationdevelopmentdeadline",
+                                                "applicationdevelopmentdone",
+                                                "sitstart",
+                                                "sitdeadline",
+                                                "sitdone",
+                                                "uatstart",
+                                                "uatdeadline",
+                                                "uatdone",
+                                                "implementationpreparestart",
+                                                "implementationpreparedeadline",
+                                                "implementationpreparedone",
+                                                "implementationmeetingstart",
+                                                "implementationmeetingdeadline",
+                                                "implementationmeetingdone",
+                                                "implementationstart",
+                                                "implementationdeadline",
+                                                "implementationdone",
+                                                "postimplementationreviewstart",
+                                                "postimplementationreviewdeadline",
+                                                "postimplementationreviewdone",
+                                                "userdomain",
+                                                "userdomainpic",
+                                                // "projectdone",
+                                            ].includes(header)
                                                 ? "hidden"
                                                 : ""
                                         }`}
@@ -351,4 +338,4 @@ const TablePpo = ({ headers, data, action, link }) => {
     );
 };
 
-export default TablePpo;
+export default MyProjectPpo;

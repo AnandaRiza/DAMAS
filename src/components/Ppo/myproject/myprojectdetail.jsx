@@ -1,27 +1,17 @@
 "use client";
 import PleaseWait from "@/components/PleaseWait";
-import { useStateContext } from "@/context/ContextProvider";
 import axios from "axios";
-import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { FiSave } from "react-icons/fi";
-import { MdOutlineCancel } from "react-icons/md";
 
-const Page = () => {
+const MyProjectDetailPpo = () => {
     const userid = document.cookie
         .split("; ")
         .find((row) => row.startsWith("DAMAS-USERID="))
         ?.split("=")[1];
 
-    const { user } = useStateContext();
-
     const params = useParams();
-    const router = useRouter();
     const [selectedDept, setSelectedDept] = useState("");
-    const [selectedUserDomain, setSelectedUserDomain] = useState("");
-    const [scheduleInput, setScheduleInput] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
     const [dataAllPic, setDataAllPic] = useState(null);
     const [dataAllProject, setDataAllProject] = useState({
         submitter: "",
@@ -62,9 +52,6 @@ const Page = () => {
         status: "",
         deadlineproject: "",
         projectdone: "",
-        userdomain: "",
-        userdomainpic: "",
-        createdby: "",
     });
     useEffect(() => {
         const getCurrentData = async () => {
@@ -102,91 +89,11 @@ const Page = () => {
         }
     }, [dataAllProject]);
 
-    const handleEditedData = async () => {
-        if (
-            dataAllProject.status === "Finished" &&
-            !dataAllProject.projectdone
-        ) {
-            alert("Please fill in Project Finished date.");
-            return;
-        }
-        setIsLoading(true);
-        try {
-            await axios.post(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/projectdev/log`,
-                {
-                    ...dataAllProject,
-                    submitter: userid,
-                    authorizer: "SUPERVISOR",
-                    submitAt: submitAtDate(),
-                    deadline: calculateDeadline(scheduleInput),
-                    statusApprovement: "PENDING",
-                    idproject: dataAllProject.id,
-                    userdomain: dataAllProject.userdomain,
-                    userdomainpic: dataAllProject.userdomainpic,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "USER-ID": userid,
-                    },
-                }
-            );
-            router.push("/main/development");
-            setIsLoading(false);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    // const convertDateToCron = (date) => {
-    //     const d = new Date(date);
-    //     const seconds = "0";
-    //     const minutes = d.getMinutes();
-    //     const hours = d.getHours();
-    //     const dayOfMonth = d.getDate();
-    //     const month = d.getMonth() + 1;
-    //     const dayOfWeek = "?";
-    //     return `${seconds} ${minutes} ${hours} ${dayOfMonth} ${month} ${dayOfWeek}`;
-    // };
-
-    const calculateDeadline = (date) => {
-        const d = new Date(date);
-        d.setDate(d.getDate() - 1);
-
-        const day = String(d.getDate()).padStart(2, "0");
-        const month = String(d.getMonth() + 1).padStart(2, "0");
-        const year = d.getFullYear();
-        const hours = String(d.getHours()).padStart(2, "0");
-        const minutes = String(d.getMinutes()).padStart(2, "0");
-        const seconds = String(d.getSeconds()).padStart(2, "0");
-
-        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
-    };
-
-    const submitAtDate = () => {
-        const d = new Date();
-        const day = String(d.getDate()).padStart(2, "0");
-        const month = String(d.getMonth() + 1).padStart(2, "0");
-        const year = d.getFullYear();
-        const hours = String(d.getHours()).padStart(2, "0");
-        const minutes = String(d.getMinutes()).padStart(2, "0");
-        const seconds = String(d.getSeconds()).padStart(2, "0");
-
-        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
-    };
-
-    // const getMinDateTime = () => {
-    //     const now = new Date();
-    //     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-    //     return now.toISOString().slice(0, 16);
-    // };
-
     return (
         <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl">
             <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
                 {dataAllProject ? (
-                    <form className="space-y-4">
+                    <form className="space-y-4 ">
                         <div className="flex flex-col">
                             <label
                                 htmlFor="namaproject"
@@ -195,6 +102,7 @@ const Page = () => {
                                 Project Name
                             </label>
                             <input
+                            disabled
                                 type="text"
                                 value={dataAllProject.projectname}
                                 onChange={(e) =>
@@ -203,7 +111,7 @@ const Page = () => {
                                         projectname: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
 
@@ -216,8 +124,9 @@ const Page = () => {
                             </label>
                             {dataAllPic && (
                                 <select
+                                    disabled
                                     type="text"
-                                    className="input input-bordered mt-1"
+                                    className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                                     value={dataAllProject.name}
                                     onChange={(e) => {
                                         const selectedPic = JSON.parse(
@@ -227,19 +136,12 @@ const Page = () => {
                                             ...dataAllProject,
                                             pic: selectedPic.nama,
                                             departement: selectedPic.departemen,
-                                            userdomainpic:
-                                                selectedPic.userdomain,
                                         });
                                         setSelectedDept(selectedPic.departemen);
-                                        setSelectedUserDomain(
-                                            selectedPic.userdomain
-                                        );
                                     }}
                                 >
                                     <option
-                                        // disabled
-                                        // selected
-                                        className="text-sm text-gray-600 opacity-50"
+                                        className="text-sm"
                                         value={dataAllProject.pic}
                                     >
                                         {dataAllProject.pic}
@@ -290,7 +192,7 @@ const Page = () => {
                                         kickoffstart: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -312,7 +214,7 @@ const Page = () => {
                                         kickoffdeadline: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -323,6 +225,7 @@ const Page = () => {
                                 Kick Off Acctual Done
                             </label>
                             <input
+                            disabled
                                 type="date"
                                 id="kickoff"
                                 name="kickoff"
@@ -333,7 +236,7 @@ const Page = () => {
                                         kickoffdone: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -355,7 +258,7 @@ const Page = () => {
                                         userrequirementstart: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -377,7 +280,7 @@ const Page = () => {
                                         userrequirementdeadline: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -388,6 +291,7 @@ const Page = () => {
                                 User Requierement Acctual Done
                             </label>
                             <input
+                            disabled
                                 type="date"
                                 id="userrequirement"
                                 name="userrequirement"
@@ -398,7 +302,7 @@ const Page = () => {
                                         userrequirementdone: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -423,7 +327,7 @@ const Page = () => {
                                             e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -448,7 +352,7 @@ const Page = () => {
                                             e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -459,6 +363,7 @@ const Page = () => {
                                 Application Development Acctual Done
                             </label>
                             <input
+                            disabled
                                 type="date"
                                 id="applicationdevelopment"
                                 name="applicationdevelopment"
@@ -472,7 +377,7 @@ const Page = () => {
                                             e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -494,7 +399,7 @@ const Page = () => {
                                         sitstart: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -516,7 +421,7 @@ const Page = () => {
                                         sitdeadline: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -527,6 +432,7 @@ const Page = () => {
                                 SIT Acctual Done
                             </label>
                             <input
+                            disabled
                                 type="date"
                                 id="sit"
                                 name="sit"
@@ -537,7 +443,7 @@ const Page = () => {
                                         sitdone: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -559,7 +465,7 @@ const Page = () => {
                                         uatstart: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -581,7 +487,7 @@ const Page = () => {
                                         uatdeadline: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -592,6 +498,7 @@ const Page = () => {
                                 UAT Acctual Done
                             </label>
                             <input
+                            disabled
                                 type="date"
                                 id="uat"
                                 name="uat"
@@ -602,7 +509,7 @@ const Page = () => {
                                         uatdone: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -627,7 +534,7 @@ const Page = () => {
                                             e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -652,7 +559,7 @@ const Page = () => {
                                             e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -663,6 +570,7 @@ const Page = () => {
                                 Implementation Prepare Acctual Done
                             </label>
                             <input
+                            disabled
                                 type="date"
                                 id="implementationprepare"
                                 name="implementationprepare"
@@ -674,7 +582,7 @@ const Page = () => {
                                             e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -699,7 +607,7 @@ const Page = () => {
                                             e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -724,7 +632,7 @@ const Page = () => {
                                             e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -735,6 +643,7 @@ const Page = () => {
                                 Implementation Meeting Acctual Done
                             </label>
                             <input
+                            disabled
                                 type="date"
                                 id="implementationmeeting"
                                 name="implementationmeeting"
@@ -746,7 +655,7 @@ const Page = () => {
                                             e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -768,7 +677,7 @@ const Page = () => {
                                         implementationstart: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -790,7 +699,7 @@ const Page = () => {
                                         implementationdeadline: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -801,6 +710,7 @@ const Page = () => {
                                 Implementation Acctual Done
                             </label>
                             <input
+                            disabled
                                 type="date"
                                 id="implementation"
                                 name="implementation"
@@ -811,7 +721,7 @@ const Page = () => {
                                         implementationdone: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -836,7 +746,7 @@ const Page = () => {
                                             e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -861,7 +771,7 @@ const Page = () => {
                                             e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -872,6 +782,7 @@ const Page = () => {
                                 Post Implementation Review Acctual Done
                             </label>
                             <input
+                            disabled
                                 type="date"
                                 id="postimplementationreview"
                                 name="postimplementationreview"
@@ -885,7 +796,7 @@ const Page = () => {
                                             e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         {/* Status dropdown */}
@@ -896,20 +807,22 @@ const Page = () => {
                             >
                                 Status
                             </label>
-                            <div className="dropdown mt-1">
+                            <div className="dropdown mt-1 ">
+                            
                                 <div
-                                    tabIndex={0}
-                                    role="button"
-                                    className="btn m-1"
+                                // disabled
+                                //     tabIndex={0}
+                                //     role="button"
+                                    className=" btn disabled:text-black"
                                 >
                                     {dataAllProject.status}
                                 </div>
                                 <ul
                                     tabIndex={0}
-                                    className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
+                                    className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52  "
                                 >
-                                    <li>
-                                        <a
+                                    <li className="  disabled:text-black">
+                                        <a 
                                             onClick={() =>
                                                 setDataAllProject({
                                                     ...dataAllProject,
@@ -966,7 +879,7 @@ const Page = () => {
                                         deadlineproject: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -977,6 +890,7 @@ const Page = () => {
                                 Project Finished
                             </label>
                             <input
+                                disabled
                                 type="date"
                                 id="projectdone"
                                 name="projectdone"
@@ -987,49 +901,8 @@ const Page = () => {
                                         projectdone: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
-                                required={dataAllProject.status === "Finished"}
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
-                        </div>
-                        <div>
-                            {/* <div className="flex gap-3 items-center">
-                                <label className="w-[220px]">
-                                    Schedule Date
-                                </label>
-                                <input
-                                    type="datetime-local"
-                                    className="input input-sm input-bordered w-[220px]"
-                                    value={scheduleInput}
-                                    required
-                                    min={getMinDateTime()}
-                                    onChange={(e) =>
-                                        setScheduleInput(e.target.value)
-                                    }
-                                />
-                            </div> */}
-                            <div className="flex gap-2 items-center text-white ml-3 mt-3">
-                                <Link href="/main/development">
-                                    <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
-                                        <MdOutlineCancel />
-                                        <span>Cancel</span>
-                                    </button>
-                                </Link>
-                                <button
-                                    type="button"
-                                    className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center"
-                                    onClick={handleEditedData}
-                                >
-                                    <FiSave />
-                                    {isLoading ? (
-                                        <div className="flex justify-center gap-3">
-                                            <p>Please wait</p>
-                                            <span className="loading loading-spinner"></span>
-                                        </div>
-                                    ) : (
-                                        <span>Edit</span>
-                                    )}
-                                </button>
-                            </div>
                         </div>
                     </form>
                 ) : (
@@ -1040,4 +913,4 @@ const Page = () => {
     );
 };
 
-export default Page;
+export default MyProjectDetailPpo;

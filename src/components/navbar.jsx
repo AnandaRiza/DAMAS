@@ -60,14 +60,16 @@ const Header = ({ title }) => {
                     </li>
                 </ul> */}
 
-        {/* <div className="pr-3 relative">
-          <h3
-            onClick={() => setIsLogoutShow(!isLogoutShow)}
-            className="font-bold text-[#0066AE] cursor-pointer"
-          >
-            Welcome,{" "}
-            <span className="font-bold capitalize">{user.username}</span>
-          </h3>
+                <div className="pr-3 relative">
+                    <h3
+                        onClick={() => setIsLogoutShow(!isLogoutShow)}
+                        className="font-bold text-[#0066AE] cursor-pointer"
+                    >
+                        Welcome,{" "}
+                        <span className="font-bold capitalize">
+                            {user?.username}
+                        </span>
+                    </h3>
 
           {isLogoutShow && (
             <div className="bg-white rounded-xl shadow-md py-5 px-10 absolute top-10 right-2 z-50">

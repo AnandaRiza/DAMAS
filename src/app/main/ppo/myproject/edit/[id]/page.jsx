@@ -1,5 +1,5 @@
+import MyProjectPpoFormEdit from "@/components/Ppo/myproject/MyProjectPpoFormEdit";
 import HeaderDev from "@/components/sdlc/header/HeaderDev";
-import SDLCFormEdit from "@/components/sdlc/sdlc_form_edit";
 import React from "react";
 
 const page = () => {
@@ -8,7 +8,7 @@ const page = () => {
         <div>
           <HeaderDev title="Edit Project"/>
           <div>
-            <SDLCFormEdit />
+            <MyProjectPpoFormEdit />
           </div>
         </div>
       </div>

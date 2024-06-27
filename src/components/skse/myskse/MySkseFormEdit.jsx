@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
-const Page = () => {
+const MySkseFormEdit = () => {
     const userid = document.cookie
         .split("; ")
         .find((row) => row.startsWith("DAMAS-USERID="))
@@ -100,6 +100,32 @@ const Page = () => {
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const calculateDeadline = (date) => {
+        const d = new Date(date);
+        d.setDate(d.getDate() - 1);
+
+        const day = String(d.getDate()).padStart(2, "0");
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const year = d.getFullYear();
+        const hours = String(d.getHours()).padStart(2, "0");
+        const minutes = String(d.getMinutes()).padStart(2, "0");
+        const seconds = String(d.getSeconds()).padStart(2, "0");
+
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+    };
+
+    const submitAtDate = () => {
+        const d = new Date();
+        const day = String(d.getDate()).padStart(2, "0");
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const year = d.getFullYear();
+        const hours = String(d.getHours()).padStart(2, "0");
+        const minutes = String(d.getMinutes()).padStart(2, "0");
+        const seconds = String(d.getSeconds()).padStart(2, "0");
+
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
     };
 
     return (
@@ -318,4 +344,4 @@ const Page = () => {
     );
 };
 
-export default Page;
+export default MySkseFormEdit;

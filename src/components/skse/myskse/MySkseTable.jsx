@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 
-const TableSKSE = ({ headers, data, action, link }) => {
+const MySkseTable = ({ headers, data, action, link }) => {
     const router = useRouter();
 
     const rowClass = (inputDate, status) => {
@@ -232,4 +232,4 @@ const TableSKSE = ({ headers, data, action, link }) => {
     );
 };
 
-export default TableSKSE;
+export default MySkseTable;
