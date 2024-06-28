@@ -2,9 +2,10 @@
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
+import { IoMdEye } from "react-icons/io";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
-const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
+const ApprovalTableReviewer = ({ headers, data, action, link, onSort, sortConfig }) => {
     const router = useRouter();
     const [sortedData, setSortedData] = useState([]);
 
@@ -28,6 +29,18 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                 return -1;
             }
 
+            if (a.memo_status === 'MEMO APPROVED' && b.memo_status === 'MEMO APPROVED') {
+                return classA.localeCompare(classB);
+            }
+
+            if (a.memo_status === 'MEMO APPROVED') {
+                return 1;
+            }
+
+            if (b.memo_status === 'MEMO APPROVED') {
+                return -1;
+            }
+
             if (a.memo_status === 'Ongoing' && b.memo_status === 'Ongoing') {
                 return new Date(a.memo_deadline) - new Date(b.memo_deadline);
             }
@@ -46,22 +59,18 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
         setSortedData(sorted);
     }, [data]);
 
-    const handleDoubleClick = (memoId) => {
-        router.push(`${link}mymemo/detailmemo/${memoId}`);
-    };
-
     const getDisplayName = (header) => {
         const displayNames = {
-            memo_id: 'Memo ID',
-            memo_num: 'Nomor Memo',
-            memo_perihal: 'Perihal Memo',
-            memo_pic: 'PIC',
-            memo_department: 'Department',
-            memo_createdBy: 'Created By',
-            memo_reviewer: 'Reviewer',
-            memo_deadline: 'Deadline',
-            memo_status: 'Status Memo',
-            memo_notes: 'Notes'
+            memo_id: "Memo ID",
+            memo_num: "Nomor Memo",
+            memo_perihal: "Perihal Memo",
+            memo_pic: "PIC",
+            memo_department: "Department",
+            memo_createdBy: "Created By",
+            memo_reviewer: "Reviewer",
+            memo_deadline: "Deadline",
+            memo_status: "Status Memo",
+            memo_notes: "Notes",
         };
         return displayNames[header] || header;
     };
@@ -69,16 +78,19 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     const rowClass = (deadline, status) => {
         const daysLeft = (new Date(deadline) - new Date()) / (1000 * 60 * 60 * 24);
         if (status === 'MEMO APPROVED') return 'bg-green-200 hover:bg-green-300';
-        if (status === 'REQUEST HAS BEEN REJECTED') return 'bg-red-200 hover:bg-red-300';
+        if (status === 'WAITING FOR') return 'bg-red-200 hover:bg-red-300';
         if (status === 'MEMO DRAFT') return 'bg-blue-200 hover:bg-blue-300';
-        if (status === 'APPROVAL REQUEST SENT') return 'bg-yellow-200 hover:bg-yellow-300';
         if (daysLeft <= 3) return 'bg-red-200 hover:bg-red-300';
         if (daysLeft <= 7) return 'bg-yellow-200 hover:bg-yellow-300';
         return 'bg-white hover:bg-gray-300';
     };
 
     const handleEditClick = (memoId) => {
-        router.push(`${link}mymemo/editmemo/${memoId}`);
+        router.push(`${link}logisticreview/${memoId}`);
+    };
+
+    const handleDoubleClick = (memoId) => {
+        router.push(`${link}logisticdetailreview/${memoId}`);
     };
 
     const formatDate = (dateString) => {
@@ -98,6 +110,15 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
         };
 
         return `${day}${getOrdinalSuffix(day)} ${month} ${year}`;
+    };
+
+    const userId = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("DAMAS-USERID="))
+        ?.split("=")[1];
+
+    const transformStatus = (status) => {
+        return status === 'APPROVAL REQUEST SENT TO GROUP HEAD' ? 'WAITING FOR GROUP HEAD APPROVAL' : status;
     };
 
     const calculateDeadlineStatus = (deadline, memoStatus) => {
@@ -122,66 +143,67 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                 <table className="table">
                     <thead>
                         <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
+                            {action && (
+                                <th className="py-3 px-6 w-32 flex items-center justify-center gap-3 uppercase">
+                                    Action
+                                </th>
+                            )}
                             {headers.map((item, index) => (
                                 <th
                                     key={index}
-                                    className={`py-3 px-6 uppercase ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes', 'memo_upload','userdomain', 'userdomainpic','userdomainreviewer'].includes(item) ? 'hidden' : ''}`}
+                                    className={`py-3 px-6 uppercase ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes', 'memo_upload', 'userdomain', 'userdomainpic','userdomainreviewer'].includes(item) ? 'hidden' : ''}`}
                                     onClick={() => onSort(item)}
                                 >
                                     <div className="flex items-center cursor-pointer">
                                         {getDisplayName(item)}
-                                        {sortConfig.key === item && (
-                                            sortConfig.direction === 'ascending' ? (
+                                        {sortConfig.key === item &&
+                                            (sortConfig.direction === "ascending" ? (
                                                 <MdArrowDropUp className="ml-1" />
                                             ) : (
                                                 <MdArrowDropDown className="ml-1" />
-                                            )
-                                        )}
+                                            ))}
                                     </div>
                                 </th>
                             ))}
                             <th className="py-3 px-6 uppercase">Deadline Status</th>
-                            {action && (
-                                <th className="py-3 px-6 w-32 flex items-center justify-center gap-3 uppercase">
-                                    Edit
-                                </th>
-                            )}
                         </tr>
                     </thead>
                     <tbody>
-                        {sortedData.map((item, index) => {
-                            const rowClassName = rowClass(item.memo_deadline, item.memo_status);
-                            const deadlineStatus = calculateDeadlineStatus(item.memo_deadline, item.memo_status);
+                        {sortedData
+                            .filter(item => item.memo_status === "APPROVAL REQUEST SENT TO GROUP HEAD")
+                            .map((item, index) => {
+                                const rowClassName = rowClass(item.memo_deadline, item.memo_status);
+                                const deadlineStatus = calculateDeadlineStatus(item.memo_deadline, item.memo_status);
 
-                            return (
-                                <tr
+                                return (
+                                    <tr
                                     key={index}
-                                    className={`${rowClassName} text-xs leading-5`}
+                                    className={`${rowClassName} text-xs leading-5 cursor-pointer`} // Added cursor-pointer class
                                     onDoubleClick={() => handleDoubleClick(item.memo_id)}
                                 >
-                                    {headers.map((header, headerIndex) => (
-                                        <td
-                                            key={headerIndex}
-                                            className={`py-3 px-6 ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes', 'memo_upload', 'userdomain', 'userdomainpic','userdomainreviewer'].includes(header) ? 'hidden' : ''}`}
-                                        >
-                                            {header === 'memo_deadline' ? formatDate(item[header]) : item[header]}
-                                        </td>
-                                    ))}
-                                    <td className="py-3 px-6">{deadlineStatus}</td>
-                                    {action && (
-                                        <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                            <button
-                                                type="button"
-                                                className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
-                                                onClick={() => handleEditClick(item.memo_id)}
+                                        {action && (
+                                            <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                                                <button
+                                                    type="button"
+                                                    className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
+                                                    onClick={() => handleEditClick(item.memo_id)}
+                                                >
+                                                    <IoMdEye size={20} />
+                                                </button>
+                                            </td>
+                                        )}
+                                        {headers.map((header, headerIndex) => (
+                                            <td
+                                                key={headerIndex}
+                                                className={`py-3 px-6 ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes', 'memo_upload', 'userdomain', 'userdomainpic','userdomainreviewer'].includes(header) ? 'hidden' : ''}`}
                                             >
-                                                <AiOutlineEdit size={20} />
-                                            </button>
-                                        </td>
-                                    )}
-                                </tr>
-                            );
-                        })}
+                                                {header === 'memo_status' ? transformStatus(item[header]) : item[header]}
+                                            </td>
+                                        ))}
+                                        <td className="py-3 px-6">{deadlineStatus}</td>
+                                    </tr>
+                                );
+                            })}
                     </tbody>
                 </table>
             )}
@@ -189,4 +211,4 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     );
 };
 
-export default MyMemoTable;
+export default ApprovalTableReviewer;

@@ -66,7 +66,7 @@ const Page = () => {
             if (key === 'memo_status') {
                 const statusOrder = [
                     "MEMO DRAFT",
-                    "APPROVAL REQUEST SENT",
+                    "APPROVAL REQUEST SENT ",
                     "REQUEST HAS BEEN REJECTED",
                     "MEMO APPROVED"
                 ];

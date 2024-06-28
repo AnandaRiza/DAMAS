@@ -3,6 +3,8 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { useStateContext } from "@/context/ContextProvider";
+
 
 const MemoForm = () => {
   const [dataAllPic, setDataAllPic] = useState(null);
@@ -19,11 +21,16 @@ const MemoForm = () => {
     memo_deadline: "",
     memo_status: "MEMO DRAFT",
     memo_notes: "",
-    memo_upload: null, // New state for file upload
+    memo_upload: null,
+    userdomain: "",
+    userdomainpic: "",
+    userdomainreviewer: "",
   });
 
   const [error, setError] = useState("");
   const router = useRouter();
+
+  const {user}  = useStateContext();
 
   const getDataAllPic = async () => {
     setDataAllPic(null);
@@ -32,7 +39,7 @@ const MemoForm = () => {
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
       );
       setDataAllPic(response.data.data);
-      setFilteredDataAllPic(response.data.data); // Initialize filtered data
+      setFilteredDataAllPic(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +59,7 @@ const MemoForm = () => {
       .split("; ")
       .find((row) => row.startsWith("DAMAS-USERID="))
       ?.split("=")[1];
-    
+
     try {
       const regex = /^\d{4}-\d{2}-\d{2}$/;
       if (!regex.test(formData.memo_deadline)) {
@@ -60,21 +67,14 @@ const MemoForm = () => {
         return;
       }
 
-      // Create a JSON object with the form data
       const formDataToSend = {
-        memo_num: formData.memo_num,
-        memo_perihal: formData.memo_perihal,
-        memo_pic: formData.memo_pic,
-        memo_department: selectedDept,
+        ...formData,
         memo_createdBy: userid,
-        memo_reviewer: formData.memo_reviewer,
-        memo_deadline: formData.memo_deadline,
-        memo_status: formData.memo_status,
-        memo_notes: formData.memo_notes,
-        memo_upload: formData.memo_upload ? await toBase64(formData.memo_upload) : null // Convert file to Base64 if present
+        userdomain: user.userdomain,
       };
 
-      // Send JSON request
+      console.log("Data to be posted:", formDataToSend);
+
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo`,
         formDataToSend,
@@ -101,15 +101,6 @@ const MemoForm = () => {
       alert("Create Memo Failed!");
     }
   };
-
-// Helper function to convert file to Base64
-const toBase64 = (file) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result.split(',')[1]);
-    reader.onerror = error => reject(error);
-});
-  
 
   const handleDateChange = (e) => {
     const { value } = e.target;
@@ -210,7 +201,12 @@ const toBase64 = (file) => new Promise((resolve, reject) => {
                   value={JSON.stringify(dataAllPic.find((item) => item.nama === formData.memo_pic))}
                   onChange={(e) => {
                     const selectedPic = JSON.parse(e.target.value);
-                    setFormData({ ...formData, memo_pic: selectedPic.nama, memo_department: selectedPic.departemen });
+                    setFormData({
+                      ...formData,
+                      memo_pic: selectedPic.nama,
+                      memo_department: selectedPic.departemen,
+                      userdomainpic: selectedPic.userdomain,
+                    });
                     setSelectedDept(selectedPic.departemen);
                   }}
                 >
@@ -268,26 +264,28 @@ const toBase64 = (file) => new Promise((resolve, reject) => {
                 name="memo_reviewer"
                 id="memo_reviewer"
                 className="input input-bordered mt-1"
-                value={formData.memo_reviewer}
-                onChange={(e) =>
+                value={JSON.stringify(dataAllPic.find((item) => item.nama === formData.memo_reviewer))}
+                onChange={(e) => {
+                  const selectedReviewer = JSON.parse(e.target.value);
                   setFormData({
                     ...formData,
-                    memo_reviewer: e.target.value,
-                  })
-                }
+                    memo_reviewer: selectedReviewer.nama,
+                    userdomainreviewer: selectedReviewer.userdomain,
+                  });
+                }}
               >
-                <option disabled value="">
+                <option disabled selected className="text-sm text-gray-600 opacity-50">
                   Select Reviewer...
                 </option>
-                {dataAllPic.map((item, index) => (
-                  <option key={index} value={item.nama}>
+                {filteredDataAllPic.map((item, index) => (
+                  <option key={index} value={JSON.stringify(item)}>
                     {item.nama}
                   </option>
                 ))}
               </select>
             )}
           </div>
-          
+
           <div className="flex flex-col">
             <label htmlFor="memo_deadline" className="text-sm font-semibold text-gray-600">
               Deadline

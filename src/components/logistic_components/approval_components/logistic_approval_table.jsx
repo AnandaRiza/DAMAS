@@ -89,6 +89,10 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
         router.push(`${link}logisticreview/${memoId}`);
     };
 
+    const handleDoubleClick = (memoId) => {
+        router.push(`${link}logisticdetailreview/${memoId}`);
+    };
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const day = date.getDate();
@@ -114,7 +118,7 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
         ?.split("=")[1];
 
     const transformStatus = (status) => {
-        return status === 'APPROVAL REQUEST SENT' ? 'WAITING FOR APPROVAL' : status;
+        return status === 'APPROVAL REQUEST SENT TO HEAD OF DEPARTMENT' ? 'WAITING FOR HEAD OF DEPARTMENT APPROVAL' : status;
     };
 
     const calculateDeadlineStatus = (deadline, memoStatus) => {
@@ -147,7 +151,7 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                             {headers.map((item, index) => (
                                 <th
                                     key={index}
-                                    className={`py-3 px-6 uppercase ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes', 'memo_upload'].includes(item) ? 'hidden' : ''}`}
+                                    className={`py-3 px-6 uppercase ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes', 'memo_upload', 'userdomain', 'userdomainpic','userdomainreviewer'].includes(item) ? 'hidden' : ''}`}
                                     onClick={() => onSort(item)}
                                 >
                                     <div className="flex items-center cursor-pointer">
@@ -166,16 +170,17 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                     </thead>
                     <tbody>
                         {sortedData
-                            .filter(item => item.memo_status === "APPROVAL REQUEST SENT")
+                            .filter(item => item.memo_status === "APPROVAL REQUEST SENT TO HEAD OF DEPARTMENT")
                             .map((item, index) => {
                                 const rowClassName = rowClass(item.memo_deadline, item.memo_status);
                                 const deadlineStatus = calculateDeadlineStatus(item.memo_deadline, item.memo_status);
 
                                 return (
                                     <tr
-                                        key={index}
-                                        className={`${rowClassName} text-xs leading-5`}
-                                    >
+                                    key={index}
+                                    className={`${rowClassName} text-xs leading-5 cursor-pointer`} // Added cursor-pointer class
+                                    onDoubleClick={() => handleDoubleClick(item.memo_id)}
+                                >
                                         {action && (
                                             <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                                 <button
@@ -190,7 +195,7 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                                         {headers.map((header, headerIndex) => (
                                             <td
                                                 key={headerIndex}
-                                                className={`py-3 px-6 ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes', 'memo_upload'].includes(header) ? 'hidden' : ''}`}
+                                                className={`py-3 px-6 ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes', 'memo_upload', 'userdomain', 'userdomainpic','userdomainreviewer'].includes(header) ? 'hidden' : ''}`}
                                             >
                                                 {header === 'memo_status' ? transformStatus(item[header]) : item[header]}
                                             </td>

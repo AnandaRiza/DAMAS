@@ -3,6 +3,7 @@ import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
 import ApprovalTable from "@/components/logistic_components/approval_components/logistic_approval_table";
+import ApprovalTableReviewer from "@/components/logistic_components/approval_components_supervisor/logistic_approval_table";
 import HeaderStatusLogistic from "@/components/logistic_components/header/HeaderStatusLogistic";
 import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
@@ -94,14 +95,14 @@ const ApprovalPage = () => {
                 </div>
                 {dataAllMemo && (!searchResult || searchInput === "") ? (
                     <div className="mt-4">
-                        <ApprovalTable
+                        <ApprovalTableReviewer
                             headers={Object.keys(dataAllMemo[0]).slice(
                                 0,
                                 Object.keys(dataAllMemo[0]).length - 1
                             )}
                             data={dataAllMemo}
                             action={true}
-                            link={"/main/status/approvelogistic/"}
+                            link={"/main/status/approvelogistic_supervisor/"}
                             onSort={handleSort}
                             sortConfig={sortConfig}
                         />
@@ -114,14 +115,14 @@ const ApprovalPage = () => {
                     searchInput !== "" &&
                     searchResult.length !== 0 && (
                         <div className="mt-4">
-                            <ApprovalTable
+                            <ApprovalTableReviewer
                                 headers={Object.keys(searchResult[0]).slice(
                                     0,
                                     Object.keys(searchResult[0]).length - 1
                                 )}
                                 data={searchResult}
                                 action={true}
-                                link={"/main/status/approvelogistic/"}
+                                link={"/main/status/approvelogistic_supervisor/"}
                                 onSort={handleSort}
                                 sortConfig={sortConfig}
                             />

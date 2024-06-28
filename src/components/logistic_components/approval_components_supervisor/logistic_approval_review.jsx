@@ -11,7 +11,7 @@ import { FaPenNib } from "react-icons/fa";
 import LogisticSignature from "@/components/logistic_components/logistic_signature";
 import MemoApprovalForm from "@/components/logistic_components/approval_components/memo_approval"; // Make sure this is the correct import path
 
-const ReviewMemoPage = () => {
+const ReviewMemoSupervisorPage = () => {
   const [dataAllMemo, setDataAllMemo] = useState({
     memo_id: "",
     memo_num: "",
@@ -101,7 +101,7 @@ const ReviewMemoPage = () => {
   const handleApprove = () => {
     setDataAllMemo(prevState => ({
       ...prevState,
-      memo_status: 'MEMO HAS BEEN APPROVED BY HEAD OF DEPARTMENT ',
+      memo_status: 'MEMO HAS BEEN APPROVED BY GROUP HEAD ',
       memo_notes: ''
     }));
   };
@@ -109,7 +109,7 @@ const ReviewMemoPage = () => {
   const handleReject = () => {
     setDataAllMemo(prevState => ({
       ...prevState,
-      memo_status: 'REQUEST HAS BEEN REJECTED BY HEAD OF DEPARTMENT'
+      memo_status: 'REQUEST HAS BEEN REJECTED BY GROUP HEAD'
     }));
   };
 
@@ -212,7 +212,7 @@ const ReviewMemoPage = () => {
   return (
     <>
       <form className="space-y-4">
-        <Link href="/main/status/approvelogistic">
+        <Link href="/main/status/approvelogistic_supervisor">
           <button className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 text-white flex gap-1 items-center">
             <IoMdArrowRoundBack />
             <span>Back</span>
@@ -381,18 +381,22 @@ const ReviewMemoPage = () => {
               disabled
             />
 
-            <div className="flex items-center flex-wrap gap-2">
+            
+
+          </div>
+        </div>
+        <div className="flex items-center flex-wrap gap-2">
 
               <button
                 type="button"
-                className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 text-white flex gap-1 items-center"
+                className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 text-white flex gap-2 items-center"
                 onClick={handleReject}
               >
                 <FaPenNib />
-                <span>Reject</span>
+                <span>Reject Memo</span>
               </button>
 
-              <button
+              {/* <button
                 type="button"
                 className="py-2 px-4 rounded-xl bg-blue-500 text-white flex gap-1 items-center hover:bg-blue-800 transition-colors duration-300"
                 onClick={handleStatusChange}
@@ -401,7 +405,7 @@ const ReviewMemoPage = () => {
               >
                 <FaPenNib />
                 <span>Request Group Head Approval</span>
-              </button>
+              </button> */}
 
               <button
                 type="button"
@@ -409,12 +413,9 @@ const ReviewMemoPage = () => {
                 onClick={handleApprove}
               >
                 <FaPenNib />
-                <span>Department Head Approval</span>
+                <span>Group Head Approval</span>
               </button>
             </div>
-
-          </div>
-        </div>
 
         <div className="flex flex-col">
           <label htmlFor="memo_notes" className="text-sm font-semibold text-gray-600">
@@ -483,4 +484,4 @@ const ReviewMemoPage = () => {
   );
 };
 
-export default ReviewMemoPage;
+export default ReviewMemoSupervisorPage;

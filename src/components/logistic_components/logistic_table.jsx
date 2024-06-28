@@ -71,7 +71,7 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
         if (status === 'MEMO APPROVED') return 'bg-green-200 hover:bg-green-300';
         if (status === 'REQUEST HAS BEEN REJECTED') return 'bg-red-200 hover:bg-red-300';
         if (status === 'MEMO DRAFT') return 'bg-blue-200 hover:bg-blue-300';
-        if (status === 'APPROVAL REQUEST SENT') return 'bg-yellow-200 hover:bg-yellow-300';
+        if (status.trim() === 'APPROVAL REQUEST SENT TO HEAD OF DEPARTMENT') return 'bg-yellow-200 hover:bg-yellow-300';
         if (daysLeft <= 3) return 'bg-red-200 hover:bg-red-300';
         if (daysLeft <= 7) return 'bg-yellow-200 hover:bg-yellow-300';
         return 'bg-white hover:bg-gray-300';
@@ -105,7 +105,8 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
         const deadlineDate = new Date(deadline);
         const daysLeft = (deadlineDate - currentDate) / (1000 * 60 * 60 * 24);
 
-        if (memoStatus === 'MEMO APPROVED') return 'MEMO FINISHED';
+        if (memoStatus === 'MEMO HAS BEEN APPROVED BY GROUP HEAD ') return 'MEMO FINISHED';
+        if (memoStatus === 'MEMO HAS BEEN APPROVED BY DEPARTMEN HEAD ') return 'MEMO FINISHED';
         if (daysLeft < 0) return 'PAST DEADLINE';
         if (daysLeft <= 3) return 'WITHIN 3 DAYS';
         if (daysLeft <= 7) return 'WITHIN 7 DAYS';
@@ -156,7 +157,7 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                             return (
                                 <tr
                                     key={index}
-                                    className={`${rowClassName} text-xs leading-5`}
+                                    className={`${rowClassName} text-xs leading-5 cursor-pointer`} // Added cursor-pointer class
                                     onDoubleClick={() => handleDoubleClick(item.memo_id)}
                                 >
                                     {headers.map((header, headerIndex) => (

@@ -7,6 +7,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { FaPenNib } from "react-icons/fa";
+import { useStateContext } from "@/context/ContextProvider";
 import LogisticSignature from "@/components/logistic_components/logistic_signature";
 import MemoApprovalForm from "@/components/logistic_components/approval_components/memo_approval"; // Make sure this is the correct import path
 
@@ -22,7 +23,10 @@ const EditMemoPage = () => {
         memo_deadline: "",
         memo_status: "", // Initialize with desired value
         memo_notes: "",
-        memo_upload: "" // Ensure this is not null
+        memo_upload: "",
+        userdomain: "",
+        userdomainpic: "",
+        userdomainreviewer: "",
     });
     const [dataAllPic, setDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
@@ -34,6 +38,9 @@ const EditMemoPage = () => {
     const [file, setFile] = useState(null); // State to hold uploaded file
     const params = useParams();
     const router = useRouter();
+
+    const { user } = useStateContext();
+
 
     const getDataAllPic = async () => {
         setDataAllPic(null);
@@ -53,7 +60,10 @@ const EditMemoPage = () => {
                 const response = await axios.get(
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/getMemoByID/${params.memoId}`
                 );
-                setDataAllMemo(response.data.data);
+                setDataAllMemo(prevState => ({
+                    ...prevState,
+                    ...response.data.data,
+                }));
                 setSelectedDept(response.data.data.memo_department);
                 setLoading(false);
             } catch (error) {
@@ -62,9 +72,26 @@ const EditMemoPage = () => {
             }
         };
 
-        const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
-        setDataAllMemo(prevState => ({ ...prevState, memo_createdBy: userid }));
+        const fetchUserIdAndUserDomain = async () => {
+            const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
+            if (userid) {
+                try {
+                    const response = await axios.get(
+                        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users/${userid}`
+                    );
+                    const userdomain = response.data.data.userdomain;
+                    setDataAllMemo(prevState => ({
+                        ...prevState,
+                        memo_createdBy: userid,
+                        userdomain: user.userdomain
+                    }));
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        };
 
+        fetchUserIdAndUserDomain();
         if (params.memoId) {
             getCurrentData();
         }
@@ -88,7 +115,7 @@ const EditMemoPage = () => {
     const handleStatusChange = () => {
         setDataAllMemo(prevState => ({
             ...prevState,
-            memo_status: 'APPROVAL REQUEST SENT'
+            memo_status: 'APPROVAL REQUEST SENT TO HEAD OF DEPARTMENT'
         }));
     };
 
@@ -113,44 +140,46 @@ const EditMemoPage = () => {
                 memo_upload: response.data.fileName // Update state with uploaded file name
             }));
             setFile(fileToUpload); // Update file state to track if a new file is uploaded
+            console.log(`File updated: ${response.data.fileName}`); // Console log the updated file name
         } catch (error) {
             console.error("Error uploading file: ", error);
             setError("Failed to upload file");
         }
     };
 
-  // Helper function to check if a string is Base64 encoded
-const isBase64 = (str) => {
-    try {
-        return btoa(atob(str)) === str;
-    } catch (err) {
-        return false;
-    }
-};
 
+    // Helper function to check if a string is Base64 encoded
+    const isBase64 = (str) => {
+        try {
+            return btoa(atob(str)) === str;
+        } catch (err) {
+            return false;
+        }
+    };
 
+    // Function to handle file download
+    const handleFileDownload = async () => {
+        const { memo_upload } = dataAllMemo;
+        try {
+            const decodedFileName = decodeBase64(memo_upload);
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/download/${decodedFileName}`,
+                {
+                    responseType: "blob" // Important to specify blob response type
+                }
+            );
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", decodedFileName);
+            document.body.appendChild(link);
+            link.click();
+        } catch (error) {
+            console.error("Error downloading file: ", error);
+            setError("Failed to download file");
+        }
+    };
 
-// Function to handle file download
-const handleFileDownload = async () => {
-    const { memo_upload } = dataAllMemo;
-    try {
-        const response = await axios.get(
-            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/download/${memo_upload}`,
-            {
-                responseType: "blob" // Important to specify blob response type
-            }
-        );
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", memo_upload);
-        document.body.appendChild(link);
-        link.click();
-    } catch (error) {
-        console.error("Error downloading file: ", error);
-        setError("Failed to download file");
-    }
-};
     // Decode base64 string if necessary
     const decodeBase64 = (encodedString) => {
         try {
@@ -163,26 +192,31 @@ const handleFileDownload = async () => {
 
     // Function to handle form submission after edits
     const handleEditedData = async () => {
-        try {
-            if (!file) {
-                setDataAllMemo(prevState => ({
-                    ...prevState,
-                    memo_upload: prevState.memo_upload // Keep existing file name if no new file is uploaded
-                }));
+        if (window.confirm("Are you sure you want to save the changes?")) {
+            try {
+                if (!file) {
+                    setDataAllMemo(prevState => ({
+                        ...prevState,
+                        memo_upload: prevState.memo_upload // Keep existing file name if no new file is uploaded
+                    }));
+                }
+                const updatedData = {
+                    ...dataAllMemo,
+                    memo_upload: decodeBase64(dataAllMemo.memo_upload) // Decode base64 before sending if necessary
+                };
+                const response = await axios.put(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
+                    updatedData
+                );
+                console.log("Memo update response:", response.data);
+                console.log(`File updated: ${updatedData.memo_upload}`); // Console log the updated file name
+
+                alert("Memo Update Success");
+                router.push('/main/logistic');
+            } catch (error) {
+                console.error("Error updating memo: ", error);
+                setError("Failed to update memo");
             }
-            const updatedData = {
-                ...dataAllMemo,
-                memo_upload: decodeBase64(dataAllMemo.memo_upload) // Decode base64 before sending if necessary
-            };
-            await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
-                updatedData
-            );
-            alert("Memo Update Success");
-            router.push('/main/logistic');
-        } catch (error) {
-            console.error("Error updating memo: ", error);
-            setError("Failed to update memo");
         }
     };
 
@@ -195,14 +229,13 @@ const handleFileDownload = async () => {
     return (
         <>
             <form className="space-y-4">
-            <Link href="/main/logistic">
-                        <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
-                            <IoMdArrowRoundBack />
-                            <span>Back</span>
-                        </button>
-                    </Link>
+                <Link href="/main/logistic">
+                    <button className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 flex gap-1 items-center">
+                        <IoMdArrowRoundBack />
+                        <span>Back</span>
+                    </button>
+                </Link>
                 <div className="flex flex-col">
-                    
                     <label htmlFor="memo_num" className="text-sm font-semibold text-gray-600">
                         Nomor Memo
                     </label>
@@ -244,7 +277,7 @@ const handleFileDownload = async () => {
 
                 <div className="flex flex-col">
                     <label htmlFor="memo_pic" className="text-sm font-semibold text-gray-600">
-                        PIC <span className="text-red-500">*</span>
+                        PIC
                     </label>
                     {dataAllPic && (
                         <select
@@ -257,7 +290,8 @@ const handleFileDownload = async () => {
                                 setDataAllMemo({
                                     ...dataAllMemo,
                                     memo_pic: selectedPic.nama,
-                                    memo_department: selectedPic.departemen
+                                    memo_department: selectedPic.departemen,
+                                    userdomainpic: selectedPic.userdomain,
                                 });
                                 setSelectedDept(selectedPic.departemen);
                             }}
@@ -288,18 +322,18 @@ const handleFileDownload = async () => {
                     />
                 </div>
 
-                <input
-                    type="text"
-                    value={dataAllMemo.memo_createdBy}
-                    onChange={(e) =>
-                        setDataAllMemo({
-                            ...dataAllMemo,
-                            memo_createdBy: e.target.value,
-                        })
-                    }
-                    className="input input-bordered mt-1"
-                    hidden
-                />
+                <div className="flex flex-col">
+                    <label htmlFor="memo_perihal" className="text-sm font-semibold text-gray-600">
+                        Pembuat Memo
+                    </label>
+                    <input
+                        type="text"
+                        name="memo_createdBy"
+                        value={dataAllMemo.memo_createdBy}
+                        className="input input-bordered mt-1"
+                        disabled
+                    />
+                </div>
 
                 <div className="flex flex-col">
                     <label htmlFor="memo_reviewer" className="text-sm font-semibold text-gray-600">
@@ -310,20 +344,22 @@ const handleFileDownload = async () => {
                             name="memo_reviewer"
                             id="memo_reviewer"
                             className="input input-bordered mt-1"
-                            value={dataAllMemo.memo_reviewer}
-                            onChange={(e) =>
+                            value={JSON.stringify(dataAllPic.find(item => item.nama === dataAllMemo.memo_reviewer))}
+                            onChange={(e) => {
+                                const selectedReviewer = JSON.parse(e.target.value);
                                 setDataAllMemo({
                                     ...dataAllMemo,
-                                    memo_reviewer: e.target.value,
-                                })
-                            }
+                                    memo_reviewer: selectedReviewer.nama,
+                                    userdomainreviewer: selectedReviewer.userdomain,
+                                });
+                            }}
                             disabled={isReadOnly}
                         >
                             <option disabled selected className="text-sm text-gray-600 opacity-50">
                                 Select Reviewer...
                             </option>
                             {dataAllPic.map((item, index) => (
-                                <option key={index} value={item.nama}>
+                                <option key={index} value={JSON.stringify(item)}>
                                     {item.nama}
                                 </option>
                             ))}
@@ -360,7 +396,7 @@ const handleFileDownload = async () => {
                         />
                         <button
                             type="button"
-                            className="py-2 px-4 rounded-xl bg-blue-500 text-white flex gap-1 items-center ml-2 hover:bg-blue-600 transition-colors duration-300"
+                            className="py-2 px-4 rounded-xl bg-blue-500 text-white flex gap-1 items-center ml-2 hover:bg-blue-800 transition-colors duration-300"
                             onClick={handleStatusChange}
                             disabled={isReadOnly}
                         >
@@ -370,7 +406,7 @@ const handleFileDownload = async () => {
                     </div>
                 </div>
 
-               {dataAllMemo.memo_notes && ( // Only render this section if memo_notes has data
+                {dataAllMemo.memo_notes && ( // Only render this section if memo_notes has data
                     <div className="flex flex-col">
                         <label htmlFor="memo_notes" className="text-sm font-semibold text-gray-600">
                             Memo Notes
@@ -413,18 +449,14 @@ const handleFileDownload = async () => {
                     )}
                 </div>
 
-
                 {/* Download Link */}
-          
-
                 {/* Error Handling */}
                 {error && <p className="text-red-500">{error}</p>}
 
-                <div className="flex gap-2 items-center text-white ml-3 mt-3 justify-between">
-                  
+                <div className="flex gap-2 items-center text-white  justify-between">
                     <button
                         type="button"
-                        className="py-2 px-4 rounded-xl bg-green-500 flex gap-1 items-center"
+                        className="py-2 px-4 rounded-xl bg-green-500 hover:bg-green-800 flex gap-1 items-center"
                         onClick={handleEditedData}
                         disabled={isReadOnly}
                     >
