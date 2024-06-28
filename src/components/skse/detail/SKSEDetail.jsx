@@ -23,7 +23,7 @@ const SKSEDetail = () => {
         perihal: "",
         pic: "",
         departement: "",
-        deadline: "",
+        deadlineskse: "",
         status: "",
     });
     useEffect(() => {
@@ -174,14 +174,14 @@ const SKSEDetail = () => {
                         </label>
                         <input
                         disabled
-                            type="date"
+                            // type="date"
                             id="deadline"
                             name="deadline"
-                            value={dataAllSkse.deadline}
+                            value={dataAllSkse.deadlineskse}
                             onChange={(e) =>
                                 setDataAllSkse({
                                     ...dataAllSkse,
-                                    deadline: e.target.value,
+                                    deadlineskse: e.target.value,
                                 })
                             }
                             className="input input-bordered mt-1 disabled:text-black"

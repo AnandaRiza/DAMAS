@@ -16,6 +16,7 @@ const SDLCForm = () => {
     const [dataAllPic, setDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
     const [selectedUserDomain, setSelectedUserDomain] = useState("");
+    const [scheduleInput, setScheduleInput] = useState("");
     const router = useRouter();
     
     // State to manage form data
@@ -56,6 +57,13 @@ const SDLCForm = () => {
         userdomain:"",
         userdomainpic: "",
     });
+
+    const [dataEmail, setdataEmail] = useState({
+        to: "",
+        subject: "Test",
+        deadline: "",
+        deadlinepro: "",
+    });
   
     
 
@@ -82,9 +90,10 @@ const SDLCForm = () => {
            
             await axios.post( `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/projectdev`,
             {
-                ...formData,
+                ...formData, 
                 createdby: userid,
-                userdomain: user.userdomain
+                userdomain: user.userdomain,
+                deadlineproject: calculateDeadline(scheduleInput)
                 
             },
             {
@@ -94,12 +103,66 @@ const SDLCForm = () => {
                 },
             }  
         );
+        // console.log(calculateDeadline(formData.deadlineproject))
+        await axios.post( `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/schedulesend-email`,
+            {
+                ...dataEmail,
+                text: "halo",
+                to: "mayastri_devana@bcasyariah.co.id",
+                deadline: calculateDeadline(scheduleInput),
+                deadlinepro: calculateDeadline(scheduleInput),
+            },
+        );
         router.push("/main/development")
         // console.log(createdby)
         } catch (error) {
             console.log(error);
             alert("Create Project Failed!");
         }
+    };
+
+    //  const convertDateToCron = (date) => {
+    //     const d = new Date(date);
+    //     const seconds = "0";
+    //     const minutes = d.getMinutes();
+    //     const hours = d.getHours();
+    //     const dayOfMonth = d.getDate();
+    //     const month = d.getMonth() + 1;
+    //     const dayOfWeek = "?";
+    //     return `${seconds} ${minutes} ${hours} ${dayOfMonth} ${month} ${dayOfWeek}`;
+    // };
+
+    const calculateDeadline = (date) => {
+        const d = new Date(date);
+        d.setDate(d.getDate() - 1);
+    
+        const day = String(d.getDate()).padStart(2, "0");
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const year = d.getFullYear();
+        const hours = String(d.getHours()).padStart(2, "0");
+        const minutes = String(d.getMinutes()).padStart(2, "0");
+        const seconds = String(d.getSeconds()).padStart(2, "0");
+    
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+    };
+    
+
+    // const submitAtDate = () => {
+    //     const d = new Date();
+    //     const day = String(d.getDate()).padStart(2, "0");
+    //     const month = String(d.getMonth() + 1).padStart(2, "0");
+    //     const year = d.getFullYear();
+    //     const hours = String(d.getHours()).padStart(2, "0");
+    //     const minutes = String(d.getMinutes()).padStart(2, "0");
+    //     const seconds = String(d.getSeconds()).padStart(2, "0");
+
+    //     return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+    // };
+
+    const getMinDateTime = () => {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        return now.toISOString().slice(0, 16);
     };
 
     return (
@@ -626,13 +689,14 @@ const SDLCForm = () => {
                     Deadline Project <span className="text-red-500">*</span>
                 </label>
                 <input
-                    type="date"
+                    type="datetime-local"
                     id="deadlineproject"
                     name="deadlineproject"
                     required
-                    value={formData.deadlineproject}
+                    value={scheduleInput}
+                    min={getMinDateTime()}
                     onChange={(e) =>
-                        setFormData({ ...formData, deadlineproject: e.target.value })
+                        setScheduleInput(e.target.value)
                     }
                     className="input input-bordered mt-1"
                 />

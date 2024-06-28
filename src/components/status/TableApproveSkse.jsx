@@ -17,7 +17,7 @@ const TableApproveSkse = ({ headers, data, parameter, action, isRefresh }) => {
             perihal: "Perihal",
             pic: "PIC",
             departement: "Departement",
-            deadline: "Deadline",
+            deadlineskse: "Deadline SK/SE",
             status: "Status",
         };
 
@@ -42,9 +42,9 @@ const TableApproveSkse = ({ headers, data, parameter, action, isRefresh }) => {
             <table className="text-center border-b cursor-pointer">
                 <thead>
                     <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
-                        {action && <th className="py-2 px-4 w-32">Action</th>}
+                        {action && <th className="py-2 px-4 w-32">ACTION</th>}
                         {headers.map((item, index) => (
-                            <th key={index} className={`py-3 px-6 capitalize ${item === 'id' || item === 'idskse' || item === 'deadlineApprovement' ? 'hidden' : ''}`}>
+                            <th key={index} className={`py-3 px-6 uppercase ${item === 'id' || item === 'idskse' || item === 'deadlineApprovement' ? 'hidden' : ''}`}>
                                 {getDisplayName(item)}
                             </th>
                         ))}

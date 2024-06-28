@@ -30,7 +30,7 @@ const MySkseFormEdit = () => {
         perihal: "",
         pic: "",
         departement: "",
-        deadline: "",
+        deadlineskse: "",
         status: "",
         userdomain: "",
         userdomainpic: "",
@@ -232,21 +232,21 @@ const MySkseFormEdit = () => {
                         </div>
                         <div className="flex flex-col">
                             <label
-                                htmlFor="deadline"
+                                htmlFor="deadlineskse"
                                 className="text-sm font-semibold text-gray-600"
                             >
-                                Deadline
+                                Deadline SK/SE
                             </label>
                             <input
                                 disabled
-                                type="date"
-                                id="deadline"
-                                name="deadline"
-                                value={dataAllSkse.deadline}
+                                // type="date"
+                                id="deadlineskse"
+                                name="deadlineskse"
+                                value={dataAllSkse.deadlineskse}
                                 onChange={(e) =>
                                     setDataAllSkse({
                                         ...dataAllSkse,
-                                        deadline: e.target.value,
+                                        deadlineskse: e.target.value,
                                     })
                                 }
                                 className="input input-bordered mt-1 disabled:text-black"

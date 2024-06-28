@@ -6,30 +6,36 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const SKSEForm = () => {
-
     const userid = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("DAMAS-USERID="))
-    ?.split("=")[1];
+        .split("; ")
+        .find((row) => row.startsWith("DAMAS-USERID="))
+        ?.split("=")[1];
 
-    const {user}  = useStateContext();
-
+    const { user } = useStateContext();
 
     // State to manage form data
     const router = useRouter();
     const [dataAllPic, setDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
     const [selectedUserDomain, setSelectedUserDomain] = useState("");
+    const [scheduleInput, setScheduleInput] = useState("");
     const [formData, setFormData] = useState({
         nosurat: "",
         perihal: "",
         pic: "",
         departement: "",
-        deadline: "",
+        deadlineskse: "",
         status: "",
-        userdomain:"",
+        userdomain: "",
         userdomainpic: "",
         createdby: "",
+    });
+
+    const [dataEmail, setdataEmail] = useState({
+        to: "",
+        subject: "Test",
+        deadline: "",
+        deadlinepro: "",
     });
 
     const getDataAllPic = async () => {
@@ -47,7 +53,10 @@ const SKSEForm = () => {
 
     useEffect(() => {
         getDataAllPic();
-        const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
+        const userid = document.cookie
+            .split("; ")
+            .find((row) => row.startsWith("DAMAS-USERID="))
+            ?.split("=")[1];
     }, []);
 
     const handleSubmit = async () => {
@@ -57,7 +66,8 @@ const SKSEForm = () => {
                 {
                     ...formData,
                     createdby: userid,
-                    userdomain: user.userdomain
+                    userdomain: user.userdomain,
+                    deadlineskse: calculateDeadline(scheduleInput),
                 },
                 {
                     headers: {
@@ -65,7 +75,16 @@ const SKSEForm = () => {
                         "USER-ID": userid,
                     },
                 }
-                
+            );
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/schedulesend-email`,
+                {
+                    ...dataEmail,
+                    text: "halo",
+                    to: "mayastri_devana@bcasyariah.co.id",
+                    deadline: calculateDeadline(scheduleInput),
+                    deadlinepro: calculateDeadline(scheduleInput),
+                }
             );
             router.push("/main/ppo/allskse");
         } catch (error) {
@@ -73,6 +92,27 @@ const SKSEForm = () => {
             alert("Create SK/SE Failed!");
         }
     };
+
+    const calculateDeadline = (date) => {
+        const d = new Date(date);
+        d.setDate(d.getDate() - 1);
+    
+        const day = String(d.getDate()).padStart(2, "0");
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const year = d.getFullYear();
+        const hours = String(d.getHours()).padStart(2, "0");
+        const minutes = String(d.getMinutes()).padStart(2, "0");
+        const seconds = String(d.getSeconds()).padStart(2, "0");
+    
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+    };
+
+    const getMinDateTime = () => {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        return now.toISOString().slice(0, 16);
+    };
+
 
     return (
         <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl">
@@ -151,10 +191,12 @@ const SKSEForm = () => {
                                         ...formData,
                                         pic: selectedPic.nama,
                                         departement: selectedPic.departemen,
-                                        userdomainpic: selectedPic.userdomain
+                                        userdomainpic: selectedPic.userdomain,
                                     });
                                     setSelectedDept(selectedPic.departemen);
-                                    setSelectedUserDomain(selectedPic.userdomain)
+                                    setSelectedUserDomain(
+                                        selectedPic.userdomain
+                                    );
                                 }}
                             >
                                 <option
@@ -193,22 +235,20 @@ const SKSEForm = () => {
 
                     <div className="flex flex-col">
                         <label
-                            htmlFor="deadline"
+                            htmlFor="deadlineskse"
                             className="text-sm font-semibold text-gray-600"
                         >
-                            Deadline <span className="text-red-500">*</span>
+                            Deadline SK/SE <span className="text-red-500">*</span>
                         </label>
                         <input
-                            type="date"
-                            id="deadline"
-                            name="deadline"
+                            type="datetime-local"
+                            id="deadlineskse"
+                            name="deadlineskse"
                             required
-                            value={formData.deadline}
+                            value={scheduleInput}
+                            min={getMinDateTime()}
                             onChange={(e) =>
-                                setFormData({
-                                    ...formData,
-                                    deadline: e.target.value,
-                                })
+                                setScheduleInput(e.target.value)
                             }
                             className="input input-bordered mt-1"
                         />
