@@ -218,7 +218,9 @@ const TablePpo = ({ headers, data, action, link }) => {
                                     item === "postimplementationreviewstart" ||
                                     item ===
                                         "postimplementationreviewdeadline" ||
-                                    item === "postimplementationreviewdone"
+                                    item === "postimplementationreviewdone" ||
+                                    item === "userdomain" ||
+                                    item === "userdomainpic"
                                         ? "hidden"
                                         : ""
                                 }`}
@@ -302,7 +304,11 @@ const TablePpo = ({ headers, data, action, link }) => {
                                             header ===
                                                 "postimplementationreviewdeadline" ||
                                             header ===
-                                                "postimplementationreviewdone"
+                                                "postimplementationreviewdone" ||
+                                                header ===
+                                                    "userdomain" ||
+                                                    header ===
+                                                        "userdomainpic"
                                                 ? "hidden"
                                                 : ""
                                         }`}

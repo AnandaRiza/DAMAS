@@ -93,6 +93,9 @@ const TableApprove = ({ headers, data, parameter, action, isRefresh }) => {
                                     "implementationdeadline",
                                     "postimplementationreviewstart",
                                     "postimplementationreviewdeadline",
+                                    "deadlineApprovement",
+                                    "userdomain",
+                                    "userdomainpic",
                                     // "projectdone",
                                 ].includes(item)
                                     ? "hidden"
@@ -183,6 +186,9 @@ const TableApprove = ({ headers, data, parameter, action, isRefresh }) => {
                                     "implementationdeadline",
                                     "postimplementationreviewstart",
                                     "postimplementationreviewdeadline",
+                                    "deadlineApprovement",
+                                    "userdomain",
+                                    "userdomainpic",
                                     // "projectdone",
                                 ].includes(header)
                                     ? "hidden"

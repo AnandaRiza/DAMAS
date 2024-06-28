@@ -147,7 +147,7 @@ const TableSKSE = ({ headers, data, action, link }) => {
                             <th
                                 key={index}
                                 className={`py-3 px-6 uppercase ${
-                                    item === "id" || item === "id"
+                                    item === "id" || item === "userdomain" || item === "userdomainpic"
                                         ? "hidden"
                                         : ""
                                 }`}
@@ -190,7 +190,7 @@ const TableSKSE = ({ headers, data, action, link }) => {
                                     <td
                                         key={headerIndex}
                                         className={`py-3 px-6 ${
-                                            header === "id" ? "hidden" : ""
+                                            header === "id" || header === "userdomain" || header === "userdomainpic" ? "hidden" : ""
                                         }`}
                                     >
                                         {header === "status"

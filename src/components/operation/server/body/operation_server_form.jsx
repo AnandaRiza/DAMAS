@@ -121,12 +121,22 @@ return (
                 value={selectedDept} disabled />
             </div>
 
-        <div className="flex flex-col">
+        <div>
+        <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Kick Off
+              </label>
+            <div
+            className="border rounded-xl"
+            style={{ borderColor: "#DADADA" }}>
+            <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Kick Off Start
+                Start
             </label>
             <input
                 type="date"
@@ -140,12 +150,12 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Kick Off Deadline
+                Deadline
             </label>
             <input
                 type="date"
@@ -158,8 +168,7 @@ return (
                 className="input input-bordered mt-1"
             />
         </div>
-
-        <div className="flex flex-col">
+         {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -176,14 +185,30 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
+        </div> */}
+            </div>
         </div>
 
-        <div className="flex flex-col">
+       
+
+       
+
+        <div>
+        <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Penyiapan Server
+              </label>
+            <div
+            className="border rounded-xl"
+            style={{ borderColor: "#DADADA" }}>
+            <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Penyiapan Server Start
+                Start
             </label>
             <input
                 type="date"
@@ -197,12 +222,12 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Penyiapan Server Deadline
+                Deadline
             </label>
             <input
                 type="date"
@@ -215,8 +240,7 @@ return (
                 className="input input-bordered mt-1"
             />
         </div>
-
-        <div className="flex flex-col">
+         {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -233,14 +257,30 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
+        </div> */}
+            </div>
         </div>
 
-        <div className="flex flex-col">
+        
+
+       
+
+        <div>
+        <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Instalasi Aplikasi
+              </label>
+            <div
+            className="border rounded-xl"
+            style={{ borderColor: "#DADADA" }}>
+            <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Instalasi Aplikasi Start
+                Start
             </label>
             <input
                 type="date"
@@ -254,12 +294,12 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Instalasi Aplikasi Deadline
+                Deadline
             </label>
             <input
                 type="date"
@@ -272,8 +312,7 @@ return (
                 className="input input-bordered mt-1"
             />
         </div>
-
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -290,14 +329,30 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
+        </div> */}
+            </div>
         </div>
 
-        <div className="flex flex-col">
+        
+
+        
+
+        <div>
+        <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Install Checkpoint
+              </label>
+            <div
+            className="border rounded-xl"
+            style={{ borderColor: "#DADADA" }}>
+            <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Install Checkpoint Start
+                Start
             </label>
             <input
                 type="date"
@@ -311,12 +366,12 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Install Checkpoint Deadline
+                Deadline
             </label>
             <input
                 type="date"
@@ -329,8 +384,7 @@ return (
                 className="input input-bordered mt-1"
             />
         </div>
-
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -347,14 +401,30 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
+        </div> */}
+            </div>
         </div>
 
-        <div className="flex flex-col">
+       
+
+        
+
+        <div>
+        <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Testing Koneksi
+              </label>
+            <div
+            className="border rounded-xl"
+            style={{ borderColor: "#DADADA" }}>
+            <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Testing Koneksi Start
+                Start
             </label>
             <input
                 type="date"
@@ -368,12 +438,12 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Testing Koneksi Deadline
+                Deadline
             </label>
             <input
                 type="date"
@@ -386,8 +456,7 @@ return (
                 className="input input-bordered mt-1"
             />
         </div>
-
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -404,14 +473,30 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
+        </div> */}
+            </div>
         </div>
 
-        <div className="flex flex-col">
+       
+
+        
+
+        <div>
+        <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Serah Terima Server
+              </label>
+            <div
+            className="border rounded-xl"
+            style={{ borderColor: "#DADADA" }}>
+            <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Serah Terima Server Start
+                Start
             </label>
             <input
                 type="date"
@@ -425,12 +510,12 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Serah Terima Server Deadline
+                Deadline
             </label>
             <input
                 type="date"
@@ -444,7 +529,7 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -461,14 +546,26 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
+        </div> */}
+            </div>
         </div>
 
-        <div className="flex flex-col">
+       <div>
+       <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Implementasi
+              </label>
+        <div
+        className="border rounded-xl"
+        style={{ borderColor: "#DADADA" }}>
+        <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Implementasi Start
+                Start
             </label>
             <input
                 type="date"
@@ -482,12 +579,12 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col mx-3 my-3">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
             >
-                Implementasi Deadline
+                Deadline
             </label>
             <input
                 type="date"
@@ -501,7 +598,7 @@ return (
             />
         </div>
 
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
             <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -518,7 +615,11 @@ return (
                 }
                 className="input input-bordered mt-1"
             />
+        </div> */}
         </div>
+       </div>
+
+        
 
         <div className="flex flex-col">
             <label

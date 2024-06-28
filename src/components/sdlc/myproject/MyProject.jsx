@@ -209,6 +209,8 @@ const MyProject = ({ headers, data, action, link }) => {
                                         "postimplementationreviewstart",
                                         "postimplementationreviewdeadline",
                                         "postimplementationreviewdone",
+                                        "userdomain",
+                                        "userdomainpic",
                                         // "projectdone",
                                     ].includes(item)
                                         ? "hidden"
@@ -267,6 +269,8 @@ const MyProject = ({ headers, data, action, link }) => {
                                                 "postimplementationreviewstart",
                                                 "postimplementationreviewdeadline",
                                                 "postimplementationreviewdone",
+                                                "userdomain",
+                                                "userdomainpic",
                                                 // "projectdone",
                                             ].includes(header)
                                                 ? "hidden"

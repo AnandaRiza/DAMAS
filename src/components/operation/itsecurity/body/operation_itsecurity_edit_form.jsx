@@ -84,7 +84,7 @@ const page = () => {
           },
         }
       );
-      router.push("/main/operation");
+      router.push("/main/operation/itsecurity/allprogress");
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -860,6 +860,7 @@ const page = () => {
                       itsecurity_deadline_project: e.target.value,
                     })
                   }
+                  disabled
                 />
               </div>
 
@@ -938,7 +939,7 @@ const page = () => {
               </div>
 
               <div className="flex gap-2 items-center text-white ml-3 mt-3">
-                <Link href="/main/operation/datacenter/allprogress">
+                <Link href="/main/operation/itsecurity/allprogress">
                   <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
                     <MdOutlineCancel />
                     <span>Cancel</span>

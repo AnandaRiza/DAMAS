@@ -1,14 +1,25 @@
 "use client";
 
+import { useStateContext } from "@/context/ContextProvider";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const SKSEForm = () => {
+
+    const userid = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("DAMAS-USERID="))
+    ?.split("=")[1];
+
+    const {user}  = useStateContext();
+
+
     // State to manage form data
     const router = useRouter();
     const [dataAllPic, setDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
+    const [selectedUserDomain, setSelectedUserDomain] = useState("");
     const [formData, setFormData] = useState({
         nosurat: "",
         perihal: "",
@@ -16,6 +27,9 @@ const SKSEForm = () => {
         departement: "",
         deadline: "",
         status: "",
+        userdomain:"",
+        userdomainpic: "",
+        createdby: "",
     });
 
     const getDataAllPic = async () => {
@@ -33,13 +47,25 @@ const SKSEForm = () => {
 
     useEffect(() => {
         getDataAllPic();
+        const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
     }, []);
 
     const handleSubmit = async () => {
         try {
             await axios.post(
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/newskse`,
-                formData
+                {
+                    ...formData,
+                    createdby: userid,
+                    userdomain: user.userdomain
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "USER-ID": userid,
+                    },
+                }
+                
             );
             router.push("/main/ppo/allskse");
         } catch (error) {
@@ -125,8 +151,10 @@ const SKSEForm = () => {
                                         ...formData,
                                         pic: selectedPic.nama,
                                         departement: selectedPic.departemen,
+                                        userdomainpic: selectedPic.userdomain
                                     });
                                     setSelectedDept(selectedPic.departemen);
+                                    setSelectedUserDomain(selectedPic.userdomain)
                                 }}
                             >
                                 <option

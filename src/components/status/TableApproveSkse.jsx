@@ -44,7 +44,7 @@ const TableApproveSkse = ({ headers, data, parameter, action, isRefresh }) => {
                     <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
                         {action && <th className="py-2 px-4 w-32">Action</th>}
                         {headers.map((item, index) => (
-                            <th key={index} className={`py-3 px-6 capitalize ${item === 'id' || item === 'idskse' ? 'hidden' : ''}`}>
+                            <th key={index} className={`py-3 px-6 capitalize ${item === 'id' || item === 'idskse' || item === 'deadlineApprovement' ? 'hidden' : ''}`}>
                                 {getDisplayName(item)}
                             </th>
                         ))}
@@ -110,7 +110,7 @@ const TableApproveSkse = ({ headers, data, parameter, action, isRefresh }) => {
                             )}
 
                             {headers.map((header, headerIndex) => (
-                                <td key={headerIndex} className={`py-3 px-6 ${header === 'id' || header === 'idskse' ? 'hidden' : ''}`}>
+                                <td key={headerIndex} className={`py-3 px-6 ${header === 'id' || header === 'idskse' || header === 'deadlineApprovement' ? 'hidden' : ''}`}>
                                     {item[header]}
                                 </td>
                             ))}
