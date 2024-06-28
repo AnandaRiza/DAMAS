@@ -195,7 +195,7 @@ const ReviewMemoSupervisorPage = () => {
         console.log(`File updated: ${updatedData.memo_upload}`); // Console log the updated file name
 
         alert("Memo Update Success");
-        router.push('/main/logistic');
+        router.push('/main/status/approvelogistic_supervisor');
       } catch (error) {
         console.error("Error updating memo: ", error);
         setError("Failed to update memo");
@@ -432,7 +432,7 @@ const ReviewMemoSupervisorPage = () => {
               })
             }
             className="input input-bordered mt-1"
-            disabled={dataAllMemo.memo_status !== 'REQUEST HAS BEEN REJECTED BY HEAD OF DEPARTMENT'} // Make notes editable if status is 'REQUEST HAS BEEN REJECTED BY HEAD OF DEPARTMENT'
+            disabled={dataAllMemo.memo_status !== 'REQUEST HAS BEEN REJECTED BY GROUP HEAD'} // Make notes editable if status is 'REQUEST HAS BEEN REJECTED BY HEAD OF DEPARTMENT'
           />
         </div>
 

@@ -12,10 +12,10 @@ const layout = ({ children }) => {
             <div className="w-full h-full relative bg-[#00A6B4] bg-opacity-25 ">
                 <Header title="DAMAS" />
                 <div className="w-full h-full relative pb-10 flex">
-                    <div className="relative">
+                    <div className="relative w-[15%]">
                         <Sidebar />
                     </div>
-                    <div className="px-6 w-full h-full">
+                    <div className="px-6 w-[85%] h-full">
                         <div className="">{children}</div>
                     </div>
                     {/* <Footer /> */}

@@ -1,6 +1,5 @@
 "use client";
 import { IsDacenOperator, IsDevOperator, IsItmoOperator, IsItsecurityOperator, IsItsupportOperator, IsLogisticOperator, IsNetworkOperator, IsOperator, IsPpoOperator, IsServerOperator, IsSkseOperator } from "@/validation/validateGroupAkses";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -8,10 +7,18 @@ import { AiOutlineEdit } from "react-icons/ai";
 const MySkseTable = ({ headers, data, action, link }) => {
     const router = useRouter();
 
+    const convertToDateFormat = (dateTimeLocal) => {
+        const [date, time] = dateTimeLocal.split(", ");
+        const [day, month, year] = date.split("/");
+        // Format tanggal menjadi yyyy-mm-dd
+
+        return `${year}-${month}-${day}`;
+    };
+
     const rowClass = (inputDate, status) => {
         const calculateTimeLeft = (date) => {
             const now = new Date();
-            const deadline = new Date(date);
+            const deadline = new Date(convertToDateFormat(date));
             const difference = deadline.getTime() - now.getTime();
             const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
             return daysLeft;
@@ -52,7 +59,7 @@ const MySkseTable = ({ headers, data, action, link }) => {
             perihal: "Perihal",
             pic: "PIC",
             departement: "Departement",
-            deadline: "Deadline",
+            deadlineskse: "Deadline SK/SE",
             status: "Status",
         };
         return displayNames[header] || header;
@@ -61,7 +68,7 @@ const MySkseTable = ({ headers, data, action, link }) => {
     const getStatus = (item) => {
         const calculateTimeLeft = (date) => {
             const now = new Date();
-            const deadline = new Date(date);
+            const deadline = new Date(convertToDateFormat(date));
             const difference = deadline.getTime() - now.getTime();
             const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
 
@@ -74,7 +81,7 @@ const MySkseTable = ({ headers, data, action, link }) => {
             return "Finished";
         }
 
-        const daysLeft = calculateTimeLeft(item.deadline);
+        const daysLeft = calculateTimeLeft(item.deadlineskse);
 
         if (daysLeft < 0) {
             return "Past Deadline";
@@ -88,8 +95,8 @@ const MySkseTable = ({ headers, data, action, link }) => {
     };
 
     const sortedData = data.slice().sort((a, b) => {
-        const classA = rowClass(a.deadline, a.status);
-        const classB = rowClass(b.deadline, b.status);
+        const classA = rowClass(convertToDateFormat(a.deadlineskse), a.status);
+        const classB = rowClass(convertToDateFormat(b.deadlineskse), b.status);
 
         const aIsFinished = a.status === "Finished";
         const bIsFinished = b.status === "Finished";
@@ -122,7 +129,7 @@ const MySkseTable = ({ headers, data, action, link }) => {
         // Jika keduanya tidak selesai, tetapi memiliki status "Ongoing"
         if (a.status === "Ongoing" && b.status === "Ongoing") {
             // Urutkan berdasarkan deadlineproject
-            return new Date(a.deadline) - new Date(b.deadline);
+            return new Date(convertToDateFormat(a.deadlineskse)) - new Date(convertToDateFormat(b.deadlineskse));
         }
 
         // Jika hanya salah satu memiliki status "Ongoing", letakkan yang lain di atas
@@ -177,7 +184,7 @@ const MySkseTable = ({ headers, data, action, link }) => {
                     {sortedData.map((item, index) => {
                         const status = getStatus(item);
                         const rowClassName = rowClass(
-                            item.deadline,
+                            item.deadlineskse,
                             item.status
                         );
                         return (

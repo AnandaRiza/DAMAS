@@ -15,6 +15,7 @@ const Page = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [startIndex, setStartIndex] = useState(0);
   const [perPage, setPerPage] = useState(20);
+  const [hasMoreData, setHasMoreData] = useState(true);
 
   const { user } = useStateContext();
 
@@ -32,7 +33,9 @@ const Page = () => {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allproject/userdomainprojects?start=${startIndex}&size=${perPage}&userdomain=${user.userdomain}`
       );
-      setDataAllProject(response.data.data);
+      const fetchedData = response.data.data;
+            setDataAllProject(fetchedData);
+            setHasMoreData(fetchedData.length === perPage);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -117,21 +120,21 @@ const Page = () => {
                   disabled={currentPage === 1 || startIndex === 0}
                   onClick={() => {
                     setCurrentPage(currentPage - 1);
-                    setStartIndex(startIndex - 20);
+                    setStartIndex(startIndex - perPage);
                   }}
-                  className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
+                  className={`py-2 px-4 rounded-xl ${currentPage === 1 || startIndex === 0 ? 'bg-gray-400' : 'bg-[#00A6B4]'} text-white`}
                 >
                   Prev
                 </button>
                 <h5 className="font-semibold">{currentPage}</h5>
                 <button
                   type="button"
-                  disabled={startIndex + perPage >= dataAllProject[0].maxSize}
-                  onClick={() => {
-                    setCurrentPage(currentPage + 1);
-                    setStartIndex(startIndex + 20);
-                  }}
-                  className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
+                  disabled={!hasMoreData}
+                            onClick={() => {
+                                setCurrentPage(currentPage + 1);
+                                setStartIndex(startIndex + perPage);
+                            }}
+                            className={`py-2 px-4 rounded-xl ${!hasMoreData ? 'bg-gray-400' : 'bg-[#00A6B4]'} text-white`}
                 >
                   Next
                 </button>

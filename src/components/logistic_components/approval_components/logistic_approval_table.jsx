@@ -78,7 +78,7 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     const rowClass = (deadline, status) => {
         const daysLeft = (new Date(deadline) - new Date()) / (1000 * 60 * 60 * 24);
         if (status === 'MEMO APPROVED') return 'bg-green-200 hover:bg-green-300';
-        if (status === 'WAITING FOR') return 'bg-red-200 hover:bg-red-300';
+        if (status === 'WAITING FOR HEAD OF DEPARTMENT APPROVAL') return 'bg-yellow-200 hover:bg-yellow-300';
         if (status === 'MEMO DRAFT') return 'bg-blue-200 hover:bg-blue-300';
         if (daysLeft <= 3) return 'bg-red-200 hover:bg-red-300';
         if (daysLeft <= 7) return 'bg-yellow-200 hover:bg-yellow-300';
@@ -170,17 +170,19 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                     </thead>
                     <tbody>
                         {sortedData
-                            .filter(item => item.memo_status === "APPROVAL REQUEST SENT TO HEAD OF DEPARTMENT")
+                            .filter(item =>
+                                ["APPROVAL REQUEST SENT TO HEAD OF DEPARTMENT", "REQUEST HAS BEEN REJECTED BY GROUP HEAD",].includes(item.memo_status)
+                            )
                             .map((item, index) => {
                                 const rowClassName = rowClass(item.memo_deadline, item.memo_status);
                                 const deadlineStatus = calculateDeadlineStatus(item.memo_deadline, item.memo_status);
 
                                 return (
                                     <tr
-                                    key={index}
-                                    className={`${rowClassName} text-xs leading-5 cursor-pointer`} // Added cursor-pointer class
-                                    onDoubleClick={() => handleDoubleClick(item.memo_id)}
-                                >
+                                        key={index}
+                                        className={`${rowClassName} text-xs leading-5 cursor-pointer`} // Added cursor-pointer class
+                                        onDoubleClick={() => handleDoubleClick(item.memo_id)}
+                                    >
                                         {action && (
                                             <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                                 <button

@@ -195,7 +195,7 @@ const ReviewMemoPage = () => {
         console.log(`File updated: ${updatedData.memo_upload}`); // Console log the updated file name
 
         alert("Memo Update Success");
-        router.push('/main/logistic');
+        router.push('/main/status/approvelogistic');
       } catch (error) {
         console.error("Error updating memo: ", error);
         setError("Failed to update memo");

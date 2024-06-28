@@ -55,6 +55,10 @@ const MemoForm = () => {
   }, []);
 
   const handleSubmit = async () => {
+    if (!window.confirm("Are you sure you want to create this memo?")) {
+      return;
+    }
+  
     const userid = document.cookie
       .split("; ")
       .find((row) => row.startsWith("DAMAS-USERID="))
