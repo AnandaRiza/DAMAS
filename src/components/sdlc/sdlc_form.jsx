@@ -86,7 +86,6 @@ const SDLCForm = () => {
             ?.split("=")[1];
     }, []);
 
-
     const handleSubmit = async () => {
         try {
             await axios.post(
@@ -111,19 +110,19 @@ const SDLCForm = () => {
                     ...dataEmail,
                     text: `Assalamualaikum Warahmatullahi Wabarakatuh,
             
-            Yth. Bapak/Ibu,
-            
-            Bersama ini kami memberitahukan bahwa deadline project tinggal 1 hari lagi dengan detail project:
-            
-            Nama Project: ${formData.projectname}
-            PIC         : ${formData.pic}
-            Departement : ${formData.departement}
-            Deadline    : ${calculateDeadline(scheduleInput)}
-            Website     : http://localhost:3000/main
-            
-            Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan proyek selesai tepat waktu. Terima Kasih.
-            
-Wassalamualaikum Warahmatullahi Wabarakatuh`,
+                    Yth. Bapak/Ibu,
+                    
+                    Bersama ini kami memberitahukan bahwa deadline project tinggal 1 hari lagi dengan detail project:
+                    
+                    Nama Project: ${formData.projectname}
+                    PIC         : ${formData.pic}
+                    Departement : ${formData.departement}
+                    Deadline    : ${calculateDeadline(scheduleInput)}
+                    Website     : http://localhost:3000/main
+                    
+                    Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan proyek selesai tepat waktu. Terima Kasih.
+                    
+    Wassalamualaikum Warahmatullahi Wabarakatuh`,
                     to: "mayastri_devana@bcasyariah.co.id",
                     deadline: calculateDeadline(scheduleInput),
                     deadlinepro: calculateDeadline(scheduleInput),
