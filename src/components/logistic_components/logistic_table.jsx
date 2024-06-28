@@ -13,8 +13,8 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
             const classA = rowClass(a.memo_deadline, a.memo_status);
             const classB = rowClass(b.memo_deadline, b.memo_status);
 
-            const aIsFinished = a.memo_status === 'MEMO APPROVED';
-            const bIsFinished = b.memo_status === 'MEMO APPROVED';
+            const aIsFinished = a.memo_status.includes('APPROVED');
+            const bIsFinished = b.memo_status.includes('APPROVED');
 
             if (aIsFinished && bIsFinished) {
                 return classA.localeCompare(classB);
@@ -68,10 +68,10 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
 
     const rowClass = (deadline, status) => {
         const daysLeft = (new Date(deadline) - new Date()) / (1000 * 60 * 60 * 24);
-        if (status === 'MEMO APPROVED') return 'bg-green-200 hover:bg-green-300';
-        if (status === 'REQUEST HAS BEEN REJECTED') return 'bg-red-200 hover:bg-red-300';
+        if (status.includes('APPROVED')) return 'bg-green-200 hover:bg-green-300';
+        if (status.includes('REJECTED')) return 'bg-red-200 hover:bg-red-300';
         if (status === 'MEMO DRAFT') return 'bg-blue-200 hover:bg-blue-300';
-        if (status.trim() === 'APPROVAL REQUEST SENT TO HEAD OF DEPARTMENT') return 'bg-yellow-200 hover:bg-yellow-300';
+        if (status.trim() === 'APPROVAL REQUEST SENT TO HEAD OF DEPARTMENT', 'APPROVAL REQUEST SENT TO GROUP HEAD') return 'bg-yellow-200 hover:bg-yellow-300';
         if (daysLeft <= 3) return 'bg-red-200 hover:bg-red-300';
         if (daysLeft <= 7) return 'bg-yellow-200 hover:bg-yellow-300';
         return 'bg-white hover:bg-gray-300';
@@ -105,8 +105,7 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
         const deadlineDate = new Date(deadline);
         const daysLeft = (deadlineDate - currentDate) / (1000 * 60 * 60 * 24);
 
-        if (memoStatus === 'MEMO HAS BEEN APPROVED BY GROUP HEAD ') return 'MEMO FINISHED';
-        if (memoStatus === 'MEMO HAS BEEN APPROVED BY DEPARTMEN HEAD ') return 'MEMO FINISHED';
+        if (memoStatus.includes('APPROVED')) return 'MEMO FINISHED';
         if (daysLeft < 0) return 'PAST DEADLINE';
         if (daysLeft <= 3) return 'WITHIN 3 DAYS';
         if (daysLeft <= 7) return 'WITHIN 7 DAYS';
@@ -126,7 +125,7 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                             {headers.map((item, index) => (
                                 <th
                                     key={index}
-                                    className={`py-3 px-6 uppercase ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes', 'memo_upload','userdomain', 'userdomainpic','userdomainreviewer'].includes(item) ? 'hidden' : ''}`}
+                                    className={`py-3 px-6 uppercase ${['memo_id', 'memo_department', 'memo_createdBy', 'memo_reviewer', 'memo_notes', 'memo_upload', 'userdomain', 'userdomainpic','userdomainreviewer'].includes(item) ? 'hidden' : ''}`}
                                     onClick={() => onSort(item)}
                                 >
                                     <div className="flex items-center cursor-pointer">
@@ -142,11 +141,11 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                                 </th>
                             ))}
                             <th className="py-3 px-6 uppercase">Deadline Status</th>
-                            {action && (
+                            {/* {action && (
                                 <th className="py-3 px-6 w-32 flex items-center justify-center gap-3 uppercase">
                                     Edit
                                 </th>
-                            )}
+                            )} */}
                         </tr>
                     </thead>
                     <tbody>
@@ -169,7 +168,7 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                                         </td>
                                     ))}
                                     <td className="py-3 px-6">{deadlineStatus}</td>
-                                    {action && (
+                                    {/* {action && (
                                         <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                             <button
                                                 type="button"
@@ -179,7 +178,7 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                                                 <AiOutlineEdit size={20} />
                                             </button>
                                         </td>
-                                    )}
+                                    )} */}
                                 </tr>
                             );
                         })}
