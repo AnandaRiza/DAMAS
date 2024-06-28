@@ -27,7 +27,7 @@ const page = () => {
                     <a>My Project</a>
                   </li>
                   <li>
-                    <a>Detail</a>
+                    <a>Edit</a>
                   </li>
                 </ul>
               </div>
