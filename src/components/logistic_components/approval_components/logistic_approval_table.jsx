@@ -118,7 +118,7 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
         ?.split("=")[1];
 
     const transformStatus = (status) => {
-        return status === 'APPROVAL REQUEST SENT' ? 'WAITING FOR APPROVAL' : status;
+        return status === 'APPROVAL REQUEST SENT TO HEAD OF DEPARTMENT' ? 'WAITING FOR HEAD OF DEPARTMENT APPROVAL' : status;
     };
 
     const calculateDeadlineStatus = (deadline, memoStatus) => {
@@ -170,7 +170,7 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                     </thead>
                     <tbody>
                         {sortedData
-                            .filter(item => item.memo_status === "APPROVAL REQUEST SENT")
+                            .filter(item => item.memo_status === "APPROVAL REQUEST SENT TO HEAD OF DEPARTMENT")
                             .map((item, index) => {
                                 const rowClassName = rowClass(item.memo_deadline, item.memo_status);
                                 const deadlineStatus = calculateDeadlineStatus(item.memo_deadline, item.memo_status);
@@ -178,7 +178,7 @@ const ApprovalTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                                 return (
                                     <tr
                                     key={index}
-                                    className={`${rowClassName} text-xs leading-5`}
+                                    className={`${rowClassName} text-xs leading-5 cursor-pointer`} // Added cursor-pointer class
                                     onDoubleClick={() => handleDoubleClick(item.memo_id)}
                                 >
                                         {action && (
