@@ -33,7 +33,7 @@ const SKSEForm = () => {
 
     const [dataEmail, setdataEmail] = useState({
         to: "",
-        subject: "Test",
+        subject: "Deadline SK/SE is Due Tomorrow",
         deadline: "",
         deadlinepro: "",
     });
@@ -80,7 +80,22 @@ const SKSEForm = () => {
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/schedulesend-email`,
                 {
                     ...dataEmail,
-                    text: "halo",
+                    text: `Assalamualaikum Warahmatullahi Wabarakatuh,
+            
+                Yth. Bapak/Ibu,
+                
+                Bersama ini kami memberitahukan bahwa deadline SK/SE tinggal 1 hari lagi dengan detail project:
+                
+                No Surat    : ${formData.nosurat}
+                Perihal     : ${formData.perihal}
+                PIC         : ${formData.pic}
+                Departement : ${formData.departement}
+                Deadline    : ${calculateDeadline(scheduleInput)}
+                Website     : http://localhost:3000/main
+                
+                Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan proyek selesai tepat waktu. Terima Kasih.
+                
+Wassalamualaikum Warahmatullahi Wabarakatuh`,
                     to: "mayastri_devana@bcasyariah.co.id",
                     deadline: calculateDeadline(scheduleInput),
                     deadlinepro: calculateDeadline(scheduleInput),

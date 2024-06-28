@@ -61,7 +61,7 @@ const PpoForm = () => {
 
     const [dataEmail, setdataEmail] = useState({
         to: "",
-        subject: "Test",
+        subject: "Deadline Project is Due Tomorrow",
         deadline: "",
         deadlinepro: "",
     });
@@ -109,7 +109,21 @@ const PpoForm = () => {
          await axios.post( `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/schedulesend-email`,
             {
                 ...dataEmail,
-                text: "halo",
+                text: `Assalamualaikum Warahmatullahi Wabarakatuh,
+            
+                Yth. Bapak/Ibu,
+                
+                Bersama ini kami memberitahukan bahwa deadline project tinggal 1 hari lagi dengan detail project:
+                
+                Nama Project: ${formData.projectname}
+                PIC         : ${formData.pic}
+                Departement : ${formData.departement}
+                Deadline    : ${calculateDeadline(scheduleInput)}
+                Website     : http://localhost:3000/main
+                
+                Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan proyek selesai tepat waktu. Terima Kasih.
+                
+Wassalamualaikum Warahmatullahi Wabarakatuh`,
                 to: "ananda_riza@bcasyariah.co.id",
                 deadline: calculateDeadline(scheduleInput),
                 deadlinepro: calculateDeadline(scheduleInput),
