@@ -432,7 +432,7 @@ const ReviewMemoSupervisorPage = () => {
               })
             }
             className="input input-bordered mt-1"
-            disabled={dataAllMemo.memo_status !== 'REQUEST HAS BEEN REJECTED BY HEAD OF DEPARTMENT'} // Make notes editable if status is 'REQUEST HAS BEEN REJECTED BY HEAD OF DEPARTMENT'
+            disabled={dataAllMemo.memo_status !== 'REQUEST HAS BEEN REJECTED BY GROUP HEAD'} // Make notes editable if status is 'REQUEST HAS BEEN REJECTED BY HEAD OF DEPARTMENT'
           />
         </div>
 
