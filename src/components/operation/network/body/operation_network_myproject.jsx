@@ -23,7 +23,7 @@ const NetworkForm = ({ headers, data, action, link }) => {
     const updatedData = data.map((item) => {
       if (item.network_id === network_id) {
         item.status = "Finish";
-        router.push(`${link}/editmyproject/${network_id}`);
+        router.push(`${link}/edit/${network_id}`);
       }
       return item;
     });
@@ -291,7 +291,7 @@ const NetworkForm = ({ headers, data, action, link }) => {
                     <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                       <button
                         type="button"
-                        onClick={() => handleEdit(item.id)}
+                        onClick={() => handleEdit(item.network_id)}
                         className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
                       >
                         <AiOutlineEdit size={20} />
