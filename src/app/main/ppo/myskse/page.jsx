@@ -15,6 +15,7 @@ const page = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
     const [perPage, setPerPage] = useState(20);
+    const [hasMoreData, setHasMoreData] = useState(true);
 
     const { user } = useStateContext();
 
@@ -28,7 +29,9 @@ const page = () => {
             const response = await axios.get(
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allskse/userdomainskse?start=${startIndex}&size=${perPage}&userdomain=${user.userdomain}`
             );
-            setDataAllSkse(response.data.data);
+            const fetchedData = response.data.data;
+            setDataAllSkse(fetchedData);
+            setHasMoreData(fetchedData.length === perPage);
         } catch (error) {
             console.log(error);
         }
@@ -40,6 +43,8 @@ const page = () => {
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allskse/getskse?input=${searchInput}`
             );
             setSearchResult(response.data.data);
+            setCurrentPage(1);
+            setStartIndex(0);
         } catch (error) {
             console.log(error);
         }
@@ -121,24 +126,29 @@ const page = () => {
                                     }
                                     onClick={() => {
                                         setCurrentPage(currentPage - 1);
-                                        setStartIndex(startIndex - 20);
+                                        setStartIndex(startIndex - perPage);
                                     }}
-                                    className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
+                                    className={`py-2 px-4 rounded-xl ${
+                                        currentPage === 1 || startIndex === 0
+                                            ? "bg-gray-400"
+                                            : "bg-[#00A6B4]"
+                                    } text-white`}
                                 >
                                     Prev
                                 </button>
                                 <h5 className="font-semibold">{currentPage}</h5>
                                 <button
                                     type="button"
-                                    disabled={
-                                        startIndex + perPage >=
-                                        dataAllSkse[0].maxSize
-                                    }
+                                    disabled={!hasMoreData}
                                     onClick={() => {
                                         setCurrentPage(currentPage + 1);
-                                        setStartIndex(startIndex + 20);
+                                        setStartIndex(startIndex + perPage);
                                     }}
-                                    className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
+                                    className={`py-2 px-4 rounded-xl ${
+                                        !hasMoreData
+                                            ? "bg-gray-400"
+                                            : "bg-[#00A6B4]"
+                                    } text-white`}
                                 >
                                     Next
                                 </button>
