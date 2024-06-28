@@ -297,7 +297,7 @@ const page = ({ headers, data, action, link }) => {
                                             <button
                                                 type="button"
                                                 onClick={() =>
-                                                    handleEdit(item.id)
+                                                    handleEdit(item.dacen_id)
                                                 }
                                                 className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
                                             >

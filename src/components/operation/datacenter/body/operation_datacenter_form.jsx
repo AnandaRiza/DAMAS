@@ -213,7 +213,7 @@ const page = () => {
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -233,7 +233,8 @@ const page = () => {
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+
                 </div>
                 {showPhase <= 1 && (
                   <button
@@ -325,7 +326,7 @@ const page = () => {
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -345,7 +346,8 @@ const page = () => {
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+
                 </div>
                 {showPhase <= 2 && (
                     <button
@@ -437,7 +439,7 @@ const page = () => {
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -457,7 +459,8 @@ const page = () => {
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+
                 </div>
                 {showPhase <= 3 && (
                 <button
@@ -550,7 +553,7 @@ const page = () => {
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -570,7 +573,8 @@ const page = () => {
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+
                 </div>
                 {showPhase <= 4 && (
                     <button
@@ -663,7 +667,7 @@ const page = () => {
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -683,7 +687,8 @@ const page = () => {
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+
                 </div>
                 {showPhase <= 5 && (
                     <button
@@ -776,7 +781,7 @@ const page = () => {
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -796,7 +801,8 @@ const page = () => {
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+
                 </div>
                 {showPhase <= 6 && (
                     <button
@@ -889,7 +895,7 @@ const page = () => {
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -909,7 +915,8 @@ const page = () => {
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+                  
                 </div>
               </div>
             )}

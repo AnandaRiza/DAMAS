@@ -79,7 +79,7 @@ const ApprovalPage = () => {
 
     return (
         <div>
-            <HeaderStatusLogistic title="Logistic Approval Request" />
+            <HeaderStatusLogistic title="Logistic Approval Request for Reviewer" />
 
             <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch

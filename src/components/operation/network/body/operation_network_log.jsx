@@ -34,6 +34,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
             network_uat_done: "UAT Done",
             network_status: "Status",
             network_deadline_project: "Project Deadline",
+            createdby: "",
         };
 
         const displayName = displayNames[header] || header;
@@ -59,7 +60,36 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                     <tr className="border-b-2 bg-[#00A6B4] text-sm">
                         {action && <th className="py-2 px-4 w-32">Action</th>}
                         {headers.map((item, index) => (
-                            <th key={index} className="py-3 px-6 capitalize">
+                            <th key={index} className={`py-3 px-6 capitalize ${
+                                [
+                                    "id",
+                                    "network_id",
+                                    "network_kickoff_start",
+                                    "network_kickoff_deadline",
+                                    "network_kickoff_done",
+                                    "network_mop_start",
+                                    "network_mop_deadline",
+                                    "network_mop_done",
+                                    "network_demomop_start",
+                                    "network_demomop_deadline",
+                                    "network_demomop_done",
+                                    "network_implementasi_start", 
+                                    "network_implementasi_deadline",
+                                    "network_implementasi_done",
+                                    "network_skse_start",
+                                    "network_skse_deadline",
+                                    "network_skse_done",
+                                    "network_uat_start",
+                                    "network_uat_deadline",
+                                    "network_uat_done",
+                                    "network_status",
+                                    "network_deadline_project",
+                                    "userdomain",
+                                    "userdomain_pic",
+                                ].includes(item)
+                                ?"hidden"
+                                :""
+                            }`}>
                                 {getDisplayName(item)}
                             </th>
                         ))}
@@ -119,7 +149,36 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                             )}
 
                             {headers.map((header, headerIndex) => (
-                                <td key={headerIndex} className="py-3 px-6">
+                                <td key={headerIndex} className={`py-3 px-6 ${
+                                    [
+                                        "id",
+                                        "network_id",
+                                        "network_kickoff_start",
+                                        "network_kickoff_deadline",
+                                        "network_kickoff_done",
+                                        "network_mop_start",
+                                        "network_mop_deadline",
+                                        "network_mop_done",
+                                        "network_demomop_start",
+                                        "network_demomop_deadline",
+                                        "network_demomop_done",
+                                        "network_implementasi_start", 
+                                        "network_implementasi_deadline",
+                                        "network_implementasi_done",
+                                        "network_skse_start",
+                                        "network_skse_deadline",
+                                        "network_skse_done",
+                                        "network_uat_start",
+                                        "network_uat_deadline",
+                                        "network_uat_done",
+                                        "network_status",
+                                        "network_deadline_project",
+                                        "userdomain",
+                                        "userdomain_pic",
+                                    ].includes(header)
+                                    ? "hidden"
+                                    : ""
+                                }`}>
                                     {item[header]}
                                 </td>
                             ))}

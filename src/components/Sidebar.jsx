@@ -50,7 +50,7 @@ const Sidebar = () => {
     };
 
     return (
-        <div className="bg-[#00A6B4]/[0.5] text-w w-full h-full p-4 ml-4 mt-3 rounded-xl shadow-r-md">
+    <div className="bg-[#00A6B4]/[0.5] text-w w-full h-full p-4 ml-4 mt-3 rounded-xl shadow-r-md">
             <div className="collapse collapse-arrow ">
                 <div>
                     <div>
@@ -709,7 +709,7 @@ const Sidebar = () => {
                                 </div>
 
                                 <div className="collapse-content">
-                                    {(IsLogisticOperator() || IsOperator()) && (
+                                    {IsLogisticOperator()|| IsOperator() && (
                                         <div>
                                             <Link href="/main/logistic/mymemo">
                                                 <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -730,7 +730,7 @@ const Sidebar = () => {
                                         </div>
                                     </Link>
 
-                                    {(IsLogisticOperator() || IsOperator()) && (
+                                    {IsLogisticOperator()|| IsOperator() && (
                                         <div>
                                             <hr className="my-4 border-gray-300" />
 
@@ -785,7 +785,7 @@ const Sidebar = () => {
                                         </div>
                                     )}
 
-                                    {(IsPpoSupervisor() || IsSupervisor() || IsOperator()) && (
+                                    {(IsPpoSupervisor() || IsSupervisor()) || IsOperator() && (
                                         <div>
                                             <hr className="my-4 border-gray-300" />
 
@@ -799,16 +799,31 @@ const Sidebar = () => {
                                         </div>
                                     )}
 
-                                    {(IsLogisticSupervisor() ||
-                                        IsSupervisor() || IsOperator() ||
-                                        IsReviewerSupervisor()) && (
+                                    {(  IsLogisticSupervisor() ||
+                                        IsSupervisor() || IsOperator() ) && (
                                         <div>
                                             <hr className="my-4 border-gray-300" />
 
                                             <Link href="/main/status/approvelogistic">
                                                 <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                                     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                                        Logistic
+                                                    Logistic Reviewer 
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            <hr className="my-4 border-gray-300" />
+                                        </div>
+                                    )}
+
+                                    {(IsReviewerSupervisor() ||
+                                        IsSupervisor() || IsOperator()) && (
+                                        <div>
+                                            <hr className="my-4 border-gray-300" />
+
+                                            <Link href="/main/status/approvelogistic_supervisor">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                    Logistic Supervisor
                                                     </button>
                                                 </div>
                                             </Link>
@@ -835,7 +850,7 @@ const Sidebar = () => {
                                             </div>
                                             <div className="collapse-content">
                                                 {(IsNetworkOperator() || IsSupervisor() ||
-                                                    IsOperationSupervisor() || IsOperator() ) && (
+                                                    IsOperationSupervisor()|| IsOperator() ) && (
                                                     <div>
                                                         <Link href="/main/status/approveoperation/network">
                                                             <div className="collapse-title font-bold flex items-center hover:bg-[#ACC8E5] rounded mb-2 bg-base-200 ">
@@ -848,7 +863,7 @@ const Sidebar = () => {
                                                     </div>
                                                 )}
                                                 {(IsServerOperator() || IsSupervisor() ||
-                                                    IsOperationSupervisor() || IsOperator()) && (
+                                                    IsOperationSupervisor()|| IsOperator() ) && (
                                                     <div>
                                                         <hr className="my-4 border-gray-300" />
 
@@ -864,7 +879,7 @@ const Sidebar = () => {
                                                 )}
 
                                                 {(IsDacenOperator() || IsSupervisor() ||
-                                                    IsOperationSupervisor() || IsOperator() ) && (
+                                                    IsOperationSupervisor()|| IsOperator() ) && (
                                                     <div>
                                                         <hr className="my-4 border-gray-300" />
 
@@ -880,7 +895,7 @@ const Sidebar = () => {
                                                 )}
 
                                                 {(IsItsupportOperator() || IsSupervisor() ||
-                                                    IsOperationSupervisor() || IsOperator() ) && (
+                                                    IsOperationSupervisor()|| IsOperator() ) && (
                                                     <div>
                                                         <hr className="my-4 border-gray-300" />
 
@@ -896,7 +911,7 @@ const Sidebar = () => {
                                                 )}
 
                                                 {(IsItmoOperator() || IsSupervisor() ||
-                                                    IsOperationSupervisor() || IsOperator() ) && (
+                                                    IsOperationSupervisor()|| IsOperator() ) && (
                                                     <div>
                                                         <hr className="my-4 border-gray-300" />
 
@@ -912,7 +927,7 @@ const Sidebar = () => {
                                                 )}
 
                                                 {(IsItsecurityOperator() || IsSupervisor() ||
-                                                    IsOperationSupervisor() || IsOperator() ) && (
+                                                    IsOperationSupervisor()|| IsOperator()  ) && (
                                                     <div>
                                                         <hr className="my-4 border-gray-300" />
 

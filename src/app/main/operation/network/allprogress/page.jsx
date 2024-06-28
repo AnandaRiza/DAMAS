@@ -61,7 +61,7 @@ const page = () => {
                     <div className="w-full flex justify-between items-center"></div>
                 </div>
                 {dataAllNetwork && (!searchResult || searchInput == "") ? (
-                    <div className="">
+                    <div className="w-full h-full relative">
                         <NetworkTable
                             headers={Object.keys(dataAllNetwork[0]).slice(
                                 0,

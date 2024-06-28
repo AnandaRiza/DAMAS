@@ -210,7 +210,7 @@ return (
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -230,7 +230,8 @@ return (
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+
                 </div>
                 {showPhase <= 1 && (
                   <button
@@ -322,7 +323,7 @@ return (
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -342,7 +343,8 @@ return (
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+
                 </div>
                 {showPhase <= 2 && (
                     <button
@@ -434,7 +436,7 @@ return (
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -454,7 +456,8 @@ return (
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+
                 </div>
                 {showPhase <= 3 && (
                 <button
@@ -547,7 +550,7 @@ return (
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -567,7 +570,8 @@ return (
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+
                 </div>
                 {showPhase <= 4 && (
                     <button
@@ -660,7 +664,7 @@ return (
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -680,7 +684,8 @@ return (
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+
                 </div>
                 {showPhase <= 5 && (
                     <button
@@ -773,7 +778,7 @@ return (
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -793,7 +798,8 @@ return (
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+                  
                 </div>
                 {showPhase <= 6 && (
                     <button
@@ -886,7 +892,7 @@ return (
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  {/* <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -906,7 +912,8 @@ return (
                       }
                       className="input input-bordered mt-1"
                     />
-                  </div>
+                  </div> */}
+                  
                 </div>
               </div>
             )}
