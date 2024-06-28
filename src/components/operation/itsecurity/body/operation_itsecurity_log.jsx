@@ -13,7 +13,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
             status_approvement: "Status Approvement",
             itsecurity_perihal: "Project Name",
             itsecurity_pic: "PIC",
-            itsecuritytement: "Departement",
+            departement: "Departement",
             itsecurity_phase1: "",
             itsecurity_phase1_start: "",
             itsecurity_phase1_deadline: "",
@@ -44,6 +44,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
             itsecurity_phase7_done: "",
             itsecurity_status: "Status",
             itsecurity_deadline_project: "Project Deadline",
+            createdBy: "",
         };
 
         const displayName = displayNames[header] || header;
@@ -65,16 +66,58 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
     return (
         <div className="overflow-auto mx-auto">
             <table className="text-center border-b cursor-pointer">
-                <thead>
-                    <tr className="border-b-2 bg-[#00A6B4] text-sm">
-                        {action && <th className="py-2 px-4 w-32">Action</th>}
-                        {headers.map((item, index) => (
-                            <th key={index} className="py-3 px-6 capitalize">
-                                {getDisplayName(item)}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
+            <thead>
+          <tr className="border-b-2 bg-[#00A6B4] text-sm">
+            {action && <th className="py-2 px-4 w-32">Action</th>}
+            {headers.map((item, index) => (
+              <th
+                key={index}
+                className={`py-3 px-6 capitalize ${
+                  [
+                    "id",
+                    "itsecurity_id",
+                    "itsecurity_phase1",
+                    "itsecurity_phase1_start",
+                    "itsecurity_phase1_deadline",
+                    "itsecurity_phase1_done",
+                    "itsecurity_phase2",
+                    "itsecurity_phase2_start",
+                    "itsecurity_phase2_deadline",
+                    "itsecurity_phase2_done",
+                    "itsecurity_phase3",
+                    "itsecurity_phase3_start",
+                    "itsecurity_phase3_deadline",
+                    "itsecurity_phase3_done",
+                    "itsecurity_phase4",
+                    "itsecurity_phase4_start",
+                    "itsecurity_phase4_deadline",
+                    "itsecurity_phase4_done",
+                    "itsecurity_phase5",
+                    "itsecurity_phase5_start",
+                    "itsecurity_phase5_deadline",
+                    "itsecurity_phase5_done",
+                    "itsecurity_phase6",
+                    "itsecurity_phase6_start",
+                    "itsecurity_phase6_deadline",
+                    "itsecurity_phase6_done",
+                    "itsecurity_phase7",
+                    "itsecurity_phase7_start",
+                    "itsecurity_phase7_deadline",
+                    "itsecurity_phase7_done",
+                    "itsecurity_status",
+                    "itsecurity_deadline_project",
+                    "userdomain",
+                    "userdomain_pic",
+                  ].includes(item)
+                    ? "hidden"
+                    : ""
+                }`}
+              >
+                {getDisplayName(item)}
+              </th>
+            ))}
+          </tr>
+        </thead>
                 <tbody className="bg-black">
                     {data.map((item, index) => (
                         <tr
@@ -129,9 +172,51 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                             )}
 
                             {headers.map((header, headerIndex) => (
-                                <td key={headerIndex} className="py-3 px-6">
-                                    {item[header]}
-                                </td>
+                                <td
+                                key={headerIndex}
+                                className={`py-3 px-6 ${
+                                  [
+                                    "id",
+                                    "itsecurity_id",
+                                    "itsecurity_phase1",
+                                    "itsecurity_phase1_start",
+                                    "itsecurity_phase1_deadline",
+                                    "itsecurity_phase1_done",
+                                    "itsecurity_phase2",
+                                    "itsecurity_phase2_start",
+                                    "itsecurity_phase2_deadline",
+                                    "itsecurity_phase2_done",
+                                    "itsecurity_phase3",
+                                    "itsecurity_phase3_start",
+                                    "itsecurity_phase3_deadline",
+                                    "itsecurity_phase3_done",
+                                    "itsecurity_phase4",
+                                    "itsecurity_phase4_start",
+                                    "itsecurity_phase4_deadline",
+                                    "itsecurity_phase4_done",
+                                    "itsecurity_phase5",
+                                    "itsecurity_phase5_start",
+                                    "itsecurity_phase5_deadline",
+                                    "itsecurity_phase5_done",
+                                    "itsecurity_phase6",
+                                    "itsecurity_phase6_start",
+                                    "itsecurity_phase6_deadline",
+                                    "itsecurity_phase6_done",
+                                    "itsecurity_phase7",
+                                    "itsecurity_phase7_start",
+                                    "itsecurity_phase7_deadline",
+                                    "itsecurity_phase7_done",
+                                    "itsecurity_status",
+                                    "itsecurity_deadline_project",
+                                    "userdomain",
+                                    "userdomain_pic",
+                                  ].includes(header)
+                                    ? "hidden"
+                                    : ""
+                                }`}
+                              >
+                                {item[header]}
+                              </td>
                             ))}
                         </tr>
                     ))}

@@ -1,23 +1,52 @@
-'use client';
+"use client";
 
+import { useStateContext } from "@/context/ContextProvider";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { DiVim } from "react-icons/di";
+import { CiSquarePlus } from "react-icons/ci";
 
 const page = () => {
+  const userid = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("DAMAS-USERID="))
+    ?.split("=")[1];
 
-const [dataAllPic, setDataAllPic] = useState(null);
+  const { user } = useStateContext();
+  const [dataAllPic, setDataAllPic] = useState(null);
   const [selectedDept, setSelectedDept] = useState("");
+  const [selectedUserDomain, setSelectedUserDomain] = useState("");
+  const router = useRouter();
   const [formData, setFormData] = useState({
-
+    server_perihal: "",
+    server_pic: "",
+    server_deadline: "",
+    server_status: "",
+    createdBy: "",
+    userdomain: "",
+    userdomain_pic: "",
   });
 
   const [showPhase, setShowPhase] = useState(0);
 
   const handleSubmit = async () => {
     try {
-      await axios.post("http://localhost:8081/api/operationitsecurity", formData);
-      alert("Create Project Success");
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationitsecurity`,
+        {
+          ...formData,
+          createdBy: userid,
+          userdomain: user.userdomain,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "USER-ID": userid,
+          },
+        }
+      );
+      router.push("/main/operation/itsecurity/allprogress");
+      // console.log(createdby)
     } catch (error) {
       console.log(error);
       alert("Create Project Failed!");
@@ -39,13 +68,23 @@ const [dataAllPic, setDataAllPic] = useState(null);
 
   useEffect(() => {
     getDataAllPic();
+    const userid = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("DAMAS-USERID="))
+      ?.split("=")[1];
   }, []);
 
-return (
+  return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
       <div>
         <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
-          <form className="space-y-4">
+        <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            className="space-y-4"
+          >
             {/* Input fields for memo attributes */}
             <div className="flex flex-col">
               <label
@@ -88,8 +127,10 @@ return (
                       ...formData,
                       itsecurity_pic: selectedPic.nama,
                       departement: selectedPic.departemen,
+                      userdomain_pic: selectedPic.userdomain,
                     });
                     setSelectedDept(selectedPic.departemen);
+                    setSelectedUserDomain(selectedPic.userdomain);
                   }}
                 >
                   <option
@@ -232,7 +273,6 @@ return (
                       className="input input-bordered mt-1"
                     />
                   </div> */}
-
                 </div>
                 {showPhase <= 1 && (
                   <button
@@ -345,10 +385,9 @@ return (
                       className="input input-bordered mt-1"
                     />
                   </div> */}
-
                 </div>
                 {showPhase <= 2 && (
-                    <button
+                  <button
                     type="button"
                     className="btn btn-warning mt-4 border border-gray"
                     onClick={() => setShowPhase(3)}
@@ -356,7 +395,7 @@ return (
                     <div className=" text-black">Tambah Phase</div>
                   </button>
                 )}
-                </div>
+              </div>
             )}
 
             {showPhase >= 3 && (
@@ -458,18 +497,16 @@ return (
                       className="input input-bordered mt-1"
                     />
                   </div> */}
-
                 </div>
                 {showPhase <= 3 && (
-                <button
-                type="button"
-                className="btn btn-warning mt-4 border border-gray"
-                onClick={() => setShowPhase(4)}
-              >
-                <div className=" text-black">Tambah Phase</div>
-              </button>
+                  <button
+                    type="button"
+                    className="btn btn-warning mt-4 border border-gray"
+                    onClick={() => setShowPhase(4)}
+                  >
+                    <div className=" text-black">Tambah Phase</div>
+                  </button>
                 )}
-
               </div>
             )}
 
@@ -572,18 +609,16 @@ return (
                       className="input input-bordered mt-1"
                     />
                   </div> */}
-
                 </div>
                 {showPhase <= 4 && (
-                    <button
-                  type="button"
-                  className="btn btn-warning mt-4 border border-gray"
-                  onClick={() => setShowPhase(5)}
-                >
-                  <div className=" text-black">Tambah Phase</div>
-                </button>
+                  <button
+                    type="button"
+                    className="btn btn-warning mt-4 border border-gray"
+                    onClick={() => setShowPhase(5)}
+                  >
+                    <div className=" text-black">Tambah Phase</div>
+                  </button>
                 )}
-                
               </div>
             )}
 
@@ -686,18 +721,16 @@ return (
                       className="input input-bordered mt-1"
                     />
                   </div> */}
-
                 </div>
                 {showPhase <= 5 && (
-                    <button
-                  type="button"
-                  className="btn btn-warning mt-4 border border-gray"
-                  onClick={() => setShowPhase(6)}
-                >
-                  <div className=" text-black">Tambah Phase</div>
-                </button>
+                  <button
+                    type="button"
+                    className="btn btn-warning mt-4 border border-gray"
+                    onClick={() => setShowPhase(6)}
+                  >
+                    <div className=" text-black">Tambah Phase</div>
+                  </button>
                 )}
-                
               </div>
             )}
 
@@ -800,18 +833,16 @@ return (
                       className="input input-bordered mt-1"
                     />
                   </div> */}
-
                 </div>
                 {showPhase <= 6 && (
-                    <button
-                  type="button"
-                  className="btn btn-warning mt-4 border border-gray"
-                  onClick={() => setShowPhase(7)}
-                >
-                  <div className=" text-black">Tambah Phase</div>
-                </button>
+                  <button
+                    type="button"
+                    className="btn btn-warning mt-4 border border-gray"
+                    onClick={() => setShowPhase(7)}
+                  >
+                    <div className=" text-black">Tambah Phase</div>
+                  </button>
                 )}
-                
               </div>
             )}
 
@@ -914,7 +945,6 @@ return (
                       className="input input-bordered mt-1"
                     />
                   </div> */}
-                  
                 </div>
               </div>
             )}
@@ -944,64 +974,69 @@ return (
             {/* Status dropdown */}
 
             <div className="flex flex-col">
-                <label
-                    htmlFor="status"
-                    className="text-sm font-semibold text-[#0066AE]"
+              <label
+                htmlFor="status"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Status <span className="text-red-500">*</span>
+              </label>
+              <div className="dropdown mt-1 ">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn m-1 w-52 bg-white hover:bg-gray text-gray-600"
                 >
-                    Status <span className="text-red-500">*</span>
-                </label>
-                <div className="dropdown mt-1 ">
-                    <div tabIndex={0} role="button" className="btn m-1 w-52 bg-white hover:bg-gray text-gray-600">
-                        {formData.itsecurity_status ? formData.itsecurity_status : "Select Status"}
-                    </div>
-                    <ul
-                        tabIndex={0}
-                        className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 mb-4"
-                    >
-                        <li>
-                            <a
-                                onClick={() =>
-                                    setFormData({
-                                        ...formData,
-                                        itsecurity_status: "Ongoing",
-                                    })
-                                }
-                            >
-                                Ongoing
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                onClick={() =>
-                                    setFormData({
-                                        ...formData,
-                                        itsecurity_status: "Finished",
-                                    })
-                                }
-                            >
-                                Finished
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                onClick={() =>
-                                    setFormData({
-                                        ...formData,
-                                        itsecurity_status: "Past-Deadline",
-                                    })
-                                }
-                            >
-                                Past Deadline
-                            </a>
-                        </li>
-                    </ul>
+                  {formData.itsecurity_status
+                    ? formData.itsecurity_status
+                    : "Select Status"}
                 </div>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 mb-4"
+                >
+                  <li>
+                    <a
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          itsecurity_status: "Ongoing",
+                        })
+                      }
+                    >
+                      Ongoing
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          itsecurity_status: "Finished",
+                        })
+                      }
+                    >
+                      Finished
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          itsecurity_status: "Past-Deadline",
+                        })
+                      }
+                    >
+                      Past Deadline
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
             {/* Submit button */}
             <button
-              type="button"
+              type="submit"
               className="btn btn-success mt-4 border border-gray"
-              onClick={handleSubmit}
             >
               <div className=" text-black">Create Project</div>
             </button>
@@ -1009,7 +1044,7 @@ return (
         </div>
       </div>
     </div>
-);
+  );
 };
 
 export default page;
