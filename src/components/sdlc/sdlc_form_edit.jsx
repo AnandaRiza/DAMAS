@@ -956,7 +956,7 @@ const Page = () => {
                             </label>
                             <input
                                 disabled
-                                type="date"
+                                // type="date"
                                 id="deadlineproject"
                                 name="deadlineproject"
                                 value={dataAllProject.deadlineproject}

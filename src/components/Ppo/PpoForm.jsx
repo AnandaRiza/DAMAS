@@ -17,6 +17,7 @@ const PpoForm = () => {
     const [dataAllPic, setDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
     const [selectedUserDomain, setSelectedUserDomain] = useState("");
+    const [scheduleInput, setScheduleInput] = useState("");
     const router = useRouter();
 
     // State to manage form data
@@ -57,6 +58,13 @@ const PpoForm = () => {
         userdomainpic: "",
         createdby: "",
     });
+
+    const [dataEmail, setdataEmail] = useState({
+        to: "",
+        subject: "Deadline Project is Due Tomorrow",
+        deadline: "",
+        deadlinepro: "",
+    });
   
     
 
@@ -85,7 +93,8 @@ const PpoForm = () => {
             {
                 ...formData,
                 createdby: userid,
-                userdomain: user.userdomain
+                userdomain: user.userdomain,
+                deadlineproject: calculateDeadline(scheduleInput)
                 
             },
             {
@@ -96,12 +105,56 @@ const PpoForm = () => {
             }
             
         );
+         // console.log(calculateDeadline(formData.deadlineproject))
+         await axios.post( `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/schedulesend-email`,
+            {
+                ...dataEmail,
+                text: `Assalamualaikum Warahmatullahi Wabarakatuh,
+            
+                Yth. Bapak/Ibu,
+                
+                Bersama ini kami memberitahukan bahwa deadline project tinggal 1 hari lagi dengan detail project:
+                
+                Nama Project: ${formData.projectname}
+                PIC         : ${formData.pic}
+                Departement : ${formData.departement}
+                Deadline    : ${calculateDeadline(scheduleInput)}
+                Website     : http://localhost:3000/main
+                
+                Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan proyek selesai tepat waktu. Terima Kasih.
+                
+Wassalamualaikum Warahmatullahi Wabarakatuh`,
+                to: "ananda_riza@bcasyariah.co.id",
+                deadline: calculateDeadline(scheduleInput),
+                deadlinepro: calculateDeadline(scheduleInput),
+            },
+        );
         router.push("/main/ppo")
         // console.log(createdby)
         } catch (error) {
             console.log(error);
             alert("Create Project Failed!");
         }
+    };
+
+    const calculateDeadline = (date) => {
+        const d = new Date(date);
+        d.setDate(d.getDate() - 1);
+    
+        const day = String(d.getDate()).padStart(2, "0");
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const year = d.getFullYear();
+        const hours = String(d.getHours()).padStart(2, "0");
+        const minutes = String(d.getMinutes()).padStart(2, "0");
+        const seconds = String(d.getSeconds()).padStart(2, "0");
+    
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+    };
+
+    const getMinDateTime = () => {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        return now.toISOString().slice(0, 16);
     };
 
     return (
@@ -627,17 +680,18 @@ const PpoForm = () => {
                     Deadline Project <span className="text-red-500">*</span>
                 </label>
                 <input
-                    type="date"
-                    id="deadlineproject"
-                    name="deadlineproject"
-                    required
-                    value={formData.deadlineproject}
-                    onChange={(e) =>
-                        setFormData({ ...formData, deadlineproject: e.target.value })
-                    }
-                    className="input input-bordered mt-1"
-                />
-            </div>
+                     type="datetime-local"
+                     id="deadlineproject"
+                     name="deadlineproject"
+                     required
+                     value={scheduleInput}
+                     min={getMinDateTime()}
+                     onChange={(e) =>
+                         setScheduleInput(e.target.value)
+                     }
+                     className="input input-bordered mt-1"
+                 />
+             </div>
             {/* Submit button */}
             <button
                 type="submit"

@@ -38,6 +38,8 @@ const page = () => {
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allskse/getskse?input=${searchInput}`
             );
             setSearchResult(response.data.data);
+            setCurrentPage(1);
+            setStartIndex(0);
         } catch (error) {
             console.log(error);
         }
