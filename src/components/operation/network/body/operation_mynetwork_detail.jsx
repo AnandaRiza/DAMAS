@@ -1,51 +1,41 @@
 "use client";
 import PleaseWait from "@/components/PleaseWait";
-import { useStateContext } from "@/context/ContextProvider";
 import axios from "axios";
-import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { FiSave } from "react-icons/fi";
-import { MdOutlineCancel } from "react-icons/md";
 
-const page = () => {
+const Page = () => {
   const userid = document.cookie
     .split("; ")
     .find((row) => row.startsWith("DAMAS-USERID="))
     ?.split("=")[1];
 
-    const { user } = useStateContext();
-
   const params = useParams();
-  const router = useRouter();
   const [selectedDept, setSelectedDept] = useState("");
-  const [selectedUserDomain, setSelectedUserDomain] = useState("");
-  const [scheduleInput, setScheduleInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [dataAllPic, setDataAllPic] = useState(null);
   const [dataAllNetwork, setDataAllNetwork] = useState({
     network_perihal: "",
     network_pic: "",
     departement: "",
+    network_deadline: "",
     network_status: "",
-    network_id: "",
-    userdomain_pic: "",
   });
 
   useEffect(() => {
     const getCurrentData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/networkshow/getnetwork?input=${params.network_id}`
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/networkshow/getnetwork?input=${params.id}`
         );
         setDataAllNetwork(response.data.data[0]);
+        // console.log(response.data.data[0].id);
       } catch (error) {
         console.log(error);
       }
     };
     getDataAllPic();
-    console.log(dataAllNetwork);
     getCurrentData();
+    // console.log(dataAllProject);
   }, [params.network_id]);
 
   const getDataAllPic = async () => {
@@ -55,7 +45,7 @@ const page = () => {
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
       );
       setDataAllPic(response.data.data);
-      //   console.log(response.data.data);
+      // console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -66,69 +56,6 @@ const page = () => {
       setSelectedDept(dataAllNetwork.departement);
     }
   }, [dataAllNetwork]);
-
-  const handleEditedData = async () => {
-    if (
-      dataAllNetwork.network_status === "Finished" &&
-      !dataAllNetwork.network_project_done
-    ) {
-      alert("Please fill in Project Finished date.");
-      return;
-    }
-    setIsLoading(true);
-    try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationnetwork/log`,
-        {
-          ...dataAllNetwork,
-          submitter: userid,
-          authorizer: "SUPERVISOR",
-          submitAt: submitAtDate(),
-          deadline: calculateDeadline(scheduleInput),
-          status_approvement: "PENDING",
-          network_id: dataAllNetwork.network_id,
-          userdomain: dataAllNetwork.userdomain,
-          userdomain_pic: dataAllNetwork.userdomain_pic,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "USER-ID": userid,
-          },
-        }
-      );
-      router.push("/main/operation/network/allprogress");
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const calculateDeadline = (date) => {
-    const d = new Date(date);
-    d.setDate(d.getDate() - 1);
-
-    const day = String(d.getDate()).padStart(2, "0");
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const year = d.getFullYear();
-    const hours = String(d.getHours()).padStart(2, "0");
-    const minutes = String(d.getMinutes()).padStart(2, "0");
-    const seconds = String(d.getSeconds()).padStart(2, "0");
-
-    return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
-};
-
-const submitAtDate = () => {
-    const d = new Date();
-    const day = String(d.getDate()).padStart(2, "0");
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const year = d.getFullYear();
-    const hours = String(d.getHours()).padStart(2, "0");
-    const minutes = String(d.getMinutes()).padStart(2, "0");
-    const seconds = String(d.getSeconds()).padStart(2, "0");
-
-    return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
-};
 
   return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl ">
@@ -144,6 +71,7 @@ const submitAtDate = () => {
                   Nama Project
                 </label>
                 <input
+                  disabled
                   type="text"
                   value={dataAllNetwork.network_perihal}
                   onChange={(e) =>
@@ -152,9 +80,29 @@ const submitAtDate = () => {
                       network_perihal: e.target.value,
                     })
                   }
-                  className="input input-bordered mt-1"
+                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                 />
               </div>
+
+              {/* <div className="flex flex-col mx-3 my-3">
+                        <label
+                            htmlFor="pic"
+                            className="text-sm font-semibold text-[#0066AE]"
+                        >
+                            PIC
+                        </label>
+                        <input
+                            type="text"
+                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                            value={dataAllNetwork.network_pic}
+                            onChange={(e) =>
+                                setDataAllNetwork({
+                                    ...dataAllNetwork,
+                                    network_pic: e.target.value,
+                                })
+                            }
+                        />
+                    </div> */}
 
               <div className="flex flex-col">
                 <label
@@ -165,8 +113,9 @@ const submitAtDate = () => {
                 </label>
                 {dataAllPic && (
                   <select
+                    disabled
                     type="text"
-                    className="input input-bordered mt-1"
+                    className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                     value={dataAllNetwork.name}
                     onChange={(e) => {
                       const selectedPic = JSON.parse(e.target.value);
@@ -174,12 +123,8 @@ const submitAtDate = () => {
                         ...dataAllNetwork,
                         network_pic: selectedPic.nama,
                         departement: selectedPic.departemen,
-                        userdomain_pic: selectedPic.userdomain,
                       });
                       setSelectedDept(selectedPic.departemen);
-                      setSelectedUserDomain(
-                        selectedPic.userdomain
-                    );
                     }}
                   >
                     <option
@@ -276,7 +221,7 @@ const submitAtDate = () => {
                     </label>
                     <input
                       type="date"
-                      className="input input-bordered mt-1"
+                      className="input input-bordered mt-1 font-semibold"
                       value={dataAllNetwork.network_kickoff_done}
                       onChange={(e) =>
                         setDataAllNetwork({
@@ -284,6 +229,7 @@ const submitAtDate = () => {
                           network_kickoff_done: e.target.value,
                         })
                       }
+                      disabled
                     />
                   </div>
                 </div>
@@ -350,8 +296,9 @@ const submitAtDate = () => {
                       Done
                     </label>
                     <input
+                      disabled
                       type="date"
-                      className="input input-bordered mt-1"
+                      className="input input-bordered mt-1 font-semibold"
                       value={dataAllNetwork.network_mop_done}
                       onChange={(e) =>
                         setDataAllNetwork({
@@ -369,7 +316,7 @@ const submitAtDate = () => {
                   htmlFor="deadline"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
-                  Demo MOP
+                  DEMO MOP
                 </label>
                 <div
                   className="border rounded-xl"
@@ -426,7 +373,7 @@ const submitAtDate = () => {
                     </label>
                     <input
                       type="date"
-                      className="input input-bordered mt-1"
+                      className="input input-bordered mt-1 font-semibold"
                       value={dataAllNetwork.network_demomop_done}
                       onChange={(e) =>
                         setDataAllNetwork({
@@ -434,6 +381,7 @@ const submitAtDate = () => {
                           network_demomop_done: e.target.value,
                         })
                       }
+                      disabled
                     />
                   </div>
                 </div>
@@ -500,8 +448,9 @@ const submitAtDate = () => {
                       Done
                     </label>
                     <input
+                      disabled
                       type="date"
-                      className="input input-bordered mt-1"
+                      className="input input-bordered mt-1 font-semibold"
                       value={dataAllNetwork.network_implementasi_done}
                       onChange={(e) =>
                         setDataAllNetwork({
@@ -575,8 +524,9 @@ const submitAtDate = () => {
                       Done
                     </label>
                     <input
+                      disabled
                       type="date"
-                      className="input input-bordered mt-1"
+                      className="input input-bordered mt-1 font-semibold"
                       value={dataAllNetwork.network_skse_done}
                       onChange={(e) =>
                         setDataAllNetwork({
@@ -642,7 +592,7 @@ const submitAtDate = () => {
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3">
+                  <div className="flex flex-col mx-3 my-3 mx-3 my-3">
                     <label
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
@@ -650,8 +600,9 @@ const submitAtDate = () => {
                       Done
                     </label>
                     <input
+                      disabled
                       type="date"
-                      className="input input-bordered mt-1"
+                      className="input input-bordered mt-1 font-semibold"
                       value={dataAllNetwork.network_uat_done}
                       onChange={(e) =>
                         setDataAllNetwork({
@@ -672,8 +623,9 @@ const submitAtDate = () => {
                   Deadline Project
                 </label>
                 <input
+                  disabled
                   type="date"
-                  className="input input-bordered mt-1"
+                  className="input input-bordered mt-1 font-semibold"
                   value={dataAllNetwork.network_deadline_project}
                   onChange={(e) =>
                     setDataAllNetwork({
@@ -681,59 +633,7 @@ const submitAtDate = () => {
                       network_deadline_project: e.target.value,
                     })
                   }
-                  disabled
                 />
-              </div>
-
-              <div className="flex flex-col">
-                <label
-                  htmlFor="status"
-                  className="text-sm font-semibold text-[#0066AE]"
-                >
-                  Status
-                </label>
-                <div className="dropdown mt-1">
-                  <div tabIndex={0} role="button" className="btn m-1">
-                    {dataAllNetwork.network_status}
-                  </div>
-                  <ul
-                    tabIndex={0}
-                    className="dropdown-content z-[1] menu p-2 shadow bg-gray-100 rounded-box w-52"
-                  >
-                    <li>
-                      <a
-                        onClick={(e) =>
-                          setDataAllNetwork({
-                            ...dataAllNetwork,
-                            network_status: e.target.value,
-                          })
-                        }
-                      >
-                        <option value="Ongoing">Ongoing</option>
-                      </a>
-                      <a
-                        onClick={(e) =>
-                          setDataAllNetwork({
-                            ...dataAllNetwork,
-                            network_status: e.target.value,
-                          })
-                        }
-                      >
-                        <option value="Finished">Finished</option>
-                      </a>
-                      <a
-                        onClick={(e) =>
-                          setDataAllNetwork({
-                            ...dataAllNetwork,
-                            network_status: e.target.value,
-                          })
-                        }
-                      >
-                        <option value="Past Deadline">Past Deadline</option>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
               </div>
 
               <div className="flex flex-col">
@@ -748,32 +648,15 @@ const submitAtDate = () => {
                   id="projectdone"
                   name="projectdone"
                   value={dataAllNetwork.network_project_done}
+                  className="input input-bordered mt-1 font-semibold"
                   onChange={(e) =>
                     setDataAllNetwork({
                       ...dataAllNetwork,
                       network_project_done: e.target.value,
                     })
                   }
-                  className="input input-bordered mt-1"
-                  required={dataAllNetwork.network_status === "Finished"}
+                  disabled
                 />
-              </div>
-
-              <div className="flex gap-2 items-center text-white ml-3 mt-3">
-                <Link href="/main/operation/network/allprogress">
-                  <button className="py-2 px-4 rounded-xl bg-red-400 flex gap-1 items-center">
-                    <MdOutlineCancel />
-                    <span>Cancel</span>
-                  </button>
-                </Link>
-                <button
-                  type="button"
-                  className="py-2 px-4 rounded-xl bg-green-500 flex gap-1 items-center"
-                  onClick={handleEditedData}
-                >
-                  <FiSave />
-                  <span>Edit</span>
-                </button>
               </div>
             </form>
           ) : (
@@ -785,4 +668,4 @@ const submitAtDate = () => {
   );
 };
 
-export default page;
+export default Page;

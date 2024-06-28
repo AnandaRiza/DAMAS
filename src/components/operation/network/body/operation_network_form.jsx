@@ -1,23 +1,51 @@
 "use client";
 
+import { useStateContext } from "@/context/ContextProvider";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 const NetworkForm = () => {
+  const userid = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("DAMAS-USERID="))
+    ?.split("=")[1];
+
+    const {user}  = useStateContext();
+
   // State to manage form data
   const [dataAllPic, setDataAllPic] = useState(null);
   const [selectedDept, setSelectedDept] = useState("");
+  const [selectedUserDomain, setSelectedUserDomain] = useState("");
+  const router = useRouter();
   const [formData, setFormData] = useState({
     network_perihal: "",
     network_pic: "",
     network_deadline: "",
     network_status: "",
+    createdBy: "",
+    userdomain: "",
+    userdomain_pic: "",
   });
 
   const handleSubmit = async () => {
     try {
-      await axios.post("http://localhost:8081/api/operationnetwork", formData);
-      alert("Create Project Success");
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationnetwork`,
+        {
+          ...formData,
+          createdBy: userid,
+          userdomain: user.userdomain,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "USER-ID": userid,
+          },
+        }
+      );
+      router.push("/main/operation/network/allprogress");
+      // console.log(createdby)
     } catch (error) {
       console.log(error);
       alert("Create Project Failed!");
@@ -39,13 +67,23 @@ const NetworkForm = () => {
 
   useEffect(() => {
     getDataAllPic();
+    const userid = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("DAMAS-USERID="))
+      ?.split("=")[1];
   }, []);
 
   return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
       <div>
         <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
-          <form className="space-y-4">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            className="space-y-4"
+          >
             {/* Input fields for memo attributes */}
             <div className="flex flex-col">
               <label
@@ -88,8 +126,10 @@ const NetworkForm = () => {
                       ...formData,
                       network_pic: selectedPic.nama,
                       departement: selectedPic.departemen,
+                      userdomain_pic: selectedPic.userdomain,
                     });
                     setSelectedDept(selectedPic.departemen);
+                    setSelectedUserDomain(selectedPic.userdomain);
                   }}
                 >
                   <option
@@ -181,15 +221,16 @@ const NetworkForm = () => {
             </div>
 
             <div>
-            <label
+              <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
               >
                 MOP
               </label>
               <div
-                 className="border rounded-xl"
-                 style={{ borderColor: "#DADADA" }}>
+                className="border rounded-xl"
+                style={{ borderColor: "#DADADA" }}
+              >
                 <div className="flex flex-col mx-3 my-3">
                   <label
                     htmlFor="deadline"
@@ -236,64 +277,62 @@ const NetworkForm = () => {
               </div>
             </div>
 
-                    
             <div>
-            <label
+              <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
               >
                 DEMO MOP
               </label>
-                <div
+              <div
                 className="border rounded-xl"
-                style={{ borderColor: "#DADADA" }}>
+                style={{ borderColor: "#DADADA" }}
+              >
                 <div className="flex flex-col mx-3 my-3">
-              <label
-                htmlFor="deadline"
-                className="text-sm font-semibold text-[#0066AE]"
-              >
-                Start
-              </label>
-              <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_demomop_start}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    network_demomop_start: e.target.value,
-                  })
-                }
-                className="input input-bordered mt-1"
-              />
-            </div>
-
-            <div className="flex flex-col mx-3 my-3">
-              <label
-                htmlFor="deadline"
-                className="text-sm font-semibold text-[#0066AE]"
-              >
-                Deadline
-              </label>
-              <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_demomop_deadline}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    network_demomop_deadline: e.target.value,
-                  })
-                }
-                className="input input-bordered mt-1"
-              />
-            </div>
+                  <label
+                    htmlFor="deadline"
+                    className="text-sm font-semibold text-[#0066AE]"
+                  >
+                    Start
+                  </label>
+                  <input
+                    type="date"
+                    id="deadline"
+                    name="deadline"
+                    value={formData.network_demomop_start}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        network_demomop_start: e.target.value,
+                      })
+                    }
+                    className="input input-bordered mt-1"
+                  />
                 </div>
-            </div>
 
-           
+                <div className="flex flex-col mx-3 my-3">
+                  <label
+                    htmlFor="deadline"
+                    className="text-sm font-semibold text-[#0066AE]"
+                  >
+                    Deadline
+                  </label>
+                  <input
+                    type="date"
+                    id="deadline"
+                    name="deadline"
+                    value={formData.network_demomop_deadline}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        network_demomop_deadline: e.target.value,
+                      })
+                    }
+                    className="input input-bordered mt-1"
+                  />
+                </div>
+              </div>
+            </div>
 
             {/* <div className="flex flex-col">
             <label
@@ -315,59 +354,60 @@ const NetworkForm = () => {
         </div> */}
 
             <div>
-            <label
+              <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
               >
                 Implementasi
               </label>
-                <div
+              <div
                 className="border rounded-xl"
-                style={{ borderColor: "#DADADA" }}>
+                style={{ borderColor: "#DADADA" }}
+              >
                 <div className="flex flex-col mx-3 my-3">
-              <label
-                htmlFor="deadline"
-                className="text-sm font-semibold text-[#0066AE]"
-              >
-                Start
-              </label>
-              <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_implementasi_start}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    network_implementasi_start: e.target.value,
-                  })
-                }
-                className="input input-bordered mt-1"
-              />
-            </div>
-
-            <div className="flex flex-col mx-3 my-3">
-              <label
-                htmlFor="deadline"
-                className="text-sm font-semibold text-[#0066AE]"
-              >
-                Deadline
-              </label>
-              <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_implementasi_deadline}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    network_implementasi_deadline: e.target.value,
-                  })
-                }
-                className="input input-bordered mt-1"
-              />
-            </div>
+                  <label
+                    htmlFor="deadline"
+                    className="text-sm font-semibold text-[#0066AE]"
+                  >
+                    Start
+                  </label>
+                  <input
+                    type="date"
+                    id="deadline"
+                    name="deadline"
+                    value={formData.network_implementasi_start}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        network_implementasi_start: e.target.value,
+                      })
+                    }
+                    className="input input-bordered mt-1"
+                  />
                 </div>
+
+                <div className="flex flex-col mx-3 my-3">
+                  <label
+                    htmlFor="deadline"
+                    className="text-sm font-semibold text-[#0066AE]"
+                  >
+                    Deadline
+                  </label>
+                  <input
+                    type="date"
+                    id="deadline"
+                    name="deadline"
+                    value={formData.network_implementasi_deadline}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        network_implementasi_deadline: e.target.value,
+                      })
+                    }
+                    className="input input-bordered mt-1"
+                  />
+                </div>
+              </div>
             </div>
 
             {/* <div className="flex flex-col">
@@ -389,61 +429,62 @@ const NetworkForm = () => {
             />
         </div> */}
 
-           <div>
-           <label
+            <div>
+              <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
               >
                 SK/SE
               </label>
-            <div
-            className="border rounded-xl"
-            style={{ borderColor: "#DADADA" }}>
-            <div className="flex flex-col mx-3 my-3">
-              <label
-                htmlFor="deadline"
-                className="text-sm font-semibold text-[#0066AE]"
+              <div
+                className="border rounded-xl"
+                style={{ borderColor: "#DADADA" }}
               >
-                Start
-              </label>
-              <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_skse_start}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    network_skse_start: e.target.value,
-                  })
-                }
-                className="input input-bordered mt-1"
-              />
-            </div>
+                <div className="flex flex-col mx-3 my-3">
+                  <label
+                    htmlFor="deadline"
+                    className="text-sm font-semibold text-[#0066AE]"
+                  >
+                    Start
+                  </label>
+                  <input
+                    type="date"
+                    id="deadline"
+                    name="deadline"
+                    value={formData.network_skse_start}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        network_skse_start: e.target.value,
+                      })
+                    }
+                    className="input input-bordered mt-1"
+                  />
+                </div>
 
-            <div className="flex flex-col mx-3 my-3">
-              <label
-                htmlFor="deadline"
-                className="text-sm font-semibold text-[#0066AE]"
-              >
-                Deadline
-              </label>
-              <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_skse_deadline}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    network_skse_deadline: e.target.value,
-                  })
-                }
-                className="input input-bordered mt-1"
-              />
+                <div className="flex flex-col mx-3 my-3">
+                  <label
+                    htmlFor="deadline"
+                    className="text-sm font-semibold text-[#0066AE]"
+                  >
+                    Deadline
+                  </label>
+                  <input
+                    type="date"
+                    id="deadline"
+                    name="deadline"
+                    value={formData.network_skse_deadline}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        network_skse_deadline: e.target.value,
+                      })
+                    }
+                    className="input input-bordered mt-1"
+                  />
+                </div>
+              </div>
             </div>
-            </div>
-           </div>
 
             {/* <div className="flex flex-col">
             <label
@@ -465,59 +506,60 @@ const NetworkForm = () => {
         </div> */}
 
             <div>
-            <label
+              <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
               >
                 UAT
               </label>
-                <div
+              <div
                 className="border rounded-xl"
-                style={{ borderColor: "#DADADA" }}>
+                style={{ borderColor: "#DADADA" }}
+              >
                 <div className="flex flex-col mx-3 my-3">
-              <label
-                htmlFor="deadline"
-                className="text-sm font-semibold text-[#0066AE]"
-              >
-                Start
-              </label>
-              <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_uat_start}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    network_uat_start: e.target.value,
-                  })
-                }
-                className="input input-bordered mt-1"
-              />
-            </div>
-
-            <div className="flex flex-col mx-3 my-3">
-              <label
-                htmlFor="deadline"
-                className="text-sm font-semibold text-[#0066AE]"
-              >
-                Deadline
-              </label>
-              <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_uat_deadline}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    network_uat_deadline: e.target.value,
-                  })
-                }
-                className="input input-bordered mt-1"
-              />
-            </div>
+                  <label
+                    htmlFor="deadline"
+                    className="text-sm font-semibold text-[#0066AE]"
+                  >
+                    Start
+                  </label>
+                  <input
+                    type="date"
+                    id="deadline"
+                    name="deadline"
+                    value={formData.network_uat_start}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        network_uat_start: e.target.value,
+                      })
+                    }
+                    className="input input-bordered mt-1"
+                  />
                 </div>
+
+                <div className="flex flex-col mx-3 my-3">
+                  <label
+                    htmlFor="deadline"
+                    className="text-sm font-semibold text-[#0066AE]"
+                  >
+                    Deadline
+                  </label>
+                  <input
+                    type="date"
+                    id="deadline"
+                    name="deadline"
+                    value={formData.network_uat_deadline}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        network_uat_deadline: e.target.value,
+                      })
+                    }
+                    className="input input-bordered mt-1"
+                  />
+                </div>
+              </div>
             </div>
 
             {/* <div className="flex flex-col">
@@ -625,9 +667,8 @@ const NetworkForm = () => {
             </div>
             {/* Submit button */}
             <button
-              type="button"
+              type="submit"
               className="btn btn-success mt-4 border border-gray"
-              onClick={handleSubmit}
             >
               <div className=" text-black">Create Project</div>
             </button>

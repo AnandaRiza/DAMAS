@@ -78,15 +78,15 @@ const Header = ({ title }) => {
               </button>
             </div>
           )}
-        </div> */}
+        </div>
 
-        <div className="flex-none">
+        {/* <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
             <li>
               <details className="mr-5">
                 <summary className="font-bold text-[#0066AE]" style={{ fontSize: '1rem' }}>
                   Welcome,{" "}
-                  <span className="font-bold capitalize">{user.username}</span>
+                  <span className="font-bold capitalize">{user?.username}</span>
                 </summary>
                 <ul className="rounded-t-none text-black absolute top-full right-10 z-10 shadow-md">
                   <li>
@@ -98,7 +98,7 @@ const Header = ({ title }) => {
               </details>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );

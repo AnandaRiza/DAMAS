@@ -4,10 +4,13 @@ import axios from "axios";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { FiSave } from "react-icons/fi";
-import { MdOutlineCancel } from "react-icons/md";
 
 const page = () => {
+  const userid = document.cookie
+  .split("; ")
+  .find((row) => row.startsWith("DAMAS-USERID="))
+  ?.split("=")[1];
+
   const params = useParams();
   const [selectedDept, setSelectedDept] = useState("");
   const [dataAllPic, setDataAllPic] = useState(null);
@@ -110,7 +113,7 @@ const page = () => {
                     onChange={(e) => {
                       const selectedPic = JSON.parse(e.target.value);
                       dataAllNetwork({
-                        ...dataAllProject,
+                        ...dataAllNetwork,
                         network_pic: selectedPic.nama,
                         departement: selectedPic.departemen,
                       });
