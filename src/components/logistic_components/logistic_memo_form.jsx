@@ -63,83 +63,91 @@ const MemoForm = () => {
     setFormData((prevState) => ({ ...prevState, memo_createdBy: userid }));
   }, []);
 
+  
   const handleSubmit = async () => {
     if (!window.confirm("Are you sure you want to create this memo?")) {
-        return;
+      return;
     }
 
+    
+  
     const userid = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("DAMAS-USERID="))
-        ?.split("=")[1];
+      .split("; ")
+      .find((row) => row.startsWith("DAMAS-USERID="))
+      ?.split("=")[1];
 
     try {
-        const formDataToSend = {
-            ...formData,
-            memo_createdBy: userid,
-            userdomain: user.userdomain,
-            memo_deadline: calculateDeadline(scheduleInput),
-        };
+      // const regex = /^\d{4}-\d{2}-\d{2}$/;
+      // if (!regex.test(formData.memo_deadline)) {
+      //   setError("Date must be in the format YYYY-MM-DD");
+      //   return;
+      // }
 
-        console.log("Data to be posted:", formDataToSend);
+      const formDataToSend = {
+        ...formData,
+        memo_createdBy: userid,
+        userdomain: user.userdomain,
+        memo_deadline: deadlinecoy(scheduleInput),
+      };
 
-        const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo`,
-            formDataToSend,
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    "USER-ID": userid,
-                },
-            }
-        );
+      console.log("Data to be posted:", formDataToSend);
 
-        await axios.post(
-            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/schedulesend-email`,
-            {
-                ...dataEmail,
-                text: `Assalamualaikum Warahmatullahi Wabarakatuh,
-    
-                Yth. Bapak/Ibu,
-                
-                Bersama ini kami memberitahukan bahwa deadline memo tinggal 1 hari lagi dengan detail project:
-                
-                Nomer Memo  : ${formData.memo_num}
-                Perihal Memo: ${formData.memo_perihal}
-                PIC         : ${formData.memo_pic}
-                Departement : ${formData.memo_department}
-                Deadline    : ${calculateDeadline(scheduleInput)}
-                Website     : http://localhost:3000/main
-                
-                Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan memo selesai tepat waktu. Terima Kasih.
-                
-                Wassalamualaikum Warahmatullahi Wabarakatuh`,
-                to: "ananda_riza@bcasyariah.co.id",
-                deadline: calculateDeadline(scheduleInput),
-                deadlinepro: calculateDeadline(scheduleInput),
-            }
-        );
-
-        console.log("Memo creation response:", response.data);
-
-        alert("Create Memo Success");
-        router.push("/main/logistic");
-    } catch (error) {
-        console.error("Error response:", error.response);
-        if (error.response) {
-            console.log("Error data:", error.response.data);
-            console.log("Error status:", error.response.status);
-            console.log("Error headers:", error.response.headers);
-        } else {
-            console.log("Error message:", error.message);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "USER-ID": userid,
+          },
         }
-        alert("Create Memo Failed!");
-    }
-};
+      );
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/schedulesend-email`,
+        {
+            ...dataEmail,
+            text: `Assalamualaikum Warahmatullahi Wabarakatuh,
+    
+            Yth. Bapak/Ibu,
+            
+            Bersama ini kami memberitahukan bahwa deadline memo tinggal 1 hari lagi dengan detail project:
+            
+            Nomer Memo  : ${formData.memo_num}
+            Perihal Memo: ${formData.memo_perihal}
+            PIC         : ${formData.memo_pic}
+            Departement : ${formData.memo_department}
+            Deadline    : ${deadlinecoy(scheduleInput)}
+            Website     : http://localhost:3000/main
+            
+            Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan memo selesai tepat waktu. Terima Kasih.
+            
+Wassalamualaikum Warahmatullahi Wabarakatuh`,
+            to: "ananda_riza@bcasyariah.co.id",
+            deadline: calculateDeadline(scheduleInput),
+            deadlinepro: calculateDeadline(scheduleInput),
+        }
+    );
 
+      console.log("Memo creation response:", response.data);
+
+      alert("Create Memo Success");
+      router.push("/main/logistic");
+    } catch (error) {
+      console.error("Error response:", error.response);
+      if (error.response) {
+        console.log("Error data:", error.response.data);
+        console.log("Error status:", error.response.status);
+        console.log("Error headers:", error.response.headers);
+      } else {
+        console.log("Error message:", error.message);
+      }
+      alert("Create Memo Failed!");
+    }
+  };
 
   const calculateDeadline = (date) => {
     const d = new Date(date);
+    d.setDate(d.getDate() - 1);
 
     const day = String(d.getDate()).padStart(2, "0");
     const month = String(d.getMonth() + 1).padStart(2, "0");
@@ -150,7 +158,21 @@ const MemoForm = () => {
 
     return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
 };
-  
+
+const deadlinecoy = (date) => {
+  const d = new Date(date);
+
+  const day = String(d.getDate()).padStart(2, "0");
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const year = d.getFullYear();
+  const hours = String(d.getHours()).padStart(2, "0");
+  const minutes = String(d.getMinutes()).padStart(2, "0");
+  const seconds = String(d.getSeconds()).padStart(2, "0");
+
+  return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+};
+
+
 const getMinDateTime = () => {
   const now = new Date();
   now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
@@ -347,15 +369,15 @@ const getMinDateTime = () => {
               Deadline
             </label>
             <input
-    type="datetime-local"
-    id="memo_deadline"
-    name="memo_deadline"
-    value={scheduleInput}
-    min={getMinDateTime()}
-    onChange={(e) => setScheduleInput(e.target.value)}
-    className="input input-bordered mt-1"
-/>
-
+              type="datetime-local"
+              id="memo_deadline"
+              name="memo_deadline"
+              value={scheduleInput}
+              min={getMinDateTime()}
+              onChange={(e) => setScheduleInput(e.target.value)}
+              className="input input-bordered mt-1"
+              // placeholder="YYYY-MM-DD"
+            />
             {error && <span className="text-red-600 text-xs mt-1">{error}</span>}
           </div>
 

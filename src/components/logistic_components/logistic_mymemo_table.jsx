@@ -4,9 +4,11 @@ import React, { useState, useEffect } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
+
 const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     const router = useRouter();
     const [sortedData, setSortedData] = useState([]);
+    
 
     useEffect(() => {
         const sorted = data.slice().sort((a, b) => {
