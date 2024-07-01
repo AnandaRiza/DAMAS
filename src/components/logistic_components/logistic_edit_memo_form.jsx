@@ -456,13 +456,13 @@ const EditMemoPage = () => {
             Deadline
           </label>
           <input
-            type="date"
+            // type="date"
             id="memo_deadline"
             name="memo_deadline"
             className="input input-bordered mt-1"
             value={dataAllMemo.memo_deadline}
             onChange={handleDateChange}
-            read
+            readOnly
           />
         </div>
         <div className="flex flex-col">
