@@ -173,7 +173,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
         // Jika keduanya tidak selesai, tetapi memiliki status "Ongoing"
         if (a.status === "Ongoing" && b.status === "Ongoing") {
             // Urutkan berdasarkan deadlineproject
-            return new Date(convertToDateFormat(a.deadlineproject)) - new Date(convertToDateFormat(convertToDateFormat(b.deadlineproject)));
+            return new Date(convertToDateFormat(a.deadlineproject)) - new Date(convertToDateFormat(b.deadlineproject));
         }
 
         // Jika hanya salah satu memiliki status "Ongoing", letakkan yang lain di atas

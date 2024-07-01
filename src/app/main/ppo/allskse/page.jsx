@@ -57,47 +57,47 @@ const page = () => {
                     handleSubmit={handleSearch}
                 />
             </div>
+
             <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl px-3">
-                <div className=" bw-full px-5 py-2 mt-4">
+                <div className="w-full px-5 py-2 mt-4">
                     <div className="w-full flex justify-between items-center"></div>
                 </div>
-                {dataAllSkse && (!searchResult || searchInput == "") ? (
+                
+                {/* Render PleaseWait while loading */}
+                {(!dataAllSkse && !searchResult) && <PleaseWait />}
+
+                {/* Render TableSKSE if dataAllSkse has data and no searchResult or empty searchInput */}
+                {dataAllSkse && dataAllSkse.length > 0 && (!searchResult || searchInput === "") && (
                     <div className="mt-4">
                         <TableSKSE
-                            headers={Object.keys(dataAllSkse[0]).slice(
-                                0,
-                                Object.keys(dataAllSkse[0]).length - 1
-                            )}
+                            headers={Object.keys(dataAllSkse[0]).slice(0, Object.keys(dataAllSkse[0]).length - 1)}
                             data={dataAllSkse}
                             action={true}
                             link={"/main/ppo/allskse/"}
                         />
                     </div>
-                ) : (
-                    !(searchResult && searchInput != "") && <PleaseWait />
                 )}
 
-                {searchResult &&
-                    searchInput != "" &&
-                    searchResult.length !== 0 && (
-                        <div className="mt-4">
-                            <TableSKSE
-                                headers={Object.keys(searchResult[0]).slice(
-                                    0,
-                                    Object.keys(searchResult[0]).length - 1
-                                )}
-                                data={searchResult}
-                                action={true}
-                                link={"/main/ppo/allskse/"}
-                            />
-                        </div>
-                    )}
+                {/* Render TableSKSE if searchResult has data */}
+                {searchResult && searchInput !== "" && searchResult.length > 0 && (
+                    <div className="mt-4">
+                        <TableSKSE
+                            headers={Object.keys(searchResult[0]).slice(0, Object.keys(searchResult[0]).length - 1)}
+                            data={searchResult}
+                            action={true}
+                            link={"/main/ppo/allskse/"}
+                        />
+                    </div>
+                )}
 
-                {searchResult &&
-                    searchInput != "" &&
-                    searchResult.length === 0 && <NotFound />}
+                {/* Render NotFound if searchResult is empty */}
+                {searchResult && searchInput !== "" && searchResult.length === 0 && <NotFound />}
 
-                {dataAllSkse && !searchResult && (
+                {/* Render NotFound if dataAllSkse is empty */}
+                {dataAllSkse && dataAllSkse.length === 0 && <NotFound />}
+
+                {/* Pagination controls */}
+                {dataAllSkse && (
                     <div className="w-full flex justify-end items-center gap-3">
                         <button
                             type="button"
@@ -107,9 +107,7 @@ const page = () => {
                                 setStartIndex(startIndex - perPage);
                             }}
                             className={`py-2 px-4 rounded-xl ${
-                                currentPage === 1 || startIndex === 0
-                                    ? "bg-gray-400"
-                                    : "bg-[#00A6B4]"
+                                currentPage === 1 || startIndex === 0 ? "bg-gray-400" : "bg-[#00A6B4]"
                             } text-white`}
                         >
                             Prev
@@ -117,9 +115,7 @@ const page = () => {
                         <h5 className="font-semibold">{currentPage}</h5>
                         <button
                             type="button"
-                            disabled={
-                                startIndex + perPage >= dataAllSkse[0].maxSize
-                            }
+                            disabled={!hasMoreData}
                             onClick={() => {
                                 setCurrentPage(currentPage + 1);
                                 setStartIndex(startIndex + perPage);

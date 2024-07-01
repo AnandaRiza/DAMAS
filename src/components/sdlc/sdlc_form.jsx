@@ -477,7 +477,7 @@ const SDLCForm = () => {
                             htmlFor="uatstart"
                             className="text-sm font-semibold text-[#0066AE]"
                         >
-                            UAT Start
+                            UAT Start <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="date"
