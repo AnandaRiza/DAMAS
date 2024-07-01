@@ -68,10 +68,10 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
 
     const rowClass = (deadline, status) => {
         const daysLeft = (new Date(deadline) - new Date()) / (1000 * 60 * 60 * 24);
-        if (status === 'MEMO APPROVED') return 'bg-green-200 hover:bg-green-300';
-        if (status === 'REQUEST HAS BEEN REJECTED') return 'bg-red-200 hover:bg-red-300';
+        if (status.includes('APPROVED')) return 'bg-green-200 hover:bg-green-300';
+        if (status.includes('REJECTED')) return 'bg-red-200 hover:bg-red-300';
         if (status === 'MEMO DRAFT') return 'bg-blue-200 hover:bg-blue-300';
-        if (status === 'APPROVAL REQUEST SENT') return 'bg-yellow-200 hover:bg-yellow-300';
+        if (status.trim() === 'APPROVAL REQUEST SENT TO HEAD OF DEPARTMENT', 'APPROVAL REQUEST SENT TO GROUP HEAD') return 'bg-yellow-200 hover:bg-yellow-300';
         if (daysLeft <= 3) return 'bg-red-200 hover:bg-red-300';
         if (daysLeft <= 7) return 'bg-yellow-200 hover:bg-yellow-300';
         return 'bg-white hover:bg-gray-300';
@@ -82,11 +82,21 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     };
 
     const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = date.getDate();
-        const month = date.toLocaleString('default', { month: 'long' });
-        const year = date.getFullYear();
-
+        const parts = dateString.split(', ');
+    
+        // Splitting date part and handling date-only case
+        const datePart = parts[0];
+        const timePart = parts[1] || '00:00:00'; // Default time if not provided
+    
+        const [day, month, year] = datePart.split('/');
+        const [hours, minutes, seconds] = timePart.split(':');
+    
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        const monthName = months[parseInt(month) - 1];
+    
         const getOrdinalSuffix = (day) => {
             if (day > 3 && day < 21) return 'th'; // Covers 11th-13th
             switch (day % 10) {
@@ -96,9 +106,12 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                 default: return 'th';
             }
         };
-
-        return `${day}${getOrdinalSuffix(day)} ${month} ${year}`;
+    
+        const formattedTime = `${hours}:${minutes}:${seconds}`;
+    
+        return `${parseInt(day)}${getOrdinalSuffix(day)} ${monthName} ${year}, ${formattedTime}`;
     };
+    
 
     const calculateDeadlineStatus = (deadline, memoStatus) => {
         const currentDate = new Date();

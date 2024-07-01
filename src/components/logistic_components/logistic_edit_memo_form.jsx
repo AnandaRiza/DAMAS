@@ -59,9 +59,14 @@ const EditMemoPage = () => {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/getMemoByID/${params.memoId}`
         );
+
+        const memoData = response.data.data;
+        const deadline = memoData.memo_deadline.split(", ")[0].split("/").reverse().join("-");
         setDataAllMemo((prevState) => ({
           ...prevState,
+          ...memoData,
           ...response.data.data,
+          memo_deadline: deadline,
         }));
         setSelectedDept(response.data.data.memo_department);
         setLoading(false);
@@ -232,7 +237,7 @@ const EditMemoPage = () => {
         console.log(`File updated: ${updatedData.memo_upload}`); // Console log the updated file name
 
         alert("Memo Update Success");
-        router.push("/main/logistic");
+        router.push("/main/logistic/mymemo");
       } catch (error) {
         console.error("Error updating memo: ", error);
         setError("Failed to update memo");
@@ -457,7 +462,7 @@ const EditMemoPage = () => {
             className="input input-bordered mt-1"
             value={dataAllMemo.memo_deadline}
             onChange={handleDateChange}
-            readOnly={isReadOnly}
+            read
           />
         </div>
         <div className="flex flex-col">
