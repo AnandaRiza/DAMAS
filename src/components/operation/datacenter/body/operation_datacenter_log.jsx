@@ -44,6 +44,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
             dacen_phase7_done: "",
             dacen_status: "Status",
             dacen_deadline_project: "Project Deadline",
+            createdBy: "",
         };
 
         const displayName = displayNames[header] || header;
@@ -65,16 +66,58 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
     return (
         <div className="overflow-auto mx-auto">
             <table className="text-center border-b cursor-pointer">
-                <thead>
-                    <tr className="border-b-2 bg-[#00A6B4] text-sm">
-                        {action && <th className="py-2 px-4 w-32">Action</th>}
-                        {headers.map((item, index) => (
-                            <th key={index} className="py-3 px-6 capitalize">
-                                {getDisplayName(item)}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
+            <thead>
+          <tr className="border-b-2 bg-[#00A6B4] text-sm">
+            {action && <th className="py-2 px-4 w-32">Action</th>}
+            {headers.map((item, index) => (
+              <th
+                key={index}
+                className={`py-3 px-6 capitalize ${
+                  [
+                    "id",
+                    "dacen_id",
+                    "dacen_phase1",
+                    "dacen_phase1_start",
+                    "dacen_phase1_deadline",
+                    "dacen_phase1_done",
+                    "dacen_phase2",
+                    "dacen_phase2_start",
+                    "dacen_phase2_deadline",
+                    "dacen_phase2_done",
+                    "dacen_phase3",
+                    "dacen_phase3_start",
+                    "dacen_phase3_deadline",
+                    "dacen_phase3_done",
+                    "dacen_phase4",
+                    "dacen_phase4_start",
+                    "dacen_phase4_deadline",
+                    "dacen_phase4_done",
+                    "dacen_phase5",
+                    "dacen_phase5_start",
+                    "dacen_phase5_deadline",
+                    "dacen_phase5_done",
+                    "dacen_phase6",
+                    "dacen_phase6_start",
+                    "dacen_phase6_deadline",
+                    "dacen_phase6_done",
+                    "dacen_phase7",
+                    "dacen_phase7_start",
+                    "dacen_phase7_deadline",
+                    "dacen_phase7_done",
+                    "dacen_status",
+                    "dacen_deadline_project",
+                    "userdomain",
+                    "userdomain_pic",
+                  ].includes(item)
+                    ? "hidden"
+                    : ""
+                }`}
+              >
+                {getDisplayName(item)}
+              </th>
+            ))}
+          </tr>
+        </thead>
                 <tbody className="bg-black">
                     {data.map((item, index) => (
                         <tr
@@ -129,9 +172,51 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                             )}
 
                             {headers.map((header, headerIndex) => (
-                                <td key={headerIndex} className="py-3 px-6">
-                                    {item[header]}
-                                </td>
+                                <td
+                                key={headerIndex}
+                                className={`py-3 px-6 ${
+                                  [
+                                    "id",
+                                    "dacen_id",
+                                    "dacen_phase1",
+                                    "dacen_phase1_start",
+                                    "dacen_phase1_deadline",
+                                    "dacen_phase1_done",
+                                    "dacen_phase2",
+                                    "dacen_phase2_start",
+                                    "dacen_phase2_deadline",
+                                    "dacen_phase2_done",
+                                    "dacen_phase3",
+                                    "dacen_phase3_start",
+                                    "dacen_phase3_deadline",
+                                    "dacen_phase3_done",
+                                    "dacen_phase4",
+                                    "dacen_phase4_start",
+                                    "dacen_phase4_deadline",
+                                    "dacen_phase4_done",
+                                    "dacen_phase5",
+                                    "dacen_phase5_start",
+                                    "dacen_phase5_deadline",
+                                    "dacen_phase5_done",
+                                    "dacen_phase6",
+                                    "dacen_phase6_start",
+                                    "dacen_phase6_deadline",
+                                    "dacen_phase6_done",
+                                    "dacen_phase7",
+                                    "dacen_phase7_start",
+                                    "dacen_phase7_deadline",
+                                    "dacen_phase7_done",
+                                    "dacen_status",
+                                    "dacen_deadline_project",
+                                    "userdomain",
+                                    "userdomain_pic",
+                                  ].includes(header)
+                                    ? "hidden"
+                                    : ""
+                                }`}
+                              >
+                                {item[header]}
+                              </td>
                             ))}
                         </tr>
                     ))}

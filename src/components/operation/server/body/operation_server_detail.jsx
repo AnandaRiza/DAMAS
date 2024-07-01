@@ -202,9 +202,8 @@ const Page = () => {
                       Done
                     </label>
                     <input
-                      disabled
                       type="date"
-                      className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                      className="input input-bordered mt-1 font-semibold"
                       value={dataAllServer.server_kickoff_done}
                       onChange={(e) =>
                         setDataAllServer({
@@ -212,8 +211,11 @@ const Page = () => {
                           server_kickoff_done: e.target.value,
                         })
                       }
+                      disabled
                     />
                   </div>
+
+
                 </div>
               </div>
 
