@@ -80,13 +80,22 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     const handleEditClick = (memoId) => {
         router.push(`${link}mymemo/editmemo/${memoId}`);
     };
-
     const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = date.getDate();
-        const month = date.toLocaleString('default', { month: 'long' });
-        const year = date.getFullYear();
-
+        const parts = dateString.split(', ');
+    
+        // Splitting date part and handling date-only case
+        const datePart = parts[0];
+        const timePart = parts[1] || '00:00:00'; // Default time if not provided
+    
+        const [day, month, year] = datePart.split('/');
+        const [hours, minutes, seconds] = timePart.split(':');
+    
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        const monthName = months[parseInt(month) - 1];
+    
         const getOrdinalSuffix = (day) => {
             if (day > 3 && day < 21) return 'th'; // Covers 11th-13th
             switch (day % 10) {
@@ -96,9 +105,13 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                 default: return 'th';
             }
         };
-
-        return `${day}${getOrdinalSuffix(day)} ${month} ${year}`;
+    
+        const formattedTime = `${hours}:${minutes}:${seconds}`;
+    
+        return `${parseInt(day)}${getOrdinalSuffix(day)} ${monthName} ${year}, ${formattedTime}`;
     };
+    
+    
 
     const calculateDeadlineStatus = (deadline, memoStatus) => {
         const currentDate = new Date();

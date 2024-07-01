@@ -77,14 +77,14 @@ const ApprovalTableReviewer = ({ headers, data, action, link, onSort, sortConfig
 
     const rowClass = (deadline, status) => {
         const daysLeft = (new Date(deadline) - new Date()) / (1000 * 60 * 60 * 24);
-        if (status === 'MEMO APPROVED') return 'bg-green-200 hover:bg-green-300';
-        if (status === 'WAITING FOR') return 'bg-red-200 hover:bg-red-300';
+        if (status.includes('APPROVED')) return 'bg-green-200 hover:bg-green-300';
+        if (status.includes('REJECTED')) return 'bg-red-200 hover:bg-red-300';
         if (status === 'MEMO DRAFT') return 'bg-blue-200 hover:bg-blue-300';
+        if (status.trim() === 'APPROVAL REQUEST SENT TO GROUP HEAD') return 'bg-yellow-200 hover:bg-yellow-300';
         if (daysLeft <= 3) return 'bg-red-200 hover:bg-red-300';
         if (daysLeft <= 7) return 'bg-yellow-200 hover:bg-yellow-300';
         return 'bg-white hover:bg-gray-300';
     };
-
     const handleEditClick = (memoId) => {
         router.push(`${link}logisticreview/${memoId}`);
     };

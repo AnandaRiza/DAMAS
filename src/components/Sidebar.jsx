@@ -709,7 +709,7 @@ const Sidebar = () => {
                                 </div>
 
                                 <div className="collapse-content">
-                                    {IsLogisticOperator()|| IsOperator() && (
+                                {(IsLogisticOperator()|| IsOperator()) && (
                                         <div>
                                             <Link href="/main/logistic/mymemo">
                                                 <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -730,7 +730,7 @@ const Sidebar = () => {
                                         </div>
                                     </Link>
 
-                                    {IsLogisticOperator()|| IsOperator() && (
+                                    {(IsLogisticOperator()|| IsOperator()) && (
                                         <div>
                                             <hr className="my-4 border-gray-300" />
 
