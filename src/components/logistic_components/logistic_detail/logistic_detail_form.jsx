@@ -326,7 +326,7 @@ const handleFileDownload = async () => {
                         Deadline
                     </label>
                     <input
-                        type="date"
+                        // type="date"
                         id="memo_deadline"
                         name="memo_deadline"
                         className="input input-bordered mt-1"

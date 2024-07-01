@@ -6,7 +6,17 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
 const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     const router = useRouter();
+
+    
     const [sortedData, setSortedData] = useState([]);
+
+    const convertToDateFormat = (dateTimeLocal) => {
+        const [date, time] = dateTimeLocal.split(", ");
+        const [day, month, year] = date.split("/");
+        // Format tanggal menjadi yyyy-mm-dd
+
+        return `${year}-${month}-${day}`;
+    };
 
     useEffect(() => {
         const sorted = data.slice().sort((a, b) => {
@@ -67,11 +77,12 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     };
 
     const rowClass = (deadline, status) => {
-        const daysLeft = (new Date(deadline) - new Date()) / (1000 * 60 * 60 * 24);
+        const daysLeft = (new Date(convertToDateFormat(deadline)) - new Date(convertToDateFormat)) / (1000 * 60 * 60 * 24);
         if (status.includes('APPROVED')) return 'bg-green-200 hover:bg-green-300';
         if (status.includes('REJECTED')) return 'bg-red-200 hover:bg-red-300';
         if (status === 'MEMO DRAFT') return 'bg-blue-200 hover:bg-blue-300';
         if (status.trim() === 'APPROVAL REQUEST SENT TO HEAD OF DEPARTMENT', 'APPROVAL REQUEST SENT TO GROUP HEAD') return 'bg-yellow-200 hover:bg-yellow-300';
+
         if (daysLeft <= 3) return 'bg-red-200 hover:bg-red-300';
         if (daysLeft <= 7) return 'bg-yellow-200 hover:bg-yellow-300';
         return 'bg-white hover:bg-gray-300';
@@ -111,11 +122,10 @@ const LogisticTable = ({ headers, data, action, link, onSort, sortConfig }) => {
         return `${parseInt(day)}${getOrdinalSuffix(day)} ${monthName} ${year}, ${formattedTime}`;
     };
     
-    
-
+   
     const calculateDeadlineStatus = (deadline, memoStatus) => {
         const currentDate = new Date();
-        const deadlineDate = new Date(deadline);
+        const deadlineDate = new Date(convertToDateFormat(deadline));
         const daysLeft = (deadlineDate - currentDate) / (1000 * 60 * 60 * 24);
 
         if (memoStatus.includes('APPROVED')) return 'MEMO FINISHED';

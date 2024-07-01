@@ -61,12 +61,12 @@ const EditMemoPage = () => {
         );
 
         const memoData = response.data.data;
-        const deadline = memoData.memo_deadline.split(", ")[0].split("/").reverse().join("-");
+        // const deadline = memoData.memo_deadline.split(", ")[0].split("/").reverse().join("-");
         setDataAllMemo((prevState) => ({
           ...prevState,
           ...memoData,
           ...response.data.data,
-          memo_deadline: deadline,
+          // memo_deadline: deadline,
         }));
         setSelectedDept(response.data.data.memo_department);
         setLoading(false);
@@ -105,19 +105,19 @@ const EditMemoPage = () => {
     getDataAllPic();
   }, [params.memoId]);
 
-  const handleDateChange = (e) => {
-    const { value } = e.target;
-    const regex = /^[0-9-]*$/; // Allows only numbers and hyphens
-    if (regex.test(value)) {
-      setDataAllMemo({
-        ...dataAllMemo,
-        memo_deadline: value,
-      });
-      setError("");
-    } else {
-      setError("Only numeric values allowed");
-    }
-  };
+  // const handleDateChange = (e) => {
+  //   const { value } = e.target;
+  //   const regex = /^[0-9-]*$/; // Allows only numbers and hyphens
+  //   if (regex.test(value)) {
+  //     setDataAllMemo({
+  //       ...dataAllMemo,
+  //       memo_deadline: value,
+  //     });
+  //     setError("");
+  //   } else {
+  //     setError("Only numeric values allowed");
+  //   }
+  // };
 
   const handlePicChange = (e) => {
     const { value } = e.target;
@@ -456,13 +456,18 @@ const EditMemoPage = () => {
             Deadline
           </label>
           <input
-            type="date"
+          disabled
+            // type="date"
             id="memo_deadline"
             name="memo_deadline"
             className="input input-bordered mt-1"
             value={dataAllMemo.memo_deadline}
-            onChange={handleDateChange}
-            read
+            onChange={(e) =>
+              setDataAllMemo({
+                  ...dataAllMemo,
+                  memo_deadline: e.target.value,
+              })
+          }
           />
         </div>
         <div className="flex flex-col">
