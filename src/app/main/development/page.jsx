@@ -64,42 +64,33 @@ const Page = () => {
                 <div className="w-full px-5 py-2 mt-4">
                     <div className="w-full flex justify-between items-center"></div>
                 </div>
-                {dataAllProject && (!searchResult || searchInput === "") ? (
+                {(!dataAllProject && !searchResult) && <PleaseWait />}
+                
+                {dataAllProject && dataAllProject.length > 0 && (!searchResult || searchInput === "") && (
                     <div>
                         <TableSDLC
-                            headers={Object.keys(dataAllProject[0]).slice(
-                                0,
-                                Object.keys(dataAllProject[0]).length - 1
-                            )}
+                            headers={Object.keys(dataAllProject[0]).slice(0, Object.keys(dataAllProject[0]).length - 1)}
                             data={dataAllProject}
                             action={true}
                             link={"/main/development/"}
                         />
                     </div>
-                ) : (
-                    !(searchResult && searchInput !== "") && <PleaseWait />
                 )}
 
-                {searchResult &&
-                    searchInput !== "" &&
-                    searchResult.length !== 0 && (
-                        <div className="mt-4">
-                            <TableSDLC
-                                headers={Object.keys(searchResult[0]).slice(
-                                    0,
-                                    Object.keys(searchResult[0]).length - 1
-                                )}
-                                data={searchResult}
-                                action={true}
-                                link={"/main/development/"}
-                                rowClass={(item) => rowClass(item.deadlineproject)}
-                            />
-                        </div>
-                    )}
+                {searchResult && searchInput !== "" && searchResult.length > 0 && (
+                    <div className="mt-4">
+                        <TableSDLC
+                            headers={Object.keys(searchResult[0]).slice(0, Object.keys(searchResult[0]).length - 1)}
+                            data={searchResult}
+                            action={true}
+                            link={"/main/development/"}
+                            rowClass={(item) => rowClass(item.deadlineproject)}
+                        />
+                    </div>
+                )}
 
-                {searchResult &&
-                    searchInput !== "" &&
-                    searchResult.length === 0 && <NotFound />}
+                {(dataAllProject && dataAllProject.length === 0) && <NotFound />}
+                {(searchResult && searchInput !== "" && searchResult.length === 0) && <NotFound />}
 
                 {dataAllProject && (
                     <div className="w-full flex justify-end items-center gap-3">
