@@ -47,6 +47,8 @@ const operation_network_table = ({ headers, data, action, link }) => {
       network_status: "Status",
       network_deadline_project: "Deadline Project",
       network_project_done: "Project Done",
+      userdomain : "user domain",
+      userdomain_pic: "user domain pic",
     };
     const displayName = displayNames[header] || header;
     // console.log(`Header: ${header}, DisplayName: ${displayName}`);
