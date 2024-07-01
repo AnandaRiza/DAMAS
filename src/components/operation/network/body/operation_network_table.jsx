@@ -189,7 +189,9 @@ const operation_network_table = ({ headers, data, action, link }) => {
                   item === "network_skse_done" ||
                   item === "network_uat_start" ||
                   item === "network_uat_deadline" ||
-                  item === "network_uat_done"
+                  item === "network_uat_done" ||
+                  item === "userdomain" ||
+                  item === "userdomain_pic"
                     ? "hidden"
                     : ""
                 }`}
@@ -240,7 +242,9 @@ const operation_network_table = ({ headers, data, action, link }) => {
                       header === "network_skse_done" ||
                       header === "network_uat_start" ||
                       header === "network_uat_deadline" ||
-                      header === "network_uat_done"
+                      header === "network_uat_done" ||
+                      header === "userdomain" ||
+                      header === "userdomain_pic"
                         ? "hidden"
                         : ""
                     }`}

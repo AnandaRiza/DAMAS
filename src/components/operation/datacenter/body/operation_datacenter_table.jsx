@@ -212,7 +212,9 @@ const page = ({ headers, data, action, link }) => {
                                     item === "dacen_phase7" ||
                                     item === "dacen_phase7_start" ||
                                     item === "dacen_phase7_deadline" ||
-                                    item === "dacen_phase7_done"
+                                    item === "dacen_phase7_done" ||
+                                    item === "userdomain" ||
+                                    item === "userdomain_pic"
                                         ? "hidden"
                                         : ""
                                 }`}
@@ -282,7 +284,9 @@ const page = ({ headers, data, action, link }) => {
                                             header === "dacen_phase7_start" ||
                                             header ===
                                                 "dacen_phase7_deadline" ||
-                                            header === "dacen_phase7_done"
+                                            header === "dacen_phase7_done" ||
+                                            header === "userdomain" ||
+                                            header === "userdomain_pic"
                                                 ? "hidden"
                                                 : ""
                                         }`}

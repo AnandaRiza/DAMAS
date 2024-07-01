@@ -229,7 +229,9 @@ const page = ({ headers, data, action, link }) => {
                                     item === "itsecurity_phase7" ||
                                     item === "itsecurity_phase7_start" ||
                                     item === "itsecurity_phase7_deadline" ||
-                                    item === "itsecurity_phase7_done"
+                                    item === "itsecurity_phase7_done" ||
+                                    item === "userdomain" ||
+                                    item === "userdomain_pic"
                                         ? "hidden"
                                         : ""
                                 }`}
@@ -313,7 +315,9 @@ const page = ({ headers, data, action, link }) => {
                                                 "itsecurity_phase7_start" ||
                                             header ===
                                                 "itsecurity_phase7_deadline" ||
-                                            header === "itsecurity_phase7_done"
+                                            header === "itsecurity_phase7_done" ||
+                                            header === "userdomain" ||
+                                            header === "userdomain_pic"
                                                 ? "hidden"
                                                 : ""
                                         }`}

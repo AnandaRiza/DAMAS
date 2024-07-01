@@ -224,7 +224,9 @@ const page = ({ headers, data, action, link }) => {
                                     item === "itsupport_phase7" ||
                                     item === "itsupport_phase7_start" ||
                                     item === "itsupport_phase7_deadline" ||
-                                    item === "itsupport_phase7_done"
+                                    item === "itsupport_phase7_done" ||
+                                    item === "userdomain" ||
+                                    item === "userdomain_pic"
                                         ? "hidden"
                                         : ""
                                 }`}
@@ -308,7 +310,9 @@ const page = ({ headers, data, action, link }) => {
                                                 "itsupport_phase7_start" ||
                                             header ===
                                                 "itsupport_phase7_deadline" ||
-                                            header === "itsupport_phase7_done"
+                                            header === "itsupport_phase7_done" ||
+                                            header === "userdomain" ||
+                                            header === "userdomain_pic"
                                                 ? "hidden"
                                                 : ""
                                         }`}

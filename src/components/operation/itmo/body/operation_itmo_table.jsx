@@ -212,7 +212,9 @@ const page = ({ headers, data, action, link }) => {
                                     item === "itmo_phase7" ||
                                     item === "itmo_phase7_start" ||
                                     item === "itmo_phase7_deadline" ||
-                                    item === "itmo_phase7_done"
+                                    item === "itmo_phase7_done" ||
+                                    item === "userdomain" ||
+                                    item === "userdomain_pic"
                                         ? "hidden"
                                         : ""
                                 }`}
@@ -276,7 +278,9 @@ const page = ({ headers, data, action, link }) => {
                                             header === "itmo_phase7" ||
                                             header === "itmo_phase7_start" ||
                                             header === "itmo_phase7_deadline" ||
-                                            header === "itmo_phase7_done"
+                                            header === "itmo_phase7_done" ||
+                                            header === "userdomain" ||
+                                            header === "userdomain_pic"
                                                 ? "hidden"
                                                 : ""
                                         }`}

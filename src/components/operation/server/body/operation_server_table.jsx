@@ -199,7 +199,9 @@ const Page = ({ headers, data, action, link }) => {
                                     item === "server_serahterimaserver_done" ||
                                     item === "server_implementasi_start" ||
                                     item === "server_implementasi_deadline" ||
-                                    item === "server_implementasi_done"
+                                    item === "server_implementasi_done" ||
+                                    item === "userdomain" ||
+                                    item === "userdomain_pic"
                                         ? "hidden"
                                         : ""
                                 }`}
@@ -274,7 +276,9 @@ const Page = ({ headers, data, action, link }) => {
                                             header ===
                                                 "server_implementasi_deadline" ||
                                             header ===
-                                                "server_implementasi_done"
+                                                "server_implementasi_done" ||
+                                                header === "userdomain" ||
+                                                header === "userdomain_pic"
                                                 ? "hidden"
                                                 : ""
                                         }`}
