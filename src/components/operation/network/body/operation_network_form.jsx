@@ -17,6 +17,7 @@ const NetworkForm = () => {
   const [dataAllPic, setDataAllPic] = useState(null);
   const [selectedDept, setSelectedDept] = useState("");
   const [selectedUserDomain, setSelectedUserDomain] = useState("");
+  const [scheduleInput, setScheduleInput] = useState("");
   const router = useRouter();
   const [formData, setFormData] = useState({
     network_perihal: "",
@@ -26,7 +27,15 @@ const NetworkForm = () => {
     createdBy: "",
     userdomain: "",
     userdomain_pic: "",
+    network_deadline_project: "",
   });
+
+  const [dataEmail, setdataEmail] = useState({
+    to: "",
+    subject: "Deadline Project is Due Tomorrow",
+    deadline: "",
+    deadlinepro: "",
+});
 
   const handleSubmit = async () => {
     try {
@@ -36,6 +45,7 @@ const NetworkForm = () => {
           ...formData,
           createdBy: userid,
           userdomain: user.userdomain,
+          network_deadline_project: calculateDeadline(scheduleInput),
         },
         {
           headers: {
@@ -44,6 +54,30 @@ const NetworkForm = () => {
           },
         }
       );
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/schedulesend-email`,
+        {
+            ...dataEmail,
+            text: `Assalamualaikum Warahmatullahi Wabarakatuh,
+    
+            Yth. Bapak/Ibu,
+            
+            Bersama ini kami memberitahukan bahwa deadline project tinggal 1 hari lagi dengan detail project:
+            
+            Peihal      : ${formData.network_perihal}
+            PIC         : ${formData.network_pic}
+            Departement : ${formData.departement}
+            Deadline    : ${calculateDeadline(scheduleInput)}
+            Website     : http://localhost:3000/main
+            
+            Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan proyek selesai tepat waktu. Terima Kasih.
+            
+Wassalamualaikum Warahmatullahi Wabarakatuh`,
+            to: "ridhwan_rifky@bcasyariah.co.id",
+            deadline: calculateDeadline(scheduleInput),
+            deadlinepro: calculateDeadline(scheduleInput),
+        }
+    );
       router.push("/main/operation/network/allprogress");
       // console.log(createdby)
     } catch (error) {
@@ -72,6 +106,27 @@ const NetworkForm = () => {
       .find((row) => row.startsWith("DAMAS-USERID="))
       ?.split("=")[1];
   }, []);
+
+  const calculateDeadline = (date) => {
+    const d = new Date(date);
+    d.setDate(d.getDate() - 1);
+
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const seconds = String(d.getSeconds()).padStart(2, "0");
+
+    return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+};
+
+const getMinDateTime = () => {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  return now.toISOString().slice(0, 16);
+};
+
 
   return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
@@ -583,22 +638,19 @@ const NetworkForm = () => {
 
             <div className="flex flex-col">
               <label
-                htmlFor="deadline"
+                htmlFor="network_deadline_project"
                 className="text-sm font-semibold text-[#0066AE]"
               >
                 Project Deadline
               </label>
               <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_deadline_project}
+                type="datetime-local"
+                id="network_deadline_project"
+                name="network_deadline_project"
+                value={scheduleInput}
+                min={getMinDateTime()}
                 onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    network_deadline_project: e.target.value,
-                  })
-                }
+                  setScheduleInput(e.target.value)}
                 className="input input-bordered mt-1"
               />
             </div>

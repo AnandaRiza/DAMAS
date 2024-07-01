@@ -94,7 +94,7 @@ const PpoForm = () => {
                 ...formData,
                 createdby: userid,
                 userdomain: user.userdomain,
-                deadlineproject: calculateDeadline(scheduleInput)
+                deadlineproject: Deadlinereal(scheduleInput)
                 
             },
             {
@@ -118,7 +118,7 @@ const PpoForm = () => {
                 Nama Project: ${formData.projectname}
                 PIC         : ${formData.pic}
                 Departement : ${formData.departement}
-                Deadline    : ${calculateDeadline(scheduleInput)}
+                Deadline    : ${Deadlinereal(scheduleInput)}
                 Website     : http://localhost:3000/main
                 
                 Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan proyek selesai tepat waktu. Terima Kasih.
@@ -140,6 +140,19 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
     const calculateDeadline = (date) => {
         const d = new Date(date);
         d.setDate(d.getDate() - 1);
+    
+        const day = String(d.getDate()).padStart(2, "0");
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const year = d.getFullYear();
+        const hours = String(d.getHours()).padStart(2, "0");
+        const minutes = String(d.getMinutes()).padStart(2, "0");
+        const seconds = String(d.getSeconds()).padStart(2, "0");
+    
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+    };
+
+    const Deadlinereal = (date) => {
+        const d = new Date(date);
     
         const day = String(d.getDate()).padStart(2, "0");
         const month = String(d.getMonth() + 1).padStart(2, "0");

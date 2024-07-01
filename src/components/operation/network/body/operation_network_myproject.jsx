@@ -19,6 +19,40 @@ import { AiOutlineEdit } from "react-icons/ai";
 const Page = ({ headers, data, action, link }) => {
   const router = useRouter();
 
+  const convertToDateFormat = (dateTimeLocal) => {
+    if (!dateTimeLocal) {
+      return ''; // Mengembalikan string kosong jika dateTimeLocal null atau undefined
+    }
+    const [date, time] = dateTimeLocal.split(", ");
+    const [day, month, year] = date.split("/");
+    // Format tanggal menjadi yyyy-mm-dd
+    return `${year}-${month}-${day}`;
+};
+
+const rowClass = (inputDate, network_status) => {
+  const calculateTimeLeft = (date) => {
+    const now = new Date();
+    const deadline = new Date(convertToDateFormat(date));
+    const difference = deadline.getTime() - now.getTime();
+    const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+    return daysLeft;
+  };
+  
+  if (network_status === "Finished") {
+    return "bg-green-200 hover:bg-green-300";
+  }
+
+  const daysLeft = calculateTimeLeft(inputDate);
+
+  if (daysLeft <= 3) {
+    return "bg-red-200 hover:bg-red-300";
+  } else if (daysLeft <= 7) {
+    return "bg-yellow-200 hover:bg-yellow-300";
+  } else {
+    return "bg-white-200 hover:bg-gray-300";
+  }
+};
+
   const handleEdit = (network_id) => {
     const updatedData = data.map((item) => {
       if (item.network_id === network_id) {
@@ -66,7 +100,7 @@ const Page = ({ headers, data, action, link }) => {
   const getStatus = (item) => {
     const calculateTimeLeft = (date) => {
       const now = new Date();
-      const deadline = new Date(date);
+      const deadline = new Date(convertToDateFormat(date));
       const difference = deadline.getTime() - now.getTime();
       const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
 
@@ -92,33 +126,11 @@ const Page = ({ headers, data, action, link }) => {
     }
   };
 
-  const rowClass = (inputDate, network_status) => {
-    const calculateTimeLeft = (date) => {
-      const now = new Date();
-      const deadline = new Date(date);
-      const difference = deadline.getTime() - now.getTime();
-      const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
-      return daysLeft;
-    };
-
-    if (network_status === "Finished") {
-      return "bg-green-200 hover:bg-green-300";
-    }
-
-    const daysLeft = calculateTimeLeft(inputDate);
-
-    if (daysLeft <= 3) {
-      return "bg-red-200 hover:bg-red-300";
-    } else if (daysLeft <= 7) {
-      return "bg-yellow-200 hover:bg-yellow-300";
-    } else {
-      return "bg-white-200 hover:bg-gray-300";
-    }
-  };
+ 
 
   const sortedData = data.slice().sort((a, b) => {
-    const classA = rowClass(a.network_deadline_project, a.network_status);
-    const classB = rowClass(b.network_deadline_project, b.network_status);
+    const classA = rowClass(convertToDateFormat(a.network_deadline_project), a.network_status);
+    const classB = rowClass(convertToDateFormat(b.network_deadline_project), b.network_status);
 
     const aIsFinished = a.network_status === "Finished";
     const bIsFinished = b.network_status === "Finished";
@@ -152,8 +164,8 @@ const Page = ({ headers, data, action, link }) => {
     if (a.network_status === "Ongoing" && b.network_status === "Ongoing") {
       // Urutkan berdasarkan deadlineproject
       return (
-        new Date(a.network_deadline_project) -
-        new Date(b.network_deadline_project)
+        new Date(convertToDateFormat(a.network_deadline_project)) -
+        new Date(convertToDateFormat(b.network_deadline_project))
       );
     }
 
@@ -201,7 +213,6 @@ const Page = ({ headers, data, action, link }) => {
                     "network_uat_deadline",
                     "network_uat_done",
                     "network_status",
-                    "network_deadline_project",
                     "userdomain",
                     "userdomain_pic",
                   ].includes(item)
@@ -231,7 +242,7 @@ const Page = ({ headers, data, action, link }) => {
           </tr>
         </thead>
         <tbody>
-          {sortedData.map((item, index) => {
+          {sortedData && sortedData.map((item, index) => {
             const status = getStatus(item);
             const rowClassName = rowClass(item.deadlineproject, item.status);
             return (
@@ -266,7 +277,6 @@ const Page = ({ headers, data, action, link }) => {
                             "network_uat_deadline",
                             "network_uat_done",
                             "network_status",
-                            "network_deadline_project",
                             "userdomain",
                             "userdomain_pic",
                         ].includes(header)

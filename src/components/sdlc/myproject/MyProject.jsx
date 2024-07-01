@@ -9,6 +9,9 @@ const MyProject = ({ headers, data, action, link }) => {
     const router = useRouter();
 
     const convertToDateFormat = (dateTimeLocal) => {
+        if (!dateTimeLocal) {
+            return ''; // Mengembalikan string kosong jika dateTimeLocal null atau undefined
+          }
         const [date, time] = dateTimeLocal.split(", ");
         const [day, month, year] = date.split("/");
         // Format tanggal menjadi yyyy-mm-dd
@@ -237,7 +240,7 @@ const MyProject = ({ headers, data, action, link }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {sortedData.map((item, index) => {
+                    {sortedData && sortedData.map((item, index) => {
                         const status = getStatus(item);
                         const rowClassName = rowClass(item.deadlineproject, item.status);
                         return (
