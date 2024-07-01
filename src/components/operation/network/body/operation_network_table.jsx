@@ -7,6 +7,14 @@ import { AiOutlineEdit } from "react-icons/ai";
 const operation_network_table = ({ headers, data, action, link }) => {
   const router = useRouter();
 
+  const convertToDateFormat = (dateTimeLocal) => {
+    const [date, time] = dateTimeLocal.split(", ");
+    const [day, month, year] = date.split("/");
+    // Format tanggal menjadi yyyy-mm-dd
+
+    return `${year}-${month}-${day}`;
+};
+
   const handleEdit = (network_id) => {
     const updatedData = data.map((item) => {
       if (item.network_id === network_id) {
@@ -58,7 +66,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
   const getStatus = (item) => {
     const calculateTimeLeft = (date) => {
       const now = new Date();
-      const deadline = new Date(date);
+      const deadline = new Date(convertToDateFormat(date));
       const difference = deadline.getTime() - now.getTime();
       const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
 
@@ -87,7 +95,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
   const rowClass = (inputDate, network_status) => {
     const calculateTimeLeft = (date) => {
       const now = new Date();
-      const deadline = new Date(date);
+      const deadline = new Date(convertToDateFormat(date));
       const difference = deadline.getTime() - now.getTime();
       const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
       return daysLeft;
@@ -109,8 +117,8 @@ const operation_network_table = ({ headers, data, action, link }) => {
   };
 
   const sortedData = data.slice().sort((a, b) => {
-    const classA = rowClass(a.network_deadline_project, a.network_status);
-    const classB = rowClass(b.network_deadline_project, b.network_status);
+    const classA = rowClass(convertToDateFormat(a.network_deadline_project), a.network_status);
+    const classB = rowClass(convertToDateFormat(b.network_deadline_project), b.network_status);
 
     const aIsFinished = a.network_status === "Finished";
     const bIsFinished = b.network_status === "Finished";
@@ -144,8 +152,8 @@ const operation_network_table = ({ headers, data, action, link }) => {
     if (a.network_status === "Ongoing" && b.network_status === "Ongoing") {
       // Urutkan berdasarkan deadlineproject
       return (
-        new Date(a.network_deadline_project) -
-        new Date(b.network_deadline_project)
+        new Date(convertToDateFormat(a.network_deadline_project)) -
+        new Date(convertToDateFormat(b.network_deadline_project))
       );
     }
 
