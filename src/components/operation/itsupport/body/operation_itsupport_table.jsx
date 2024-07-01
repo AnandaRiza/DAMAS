@@ -59,6 +59,9 @@ const page = ({ headers, data, action, link }) => {
             itsupport_phase7_done: "Phase 7 Done",
             itsupport_status: "Status",
             itsupport_deadline_project: "Deadline Project",
+            itsupport_project_done: "Project Done",
+            userdomain : "user domain",
+            userdomain_pic: "user domain pic",
         };
         const displayName = displayNames[header] || header;
         // console.log(`Header: ${header}, DisplayName: ${displayName}`);

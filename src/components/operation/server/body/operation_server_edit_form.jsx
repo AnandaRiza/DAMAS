@@ -1,11 +1,11 @@
 "use client";
 
 import PleaseWait from "@/components/PleaseWait";
+import { useStateContext } from "@/context/ContextProvider";
+import axios from "axios";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { DiVim } from "react-icons/di";
 import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
@@ -15,17 +15,23 @@ const Page = () => {
     .find((row) => row.startsWith("DAMAS-USERID="))
     ?.split("=")[1];
 
-  const params = useParams();
-  const router = useRouter();
-  const [selectedDept, setSelectedDept] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [dataAllPic, setDataAllPic] = useState(null);
+    const { user } = useStateContext();
+
+    const params = useParams();
+    const router = useRouter();
+    const [selectedDept, setSelectedDept] = useState("");
+    const [selectedUserDomain, setSelectedUserDomain] = useState("");
+    const [scheduleInput, setScheduleInput] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [dataAllPic, setDataAllPic] = useState(null);
   const [dataAllServer, setDataAllServer] = useState({
+    server_id: "",
     server_perihal: "",
     server_pic: "",
     departement: "",
     server_deadline: "",
     server_status: "",
+    userdomain_pic: "",
   });
   useEffect(() => {
     const getCurrentData = async () => {
@@ -56,6 +62,12 @@ const Page = () => {
     }
   };
 
+  useEffect(() => {
+    if (dataAllServer) {
+      setSelectedDept(dataAllServer.departement);
+    }
+  }, [dataAllServer]);
+
   const handleEditedData = async () => {
     if (
       dataAllServer.server_status === "Finished" &&
@@ -71,11 +83,13 @@ const Page = () => {
         {
           ...dataAllServer,
           submitter: userid,
-          authorizer: "Kadev",
-          submitAt: "123",
-          deadline: "123",
+          authorizer: "SUPERVISOR",
+          submitAt: submitAtDate(),
+          deadline: calculateDeadline(scheduleInput),
           status_approvement: "PENDING",
           server_id: dataAllServer.server_id,
+          userdomain: dataAllServer.userdomain,
+          userdomain_pic: dataAllServer.userdomain_pic,
         },
         {
           headers: {
@@ -90,6 +104,32 @@ const Page = () => {
       console.log(error);
     }
   };
+
+  const calculateDeadline = (date) => {
+    const d = new Date(date);
+    d.setDate(d.getDate() - 1);
+
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const seconds = String(d.getSeconds()).padStart(2, "0");
+
+    return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+};
+
+const submitAtDate = () => {
+    const d = new Date();
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const seconds = String(d.getSeconds()).padStart(2, "0");
+
+    return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+};
 
   return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl ">
@@ -135,8 +175,12 @@ const Page = () => {
                         ...dataAllProject,
                         server_pic: selectedPic.nama,
                         departement: selectedPic.departemen,
+                        userdomain_pic: selectedPic.userdomain,
                       });
                       setSelectedDept(selectedPic.departemen);
+                      setSelectedUserDomain(
+                        selectedPic.userdomain
+                    );
                     }}
                   >
                     <option
@@ -212,7 +256,7 @@ const Page = () => {
                     </label>
                     <input
                       type="date"
-                      className="input input-bordered mt-1 font-semibold"
+                      className="input input-bordered mt-1"
                       value={dataAllServer.server_kickoff_deadline}
                       onChange={(e) =>
                         setDataAllServer({
@@ -233,7 +277,7 @@ const Page = () => {
                     </label>
                     <input
                       type="date"
-                      className="input input-bordered mt-1"
+                      className="input input-bordered mt-1 "
                       value={dataAllServer.server_kickoff_done}
                       onChange={(e) =>
                         setDataAllServer({
@@ -241,8 +285,11 @@ const Page = () => {
                           server_kickoff_done: e.target.value,
                         })
                       }
+                      
                     />
                   </div>
+
+
                 </div>
               </div>
 
