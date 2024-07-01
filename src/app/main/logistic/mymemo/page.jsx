@@ -3,7 +3,7 @@ import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
 import HeaderLogistic from "@/components/logistic_components/header/HeaderLogistic";
-import LogisticTable from "@/components/logistic_components/logistic_table";
+import MyMemoTable from "@/components/logistic_components/logistic_mymemo_table";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -99,7 +99,7 @@ const Page = () => {
 
     return (
         <div>
-            <HeaderLogistic title="All Memo" />
+            <HeaderLogistic title="My Memo" />
 
             <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch
@@ -121,7 +121,7 @@ const Page = () => {
                             </div>
                         ) : (
                             <div className="mt-4">
-                                <LogisticTable
+                                <MyMemoTable
                                     headers={Object.keys(dataAllMemo[0]).slice(
                                         0,
                                         Object.keys(dataAllMemo[0]).length - 1
@@ -143,7 +143,7 @@ const Page = () => {
                             <NotFound />
                         ) : (
                             <div className="mt-4">
-                                <LogisticTable
+                                <MyMemoTable
                                     headers={Object.keys(searchResult[0]).slice(
                                         0,
                                         Object.keys(searchResult[0]).length - 1
