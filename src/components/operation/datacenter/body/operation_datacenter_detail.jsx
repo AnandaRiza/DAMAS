@@ -143,7 +143,7 @@ const page = () => {
                       htmlFor="perihal"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 1
+                      Nama Phase 
                     </label>
                     <input
                       type="text"
@@ -164,7 +164,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 1 Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -185,7 +185,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 1 Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -206,7 +206,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 1 Done
+                      Done
                     </label>
                     <input
                       disabled
@@ -240,7 +240,7 @@ const page = () => {
                       htmlFor="perihal"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 2
+                      Nama Phase 
                     </label>
                     <input
                       type="text"
@@ -261,7 +261,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 2 Start
+                    Start
                     </label>
                     <input
                       type="date"
@@ -282,7 +282,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 2 Deadline
+                    Deadline
                     </label>
                     <input
                       type="date"
@@ -303,7 +303,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 2 Done
+                    Done
                     </label>
                     <input
                       disabled
@@ -337,7 +337,7 @@ const page = () => {
                       htmlFor="perihal"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 3
+                      Nama Phase 
                     </label>
                     <input
                       type="text"
@@ -358,7 +358,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 3 Start
+                    Start
                     </label>
                     <input
                       type="date"
@@ -379,7 +379,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 3 Deadline
+                    Deadline
                     </label>
                     <input
                       type="date"
@@ -400,7 +400,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 3 Done
+                    Done
                     </label>
                     <input
                       disabled
@@ -434,7 +434,7 @@ const page = () => {
                       htmlFor="perihal"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 4
+                      Nama Phase 
                     </label>
                     <input
                       type="text"
@@ -455,7 +455,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 4 Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -476,7 +476,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 4 Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -497,7 +497,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 4 Done
+                      Done
                     </label>
                     <input
                       disabled
@@ -531,7 +531,7 @@ const page = () => {
                       htmlFor="perihal"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 5
+                      Nama Phase 
                     </label>
                     <input
                       type="text"
@@ -552,7 +552,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 5 Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -573,7 +573,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 5 Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -594,7 +594,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 5 Done
+                       Done
                     </label>
                     <input
                       disabled
@@ -628,7 +628,7 @@ const page = () => {
                       htmlFor="perihal"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 6
+                      Nama Phase 
                     </label>
                     <input
                       type="text"
@@ -649,7 +649,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 6 Start
+                     Start
                     </label>
                     <input
                       type="date"
@@ -670,7 +670,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 6 Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -691,7 +691,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 6 Done
+                      Done
                     </label>
                     <input
                       disabled
@@ -725,7 +725,7 @@ const page = () => {
                       htmlFor="perihal"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 7
+                      Nama Phase 
                     </label>
                     <input
                       type="text"
@@ -746,7 +746,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 7 Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -767,7 +767,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 7 Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -788,7 +788,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 7 Done
+                    Done
                     </label>
                     <input
                       disabled
