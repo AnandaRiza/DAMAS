@@ -27,7 +27,7 @@ const Page = () => {
     userdomain: "",
     userdomain_pic: "",
   });
-  
+
   const handleSubmit = async () => {
     try {
       await axios.post(
@@ -75,9 +75,9 @@ const Page = () => {
 
   return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
-      <div>
+      <div className="rounded-xl border border-gray-300">
         <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
-        <form
+          <form
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit();

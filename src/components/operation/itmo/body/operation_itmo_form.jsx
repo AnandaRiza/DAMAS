@@ -76,9 +76,9 @@ const page = () => {
 
   return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
-      <div>
+      <div className="rounded-xl border border-gray-300">
         <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
-        <form
+          <form
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit();
@@ -213,7 +213,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -235,7 +235,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -325,7 +325,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -347,7 +347,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -437,7 +437,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -459,7 +459,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -549,7 +549,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -571,7 +571,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -661,7 +661,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -683,7 +683,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -773,7 +773,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -795,7 +795,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -885,7 +885,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -907,7 +907,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                    Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
