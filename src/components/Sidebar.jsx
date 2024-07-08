@@ -547,14 +547,17 @@ const Sidebar = () => {
                                                         </Link>
                                                     </div>
                                                 )}
-
+                                                <div>
                                                 <Link href="/main/operation/itmo/allprogress">
+                                                <hr className="my-4 border-gray-300" />
                                                     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
                                                             All Project
                                                         </button>
                                                     </div>
                                                 </Link>
+                                                </div>
+                                                
 
                                                 {(IsOperator() ||
                                                     IsItmoOperator()) && (
