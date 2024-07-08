@@ -807,7 +807,7 @@ const Sidebar = () => {
                                                     </button>
                                                 </div>
                                             </Link>
-                                            <hr className="my-4 border-gray-300" />
+                                            {/* <hr className="my-4 border-gray-300" /> */}
                                         </div>
                                     )}
 
