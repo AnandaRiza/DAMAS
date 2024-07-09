@@ -63,7 +63,7 @@ const Page = () => {
         </details>
       </div>
       {componentToDisplay && (
-        <div className="px-10 mt-4">
+        <div className="p-4">
           {componentToDisplay}
         </div>
       )}

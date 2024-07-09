@@ -67,6 +67,7 @@ const page = ({ headers, data, action, link }) => {
             itsecurity_project_done: "Project Done",
             userdomain : "user domain",
             userdomain_pic: "user domain pic",
+            createdBy: "Created By",
         };
         const displayName = displayNames[header] || header;
         // console.log(`Header: ${header}, DisplayName: ${displayName}`);
@@ -196,7 +197,7 @@ const page = ({ headers, data, action, link }) => {
         <div className="overflow-x-auto">
             <table className="table">
                 <thead>
-                    <tr className="border-b-2 bg-[#00A6B4] text-sm">
+                <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm text-center uppercase">
                         {headers.map((item, index) => (
                             <th
                                 key={index}
@@ -266,7 +267,7 @@ const page = ({ headers, data, action, link }) => {
                                 {headers.map((header, headerIndex) => (
                                     <td
                                         key={headerIndex}
-                                        className={`py-3 px-6 ${
+                                        className={`py-3 px-6 text-center ${
                                             header === "itsecurity_id" ||
                                             header === "itsecurity_phase1" ||
                                             header ===
