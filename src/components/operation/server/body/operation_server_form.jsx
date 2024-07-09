@@ -90,12 +90,13 @@ const Page = () => {
                 htmlFor="namaproject"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                Nama Project
+                Nama Project <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 id="namaproject"
                 name="namaproject"
+                required
                 value={formData.server_perihal}
                 onChange={(e) =>
                   setFormData({
@@ -112,11 +113,12 @@ const Page = () => {
                 htmlFor="pic"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                PIC
+                PIC <span className="text-red-500">*</span>
               </label>
               {dataAllPic && (
                 <select
                   name="pic"
+                  required
                   id="pic"
                   className="input input-bordered mt-1"
                   value={formData.nama}
@@ -179,12 +181,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Start
+                    Start <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_kickoff_start}
                     onChange={(e) =>
                       setFormData({
@@ -201,12 +204,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_kickoff_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -254,12 +258,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Start
+                    Start <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_peyiapanserver_start}
                     onChange={(e) =>
                       setFormData({
@@ -276,12 +281,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_peyiapanserver_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -329,12 +335,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Start
+                    Start <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_instalasiaplikasi_start}
                     onChange={(e) =>
                       setFormData({
@@ -351,12 +358,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_instalasiaplikasi_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -404,12 +412,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Start
+                    Start <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_instalcheckpoint_start}
                     onChange={(e) =>
                       setFormData({
@@ -426,12 +435,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_instalcheckpoint_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -479,12 +489,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Start
+                    Start <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_testingkoneksi_start}
                     onChange={(e) =>
                       setFormData({
@@ -501,12 +512,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_testingkoneksi_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -554,12 +566,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Start
+                    Start <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_serahterimaserver_start}
                     onChange={(e) =>
                       setFormData({
@@ -576,12 +589,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_serahterimaserver_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -630,12 +644,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Start
+                    Start <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_implementasi_start}
                     onChange={(e) =>
                       setFormData({
@@ -652,12 +667,13 @@ const Page = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.server_implementasi_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -695,12 +711,13 @@ const Page = () => {
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                Project Deadline
+                Project Deadline <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
                 id="deadline"
                 name="deadline"
+                required
                 value={formData.server_deadline_project}
                 onChange={(e) =>
                   setFormData({

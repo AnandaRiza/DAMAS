@@ -91,12 +91,13 @@ const page = () => {
                 htmlFor="namaproject"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                Nama Project
+                Nama Project <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 id="namaproject"
                 name="namaproject"
+                required
                 value={formData.itsecurity_perihal}
                 onChange={(e) =>
                   setFormData({
@@ -113,11 +114,12 @@ const page = () => {
                 htmlFor="pic"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                PIC
+                PIC <span className="text-red-500">*</span>
               </label>
               {dataAllPic && (
                 <select
                   name="pic"
+                  required
                   id="pic"
                   className="input input-bordered mt-1"
                   value={formData.nama}
@@ -954,12 +956,13 @@ const page = () => {
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                Project Deadline
+                Project Deadline <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
                 id="deadline"
                 name="deadline"
+                required
                 value={formData.itsecurity_deadline_project}
                 onChange={(e) =>
                   setFormData({
