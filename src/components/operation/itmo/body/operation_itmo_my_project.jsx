@@ -68,9 +68,9 @@ const Page = ({ headers, data, action, link }) => {
         itmo_phase7_deadline: "",
         itmo_phase7_done: "",
         itmo_status: "Status",
-        itmo_deadline_project: "Project Deadline",
+        itmo_deadline_project: "Deadline Project",
         itmo_project_done: "Project Done",
-        createdBy: "",
+        createdBy: "Created By",
     };
     return displayNames[header] || header;
   };
@@ -190,7 +190,7 @@ const Page = ({ headers, data, action, link }) => {
             {headers.map((item, index) => (
               <th
                 key={index}
-                className={`py-3 px-6 capitalize ${
+                className={`py-3 px-6 ${
                   [
                     "id",
                     "itmo_id",
@@ -223,7 +223,6 @@ const Page = ({ headers, data, action, link }) => {
                     "itmo_phase7_deadline",
                     "itmo_phase7_done",
                     "itmo_status",
-                    "itmo_deadline_project",
                     "userdomain",
                     "userdomain_pic",
                   ].includes(item)
@@ -298,7 +297,6 @@ const Page = ({ headers, data, action, link }) => {
                             "itmo_phase7_deadline",
                             "itmo_phase7_done",
                             "itmo_status",
-                            "itmo_deadline_project",
                             "userdomain",
                             "userdomain_pic",
                         ].includes(header)

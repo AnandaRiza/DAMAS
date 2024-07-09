@@ -190,7 +190,7 @@ const rowClass = (inputDate, network_status) => {
             {headers.map((item, index) => (
               <th
                 key={index}
-                className={`py-3 px-6 capitalize ${
+                className={`py-3 px-6 ${
                   [
                     "id",
                     "network_id",

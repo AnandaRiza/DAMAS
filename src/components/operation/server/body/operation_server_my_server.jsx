@@ -36,7 +36,7 @@ const ServerForm = ({ headers, data, action, link }) => {
   const getDisplayName = (header) => {
     const displayNames = {
         server_id: "Server ID",
-        server_perihal: "Project Name",
+        server_perihal: "Nama Project",
         server_pic: "PIC",
         departement: "Departement",
         server_kickoff_start: "Kick Off Start",
@@ -61,7 +61,9 @@ const ServerForm = ({ headers, data, action, link }) => {
         server_implementasi_deadline: "Implementasi Deadline",
         server_implementasi_done: "Implementasi Done",
         server_status: "Status",
-        server_deadline_project: "Project Deadline",
+        server_deadline_project: "Deadline Project",
+        server_project_done: "Project Done",
+        createdBy: "Created By",
     };
     return displayNames[header] || header;
   };
@@ -181,7 +183,7 @@ const ServerForm = ({ headers, data, action, link }) => {
             {headers.map((item, index) => (
               <th
                 key={index}
-                className={`py-3 px-6 capitalize ${
+                className={`py-3 px-6 ${
                   [
                     "id",
                     "server_id",
@@ -207,7 +209,6 @@ const ServerForm = ({ headers, data, action, link }) => {
                     "server_implementasi_deadline",
                     "server_implementasi_done",
                     "server_status",
-                    "server_deadline_project",
                     "userdomain",
                     "userdomain_pic",
                   ].includes(item)
@@ -275,7 +276,6 @@ const ServerForm = ({ headers, data, action, link }) => {
                         "server_implementasi_deadline",
                         "server_implementasi_done",
                         "server_status",
-                        "server_deadline_project",
                         "userdomain",
                         "userdomain_pic",
                       ].includes(header)
