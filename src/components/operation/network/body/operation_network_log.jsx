@@ -34,7 +34,8 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
       network_uat_done: "UAT Done",
       network_status: "Status",
       network_deadline_project: "Project Deadline",
-      createdby: "",
+      network_project_done: "Project Done",
+      createdby: "Created By",
     };
 
     const displayName = displayNames[header] || header;

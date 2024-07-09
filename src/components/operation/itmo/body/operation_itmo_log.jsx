@@ -44,7 +44,8 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
             itmo_phase7_done: "",
             itmo_status: "Status",
             itmo_deadline_project: "Project Deadline",
-            createdBy: "",
+            itmo_project_done: "Project Done",
+            createdby: "Created By",
         };
 
         const displayName = displayNames[header] || header;

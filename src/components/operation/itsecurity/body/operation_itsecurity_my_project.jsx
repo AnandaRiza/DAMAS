@@ -222,7 +222,6 @@ const Page = ({ headers, data, action, link }) => {
                     "itsecurity_phase7_start",
                     "itsecurity_phase7_deadline",
                     "itsecurity_phase7_done",
-                    "itsecurity_status",
                     "userdomain",
                     "userdomain_pic",
                   ].includes(item)
@@ -254,7 +253,7 @@ const Page = ({ headers, data, action, link }) => {
         <tbody>
           {sortedData.map((item, index) => {
             const status = getStatus(item);
-            const rowClassName = rowClass(item.deadlineproject, item.status);
+            const rowClassName = rowClass(item.itsecurity_deadline_project, item.itsecurity_status);
             return (
               <tr
                 key={index}
@@ -296,7 +295,6 @@ const Page = ({ headers, data, action, link }) => {
                             "itsecurity_phase7_start",
                             "itsecurity_phase7_deadline",
                             "itsecurity_phase7_done",
-                            "itsecurity_status",
                             "userdomain",
                             "userdomain_pic",
                         ].includes(header)

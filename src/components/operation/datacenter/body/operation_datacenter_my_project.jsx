@@ -222,7 +222,6 @@ const Page = ({ headers, data, action, link }) => {
                     "dacen_phase7_start",
                     "dacen_phase7_deadline",
                     "dacen_phase7_done",
-                    "dacen_status",
                     "userdomain",
                     "userdomain_pic",
                   ].includes(item)
@@ -254,7 +253,7 @@ const Page = ({ headers, data, action, link }) => {
         <tbody>
           {sortedData.map((item, index) => {
             const status = getStatus(item);
-            const rowClassName = rowClass(item.deadlineproject, item.status);
+            const rowClassName = rowClass(item.dacen_deadline_project, item.dacen_status);
             return (
               <tr
                 key={index}
@@ -296,7 +295,6 @@ const Page = ({ headers, data, action, link }) => {
                             "dacen_phase7_start",
                             "dacen_phase7_deadline",
                             "dacen_phase7_done",
-                            "dacen_status",
                             "userdomain",
                             "userdomain_pic",
                         ].includes(header)

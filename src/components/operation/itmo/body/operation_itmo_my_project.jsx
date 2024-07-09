@@ -222,7 +222,6 @@ const Page = ({ headers, data, action, link }) => {
                     "itmo_phase7_start",
                     "itmo_phase7_deadline",
                     "itmo_phase7_done",
-                    "itmo_status",
                     "userdomain",
                     "userdomain_pic",
                   ].includes(item)
@@ -254,7 +253,7 @@ const Page = ({ headers, data, action, link }) => {
         <tbody>
           {sortedData.map((item, index) => {
             const status = getStatus(item);
-            const rowClassName = rowClass(item.deadlineproject, item.status);
+            const rowClassName = rowClass(item.itmo_deadline_project, item.itmo_status);
             return (
               <tr
                 key={index}
@@ -296,7 +295,6 @@ const Page = ({ headers, data, action, link }) => {
                             "itmo_phase7_start",
                             "itmo_phase7_deadline",
                             "itmo_phase7_done",
-                            "itmo_status",
                             "userdomain",
                             "userdomain_pic",
                         ].includes(header)

@@ -37,7 +37,8 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
       server_implementasi_done: "Implementasi Done",
       server_status: "Status",
       server_deadline_project: "Project Deadline",
-      createdby: "",
+      server_project_done: "Project Done",
+      createdby: "Created By",
     };
 
     const displayName = displayNames[header] || header;
@@ -154,7 +155,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
               {headers.map((header, headerIndex) => (
                 <td
                   key={headerIndex}
-                  className={`py-3 px-6 capitalize ${
+                  className={`py-3 px-6 ${
                     [
                         "id",
                         "server_id",
@@ -183,7 +184,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                         "server_deadline_project",
                         "userdomain",
                         "userdomain_pic",
-                    ].includes(item)
+                    ].includes(header)
                       ? "hidden"
                       : ""
                   }`}

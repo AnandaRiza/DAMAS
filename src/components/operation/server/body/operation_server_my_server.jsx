@@ -208,7 +208,6 @@ const ServerForm = ({ headers, data, action, link }) => {
                     "server_implementasi_start",
                     "server_implementasi_deadline",
                     "server_implementasi_done",
-                    "server_status",
                     "userdomain",
                     "userdomain_pic",
                   ].includes(item)
@@ -240,7 +239,7 @@ const ServerForm = ({ headers, data, action, link }) => {
         <tbody>
           {sortedData.map((item, index) => {
             const status = getStatus(item);
-            const rowClassName = rowClass(item.deadlineproject, item.status);
+            const rowClassName = rowClass(item.server_deadline_project, item.server_status);
             return (
               <tr
                 key={index}
@@ -275,7 +274,6 @@ const ServerForm = ({ headers, data, action, link }) => {
                         "server_implementasi_start",
                         "server_implementasi_deadline",
                         "server_implementasi_done",
-                        "server_status",
                         "userdomain",
                         "userdomain_pic",
                       ].includes(header)
