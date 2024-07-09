@@ -13,6 +13,8 @@ const layout = ({ children }) => {
                 <Header title="DAMAS" />
                 <div className="w-full h-full relative pb-10 flex">
                     <div className="relative w-[15%]">
+                    {/* <div className="hidden lg:block lg:w-[15%]"> */}
+                    {/* <div className="relative w-relative"> */}
                         <Sidebar />
                     </div>
                     <div className="px-6 w-[85%] h-full">
