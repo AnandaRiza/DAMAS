@@ -84,7 +84,7 @@ const Page = () => {
           },
         }
       );
-      router.push("/main/operation/server/allserver");
+      router.push("/main/operation/general/myproject");
       setIsLoading(false);
     } catch (error) {
       console.log(error);

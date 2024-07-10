@@ -45,7 +45,7 @@ const page = () => {
           },
         }
       );
-      router.push("/main/operation/datacenter/allprogress");
+      router.push("/main/operation/general/allproject");
       // console.log(createdby)
     } catch (error) {
       console.log(error);

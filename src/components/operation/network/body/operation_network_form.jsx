@@ -78,7 +78,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
             deadlinepro: calculateDeadline(scheduleInput),
         }
     );
-      router.push("/main/operation/network/allprogress");
+      router.push("/main/operation/general/allproject");
       // console.log(createdby)
     } catch (error) {
       console.log(error);
