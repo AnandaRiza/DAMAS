@@ -111,7 +111,7 @@ const page = () => {
           )}
 
           {dataAllItsecurity && (
-            <div className="w-full flex justify-end items-center gap-3">
+            <div className="w-full flex justify-end items-center gap-3 mt-2">
               <button
                 type="button"
                 disabled={currentPage === 1 || startIndex === 0}
