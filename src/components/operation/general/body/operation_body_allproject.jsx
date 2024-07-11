@@ -37,7 +37,7 @@ const Page = () => {
       <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
         <details className="dropdown">
         <summary className="btn m-1">{selectedOption ? selectedOption.charAt(0).toUpperCase() + selectedOption.slice(1) : "Choose Table"}</summary>
-          <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+          <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow-md">
             <li>
               <a onClick={handleOptionChange}>Network</a>
             </li>
@@ -65,7 +65,7 @@ const Page = () => {
         </details>
       </div>
       {componentToDisplay && (
-        <div className="mt-2">
+        <div className="mt-1">
           {componentToDisplay}
         </div>
       )}
