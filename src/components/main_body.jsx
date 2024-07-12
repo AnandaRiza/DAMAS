@@ -10,13 +10,15 @@ const Page = () => {
 
       <div className="flex w-grow">
 
-        <div className="grid h-[330px] w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 mr-2"
+        <div className="grid h-[330px] w-[90px] flex-grow card bg-[#00A6B4] rounded-box mt-4 p-1 mr-2"
         // style={{ background: 'linear-gradient(275deg, rgba(255, 255, 255, 1), rgba(0, 166, 180, 0.8))' }}
         >
           <div className="h-[50px] w-[770px] rounded-box shadow-sm">
           <h1 className="font-bold p-2 mt-1 items-center justify-center">DEVELOPMENT</h1>
           <p className="p-4">Monitoring all STL Project From MBS</p>
           </div>
+          <button className="btn btn-success">DSADASDADS</button>
+          <button className="btn btn-success">DSADASDADS</button>
         </div>
 
         {/* <div className="divider divider-horizontal"></div> */}

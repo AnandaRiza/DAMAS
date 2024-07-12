@@ -323,7 +323,6 @@ const Sidebar = () => {
 
             {/* End Button NEW OP */}
 
-
             {/* start button Logistic */}
             {(IsLogisticSupervisor() ||
               IsLogisticOperator() ||
@@ -465,6 +464,22 @@ const Sidebar = () => {
                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                           <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
                             Logistic Supervisor
+                          </button>
+                        </div>
+                      </Link>
+                      <hr className="my-4 border-gray-300" />
+                    </div>
+                  )}
+
+                  {(IsSupervisor() ||
+                    IsOperationSupervisor() ||
+                    IsOperator()) && (
+                    <div>
+
+                      <Link href="/main/status/approveoperation/general/approval">
+                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                          <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                            Operation
                           </button>
                         </div>
                       </Link>
