@@ -50,6 +50,12 @@ const page = () => {
     }
   };
 
+  useEffect(() => {
+    if (dataAllNetwork) {
+      setSelectedDept(dataAllNetwork.departement);
+    }
+  }, [dataAllNetwork]);
+
   return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl ">
       <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
@@ -106,7 +112,7 @@ const page = () => {
                 </label>
                 {dataAllPic && (
                   <select
-                    disabled
+                  disabled
                     type="text"
                     className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                     value={dataAllNetwork.name}

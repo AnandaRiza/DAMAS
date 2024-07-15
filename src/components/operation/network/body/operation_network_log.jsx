@@ -63,7 +63,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
             {headers.map((item, index) => (
               <th
                 key={index}
-                className={`py-3 px-6 uppercase ${
+                className={`py-3 px-6 ${
                   [
                     "id",
                     "network_id",

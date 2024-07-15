@@ -61,7 +61,7 @@ const Page = () => {
             />
         </div>
         <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl px-3">
-            <div className=" bw-full">
+            <div className=" bw-full`">
                 <div className="w-full flex justify-between items-center"></div>
             </div>
             {dataLog && dataLog.length !==0 && (!searchResult || searchInput == "") ? (

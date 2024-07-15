@@ -38,7 +38,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
       server_status: "Status",
       server_deadline_project: "Project Deadline",
       server_project_done: "Project Done",
-      createdby: "Created By",
+      createdBy: "Created By",
     };
 
     const displayName = displayNames[header] || header;

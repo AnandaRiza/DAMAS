@@ -45,7 +45,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
             itsupport_status: "Status",
             itsupport_deadline_project: "Project Deadline",
             itsupport_project_done: "Project Done",
-            createdby: "Created By",
+            createdBy: "Created By",
         };
 
         const displayName = displayNames[header] || header;
@@ -67,16 +67,58 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
     return (
         <div className="overflow-auto mx-auto">
             <table className="text-center border-b cursor-pointer">
-                <thead>
-                    <tr className="border-b-2 bg-[#00A6B4] text-sm">
-                        {action && <th className="py-2 px-4 w-32">Action</th>}
-                        {headers.map((item, index) => (
-                            <th key={index} className="py-3 px-6 capitalize">
-                                {getDisplayName(item)}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
+            <thead>
+          <tr className="border-b-2 bg-[#00A6B4] text-sm">
+            {action && <th className="py-2 px-4 w-32">Action</th>}
+            {headers.map((item, index) => (
+              <th
+                key={index}
+                className={`py-3 px-6 capitalize ${
+                  [
+                    "id",
+                    "itsupport_id",
+                    "itsupport_phase1",
+                    "itsupport_phase1_start",
+                    "itsupport_phase1_deadline",
+                    "itsupport_phase1_done",
+                    "itsupport_phase2",
+                    "itsupport_phase2_start",
+                    "itsupport_phase2_deadline",
+                    "itsupport_phase2_done",
+                    "itsupport_phase3",
+                    "itsupport_phase3_start",
+                    "itsupport_phase3_deadline",
+                    "itsupport_phase3_done",
+                    "itsupport_phase4",
+                    "itsupport_phase4_start",
+                    "itsupport_phase4_deadline",
+                    "itsupport_phase4_done",
+                    "itsupport_phase5",
+                    "itsupport_phase5_start",
+                    "itsupport_phase5_deadline",
+                    "itsupport_phase5_done",
+                    "itsupport_phase6",
+                    "itsupport_phase6_start",
+                    "itsupport_phase6_deadline",
+                    "itsupport_phase6_done",
+                    "itsupport_phase7",
+                    "itsupport_phase7_start",
+                    "itsupport_phase7_deadline",
+                    "itsupport_phase7_done",
+                    "itsupport_status",
+                    "itsupport_deadline_project",
+                    "userdomain",
+                    "userdomain_pic",
+                  ].includes(item)
+                    ? "hidden"
+                    : ""
+                }`}
+              >
+                {getDisplayName(item)}
+              </th>
+            ))}
+          </tr>
+        </thead>
                 <tbody className="bg-black">
                     {data.map((item, index) => (
                         <tr
@@ -131,9 +173,51 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                             )}
 
                             {headers.map((header, headerIndex) => (
-                                <td key={headerIndex} className="py-3 px-6">
-                                    {item[header]}
-                                </td>
+                                <td
+                                key={headerIndex}
+                                className={`py-3 px-6 ${
+                                  [
+                                    "id",
+                                    "itsupport_id",
+                                    "itsupport_phase1",
+                                    "itsupport_phase1_start",
+                                    "itsupport_phase1_deadline",
+                                    "itsupport_phase1_done",
+                                    "itsupport_phase2",
+                                    "itsupport_phase2_start",
+                                    "itsupport_phase2_deadline",
+                                    "itsupport_phase2_done",
+                                    "itsupport_phase3",
+                                    "itsupport_phase3_start",
+                                    "itsupport_phase3_deadline",
+                                    "itsupport_phase3_done",
+                                    "itsupport_phase4",
+                                    "itsupport_phase4_start",
+                                    "itsupport_phase4_deadline",
+                                    "itsupport_phase4_done",
+                                    "itsupport_phase5",
+                                    "itsupport_phase5_start",
+                                    "itsupport_phase5_deadline",
+                                    "itsupport_phase5_done",
+                                    "itsupport_phase6",
+                                    "itsupport_phase6_start",
+                                    "itsupport_phase6_deadline",
+                                    "itsupport_phase6_done",
+                                    "itsupport_phase7",
+                                    "itsupport_phase7_start",
+                                    "itsupport_phase7_deadline",
+                                    "itsupport_phase7_done",
+                                    "itsupport_status",
+                                    "itsupport_deadline_project",
+                                    "userdomain",
+                                    "userdomain_pic",
+                                  ].includes(header)
+                                    ? "hidden"
+                                    : ""
+                                }`}
+                              >
+                                {item[header]}
+                              </td>
                             ))}
                         </tr>
                     ))}
