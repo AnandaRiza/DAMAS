@@ -80,29 +80,9 @@ const Page = () => {
                       network_perihal: e.target.value,
                     })
                   }
-                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
                 />
               </div>
-
-              {/* <div className="flex flex-col mx-3 my-3">
-                        <label
-                            htmlFor="pic"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            PIC
-                        </label>
-                        <input
-                            type="text"
-                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                            value={dataAllNetwork.network_pic}
-                            onChange={(e) =>
-                                setDataAllNetwork({
-                                    ...dataAllNetwork,
-                                    network_pic: e.target.value,
-                                })
-                            }
-                        />
-                    </div> */}
 
               <div className="flex flex-col">
                 <label
@@ -115,7 +95,7 @@ const Page = () => {
                   <select
                     disabled
                     type="text"
-                    className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                    className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
                     value={dataAllNetwork.name}
                     onChange={(e) => {
                       const selectedPic = JSON.parse(e.target.value);
@@ -152,7 +132,7 @@ const Page = () => {
                   Departemen
                 </label>
                 <input
-                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
                   type="text"
                   value={selectedDept}
                   disabled

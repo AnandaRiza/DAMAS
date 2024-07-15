@@ -93,7 +93,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
       );
       setDataAllPic(response.data.data);
-      // console.log(response.data.data);
+      // console.log(response.data.data); 
     } catch (error) {
       console.log(error);
     }

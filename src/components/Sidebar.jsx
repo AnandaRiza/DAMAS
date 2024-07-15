@@ -268,7 +268,7 @@ const Sidebar = () => {
                 </div>
 
                 <div className="collapse-content">
-                  {(IsSupervisor() ||
+                  {(
                     IsOperationSupervisor() ||
                     IsNetworkOperator() ||
                     IsServerOperator() ||
@@ -297,7 +297,7 @@ const Sidebar = () => {
                     </div>
                   </Link>
 
-                  {(IsSupervisor() ||
+                  {(
                     IsOperationSupervisor() ||
                     IsNetworkOperator() ||
                     IsServerOperator() ||
