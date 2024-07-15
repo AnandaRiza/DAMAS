@@ -49,9 +49,9 @@ const Page = () => {
         </div>
         <br />
         <div className="flex flex-row items-center mt-10">
-        <button className="btn bg-[#478CCF] hover:bg-[#42709F] text-[#FFFFFF] p-1 m-1 h-[75px] w-[175px]">My Project</button>
-        <button className="btn bg-[#4535C1] hover:bg-[#4C40A0] text-[#FFFFFF] p-1 m-1 h-[75px] w-[175px]">All Project</button>
-        <button className="btn bg-[#00FF66] hover:bg-[#1BBD5C] text-[#000000] p-1 m-1 h-[75px] w-[175px]">Create Project</button>
+        <button className="btn bg-[#ACC8E5] hover:bg-[#8DB5E1] text-[#000000] p-1 m-1 h-[75px] w-[175px]">My Project</button>
+        <button className="btn bg-[#ACC8E5] hover:bg-[#8DB5E1] text-[#000000] p-1 m-1 h-[75px] w-[175px]">All Project</button>
+        <button className="btn bg-[#00FF66] hover:bg-[#0EDF61] text-[#000000] p-1 m-1 h-[75px] w-[175px]">Create Project</button>
         </div>
         </div>
 
