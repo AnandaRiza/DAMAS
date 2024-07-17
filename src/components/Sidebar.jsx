@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaUsersGear } from "react-icons/fa6";
 import { FaProjectDiagram } from "react-icons/fa";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
+import { BsBuildingFillGear } from "react-icons/bs";
 import { FaTools } from "react-icons/fa";
 import { IoIosGitNetwork } from "react-icons/io";
 import { FaServer } from "react-icons/fa";
@@ -262,14 +263,13 @@ const Sidebar = () => {
                 {/* start button NEWOP */}
                 <div className="collapse-title text-xl font-bold flex items-center">
                   <div className="mr-2">
-                    <FaProjectDiagram />
+                    <BsBuildingFillGear />
                   </div>
                   Operation
                 </div>
 
                 <div className="collapse-content">
-                  {(
-                    IsOperationSupervisor() ||
+                  {(IsOperationSupervisor() ||
                     IsNetworkOperator() ||
                     IsServerOperator() ||
                     IsDacenOperator() ||
@@ -297,8 +297,7 @@ const Sidebar = () => {
                     </div>
                   </Link>
 
-                  {(
-                    IsOperationSupervisor() ||
+                  {(IsOperationSupervisor() ||
                     IsNetworkOperator() ||
                     IsServerOperator() ||
                     IsDacenOperator() ||
@@ -475,7 +474,6 @@ const Sidebar = () => {
                     IsOperationSupervisor() ||
                     IsOperator()) && (
                     <div>
-
                       <Link href="/main/status/approveoperation/general/approval">
                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                           <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
