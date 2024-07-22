@@ -45,7 +45,7 @@ const Page = () => {
             <li>
               <a onClick={handleOptionChange}>Server</a>
             </li>
-            <hr className="my-1 border-gray-300" />
+            {/* <hr className="my-1 border-gray-300" />
             <li>
               <a onClick={handleOptionChange}>Data Center</a>
             </li>
@@ -60,7 +60,7 @@ const Page = () => {
             <hr className="my-1 border-gray-300" />
             <li>
               <a onClick={handleOptionChange}>IT Security</a>
-            </li>
+            </li> */}
           </ul>
         </details>
       </div>

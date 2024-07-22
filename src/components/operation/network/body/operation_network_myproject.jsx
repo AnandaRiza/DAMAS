@@ -194,6 +194,9 @@ const rowClass = (inputDate, network_status) => {
                   [
                     "id",
                     "network_id",
+                    "network_description",
+                    "network_category",
+                    "network_category_others",
                     "network_kickoff_start",
                     "network_kickoff_deadline",
                     "network_kickoff_done",
@@ -257,6 +260,9 @@ const rowClass = (inputDate, network_status) => {
                         [
                             "id",
                             "network_id",
+                            "network_description",
+                            "network_category",
+                            "network_category_others",
                             "network_kickoff_start",
                             "network_kickoff_deadline",
                             "network_kickoff_done",

@@ -67,6 +67,9 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                   [
                     "id",
                     "network_id",
+                    "network_description",
+                    "network_category",
+                    "network_category_others",
                     "network_kickoff_start",
                     "network_kickoff_deadline",
                     "network_kickoff_done",
@@ -153,6 +156,9 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                     [
                       "id",
                       "network_id",
+                      "network_description",
+                      "network_category",
+                      "network_category_others",
                       "network_kickoff_start",
                       "network_kickoff_deadline",
                       "network_kickoff_done",

@@ -73,6 +73,20 @@ const Page = () => {
               </div>
 
               <div className="flex flex-col">
+              <label
+                htmlFor="namaproject"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Description <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                placeholder="Desc"
+                disabled
+                className="textarea textarea-bordered mt-1 textarea-lg w-full max-w-full"
+              ></textarea>
+            </div>
+
+              <div className="flex flex-col">
                 <label
                   htmlFor="pic"
                   className="text-sm font-semibold text-[#0066AE]"

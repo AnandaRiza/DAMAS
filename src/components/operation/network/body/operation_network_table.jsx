@@ -181,6 +181,9 @@ const operation_network_table = ({ headers, data, action, link }) => {
                 key={index}
                 className={`py-3 px-6 ${
                   item === "network_id" ||
+                  item === "network_description" ||
+                  item === "network_category" ||
+                  item === "network_category_others" ||
                   item === "network_kickoff_start" ||
                   item === "network_kickoff_deadline" ||
                   item === "network_kickoff_done" ||
@@ -234,6 +237,9 @@ const operation_network_table = ({ headers, data, action, link }) => {
                     key={headerIndex}
                     className={`py-3 px-6 text-center ${
                       header === "network_id" ||
+                      header === "network_description" ||
+                      header === "network_category" ||
+                      header === "network_category_others" |
                       header === "network_kickoff_start" ||
                       header === "network_kickoff_deadline" ||
                       header === "network_kickoff_done" ||
