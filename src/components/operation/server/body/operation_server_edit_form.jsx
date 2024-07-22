@@ -159,6 +159,25 @@ const submitAtDate = () => {
 
               <div className="flex flex-col">
                 <label
+                  htmlFor="namaproject"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Description
+                </label>
+                <textarea
+                  value={dataAllServer.server_description}
+                  onChange={(e) =>
+                    setDataAllServer({
+                      ...dataAllServer,
+                      server_description: e.target.value,
+                    })
+                  }
+                  className="textarea textarea-bordered mt-1 disabled:bg-gray-100 disabled text-[#373739] textarea-lg w-full max-w-full"
+                ></textarea>
+              </div>
+
+              <div className="flex flex-col">
+                <label
                   htmlFor="pic"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
@@ -213,6 +232,68 @@ const submitAtDate = () => {
                   value={selectedDept}
                   disabled
                 />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="status"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Category <span className="text-red-500">*</span>
+                </label>
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  {/* Conditional rendering based on server_category */}
+                  {dataAllServer.server_category === "Others" ? (
+                    <div>
+                      <div className="flex flex-col mx-3 my-3 w-[200px]">
+                        <input
+                          disabled
+                          type="text"
+                          value={dataAllServer.server_category}
+                          onChange={(e) =>
+                            setDataAllServer({
+                              ...dataAllServer,
+                              server_category: e.target.value,
+                            })
+                          }
+                          className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
+                        />
+                      </div>
+                      <div className="flex flex-col mx-3 my-3">
+                        <input
+                          disabled
+                          type="text"
+                          value={dataAllServer.server_category_others}
+                          onChange={(e) =>
+                            setDataAllServer({
+                              ...dataAllServer,
+                              server_category_others: e.target.value,
+                            })
+                          }
+                          className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col mx-3 my-3">
+                      <input
+                        disabled
+                        type="text"
+                        value={dataAllServer.server_category}
+                        onChange={(e) =>
+                          setDataAllServer({
+                            ...dataAllServer,
+                            server_category: e.target.value,
+                          })
+                        }
+                        className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div>
