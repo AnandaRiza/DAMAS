@@ -314,7 +314,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                       htmlFor="namaproject"
                       className="text-sm font-semibold text-[#0066AE] mx-3 my-3"
                     >
-                      Others
+                      Enter Category
                     </label>
                     <input
                       type="text"
