@@ -190,7 +190,7 @@ const Page = () => {
                 />
               </div>
 
-              <div>
+              {/* <div>
                 <label
                   htmlFor="status"
                   className="text-sm font-semibold text-[#0066AE]"
@@ -201,7 +201,6 @@ const Page = () => {
                   className="border rounded-xl"
                   style={{ borderColor: "#DADADA" }}
                 >
-                  {/* Conditional rendering based on server_category */}
                   {dataAllServer.server_category === "Others" ? (
                     <div>
                       <div className="flex flex-col mx-3 my-3 w-[200px]">
@@ -250,7 +249,7 @@ const Page = () => {
                     </div>
                   )}
                 </div>
-              </div>
+              </div> */}
 
               <div>
                 <label

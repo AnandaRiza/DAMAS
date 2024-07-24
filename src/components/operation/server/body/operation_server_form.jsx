@@ -206,7 +206,7 @@ const Page = () => {
               />
             </div>
 
-            <div>
+            {/* <div>
               <label
                 htmlFor="status"
                 className="text-sm font-semibold text-[#0066AE]"
@@ -253,7 +253,6 @@ const Page = () => {
                   </div>
                 </div>
 
-                {/* Conditional rendering of Others input */}
                 {formData.server_category === "Others" && (
                   <div className="flex flex-col">
                     <label
@@ -278,7 +277,7 @@ const Page = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
 
             <div>
               <label
