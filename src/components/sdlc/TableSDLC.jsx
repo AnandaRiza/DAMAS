@@ -20,10 +20,12 @@ const TableSDLC = ({ headers, data, action, link }) => {
     const router = useRouter();
 
     const convertToDateFormat = (dateTimeLocal) => {
+        if (!dateTimeLocal) {
+            return ""; // Handle the case where dateTimeLocal is undefined
+        }
         const [date, time] = dateTimeLocal.split(", ");
         const [day, month, year] = date.split("/");
         // Format tanggal menjadi yyyy-mm-dd
-
         return `${year}-${month}-${day}`;
     };
 
@@ -67,47 +69,16 @@ const TableSDLC = ({ headers, data, action, link }) => {
 
     const getDisplayName = (header) => {
         const displayNames = {
-            projectname: "Project Name",
-            pic: "PIC",
-            departement: "Department",
-            kickoffstart: "Kick Off Start",
-            kickoffdeadline: "Kick Off Deadline",
-            kickoffdone: "Kick off Done",
-            userrequirementstart: "User Requirement Start",
-            userrequirementdeadline: "User Requirement Deadline",
-            userrequirementdone: "User Requirement Done",
-            applicationdevelopmentstart: "Application Development Start",
-            applicationdevelopmentdeadline: "Application Development Deadline",
-            applicationdevelopmentdone: "Application Development Done",
-            sitstart: "SIT Start",
-            sitdeadline: "SIT Deadline",
-            sitdone: "SIT Done",
-            uatstart: "UAT Start",
-            uatdeadline: "UAT Deadline",
-            uatdone: "UAT Done",
-            implementationpreparestart: "Implementation Prepare Start",
-            implementationpreparedeadline: "Implementation Prepare Deadline",
-            implementationpreparedone: "Implementation Prepare Done",
-            implementationmeetingstart: "Implementation Meeting Start",
-            implementationmeetingdeadline: "Implementation Meeting Deadline",
-            implementationmeetingdone: "Implementation Meeting Done",
-            implementationstart: "Implementation Start",
-            implementationdeadline: "Implementation Deadline",
-            implementationdone: "Implementation Done",
-            postimplementationreviewstart: "Post Implementation Review Start",
-            postimplementationreviewdeadline:
-                "Post Implementation Review Deadline",
-            postimplementationreviewdone: "Post Implementation Review Done",
-            status: "Status",
-            deadlineproject: "Deadline Project",
-            projectdone: "Project Done",
-            createdby: "Created By",
+            projectNumber: "Project",
+            bcasNoPMO: "No PMO",
+            projectName: "Name",
+            bcasJenisAplikasi: "Jenis Aplikasi",
+            createdDateTime: "Planned Start Date",
+            projectEndDate: "Planned End Date",
         };
 
         return displayNames[header] || header;
     };
-
-   
 
     const getStatus = (item) => {
         const calculateTimeLeft = (date) => {
@@ -125,7 +96,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
             return "Finished";
         }
 
-        const daysLeft = calculateTimeLeft(item.deadlineproject);
+        const daysLeft = calculateTimeLeft(item.projectEndDate);
 
         if (daysLeft < 0) {
             return "Past Deadline";
@@ -139,8 +110,14 @@ const TableSDLC = ({ headers, data, action, link }) => {
     };
 
     const sortedData = data.slice().sort((a, b) => {
-        const classA = rowClass(convertToDateFormat(a.deadlineproject), a.status);
-        const classB = rowClass(convertToDateFormat(b.deadlineproject), b.status);
+        const classA = rowClass(
+            convertToDateFormat(a.projectEndDate),
+            a.status
+        );
+        const classB = rowClass(
+            convertToDateFormat(b.projectEndDate),
+            b.status
+        );
 
         const aIsFinished = a.status === "Finished";
         const bIsFinished = b.status === "Finished";
@@ -173,7 +150,10 @@ const TableSDLC = ({ headers, data, action, link }) => {
         // Jika keduanya tidak selesai, tetapi memiliki status "Ongoing"
         if (a.status === "Ongoing" && b.status === "Ongoing") {
             // Urutkan berdasarkan deadlineproject
-            return new Date(convertToDateFormat(a.deadlineproject)) - new Date(convertToDateFormat(b.deadlineproject));
+            return (
+                new Date(convertToDateFormat(a.projectEndDate)) -
+                new Date(convertToDateFormat(b.projectEndDate))
+            );
         }
 
         // Jika hanya salah satu memiliki status "Ongoing", letakkan yang lain di atas
@@ -195,48 +175,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
                 <thead>
                     <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm text-center uppercase">
                         {headers.map((item, index) => (
-                            <th
-                                key={index}
-                                className={`py-3 px-6  ${
-                                    [
-                                        "id",
-                                        "kickoffstart",
-                                        "kickoffdeadline",
-                                        "kickoffdone",
-                                        "userrequirementstart",
-                                        "userrequirementdeadline",
-                                        "userrequirementdone",
-                                        "applicationdevelopmentstart",
-                                        "applicationdevelopmentdeadline",
-                                        "applicationdevelopmentdone",
-                                        "sitstart",
-                                        "sitdeadline",
-                                        "sitdone",
-                                        "uatstart",
-                                        "uatdeadline",
-                                        "uatdone",
-                                        "implementationpreparestart",
-                                        "implementationpreparedeadline",
-                                        "implementationpreparedone",
-                                        "implementationmeetingstart",
-                                        "implementationmeetingdeadline",
-                                        "implementationmeetingdone",
-                                        "implementationstart",
-                                        "implementationdeadline",
-                                        "implementationdone",
-                                        "postimplementationreviewstart",
-                                        "postimplementationreviewdeadline",
-                                        "postimplementationreviewdone",
-                                        "userdomain",
-                                        "userdomainpic",
-                                        // "projectdone",
-                                    ].includes(item)
-                                        ? "hidden"
-                                        : ""
-                                }`}
-                            >
-                                {getDisplayName(item)}
-                            </th>
+                            <th key={index}>{getDisplayName(item)}</th>
                         ))}
                         {(IsOperator() ||
                             IsDevOperator() ||
@@ -251,7 +190,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
                             IsLogisticOperator()) &&
                             action && (
                                 <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                    Edit
+                                    Detail
                                 </th>
                             )}
                     </tr>
@@ -260,7 +199,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
                     {sortedData.map((item, index) => {
                         const status = getStatus(item);
                         const rowClassName = rowClass(
-                            item.deadlineproject,
+                            item.projectEndDate,
                             item.status
                         );
                         return (
@@ -269,52 +208,14 @@ const TableSDLC = ({ headers, data, action, link }) => {
                                 className={`${rowClassName} text-xs leading-5`}
                                 onDoubleClick={() => handleDoubleClick(item.id)}
                             >
-                                {headers.map((header, headerIndex) => (
-                                    <td
-                                        key={headerIndex}
-                                        className={`py-3 px-6 text-center ${
-                                            [
-                                                "id",
-                                                "kickoffstart",
-                                                "kickoffdeadline",
-                                                "kickoffdone",
-                                                "userrequirementstart",
-                                                "userrequirementdeadline",
-                                                "userrequirementdone",
-                                                "applicationdevelopmentstart",
-                                                "applicationdevelopmentdeadline",
-                                                "applicationdevelopmentdone",
-                                                "sitstart",
-                                                "sitdeadline",
-                                                "sitdone",
-                                                "uatstart",
-                                                "uatdeadline",
-                                                "uatdone",
-                                                "implementationpreparestart",
-                                                "implementationpreparedeadline",
-                                                "implementationpreparedone",
-                                                "implementationmeetingstart",
-                                                "implementationmeetingdeadline",
-                                                "implementationmeetingdone",
-                                                "implementationstart",
-                                                "implementationdeadline",
-                                                "implementationdone",
-                                                "postimplementationreviewstart",
-                                                "postimplementationreviewdeadline",
-                                                "postimplementationreviewdone",
-                                                "userdomain",
-                                                "userdomainpic",
-                                                // "projectdone",
-                                            ].includes(header)
-                                                ? "hidden"
-                                                : ""
-                                        }`}
-                                    >
+                                {headers.map((header, headerIndex) => {
+                                    console.log(header)
+                                    return (<td key={headerIndex}>
                                         {header === "status"
                                             ? status
-                                            : item[header]}
-                                    </td>
-                                ))}
+                                            : (header === "createdDateTime" || header === "projectEndDate") ? item[header].slice(0,19) : item[header]}
+                                    </td>);
+                                })}
                                 {(IsOperator() ||
                                     IsDevOperator() ||
                                     IsPpoOperator() ||
