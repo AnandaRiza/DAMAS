@@ -19,6 +19,8 @@ const Page = () => {
     departement: "",
     network_deadline: "",
     network_status: "",
+    network_category: "",
+    network_category_others: ""
   });
 
   useEffect(() => {
@@ -80,29 +82,29 @@ const Page = () => {
                       network_perihal: e.target.value,
                     })
                   }
-                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
                 />
               </div>
 
-              {/* <div className="flex flex-col mx-3 my-3">
-                        <label
-                            htmlFor="pic"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            PIC
-                        </label>
-                        <input
-                            type="text"
-                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                            value={dataAllNetwork.network_pic}
-                            onChange={(e) =>
-                                setDataAllNetwork({
-                                    ...dataAllNetwork,
-                                    network_pic: e.target.value,
-                                })
-                            }
-                        />
-                    </div> */}
+              <div className="flex flex-col">
+                <label
+                  htmlFor="namaproject"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Description
+                </label>
+                <textarea
+                  disabled
+                  value={dataAllNetwork.network_description}
+                  onChange={(e) =>
+                    setDataAllNetwork({
+                      ...dataAllNetwork,
+                      network_description: e.target.value,
+                    })
+                  }
+                  className="textarea textarea-bordered mt-1 disabled:bg-gray-100 disabled text-[#373739] font-semibold  textarea-lg w-full max-w-full"
+                ></textarea>
+              </div>
 
               <div className="flex flex-col">
                 <label
@@ -115,7 +117,7 @@ const Page = () => {
                   <select
                     disabled
                     type="text"
-                    className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                    className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
                     value={dataAllNetwork.name}
                     onChange={(e) => {
                       const selectedPic = JSON.parse(e.target.value);
@@ -144,6 +146,68 @@ const Page = () => {
                 )}
               </div>
 
+              <div>
+                <label
+                  htmlFor="status"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Category <span className="text-red-500">*</span>
+                </label>
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  {/* Conditional rendering based on network_category */}
+                  {dataAllNetwork.network_category === "Others" ? (
+                    <div>
+                      <div className="flex flex-col mx-3 my-3 w-[200px]">
+                        <input
+                          disabled
+                          type="text"
+                          value={dataAllNetwork.network_category}
+                          onChange={(e) =>
+                            setDataAllNetwork({
+                              ...dataAllNetwork,
+                              network_category: e.target.value,
+                            })
+                          }
+                          className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
+                        />
+                      </div>
+                      <div className="flex flex-col mx-3 my-3">
+                        <input
+                          disabled
+                          type="text"
+                          value={dataAllNetwork.network_category_others}
+                          onChange={(e) =>
+                            setDataAllNetwork({
+                              ...dataAllNetwork,
+                              network_category_others: e.target.value,
+                            })
+                          }
+                          className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col mx-3 my-3">
+                      <input
+                        disabled
+                        type="text"
+                        value={dataAllNetwork.network_category}
+                        onChange={(e) =>
+                          setDataAllNetwork({
+                            ...dataAllNetwork,
+                            network_category: e.target.value,
+                          })
+                        }
+                        className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
               <div className="flex flex-col">
                 <label
                   htmlFor="departemen"
@@ -152,7 +216,7 @@ const Page = () => {
                   Departemen
                 </label>
                 <input
-                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
                   type="text"
                   value={selectedDept}
                   disabled

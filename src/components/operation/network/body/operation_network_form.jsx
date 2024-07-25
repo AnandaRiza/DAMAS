@@ -11,7 +11,7 @@ const NetworkForm = () => {
     .find((row) => row.startsWith("DAMAS-USERID="))
     ?.split("=")[1];
 
-    const {user}  = useStateContext();
+  const { user } = useStateContext();
 
   // State to manage form data
   const [dataAllPic, setDataAllPic] = useState(null);
@@ -21,6 +21,7 @@ const NetworkForm = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     network_perihal: "",
+    network_description: "",
     network_pic: "",
     network_deadline: "",
     network_status: "",
@@ -28,14 +29,31 @@ const NetworkForm = () => {
     userdomain: "",
     userdomain_pic: "",
     network_deadline_project: "",
+    network_category: "",
+    network_category_others: "",
   });
+
+  const handleCategorySelect = (category) => {
+    if (category === "Others") {
+      setFormData({
+        ...formData,
+        network_category: category,
+        network_category_others: "", // Clear others field when Others is selected
+      });
+    } else {
+      setFormData({
+        ...formData,
+        network_category: category,
+      });
+    }
+  };
 
   const [dataEmail, setdataEmail] = useState({
     to: "",
     subject: "Deadline Project is Due Tomorrow",
     deadline: "",
     deadlinepro: "",
-});
+  });
 
   const handleSubmit = async () => {
     try {
@@ -57,8 +75,8 @@ const NetworkForm = () => {
       await axios.post(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/schedulesend-email`,
         {
-            ...dataEmail,
-            text: `Assalamualaikum Warahmatullahi Wabarakatuh,
+          ...dataEmail,
+          text: `Assalamualaikum Warahmatullahi Wabarakatuh,
     
             Yth. Bapak/Ibu,
             
@@ -73,12 +91,12 @@ const NetworkForm = () => {
             Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan proyek selesai tepat waktu. Terima Kasih.
             
 Wassalamualaikum Warahmatullahi Wabarakatuh`,
-            to: "ridhwan_rifky@bcasyariah.co.id",
-            deadline: calculateDeadline(scheduleInput),
-            deadlinepro: calculateDeadline(scheduleInput),
+          to: "ridhwan_rifky@bcasyariah.co.id",
+          deadline: calculateDeadline(scheduleInput),
+          deadlinepro: calculateDeadline(scheduleInput),
         }
-    );
-      router.push("/main/operation/network/allprogress");
+      );
+      router.push("/main/operation/general/allproject");
       // console.log(createdby)
     } catch (error) {
       console.log(error);
@@ -119,18 +137,17 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
     const seconds = String(d.getSeconds()).padStart(2, "0");
 
     return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
-};
+  };
 
-const getMinDateTime = () => {
-  const now = new Date();
-  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-  return now.toISOString().slice(0, 16);
-};
-
+  const getMinDateTime = () => {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().slice(0, 16);
+  };
 
   return (
-    <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
-      <div>
+    <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white">
+      <div className="rounded-xl border border-gray-300">
         <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
           <form
             onSubmit={(e) => {
@@ -145,12 +162,13 @@ const getMinDateTime = () => {
                 htmlFor="namaproject"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                Nama Project
+                Nama Project <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 id="namaproject"
                 name="namaproject"
+                required
                 value={formData.network_perihal}
                 onChange={(e) =>
                   setFormData({
@@ -164,14 +182,38 @@ const getMinDateTime = () => {
 
             <div className="flex flex-col">
               <label
+                htmlFor="namaproject"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Description <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                type="text"
+                id="namaproject"
+                name="namaproject"
+                required
+                value={formData.network_description}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    network_description: e.target.value,
+                  })
+                }
+                className="textarea textarea-bordered mt-1"
+              ></textarea>
+            </div>
+
+            <div className="flex flex-col">
+              <label
                 htmlFor="pic"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                PIC
+                PIC <span className="text-red-500">*</span>
               </label>
               {dataAllPic && (
                 <select
                   name="pic"
+                  required
                   id="pic"
                   className="input input-bordered mt-1"
                   value={formData.nama}
@@ -220,6 +262,97 @@ const getMinDateTime = () => {
 
             <div>
               <label
+                htmlFor="status"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Category <span className="text-red-500">*</span>
+              </label>
+              <div
+                className="border rounded-xl"
+                style={{ borderColor: "#DADADA" }}
+              >
+                <div className="flex flex-col">
+                  <div className="dropdown mt-1 mx-3 my-3">
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      className="btn m-1 w-52 bg-white hover:bg-gray text-gray-600"
+                    >
+                      {formData.network_category
+                        ? formData.network_category
+                        : "Select Category"}
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 mb-4"
+                    >
+                      <li>
+                        <a
+                          onClick={() =>
+                            handleCategorySelect("Jaringan Cabang")
+                          }
+                        >
+                          Jaringan Cabang
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          onClick={() =>
+                            handleCategorySelect("Jaringan Kantor Pusat")
+                          }
+                        >
+                          Jaringan Kantor Pusat
+                        </a>
+                      </li>
+                      <li>
+                        <a onClick={() => handleCategorySelect("Jaringan DRC")}>
+                          Jaringan DRC
+                        </a>
+                      </li>
+                      <li>
+                        <a onClick={() => handleCategorySelect("Cloud")}>
+                          Cloud
+                        </a>
+                      </li>
+                      <hr className="my-1 border-gray-300" />
+                      <li>
+                        <a onClick={() => handleCategorySelect("Others")}>
+                          Others
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Conditional rendering of Others input */}
+                {formData.network_category === "Others" && (
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="namaproject"
+                      className="text-sm font-semibold text-[#0066AE] mx-3 my-3"
+                    >
+                      Enter Category
+                    </label>
+                    <input
+                      type="text"
+                      id="namaproject"
+                      name="namaproject"
+                      value={formData.network_category_others}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          network_category_others: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1 mx-3 my-3"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
               >
@@ -234,12 +367,13 @@ const getMinDateTime = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Start
+                    Start <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.network_kickoff_start}
                     onChange={(e) =>
                       setFormData({
@@ -256,12 +390,13 @@ const getMinDateTime = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.network_kickoff_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -291,12 +426,13 @@ const getMinDateTime = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Start
+                    Start <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.network_mop_start}
                     onChange={(e) =>
                       setFormData({
@@ -313,12 +449,13 @@ const getMinDateTime = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.network_mop_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -348,12 +485,13 @@ const getMinDateTime = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Start
+                    Start <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.network_demomop_start}
                     onChange={(e) =>
                       setFormData({
@@ -370,12 +508,13 @@ const getMinDateTime = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.network_demomop_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -388,25 +527,6 @@ const getMinDateTime = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div className="flex flex-col">
-            <label
-                htmlFor="deadline"
-                className="text-sm font-semibold text-[#0066AE]"
-            >
-                Demo MOP Done
-            </label>
-            <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_demomop_done}
-                onChange={(e) =>
-                    setFormData({ ...formData, network_demomop_done: e.target.value })
-                }
-                className="input input-bordered mt-1"
-            />
-        </div> */}
 
             <div>
               <label
@@ -424,12 +544,13 @@ const getMinDateTime = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Start
+                    Start <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.network_implementasi_start}
                     onChange={(e) =>
                       setFormData({
@@ -446,12 +567,13 @@ const getMinDateTime = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.network_implementasi_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -465,31 +587,12 @@ const getMinDateTime = () => {
               </div>
             </div>
 
-            {/* <div className="flex flex-col">
-            <label
-                htmlFor="deadline"
-                className="text-sm font-semibold text-[#0066AE]"
-            >
-                Implementasi Done
-            </label>
-            <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_implementasi_done}
-                onChange={(e) =>
-                    setFormData({ ...formData, network_implementasi_done: e.target.value })
-                }
-                className="input input-bordered mt-1"
-            />
-        </div> */}
-
             <div>
               <label
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                SK/SE
+                Memo / SK/SE
               </label>
               <div
                 className="border rounded-xl"
@@ -541,25 +644,6 @@ const getMinDateTime = () => {
               </div>
             </div>
 
-            {/* <div className="flex flex-col">
-            <label
-                htmlFor="deadline"
-                className="text-sm font-semibold text-[#0066AE]"
-            >
-                SK/SE Done
-            </label>
-            <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_skse_done}
-                onChange={(e) =>
-                    setFormData({ ...formData, network_skse_done: e.target.value })
-                }
-                className="input input-bordered mt-1"
-            />
-        </div> */}
-
             <div>
               <label
                 htmlFor="deadline"
@@ -576,12 +660,13 @@ const getMinDateTime = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Start
+                    Start <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.network_uat_start}
                     onChange={(e) =>
                       setFormData({
@@ -598,12 +683,13 @@ const getMinDateTime = () => {
                     htmlFor="deadline"
                     className="text-sm font-semibold text-[#0066AE]"
                   >
-                    Deadline
+                    Deadline <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
                     id="deadline"
                     name="deadline"
+                    required
                     value={formData.network_uat_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -617,40 +703,21 @@ const getMinDateTime = () => {
               </div>
             </div>
 
-            {/* <div className="flex flex-col">
-            <label
-                htmlFor="deadline"
-                className="text-sm font-semibold text-[#0066AE]"
-            >
-                UAT Done
-            </label>
-            <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.network_uat_done}
-                onChange={(e) =>
-                    setFormData({ ...formData, network_uat_done: e.target.value })
-                }
-                className="input input-bordered mt-1"
-            />
-        </div> */}
-
             <div className="flex flex-col">
               <label
                 htmlFor="network_deadline_project"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                Project Deadline
+                Project Deadline <span className="text-red-500">*</span>
               </label>
               <input
                 type="datetime-local"
                 id="network_deadline_project"
                 name="network_deadline_project"
+                required
                 value={scheduleInput}
                 min={getMinDateTime()}
-                onChange={(e) =>
-                  setScheduleInput(e.target.value)}
+                onChange={(e) => setScheduleInput(e.target.value)}
                 className="input input-bordered mt-1"
               />
             </div>

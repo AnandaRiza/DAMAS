@@ -37,7 +37,8 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
       server_implementasi_done: "Implementasi Done",
       server_status: "Status",
       server_deadline_project: "Project Deadline",
-      createdby: "",
+      server_project_done: "Project Done",
+      createdBy: "Created By",
     };
 
     const displayName = displayNames[header] || header;
@@ -69,6 +70,9 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                   [
                     "id",
                     "server_id",
+                    "server_description",
+                    "server_category",
+                    "server_category_others",
                     "server_kickoff_start",
                     "server_kickoff_deadline",
                     "server_kickoff_done",
@@ -109,8 +113,10 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
             <tr
               key={index}
               className={`${
-                index % 2 === 0 ? "bg-white" : "bg-[#00A6B4]"
-              } hover:bg-gray-100 text-xs leading-5`}
+                index % 2 === 0
+                  ? "bg-white hover:bg-[#DADADA]"
+                  : "bg-[#00B4C4] hover:bg-[#00A6B4]"
+              } text-xs leading-5`}
             >
               {action && (
                 <td className="py-3 px-6 w-36 flex items-center justify-center gap-5">
@@ -154,36 +160,39 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
               {headers.map((header, headerIndex) => (
                 <td
                   key={headerIndex}
-                  className={`py-3 px-6 capitalize ${
+                  className={`py-3 px-6 ${
                     [
-                        "id",
-                        "server_id",
-                        "server_kickoff_start",
-                        "server_kickoff_deadline",
-                        "server_kickoff_done",
-                        "server_peyiapanserver_start",
-                        "server_peyiapanserver_deadline",
-                        "server_peyiapanserver_done",
-                        "server_instalasiaplikasi_start",
-                        "server_instalasiaplikasi_deadline",
-                        "server_instalasiaplikasi_done",
-                        "server_instalcheckpoint_start",
-                        "server_instalcheckpoint_deadline",
-                        "server_instalcheckpoint_done",
-                        "server_testingkoneksi_start",
-                        "server_testingkoneksi_deadline",
-                        "server_testingkoneksi_done",
-                        "server_serahterimaserver_start",
-                        "server_serahterimaserver_deadline",
-                        "server_serahterimaserver_done",
-                        "server_implementasi_start",
-                        "server_implementasi_deadline",
-                        "server_implementasi_done",
-                        "server_status",
-                        "server_deadline_project",
-                        "userdomain",
-                        "userdomain_pic",
-                    ].includes(item)
+                      "id",
+                      "server_id",
+                      "server_description",
+                      "server_category",
+                      "server_category_others",
+                      "server_kickoff_start",
+                      "server_kickoff_deadline",
+                      "server_kickoff_done",
+                      "server_peyiapanserver_start",
+                      "server_peyiapanserver_deadline",
+                      "server_peyiapanserver_done",
+                      "server_instalasiaplikasi_start",
+                      "server_instalasiaplikasi_deadline",
+                      "server_instalasiaplikasi_done",
+                      "server_instalcheckpoint_start",
+                      "server_instalcheckpoint_deadline",
+                      "server_instalcheckpoint_done",
+                      "server_testingkoneksi_start",
+                      "server_testingkoneksi_deadline",
+                      "server_testingkoneksi_done",
+                      "server_serahterimaserver_start",
+                      "server_serahterimaserver_deadline",
+                      "server_serahterimaserver_done",
+                      "server_implementasi_start",
+                      "server_implementasi_deadline",
+                      "server_implementasi_done",
+                      "server_status",
+                      "server_deadline_project",
+                      "userdomain",
+                      "userdomain_pic",
+                    ].includes(header)
                       ? "hidden"
                       : ""
                   }`}

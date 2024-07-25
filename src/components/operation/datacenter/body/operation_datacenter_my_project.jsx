@@ -68,9 +68,9 @@ const Page = ({ headers, data, action, link }) => {
         dacen_phase7_deadline: "",
         dacen_phase7_done: "",
         dacen_status: "Status",
-        dacen_deadline_project: "Project Deadline",
+        dacen_deadline_project: "Deadline Project",
         dacen_project_done: "Project Done",
-        createdBy: "",
+        createdBy: "Created By",
     };
     return displayNames[header] || header;
   };
@@ -190,7 +190,7 @@ const Page = ({ headers, data, action, link }) => {
             {headers.map((item, index) => (
               <th
                 key={index}
-                className={`py-3 px-6 capitalize ${
+                className={`py-3 px-6 ${
                   [
                     "id",
                     "dacen_id",
@@ -222,8 +222,6 @@ const Page = ({ headers, data, action, link }) => {
                     "dacen_phase7_start",
                     "dacen_phase7_deadline",
                     "dacen_phase7_done",
-                    "dacen_status",
-                    "dacen_deadline_project",
                     "userdomain",
                     "userdomain_pic",
                   ].includes(item)
@@ -255,7 +253,7 @@ const Page = ({ headers, data, action, link }) => {
         <tbody>
           {sortedData.map((item, index) => {
             const status = getStatus(item);
-            const rowClassName = rowClass(item.deadlineproject, item.status);
+            const rowClassName = rowClass(item.dacen_deadline_project, item.dacen_status);
             return (
               <tr
                 key={index}
@@ -297,8 +295,6 @@ const Page = ({ headers, data, action, link }) => {
                             "dacen_phase7_start",
                             "dacen_phase7_deadline",
                             "dacen_phase7_done",
-                            "dacen_status",
-                            "dacen_deadline_project",
                             "userdomain",
                             "userdomain_pic",
                         ].includes(header)

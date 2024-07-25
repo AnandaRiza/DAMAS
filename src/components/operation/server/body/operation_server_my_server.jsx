@@ -35,33 +35,35 @@ const ServerForm = ({ headers, data, action, link }) => {
 
   const getDisplayName = (header) => {
     const displayNames = {
-        server_id: "Server ID",
-        server_perihal: "Project Name",
-        server_pic: "PIC",
-        departement: "Departement",
-        server_kickoff_start: "Kick Off Start",
-        server_kickoff_deadline: "Kick Off Deadline",
-        server_kickoff_done: "Kick off Done",
-        server_peyiapanserver_start: "Penyiapan Server Start",
-        server_peyiapanserver_deadline: "Penyiapan Server Deadline",
-        server_peyiapanserver_done: "Penyiapan Server Done",
-        server_instalasiaplikasi_start: "Instalasi Aplikasi Start",
-        server_instalasiaplikasi_deadline: "Instalasi Aplikasi Deadline",
-        server_instalasiaplikasi_done: "Instalasi Aplikasi Done",
-        server_instalcheckpoint_start: "Instal Checkpoint Start",
-        server_instalcheckpoint_deadline: "Instal Checkpoint Deadline",
-        server_instalcheckpoint_done: "Instal Checkpoint Done",
-        server_testingkoneksi_start: "Testing Koneksi Start",
-        server_testingkoneksi_deadline: "Testing Koneksi Deadline",
-        server_testingkoneksi_done: "Testing Koneksi Done",
-        server_serahterimaserver_start: "Serah Terima Server Start",
-        server_serahterimaserver_deadline: "Serah Terima Server Start",
-        server_serahterimaserver_done: "Serah Terima Server Done",
-        server_implementasi_start: "Implementasi Start",
-        server_implementasi_deadline: "Implementasi Deadline",
-        server_implementasi_done: "Implementasi Done",
-        server_status: "Status",
-        server_deadline_project: "Project Deadline",
+      server_id: "Server ID",
+      server_perihal: "Nama Project",
+      server_pic: "PIC",
+      departement: "Departement",
+      server_kickoff_start: "Kick Off Start",
+      server_kickoff_deadline: "Kick Off Deadline",
+      server_kickoff_done: "Kick off Done",
+      server_peyiapanserver_start: "Penyiapan Server Start",
+      server_peyiapanserver_deadline: "Penyiapan Server Deadline",
+      server_peyiapanserver_done: "Penyiapan Server Done",
+      server_instalasiaplikasi_start: "Instalasi Aplikasi Start",
+      server_instalasiaplikasi_deadline: "Instalasi Aplikasi Deadline",
+      server_instalasiaplikasi_done: "Instalasi Aplikasi Done",
+      server_instalcheckpoint_start: "Instal Checkpoint Start",
+      server_instalcheckpoint_deadline: "Instal Checkpoint Deadline",
+      server_instalcheckpoint_done: "Instal Checkpoint Done",
+      server_testingkoneksi_start: "Testing Koneksi Start",
+      server_testingkoneksi_deadline: "Testing Koneksi Deadline",
+      server_testingkoneksi_done: "Testing Koneksi Done",
+      server_serahterimaserver_start: "Serah Terima Server Start",
+      server_serahterimaserver_deadline: "Serah Terima Server Start",
+      server_serahterimaserver_done: "Serah Terima Server Done",
+      server_implementasi_start: "Implementasi Start",
+      server_implementasi_deadline: "Implementasi Deadline",
+      server_implementasi_done: "Implementasi Done",
+      server_status: "Status",
+      server_deadline_project: "Deadline Project",
+      server_project_done: "Project Done",
+      createdBy: "Created By",
     };
     return displayNames[header] || header;
   };
@@ -181,10 +183,13 @@ const ServerForm = ({ headers, data, action, link }) => {
             {headers.map((item, index) => (
               <th
                 key={index}
-                className={`py-3 px-6 capitalize ${
+                className={`py-3 px-6 ${
                   [
                     "id",
                     "server_id",
+                    "server_description",
+                    "server_category",
+                    "server_category_others",
                     "server_kickoff_start",
                     "server_kickoff_deadline",
                     "server_kickoff_done",
@@ -206,8 +211,6 @@ const ServerForm = ({ headers, data, action, link }) => {
                     "server_implementasi_start",
                     "server_implementasi_deadline",
                     "server_implementasi_done",
-                    "server_status",
-                    "server_deadline_project",
                     "userdomain",
                     "userdomain_pic",
                   ].includes(item)
@@ -238,8 +241,11 @@ const ServerForm = ({ headers, data, action, link }) => {
         </thead>
         <tbody>
           {sortedData.map((item, index) => {
-            const status = getStatus(item);
-            const rowClassName = rowClass(item.deadlineproject, item.status);
+            const server_status = getStatus(item);
+            const rowClassName = rowClass(
+              item.server_deadline_project,
+              item.server_status
+            );
             return (
               <tr
                 key={index}
@@ -253,6 +259,9 @@ const ServerForm = ({ headers, data, action, link }) => {
                       [
                         "id",
                         "server_id",
+                        "server_description",
+                        "server_category",
+                        "server_category_others",
                         "server_kickoff_start",
                         "server_kickoff_deadline",
                         "server_kickoff_done",
@@ -274,8 +283,6 @@ const ServerForm = ({ headers, data, action, link }) => {
                         "server_implementasi_start",
                         "server_implementasi_deadline",
                         "server_implementasi_done",
-                        "server_status",
-                        "server_deadline_project",
                         "userdomain",
                         "userdomain_pic",
                       ].includes(header)
@@ -283,7 +290,7 @@ const ServerForm = ({ headers, data, action, link }) => {
                         : ""
                     }`}
                   >
-                    {header === "status" ? status : item[header]}
+                    {header === "server_status" ? server_status : item[header]}
                   </td>
                 ))}
                 {(IsOperator() ||

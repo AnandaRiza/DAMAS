@@ -68,9 +68,9 @@ const Page = ({ headers, data, action, link }) => {
         itsupport_phase7_deadline: "",
         itsupport_phase7_done: "",
         itsupport_status: "Status",
-        itsupport_deadline_project: "Project Deadline",
+        itsupport_deadline_project: "Deadline Project",
         itsupport_project_done: "Project Done",
-        createdBy: "",
+        createdBy: "Created By",
     };
     return displayNames[header] || header;
   };
@@ -190,7 +190,7 @@ const Page = ({ headers, data, action, link }) => {
             {headers.map((item, index) => (
               <th
                 key={index}
-                className={`py-3 px-6 capitalize ${
+                className={`py-3 px-6 ${
                   [
                     "id",
                     "itsupport_id",
@@ -222,8 +222,6 @@ const Page = ({ headers, data, action, link }) => {
                     "itsupport_phase7_start",
                     "itsupport_phase7_deadline",
                     "itsupport_phase7_done",
-                    "itsupport_status",
-                    "itsupport_deadline_project",
                     "userdomain",
                     "userdomain_pic",
                   ].includes(item)
@@ -255,7 +253,7 @@ const Page = ({ headers, data, action, link }) => {
         <tbody>
           {sortedData.map((item, index) => {
             const status = getStatus(item);
-            const rowClassName = rowClass(item.deadlineproject, item.status);
+            const rowClassName = rowClass(item.itsupport_deadline_project, item.itsupport_status);
             return (
               <tr
                 key={index}
@@ -297,8 +295,6 @@ const Page = ({ headers, data, action, link }) => {
                             "itsupport_phase7_start",
                             "itsupport_phase7_deadline",
                             "itsupport_phase7_done",
-                            "itsupport_status",
-                            "itsupport_deadline_project",
                             "userdomain",
                             "userdomain_pic",
                         ].includes(header)

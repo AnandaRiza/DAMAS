@@ -190,10 +190,13 @@ const rowClass = (inputDate, network_status) => {
             {headers.map((item, index) => (
               <th
                 key={index}
-                className={`py-3 px-6 capitalize ${
+                className={`py-3 px-6 ${
                   [
                     "id",
                     "network_id",
+                    "network_description",
+                    "network_category",
+                    "network_category_others",
                     "network_kickoff_start",
                     "network_kickoff_deadline",
                     "network_kickoff_done",
@@ -212,7 +215,6 @@ const rowClass = (inputDate, network_status) => {
                     "network_uat_start",
                     "network_uat_deadline",
                     "network_uat_done",
-                    "network_status",
                     "userdomain",
                     "userdomain_pic",
                   ].includes(item)
@@ -243,8 +245,8 @@ const rowClass = (inputDate, network_status) => {
         </thead>
         <tbody>
           {sortedData && sortedData.map((item, index) => {
-            const status = getStatus(item);
-            const rowClassName = rowClass(item.deadlineproject, item.status);
+            const network_status = getStatus(item);
+            const rowClassName = rowClass(item.network_deadline_project, item.network_status);
             return (
               <tr
                 key={index}
@@ -258,6 +260,9 @@ const rowClass = (inputDate, network_status) => {
                         [
                             "id",
                             "network_id",
+                            "network_description",
+                            "network_category",
+                            "network_category_others",
                             "network_kickoff_start",
                             "network_kickoff_deadline",
                             "network_kickoff_done",
@@ -276,14 +281,13 @@ const rowClass = (inputDate, network_status) => {
                             "network_uat_start",
                             "network_uat_deadline",
                             "network_uat_done",
-                            "network_status",
                             "userdomain",
                             "userdomain_pic",
                         ].includes(header)
                         ? "hidden"
                         : ""
                     }`}>
-                    {header === "status" ? status : item[header]}
+                    {header === "network_status" ? network_status : item[header]}
                   </td>
                 ))}
                 {(IsOperator() ||

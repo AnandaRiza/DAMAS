@@ -7,9 +7,9 @@ import React, { useEffect, useState } from "react";
 
 const page = () => {
   const userid = document.cookie
-  .split("; ")
-  .find((row) => row.startsWith("DAMAS-USERID="))
-  ?.split("=")[1];
+    .split("; ")
+    .find((row) => row.startsWith("DAMAS-USERID="))
+    ?.split("=")[1];
 
   const params = useParams();
   const [selectedDept, setSelectedDept] = useState("");
@@ -20,6 +20,8 @@ const page = () => {
     departement: "",
     network_deadline: "",
     network_status: "",
+    network_category: "",
+    network_category_others: "",
   });
   useEffect(() => {
     const getCurrentData = async () => {
@@ -50,6 +52,12 @@ const page = () => {
     }
   };
 
+  useEffect(() => {
+    if (dataAllNetwork) {
+      setSelectedDept(dataAllNetwork.departement);
+    }
+  }, [dataAllNetwork]);
+
   return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl ">
       <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
@@ -73,29 +81,29 @@ const page = () => {
                       network_perihal: e.target.value,
                     })
                   }
-                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
                 />
               </div>
 
-              {/* <div className="flex flex-col mx-3 my-3">
-                        <label
-                            htmlFor="pic"
-                            className="text-sm font-semibold text-[#0066AE]"
-                        >
-                            PIC
-                        </label>
-                        <input
-                            type="text"
-                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                            value={dataAllNetwork.network_pic}
-                            onChange={(e) =>
-                                setDataAllNetwork({
-                                    ...dataAllNetwork,
-                                    network_pic: e.target.value,
-                                })
-                            }
-                        />
-                    </div> */}
+              <div className="flex flex-col">
+                <label
+                  htmlFor="namaproject"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Description
+                </label>
+                <textarea
+                  disabled
+                  value={dataAllNetwork.network_description}
+                  onChange={(e) =>
+                    setDataAllNetwork({
+                      ...dataAllNetwork,
+                      network_description: e.target.value,
+                    })
+                  }
+                  className="textarea textarea-bordered mt-1 disabled:bg-gray-100 disabled text-[#373739] font-semibold  textarea-lg w-full max-w-full"
+                ></textarea>
+              </div>
 
               <div className="flex flex-col">
                 <label
@@ -108,7 +116,7 @@ const page = () => {
                   <select
                     disabled
                     type="text"
-                    className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                    className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
                     value={dataAllNetwork.name}
                     onChange={(e) => {
                       const selectedPic = JSON.parse(e.target.value);
@@ -145,11 +153,73 @@ const page = () => {
                   Departemen
                 </label>
                 <input
-                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
                   type="text"
                   value={selectedDept}
                   disabled
                 />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="status"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Category <span className="text-red-500">*</span>
+                </label>
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  {/* Conditional rendering based on network_category */}
+                  {dataAllNetwork.network_category === "Others" ? (
+                    <div>
+                      <div className="flex flex-col mx-3 my-3 w-[200px]">
+                        <input
+                          disabled
+                          type="text"
+                          value={dataAllNetwork.network_category}
+                          onChange={(e) =>
+                            setDataAllNetwork({
+                              ...dataAllNetwork,
+                              network_category: e.target.value,
+                            })
+                          }
+                          className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
+                        />
+                      </div>
+                      <div className="flex flex-col mx-3 my-3">
+                        <input
+                          disabled
+                          type="text"
+                          value={dataAllNetwork.network_category_others}
+                          onChange={(e) =>
+                            setDataAllNetwork({
+                              ...dataAllNetwork,
+                              network_category_others: e.target.value,
+                            })
+                          }
+                          className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col mx-3 my-3">
+                      <input
+                        disabled
+                        type="text"
+                        value={dataAllNetwork.network_category}
+                        onChange={(e) =>
+                          setDataAllNetwork({
+                            ...dataAllNetwork,
+                            network_category: e.target.value,
+                          })
+                        }
+                        className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div>

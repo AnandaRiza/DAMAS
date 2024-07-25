@@ -34,7 +34,8 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
       network_uat_done: "UAT Done",
       network_status: "Status",
       network_deadline_project: "Project Deadline",
-      createdby: "",
+      network_project_done: "Project Done",
+      createdby: "Created By",
     };
 
     const displayName = displayNames[header] || header;
@@ -58,14 +59,17 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
       <table className="text-center border-b cursor-pointer">
         <thead>
           <tr className="border-b-2 bg-[#00A6B4] text-sm">
-            {action && <th className="py-2 px-4 w-32">Action</th>}
+            {action && <th className="py-2 px-4 w-32">ACTION</th>}
             {headers.map((item, index) => (
               <th
                 key={index}
-                className={`py-3 px-6 capitalize ${
+                className={`py-3 px-6 ${
                   [
                     "id",
                     "network_id",
+                    "network_description",
+                    "network_category",
+                    "network_category_others",
                     "network_kickoff_start",
                     "network_kickoff_deadline",
                     "network_kickoff_done",
@@ -103,8 +107,8 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
             <tr
               key={index}
               className={`${
-                index % 2 === 0 ? "bg-white" : "bg-[#00A6B4]"
-              } hover:bg-gray-100 text-xs leading-5`}
+                index % 2 === 0 ? "bg-white hover:bg-[#DADADA]" : "bg-[#00B4C4] hover:bg-[#00A6B4]"
+              } text-xs leading-5`}
             >
               {action && (
                 <td className="py-3 px-6 w-36 flex items-center justify-center gap-5">
@@ -152,6 +156,9 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                     [
                       "id",
                       "network_id",
+                      "network_description",
+                      "network_category",
+                      "network_category_others",
                       "network_kickoff_start",
                       "network_kickoff_deadline",
                       "network_kickoff_done",

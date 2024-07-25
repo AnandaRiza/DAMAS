@@ -45,7 +45,7 @@ const page = () => {
           },
         }
       );
-      router.push("/main/operation/itsecurity/allprogress");
+      router.push("/main/operation/general/allproject");
       // console.log(createdby)
     } catch (error) {
       console.log(error);
@@ -76,9 +76,9 @@ const page = () => {
 
   return (
     <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
-      <div>
+      <div className="rounded-xl border border-gray-300">
         <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
-        <form
+          <form
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit();
@@ -91,12 +91,13 @@ const page = () => {
                 htmlFor="namaproject"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                Nama Project
+                Nama Project <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 id="namaproject"
                 name="namaproject"
+                required
                 value={formData.itsecurity_perihal}
                 onChange={(e) =>
                   setFormData({
@@ -113,11 +114,12 @@ const page = () => {
                 htmlFor="pic"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                PIC
+                PIC <span className="text-red-500">*</span>
               </label>
               {dataAllPic && (
                 <select
                   name="pic"
+                  required
                   id="pic"
                   className="input input-bordered mt-1"
                   value={formData.nama}
@@ -191,7 +193,7 @@ const page = () => {
                       htmlFor="namaproject"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 1
+                      Nama Phase
                     </label>
                     <input
                       type="text"
@@ -213,7 +215,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 1 Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -235,7 +237,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 1 Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -303,7 +305,7 @@ const page = () => {
                       htmlFor="namaproject"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 2
+                      Nama Phase
                     </label>
                     <input
                       type="text"
@@ -325,7 +327,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 2 Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -347,7 +349,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 2 Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -415,7 +417,7 @@ const page = () => {
                       htmlFor="namaproject"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 3
+                      Nama Phase
                     </label>
                     <input
                       type="text"
@@ -437,7 +439,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 3 Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -459,7 +461,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 3 Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -527,7 +529,7 @@ const page = () => {
                       htmlFor="namaproject"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 4
+                      Nama Phase
                     </label>
                     <input
                       type="text"
@@ -549,7 +551,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 4 Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -571,7 +573,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 4 Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -639,7 +641,7 @@ const page = () => {
                       htmlFor="namaproject"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 5
+                      Nama Phase
                     </label>
                     <input
                       type="text"
@@ -661,7 +663,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 5 Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -683,7 +685,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 5 Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -751,7 +753,7 @@ const page = () => {
                       htmlFor="namaproject"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 6
+                      Nama Phase
                     </label>
                     <input
                       type="text"
@@ -773,7 +775,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 6 Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -795,7 +797,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 6 Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -863,7 +865,7 @@ const page = () => {
                       htmlFor="namaproject"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Nama Phase 7
+                      Nama Phase
                     </label>
                     <input
                       type="text"
@@ -885,7 +887,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 7 Start
+                      Start
                     </label>
                     <input
                       type="date"
@@ -907,7 +909,7 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
-                      Phase 7 Deadline
+                      Deadline
                     </label>
                     <input
                       type="date"
@@ -954,12 +956,13 @@ const page = () => {
                 htmlFor="deadline"
                 className="text-sm font-semibold text-[#0066AE]"
               >
-                Project Deadline
+                Project Deadline <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
                 id="deadline"
                 name="deadline"
+                required
                 value={formData.itsecurity_deadline_project}
                 onChange={(e) =>
                   setFormData({

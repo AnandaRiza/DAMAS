@@ -60,7 +60,7 @@ const Header = ({ title }) => {
                     </li>
                 </ul> */}
 
-                <div className="pr-3 relative">
+                {/* <div className="pr-3 relative">
                     <h3
                         onClick={() => setIsLogoutShow(!isLogoutShow)}
                         className="font-bold text-[#0066AE] cursor-pointer"
@@ -78,9 +78,9 @@ const Header = ({ title }) => {
               </button>
             </div>
           )}
-        </div>
+        </div> */}
 
-        {/* <div className="flex-none">
+        <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
             <li>
               <details className="mr-5">
@@ -98,7 +98,7 @@ const Header = ({ title }) => {
               </details>
             </li>
           </ul>
-        </div> */}
+        </div>
       </div>
     </div>
   );

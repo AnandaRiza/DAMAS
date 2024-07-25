@@ -62,6 +62,7 @@ const page = ({ headers, data, action, link }) => {
             itsupport_project_done: "Project Done",
             userdomain : "user domain",
             userdomain_pic: "user domain pic",
+            createdBy: "Created By",
         };
         const displayName = displayNames[header] || header;
         // console.log(`Header: ${header}, DisplayName: ${displayName}`);
@@ -191,7 +192,7 @@ const page = ({ headers, data, action, link }) => {
         <div className="overflow-x-auto">
             <table className="table">
                 <thead>
-                    <tr className="border-b-2 bg-[#00A6B4] text-sm">
+                <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm text-center uppercase">
                         {headers.map((item, index) => (
                             <th
                                 key={index}
@@ -224,7 +225,9 @@ const page = ({ headers, data, action, link }) => {
                                     item === "itsupport_phase7" ||
                                     item === "itsupport_phase7_start" ||
                                     item === "itsupport_phase7_deadline" ||
-                                    item === "itsupport_phase7_done"
+                                    item === "itsupport_phase7_done" ||
+                                    item === "userdomain" ||
+                                    item === "userdomain_pic"
                                         ? "hidden"
                                         : ""
                                 }`}
@@ -259,7 +262,7 @@ const page = ({ headers, data, action, link }) => {
                                 {headers.map((header, headerIndex) => (
                                     <td
                                         key={headerIndex}
-                                        className={`py-3 px-6 ${
+                                        className={`py-3 px-6 text-center ${
                                             header === "itsupport_id" ||
                                             header === "itsupport_phase1" ||
                                             header ===
@@ -308,7 +311,9 @@ const page = ({ headers, data, action, link }) => {
                                                 "itsupport_phase7_start" ||
                                             header ===
                                                 "itsupport_phase7_deadline" ||
-                                            header === "itsupport_phase7_done"
+                                            header === "itsupport_phase7_done" ||
+                                            header === "userdomain" ||
+                                            header === "userdomain_pic"
                                                 ? "hidden"
                                                 : ""
                                         }`}

@@ -44,7 +44,8 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
             itmo_phase7_done: "",
             itmo_status: "Status",
             itmo_deadline_project: "Project Deadline",
-            createdBy: "",
+            itmo_project_done: "Project Done",
+            createdBy: "Created By",
         };
 
         const displayName = displayNames[header] || header;
@@ -123,8 +124,8 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                         <tr
                             key={index}
                             className={`${
-                                index % 2 === 0 ? "bg-white" : "bg-[#00A6B4]"
-                            } hover:bg-gray-100 text-xs leading-5`}
+                                index % 2 === 0 ? "bg-white hover:bg-[#DADADA]" : "bg-[#00B4C4] hover:bg-[#00A6B4]"
+                            } text-xs leading-5`}
                         >
                             {action && (
                                 <td className="py-3 px-6 w-36 flex items-center justify-center gap-5">

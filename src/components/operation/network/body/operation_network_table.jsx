@@ -57,6 +57,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
       network_project_done: "Project Done",
       userdomain : "user domain",
       userdomain_pic: "user domain pic",
+      createdBy: "Created By",
     };
     const displayName = displayNames[header] || header;
     // console.log(`Header: ${header}, DisplayName: ${displayName}`);
@@ -174,12 +175,15 @@ const operation_network_table = ({ headers, data, action, link }) => {
     <div className="overflow-x-auto relative">
       <table className="table min-w-full">
         <thead>
-          <tr className="border-b-2 bg-[#00A6B4] text-sm">
+        <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm text-center uppercase">
             {headers.map((item, index) => (
               <th
                 key={index}
-                className={`py-3 px-6 uppercase font-bold ${
+                className={`py-3 px-6 ${
                   item === "network_id" ||
+                  item === "network_description" ||
+                  item === "network_category" ||
+                  item === "network_category_others" ||
                   item === "network_kickoff_start" ||
                   item === "network_kickoff_deadline" ||
                   item === "network_kickoff_done" ||
@@ -197,7 +201,9 @@ const operation_network_table = ({ headers, data, action, link }) => {
                   item === "network_skse_done" ||
                   item === "network_uat_start" ||
                   item === "network_uat_deadline" ||
-                  item === "network_uat_done"
+                  item === "network_uat_done" ||
+                  item === "userdomain" ||
+                  item === "userdomain_pic"
                     ? "hidden"
                     : ""
                 }`}
@@ -206,7 +212,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
               </th>
             ))}
             {(IsNetworkOperator() || IsOperator()) && action && (
-              <th className="py-3 px-6 w-32 flex items-center justify-center gap-3 uppercase">
+              <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                 Edit
               </th>
             )}
@@ -229,8 +235,11 @@ const operation_network_table = ({ headers, data, action, link }) => {
                 {headers.map((header, headerIndex) => (
                   <td
                     key={headerIndex}
-                    className={`py-3 px-6 ${
+                    className={`py-3 px-6 text-center ${
                       header === "network_id" ||
+                      header === "network_description" ||
+                      header === "network_category" ||
+                      header === "network_category_others" |
                       header === "network_kickoff_start" ||
                       header === "network_kickoff_deadline" ||
                       header === "network_kickoff_done" ||
@@ -248,7 +257,9 @@ const operation_network_table = ({ headers, data, action, link }) => {
                       header === "network_skse_done" ||
                       header === "network_uat_start" ||
                       header === "network_uat_deadline" ||
-                      header === "network_uat_done"
+                      header === "network_uat_done" ||
+                      header === "userdomain" ||
+                      header === "userdomain_pic"
                         ? "hidden"
                         : ""
                     }`}
