@@ -13,7 +13,7 @@ const Page = () => {
         <div className="grid h-[450px] w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 mr-2 shadow-lg"
         style={{ background: 'linear-gradient(360deg, rgba(54, 194, 206, 1), rgba(255, 255, 255, 1))' }}
         >
-          <div className="h-[50px] w-[770px] rounded-box shadow-sm">
+          <div className="h-[50px] w-[770px] rounded-box">
           <h1 className="font-bold p-4 items-center justify-center">DEVELOPMENT</h1>
           <p className="p-4 text-[#605A5A] font-semibold">Monitoring all STL Project From MBS</p>
           <div className="badge badge-accent p-3 m-1 font-bold">SDLC</div>
@@ -38,15 +38,15 @@ const Page = () => {
 
         <div className="grid h-[450px] w-[90px] flex-grow card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-lg"
         style={{ background: 'linear-gradient(360deg, rgba(54, 194, 206, 1), rgba(255, 255, 255, 1))' }}>
-        <div className="h-[50px] w-[770px] rounded-box shadow-sm mb-10">
+        <div className="h-[50px] w-[770px] rounded-box mb-10">
         <h1 className="font-bold p-4">OPERATION</h1>
-        <p className="p-4 text-[#605A5A] font-semibold">Monitoring all Project in Operation Division</p>
+        <p className="p-4 text-[#605A5A] font-semibold">Monitoring Network and Server Project</p>
         <div className="badge badge-accent p-3 m-1">Network</div>
         <div className="badge badge-accent p-3 m-1">Server</div>
-        <div className="badge badge-accent p-3 m-1">Data Center</div>
+        {/* <div className="badge badge-accent p-3 m-1">Data Center</div>
         <div className="badge badge-accent p-3 m-1">IT MO</div>
         <div className="badge badge-accent p-3 m-1">IT Support</div>
-        <div className="badge badge-accent p-3 m-1">IT Security</div>
+        <div className="badge badge-accent p-3 m-1">IT Security</div> */}
         </div>
         <br />
         {/* <div className="flex flex-row items-center mt-10">
@@ -62,7 +62,7 @@ const Page = () => {
         style={{ background: 'linear-gradient(360deg, rgba(54, 194, 206, 1), rgba(255, 255, 255, 1))' }}>
         <div className="h-[50px] w-[770px] rounded-box">
         <h1 className="font-bold p-4">LOGISTIC</h1>
-        <p className="p-4 text-[#605A5A] font-semibold">Monitoring all Logistic Project and Everything Related with Logistic</p>
+        <p className="p-4 text-[#605A5A] font-semibold">Monitoring all Logistic Project and Memo</p>
         </div>
         </div>
 

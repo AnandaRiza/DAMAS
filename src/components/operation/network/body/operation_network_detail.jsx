@@ -687,7 +687,7 @@ const page = () => {
                 </label>
                 <input
                   disabled
-                  type="date"
+                  // type="datetime-local"
                   className="input input-bordered mt-1 font-semibold"
                   value={dataAllNetwork.network_deadline_project}
                   onChange={(e) =>

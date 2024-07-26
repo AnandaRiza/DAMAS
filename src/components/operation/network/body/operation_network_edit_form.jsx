@@ -754,7 +754,6 @@ const page = () => {
                   Deadline Project
                 </label>
                 <input
-                  type="date"
                   className="input input-bordered mt-1"
                   value={dataAllNetwork.network_deadline_project}
                   onChange={(e) =>

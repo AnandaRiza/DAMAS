@@ -688,7 +688,6 @@ const Page = () => {
                 </label>
                 <input
                   disabled
-                  type="date"
                   className="input input-bordered mt-1 font-semibold"
                   value={dataAllNetwork.network_deadline_project}
                   onChange={(e) =>
