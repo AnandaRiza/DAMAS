@@ -38,7 +38,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
             return daysLeft;
         };
 
-        if (status === "Finished") {
+        if (status === "Closed") {
             return "bg-green-200 hover:bg-green-300";
         }
 
@@ -92,8 +92,8 @@ const TableSDLC = ({ headers, data, action, link }) => {
 
         const { status } = item;
 
-        if (status === "Finished") {
-            return "Finished";
+        if (status === "Closed") {
+            return "Closed";
         }
 
         const daysLeft = calculateTimeLeft(item.projectEndDate);
@@ -119,8 +119,8 @@ const TableSDLC = ({ headers, data, action, link }) => {
             b.status
         );
 
-        const aIsFinished = a.status === "Finished";
-        const bIsFinished = b.status === "Finished";
+        const aIsFinished = a.status === "Closed";
+        const bIsFinished = b.status === "Closed";
 
         if (aIsFinished && bIsFinished) {
             // Sort "Finished" items by classA and classB
@@ -135,15 +135,15 @@ const TableSDLC = ({ headers, data, action, link }) => {
             return -1; // Move "Finished" (b) to the bottom
         }
 
-        if (a.status === "Finished" && b.status === "Finished") {
+        if (a.status === "Closed" && b.status === "Closed") {
             return classA.localeCompare(classB);
         }
 
-        if (a.status === "Finished") {
+        if (a.status === "Closed") {
             return 1; // Move 'Finished' projects to the bottom
         }
 
-        if (b.status === "Finished") {
+        if (b.status === "Closed") {
             return -1; // Move 'Finished' projects to the bottom
         }
 
