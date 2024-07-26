@@ -31,7 +31,7 @@ const Page = () => {
     setDataAllProject(null);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allproject/userdomainprojects?start=${startIndex}&size=${perPage}&userdomain=${user.userdomain}`
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/frsproject?start=${startIndex}&size=${perPage}&userdomain=${user.userdomain}`
       );
       const fetchedData = response.data.data;
             setDataAllProject(fetchedData);
@@ -81,10 +81,17 @@ const Page = () => {
           <div>
             {dataAllProject && (!searchResult || searchInput === "") ? (
               <MyProject
-                headers={Object.keys(dataAllProject[0]).slice(
-                  0,
-                  Object.keys(dataAllProject[0]).length - 1
-                )}
+                headers={[
+                  'projectNumber',
+                  'bcasNoPMO',
+                  'projectName',
+                  'summary',
+                  'owner',
+                  'bcasJenisAplikasi',
+                  'status',
+                  'createdDateTime',
+                  'projectEndDate'
+              ]}
                 data={dataAllProject}
                 action={true}
                 link={"/main/development/myproject/"}
@@ -97,10 +104,17 @@ const Page = () => {
             {searchResult && searchInput !== "" && searchResult.length !== 0 && (
               <div className="mt-4">
                 <MyProject
-                  headers={Object.keys(searchResult[0]).slice(
-                    0,
-                    Object.keys(searchResult[0]).length - 1
-                  )}
+                  headers={[
+                    'projectNumber',
+                    'bcasNoPMO',
+                    'projectName',
+                    'summary',
+                    'owner',
+                    'bcasJenisAplikasi',
+                    'status',
+                    'createdDateTime',
+                    'projectEndDate'
+                ]}
                   data={searchResult}
                   action={true}
                   link={"/main/development/myproject"}
