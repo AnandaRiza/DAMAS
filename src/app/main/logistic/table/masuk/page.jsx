@@ -56,6 +56,7 @@ const Page = () => {
     "memo_masuk",
     "memo_doc_type",
     "memo_keluar",
+    "memo_category",
   ];
 
   const handleSearch = async () => {

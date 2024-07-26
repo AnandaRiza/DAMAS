@@ -8,8 +8,15 @@ import { AiOutlineEdit } from "react-icons/ai";
 const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
   const router = useRouter();
 
+  const filteredData = useMemo(() => {
+    return data.filter(
+      (item) =>
+        item.memo_category === "MEMO KELUAR" || item.memo_category === "Memo Keluar"
+    );
+  }, [data]);
+
   const sortedData = useMemo(() => {
-    let sortableItems = [...data];
+    let sortableItems = [...filteredData];
     if (sortConfig.key !== null) {
       sortableItems.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -22,7 +29,7 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
       });
     }
     return sortableItems;
-  }, [data, sortConfig]);
+  }, [filteredData, sortConfig]);
 
   useEffect(() => {
     console.log("Incoming data:", data);
@@ -106,7 +113,8 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
       memo_masuk: "TANGGAL MEMO MASUK",
       memo_doc_type: "TIPE DOKUMEN",
       memo_keluar: "TANGGAL MEMO KELUAR",
-      memo_terima: "TANGGAL TERIMA MEMO", // Add this if you've included memo_terima
+      memo_terima: "TANGGAL TERIMA MEMO", 
+      memo_category: "KATEGORI MEMO"// Add this if you've included memo_terima
     };
     return displayNames[header] || header;
   };
@@ -119,7 +127,7 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     "memo_surat_type",
     "memo_doc_type",
     "memo_masuk",
-
+    
     "memo_keluar",
     "memo_terima", // Add this if you want to show the receive date
   ];
@@ -167,11 +175,11 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                   </div>
                 </th>
               ))}
-              {action && (
+              {/* {action && (
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Edit
                 </th>
-              )}
+              )} */}
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -210,7 +218,7 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                     </td>
                   );
                 })}
-                {action && (
+                {/* {action && (
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <button
                       type="button"
@@ -222,7 +230,7 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                       <AiOutlineEdit size={20} />
                     </button>
                   </td>
-                )}
+                )} */}
               </tr>
             ))}
           </tbody>
@@ -233,4 +241,3 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
 };
 
 export default MyMemoTable;
-    

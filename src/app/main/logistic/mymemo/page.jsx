@@ -27,7 +27,11 @@ const Page = () => {
             const response = await axios.get(
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allmemo?start=${startIndex}&size=${perPage}`
             );
-            const fetchedData = response.data.data;
+            const fetchedData = response.data.data.map(item => ({
+                ...item,
+                memo_deadline: item.memo_deadline ? new Date(item.memo_deadline).toLocaleDateString() : ''
+            }));
+            console.log("Fetched data:", fetchedData);
             setDataAllMemo(fetchedData);
             setHasMoreData(fetchedData.length === perPage);
         } catch (error) {
