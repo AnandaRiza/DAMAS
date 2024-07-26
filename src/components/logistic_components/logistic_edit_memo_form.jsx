@@ -27,6 +27,12 @@ const EditMemoPage = () => {
     userdomain: "",
     userdomainpic: "",
     userdomainreviewer: "",
+    memo_category: "",
+    memo_surat_type: "",
+    memo_masuk: "",
+    memo_doc_type: "",
+    memo_keluar: "",
+    memo_terima: "",
   });
   const [dataAllPic, setDataAllPic] = useState(null);
   const [selectedDept, setSelectedDept] = useState("");
@@ -60,16 +66,32 @@ const EditMemoPage = () => {
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/getMemoByID/${params.memoId}`
         );
 
-        const memoData = response.data.data;
-        // const deadline = memoData.memo_deadline.split(", ")[0].split("/").reverse().join("-");
+        const responseData = response.data.data;
+
+        const formatDate = (dateString) => {
+          if (!dateString) return "";
+          const date = new Date(dateString);
+          return date.toISOString().split("T")[0];
+        };
+
         setDataAllMemo((prevState) => ({
           ...prevState,
-          ...memoData,
-          ...response.data.data,
-          // memo_deadline: deadline,
+          ...responseData,
+          memo_masuk: formatDate(responseData.memo_masuk),
+          memo_keluar: formatDate(responseData.memo_keluar),
+          memo_terima: formatDate(responseData.memo_terima),
         }));
-        setSelectedDept(response.data.data.memo_department);
+
+        setSelectedDept(responseData.memo_department);
         setLoading(false);
+
+        // Log the updated state
+        console.log("Updated dataAllMemo:", {
+          ...responseData,
+          memo_masuk: formatDate(responseData.memo_masuk),
+          memo_keluar: formatDate(responseData.memo_keluar),
+          memo_terima: formatDate(responseData.memo_terima),
+        });
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -77,26 +99,26 @@ const EditMemoPage = () => {
     };
 
     const fetchUserIdAndUserDomain = async () => {
-        const userid = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("DAMAS-USERID="))
-          ?.split("=")[1];
-        if (userid) {
-          try {
-            const response = await axios.get(
-              `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users/${userid}`
-            );
-            const userdomain = response.data.data.userdomain;
-            setDataAllMemo((prevState) => ({
-              ...prevState,
-              memo_createdBy: userid,
-              userdomain: user.userdomain,
-            }));
-          } catch (error) {
-            console.log(error);
-          }
+      const userid = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("DAMAS-USERID="))
+        ?.split("=")[1];
+      if (userid) {
+        try {
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users/${userid}`
+          );
+          const userdomain = response.data.data.userdomain;
+          setDataAllMemo((prevState) => ({
+            ...prevState,
+            memo_createdBy: userid,
+            userdomain: user.userdomain,
+          }));
+        } catch (error) {
+          console.log(error);
         }
-      };
+      }
+    };
 
     fetchUserIdAndUserDomain();
     if (params.memoId) {
@@ -136,7 +158,9 @@ const EditMemoPage = () => {
     }
   };
   const handleStatusChange = () => {
-    const confirmChange = window.confirm("Are you sure you want to change the status? Once the status is changed, it cannot be undone.");
+    const confirmChange = window.confirm(
+      "Are you sure you want to change the status? Once the status is changed, it cannot be undone."
+    );
     if (confirmChange) {
       setDataAllMemo((prevState) => ({
         ...prevState,
@@ -215,6 +239,10 @@ const EditMemoPage = () => {
     }
   };
 
+  useEffect(() => {
+    console.log("Updated dataAllMemo:", dataAllMemo);
+  }, [dataAllMemo]);
+
   // Function to handle form submission after edits
   const handleEditedData = async () => {
     if (window.confirm("Are you sure you want to save the changes?")) {
@@ -229,10 +257,15 @@ const EditMemoPage = () => {
           ...dataAllMemo,
           memo_upload: decodeBase64(dataAllMemo.memo_upload), // Decode base64 before sending if necessary
         };
+
+        // Console log the data being posted
+        console.log("Data being posted:", updatedData);
+
         const response = await axios.put(
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
           updatedData
         );
+
         console.log("Memo update response:", response.data);
         console.log(`File updated: ${updatedData.memo_upload}`); // Console log the updated file name
 
@@ -249,7 +282,7 @@ const EditMemoPage = () => {
     return <PleaseWait />;
   }
 
-  const isReadOnly = dataAllMemo.memo_status !== "MEMO DRAFT";
+  // const isReadOnly = dataAllMemo.memo_status !== "MEMO DRAFT";
 
   return (
     <>
@@ -279,7 +312,7 @@ const EditMemoPage = () => {
               })
             }
             name="memo_num"
-            readOnly={isReadOnly}
+            // readOnly={isReadOnly}
           />
         </div>
         <div className="flex flex-col">
@@ -301,11 +334,10 @@ const EditMemoPage = () => {
               })
             }
             name="memo_perihal"
-            readOnly={isReadOnly}
+            // readOnly={isReadOnly}
           />
         </div>
-
-{/* 
+        {/* 
         <input
             type="text"
             name="memo_createdBy"
@@ -330,10 +362,6 @@ const EditMemoPage = () => {
             className="input input-bordered mt-1"
             
           /> */}
-
-          
-
-          
         <div className="flex flex-col">
           <label
             htmlFor="memo_pic"
@@ -359,7 +387,7 @@ const EditMemoPage = () => {
                 });
                 setSelectedDept(selectedPic.departemen);
               }}
-              disabled={isReadOnly}
+              // disabled={isReadOnly}
             >
               <option
                 disabled
@@ -408,6 +436,102 @@ const EditMemoPage = () => {
         </div>
         <div className="flex flex-col">
           <label
+            htmlFor="memo_category"
+            className="text-sm font-semibold text-gray-600"
+          >
+            Kategori Memo
+          </label>
+          <select
+            name="memo_category"
+            value={dataAllMemo.memo_category}
+            onChange={(e) =>
+              setDataAllMemo({
+                ...dataAllMemo,
+                memo_category: e.target.value,
+              })
+            }
+            className="input input-bordered mt-1"
+          >
+            <option value="" disabled>
+              Pilih Kategori Memo ...
+            </option>
+            <option value="Memo Masuk">Memo Masuk</option>
+            <option value="Memo Keluar">Memo Keluar</option>
+          </select>
+        </div>
+        <div className="flex flex-col">
+          <label
+            htmlFor="memo_surat_type"
+            className="text-sm font-semibold text-gray-600"
+          >
+            Tipe Surat
+          </label>
+          <select
+            name="memo_surat_type"
+            value={dataAllMemo.memo_surat_type}
+            onChange={(e) =>
+              setDataAllMemo({
+                ...dataAllMemo,
+                memo_surat_type: e.target.value,
+              })
+            }
+            className="input input-bordered mt-1"
+          >
+            <option value="" disabled>
+              Pilih Tipe Surat ...
+            </option>
+            <option value="-">-</option>
+
+            <option value="MO">MO</option>
+            <option value="SE">SE</option>
+            <option value="SK">SK</option>
+            <option value="AGR">AGR</option>
+            <option value="NDA">NDA</option>
+            <option value="PKS">PKS</option>
+            <option value="SPJ">SPJ</option>
+            <option value="SKU">SKU</option>
+            <option value="BAST">BAST</option>
+          </select>
+        </div>
+        <div className="flex flex-col">
+          <label
+            htmlFor="memo_doc_type"
+            className="text-sm font-semibold text-gray-600"
+          >
+            Tipe Dokumen
+          </label>
+          <select
+            name="memo_doc_type"
+            value={dataAllMemo.memo_doc_type}
+            onChange={(e) =>
+              setDataAllMemo({
+                ...dataAllMemo,
+                memo_doc_type: e.target.value,
+              })
+            }
+            className="input input-bordered mt-1"
+          >
+            <option value="" disabled>
+              Pilih Tipe Dokumen ...
+            </option>
+            <option value="-">-</option>
+            <option value="PKS">PKS</option>
+            <option value="BAST">BAST</option>
+            <option value="MEMO">MEMO</option>
+            <option value="INVOICE">INVOICE</option>
+            <option value="NDA">NDA</option>
+            <option value="PROGRAM KERJA">PROGRAM KERJA</option>
+            <option value="BON">BON</option>
+            <option value="DOKUMEN">DOKUMEN</option>
+            <option value="PAYMENT">PAYMENT</option>
+            <option value="FORM">FORM</option>
+            <option value="TANDA TERIMA">TANDA TERIMA</option>
+            <option value="SURAT">SURAT</option>
+            <option value="LAPORAN">LAPORAN</option>
+          </select>
+        </div>
+        <div className="flex flex-col">
+          <label
             htmlFor="memo_reviewer"
             className="text-sm font-semibold text-gray-600"
           >
@@ -431,7 +555,7 @@ const EditMemoPage = () => {
                   userdomainreviewer: selectedReviewer.userdomain,
                 });
               }}
-              disabled={isReadOnly}
+              // disabled={isReadOnly}
             >
               <option
                 disabled
@@ -450,24 +574,65 @@ const EditMemoPage = () => {
         </div>
         <div className="flex flex-col">
           <label
-            htmlFor="memo_deadline"
+            htmlFor="memo_masuk"
             className="text-sm font-semibold text-gray-600"
           >
-            Deadline
+            Tanggal Memo Masuk
           </label>
           <input
-          disabled
-            // type="date"
-            id="memo_deadline"
-            name="memo_deadline"
+            type="date"
+            id="memo_masuk"
+            name="memo_masuk"
             className="input input-bordered mt-1"
-            value={dataAllMemo.memo_deadline}
+            value={dataAllMemo.memo_masuk || ""}
             onChange={(e) =>
               setDataAllMemo({
-                  ...dataAllMemo,
-                  memo_deadline: e.target.value,
+                ...dataAllMemo,
+                memo_masuk: e.target.value,
               })
-          }
+            }
+          />
+        </div>
+        <div className="flex flex-col">
+          <label
+            htmlFor="memo_keluar"
+            className="text-sm font-semibold text-gray-600"
+          >
+            Tanggal Memo Keluar
+          </label>
+          <input
+            type="date"
+            id="memo_keluar"
+            name="memo_keluar"
+            className="input input-bordered mt-1"
+            value={dataAllMemo.memo_keluar}
+            onChange={(e) =>
+              setDataAllMemo({
+                ...dataAllMemo,
+                memo_keluar: e.target.value,
+              })
+            }
+          />
+        </div>
+        <div className="flex flex-col">
+          <label
+            htmlFor="memo_terima"
+            className="text-sm font-semibold text-gray-600"
+          >
+            Tanggal Terima Memo
+          </label>
+          <input
+            type="date"
+            id="memo_terima"
+            name="memo_terima"
+            className="input input-bordered mt-1"
+            value={dataAllMemo.memo_terima}
+            onChange={(e) =>
+              setDataAllMemo({
+                ...dataAllMemo,
+                memo_terima: e.target.value,
+              })
+            }
           />
         </div>
         <div className="flex flex-col">
@@ -475,26 +640,27 @@ const EditMemoPage = () => {
             htmlFor="memo_status"
             className="text-sm font-semibold text-gray-600"
           >
-            Status
+            Status Memo
           </label>
-          <div className="flex items-center">
-            <input
-              type="text"
-              id="memo_status"
-              className="input input-bordered mt-1 disabled:bg-gray-100 flex-1"
-              value={dataAllMemo.memo_status}
-              disabled
-            />
-            <button
-              type="button"
-              className="py-2 px-4 rounded-xl bg-blue-500 text-white flex gap-1 items-center ml-2 hover:bg-blue-800 transition-colors duration-300"
-              onClick={handleStatusChange}
-              disabled={isReadOnly}
-            >
-              <FaPenNib />
-              <span>Request Approval</span>
-            </button>
-          </div>
+          <select
+            name="memo_status"
+            value={dataAllMemo.memo_status}
+            onChange={(e) =>
+              setDataAllMemo({
+                ...dataAllMemo,
+                memo_status: e.target.value,
+              })
+            }
+            className="input input-bordered mt-1"
+          >
+            <option value="" disabled>
+              Pilih Kategori Memo ...
+            </option>
+            <option value="MEMO DRAFT">MEMO DRAFT</option>
+            <option value="MEMO ON HOLD">MEMO ON HOLD</option>
+            <option value="MEMO FINISHED">MEMO FINISHED</option>
+            <option value="MEMO CANCELED">MEMO CANCELED</option>
+          </select>
         </div>
         {dataAllMemo.memo_notes && ( // Only render this section if memo_notes has data
           <div className="flex flex-col">
@@ -515,7 +681,7 @@ const EditMemoPage = () => {
                 })
               }
               name="memo_notes"
-              readOnly={isReadOnly}
+              // disabled={isReadOnly}
               disabled
             />
           </div>
@@ -534,7 +700,7 @@ const EditMemoPage = () => {
             className="file-input file-input-bordered mt-1"
             onChange={handleFileUpload}
             name="memo_upload"
-            disabled={isReadOnly}
+            // disabled={isReadOnly}
           />
           {dataAllMemo.memo_upload && (
             <div>
@@ -556,7 +722,6 @@ const EditMemoPage = () => {
             type="button"
             className="py-2 px-4 rounded-xl bg-green-500 hover:bg-green-800 flex gap-1 items-center"
             onClick={handleEditedData}
-       
           >
             <FiSave />
             <span>Save Edit</span>

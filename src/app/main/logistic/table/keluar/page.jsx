@@ -3,7 +3,7 @@ import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
 import HeaderLogistic from "@/components/logistic_components/header/HeaderLogistic";
-import LogisticTable from "@/components/logistic_components/table/logistic_table_masuk";
+import LogisticTable from "@/components/logistic_components/table/logistic_table_keluar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -75,7 +75,7 @@ const Page = () => {
 
   return (
     <div>
-      <HeaderLogistic title="All Memo" />
+      <HeaderLogistic title="Memo Keluar" />
 
       <div style={{ position: "absolute", top: 30, right: 45 }}>
         <FormSearch
