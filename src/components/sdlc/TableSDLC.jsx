@@ -1,20 +1,5 @@
-import {
-    IsDacenOperator,
-    IsDevOperator,
-    IsItmoOperator,
-    IsItsecurityOperator,
-    IsItsupportOperator,
-    IsLogisticOperator,
-    IsNetworkOperator,
-    IsOperator,
-    IsPpoOperator,
-    IsServerOperator,
-    IsSkseOperator,
-} from "@/validation/validateGroupAkses";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { AiOutlineEdit } from "react-icons/ai";
-// import moment from "moment";
 
 const TableSDLC = ({ headers, data, action, link }) => {
     const router = useRouter();
@@ -51,16 +36,6 @@ const TableSDLC = ({ headers, data, action, link }) => {
         } else {
             return "bg-white-200 hover:bg-gray-300";
         }
-    };
-
-    const handleEdit = (id) => {
-        const updatedData = data.map((item) => {
-            if (item.id === id) {
-                item.status = "Finish";
-                router.push(`${link}/edit/${id}`);
-            }
-            return item;
-        });
     };
 
     const handleDoubleClick = (id) => {
@@ -171,28 +146,12 @@ const TableSDLC = ({ headers, data, action, link }) => {
 
     return (
         <div className="overflow-x-auto">
-            <table className="table cursor-pointer text-center ">
+            <table className="table cursor-pointer">
                 <thead>
                     <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm text-center uppercase">
                         {headers.map((item, index) => (
-                            <th key={index}>{getDisplayName(item)}</th>
+                            <th key={index} className="border">{getDisplayName(item)}</th>
                         ))}
-                        {(IsOperator() ||
-                            IsDevOperator() ||
-                            IsPpoOperator() ||
-                            IsSkseOperator() ||
-                            IsNetworkOperator() ||
-                            IsServerOperator() ||
-                            IsDacenOperator() ||
-                            IsItsupportOperator() ||
-                            IsItmoOperator() ||
-                            IsItsecurityOperator() ||
-                            IsLogisticOperator()) &&
-                            action && (
-                                <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                    Detail
-                                </th>
-                            )}
                     </tr>
                 </thead>
                 <tbody>
@@ -205,41 +164,17 @@ const TableSDLC = ({ headers, data, action, link }) => {
                         return (
                             <tr
                                 key={index}
-                                className={`${rowClassName} text-xs leading-5`}
+                                className={`${rowClassName} text-xs text-left leading-5`}
                                 onDoubleClick={() => handleDoubleClick(item.id)}
                             >
                                 {headers.map((header, headerIndex) => {
                                     console.log(header)
-                                    return (<td key={headerIndex}>
+                                    return (<td key={headerIndex} className="border">
                                         {header === "status"
                                             ? status
                                             : (header === "createdDateTime" || header === "projectEndDate") ? item[header].slice(0,19) : item[header]}
                                     </td>);
                                 })}
-                                {(IsOperator() ||
-                                    IsDevOperator() ||
-                                    IsPpoOperator() ||
-                                    IsSkseOperator() ||
-                                    IsNetworkOperator() ||
-                                    IsServerOperator() ||
-                                    IsDacenOperator() ||
-                                    IsItsupportOperator() ||
-                                    IsItmoOperator() ||
-                                    IsItsecurityOperator() ||
-                                    IsLogisticOperator()) &&
-                                    action && (
-                                        <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    handleEdit(item.id)
-                                                }
-                                                className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
-                                            >
-                                                <AiOutlineEdit size={20} />
-                                            </button>
-                                        </td>
-                                    )}
                             </tr>
                         );
                     })}

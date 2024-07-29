@@ -72,7 +72,6 @@ const Sidebar = () => {
                                     </div>
                                     Project
                                 </div>
-
                                 <div className="collapse-content">
                                     <Link href="/main/development">
                                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -81,8 +80,6 @@ const Sidebar = () => {
                                             </button>
                                         </div>
                                     </Link>
-
-                  
                                 </div>
                             </div>
                         )}
@@ -251,43 +248,10 @@ const Sidebar = () => {
                                 </div>
 
                                 <div className="collapse-content">
-                                    {(IsPpoSupervisor() ||
-                                        IsSupervisor() ||
-                                        IsDevSupervisor() ||
-                                        IsOperator()) && (
-                                        <div>
-                                            <Link href="/main/status/approveprojectdev">
-                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                                        SDLC
-                                                    </button>
-                                                </div>
-                                            </Link>
-                                        </div>
-                                    )}
-
-                                    {IsPpoSupervisor() ||
-                                        IsSupervisor() ||
-                                        (IsOperator() && (
-                                            <div>
-                                                <hr className="my-4 border-gray-300" />
-
-                                                <Link href="/main/status/approveskse">
-                                                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                                            SK/SE
-                                                        </button>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        ))}
-
                                     {(IsLogisticSupervisor() ||
                                         IsSupervisor() ||
                                         IsOperator()) && (
                                         <div>
-                                            <hr className="my-4 border-gray-300" />
-
                                             <Link href="/main/status/approvelogistic">
                                                 <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                                     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
