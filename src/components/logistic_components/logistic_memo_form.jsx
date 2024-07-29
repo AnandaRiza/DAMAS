@@ -93,13 +93,13 @@ const MemoForm = () => {
         ...formData,
         memo_createdBy: userid,
         userdomain: user.userdomain,
-        // memo_deadline: deadlinecoy(scheduleInput),
         memo_category: formData.memo_category,
         memo_surat_type: formData.memo_surat_type,
         memo_masuk: formData.memo_masuk,
         memo_keluar: formData.memo_keluar,
         memo_terima: formData.memo_terima,
         memo_doc_type: formData.memo_doc_type,
+        memo_status: formData.memo_status, // Make sure this line is present
       };
 
       console.log("Data to be posted:", formDataToSend);
@@ -614,22 +614,23 @@ const getMinDateTime = () => {
               Status
             </label>
             <select
-              id="memo_status"
-              className="input input-bordered mt-1"
-              value={formData.memo_status}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  memo_status: e.target.value,
-                })
-              }
-              name="memo_status"
-            >
-              <option value="MEMO DRAFT">MEMO DRAFT</option>
-              <option value="MEMO ON HOLD">MEMO ON HOLD</option>
-              <option value="MEMO FINISHED">MEMO FINISHED</option>
-              <option value="MEMO CANCELED">MEMO CANCELED</option>
-            </select>
+  id="memo_status"
+  className="input input-bordered mt-1"
+  value={formData.memo_status}
+  onChange={(e) =>
+    setFormData({
+      ...formData,
+      memo_status: e.target.value,
+    })
+  }
+  name="memo_status"
+  defaultValue="MEMO DRAFT"
+>
+  <option value="MEMO DRAFT">MEMO DRAFT</option>
+  <option value="MEMO ON HOLD">MEMO ON HOLD</option>
+  <option value="MEMO FINISHED">MEMO FINISHED</option>
+  <option value="MEMO CANCELED">MEMO CANCELED</option>
+</select>
           </div>
 
           {/* <div className="flex flex-col">

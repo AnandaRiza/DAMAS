@@ -5,20 +5,11 @@ import React, { useMemo, useEffect, useState } from "react";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { AiOutlineEdit } from "react-icons/ai";
 
-const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
+const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig, selectedColumns }) => {
   const router = useRouter();
 
-  // Filter the data to only include memos with category "MEMO KELUAR" or "Memo Keluar"
-  const filteredData = useMemo(() => {
-    return data.filter(
-      (item) =>
-        item.memo_category === "MEMO MASUK" || item.memo_category === "Memo Masuk"
-    );
-  }, [data]);
-
-  // Sort the filtered data based on the sort configuration
   const sortedData = useMemo(() => {
-    let sortableItems = [...filteredData];
+    let sortableItems = [...data];
     if (sortConfig.key !== null) {
       sortableItems.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -31,7 +22,7 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
       });
     }
     return sortableItems;
-  }, [filteredData, sortConfig]);
+  }, [data, sortConfig]);
 
   useEffect(() => {
     console.log("Incoming data:", data);
@@ -116,11 +107,10 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
       memo_doc_type: "TIPE DOKUMEN",
       memo_keluar: "TANGGAL MEMO KELUAR",
       memo_terima: "TANGGAL TERIMA MEMO", 
-      memo_category: "KATEGORI MEMO"
+      memo_category: "KATEGORI MEMO"// Add this if you've included memo_terima
     };
     return displayNames[header] || header;
   };
-
 
   const columnsToShow = [
     "memo_num",
@@ -134,7 +124,6 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     "memo_terima", // Add this if you want to show the receive date
     "memo_category",
   ];
-
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -179,6 +168,11 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                   </div>
                 </th>
               ))}
+              {/* {action && (
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Edit
+                </th>
+              )} */}
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -217,6 +211,19 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                     </td>
                   );
                 })}
+                {/* {action && (
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <button
+                      type="button"
+                      className="text-black-400 flex items-center justify-center"
+                      onClick={() =>
+                        router.push(`${link}mymemo/editmemo/${item.memo_id}`)
+                      }
+                    >
+                      <AiOutlineEdit size={20} />
+                    </button>
+                  </td>
+                )} */}
               </tr>
             ))}
           </tbody>

@@ -299,7 +299,7 @@ const DetailMemoPage = () => {
     <>
       <form className="space-y-4">
       <div className="flex justify-between items-center p-4">
-  <Link href="/main/logistic/mymemo">
+  <Link href="/main/logistic/general/allproject">
     <button className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 text-white flex gap-1 items-center">
       <IoMdArrowRoundBack />
       <span>Back</span>

@@ -9,7 +9,8 @@ import { useRouter } from "next/navigation";
 import { FaPenNib } from "react-icons/fa";
 import { useStateContext } from "@/context/ContextProvider";
 import LogisticSignature from "@/components/logistic_components/logistic_signature";
-import MemoApprovalForm from "@/components/logistic_components/approval_components/memo_approval"; // Make sure this is the correct import path
+import MemoApprovalForm from "@/components/logistic_components/approval_components/memo_approval"; 
+import Swal from 'sweetalert2';
 
 const EditMemoPage = () => {
   const [dataAllMemo, setDataAllMemo] = useState({
@@ -58,6 +59,14 @@ const EditMemoPage = () => {
       console.log(error);
     }
   };
+
+  const fieldDisplayNames = {
+    memo_num: "Nomor Memo",
+    memo_perihal: "Perihal Memo",
+    memo_category: "Kategori Memo",
+    // Add other fields as needed
+  };
+
 
   useEffect(() => {
     const getCurrentData = async () => {
@@ -239,12 +248,34 @@ const EditMemoPage = () => {
     }
   };
 
+  // Function to check required fields
+  const validateRequiredFields = (data, requiredFields) => {
+    for (const field of requiredFields) {
+      if (!data[field] || data[field].trim() === "") {
+        return `The field ${fieldDisplayNames[field] || field} is required.`;
+      }
+    }
+    return null;
+  };
+  
+
   useEffect(() => {
     console.log("Updated dataAllMemo:", dataAllMemo);
   }, [dataAllMemo]);
 
   // Function to handle form submission after edits
   const handleEditedData = async () => {
+
+    // Define the required fields
+  const requiredFields = ["memo_num", "memo_perihal", "memo_category"];
+
+  // Validate required fields
+  const validationError = validateRequiredFields(dataAllMemo, requiredFields);
+  if (validationError) {
+    Swal.fire("Error", validationError, "error");
+    return;
+  }
+
     if (window.confirm("Are you sure you want to save the changes?")) {
       try {
         if (!file) {
@@ -269,8 +300,8 @@ const EditMemoPage = () => {
         console.log("Memo update response:", response.data);
         console.log(`File updated: ${updatedData.memo_upload}`); // Console log the updated file name
 
-        alert("Memo Update Success");
-        router.push("/main/logistic/mymemo");
+        Swal.fire("Success", "Memo updated successfully.", "success");
+        router.push("/main/logistic");
       } catch (error) {
         console.error("Error updating memo: ", error);
         setError("Failed to update memo");
@@ -287,8 +318,8 @@ const EditMemoPage = () => {
   return (
     <>
       <form className="space-y-4">
-        <Link href="/main/logistic/mymemo">
-          <button className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 flex gap-1 items-center">
+      <Link href={`/main/logistic/mymemo/detailmemo/${dataAllMemo.memo_id}`}>
+      <button className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 flex gap-1 items-center">
             <IoMdArrowRoundBack />
             <span>Back</span>
           </button>
@@ -692,12 +723,12 @@ const EditMemoPage = () => {
             htmlFor="memo_upload"
             className="text-sm font-semibold text-gray-600"
           >
-            Upload File <span className="text-red-500">*</span>
+            Upload File 
           </label>
           <input
             type="file"
             id="memo_upload"
-            className="file-input file-input-bordered mt-1"
+            className="file-input file-input-bordered  file-input-success mt-1"
             onChange={handleFileUpload}
             name="memo_upload"
             // disabled={isReadOnly}

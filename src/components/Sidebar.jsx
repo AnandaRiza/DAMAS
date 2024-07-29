@@ -344,10 +344,10 @@ const Sidebar = () => {
                 <div className="collapse-content">
                   {(IsLogisticOperator() || IsOperator()) && (
                     <div>
-                      <Link href="/main/logistic/mymemo">
+                      <Link href="/main/logistic/general/allproject">
                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                           <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                            My Memo
+                            Sorted Memo
                           </button>
                         </div>
                       </Link>
