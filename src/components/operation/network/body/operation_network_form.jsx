@@ -218,6 +218,29 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
 
             <div className="flex flex-col">
               <label
+                htmlFor="namaproject"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Project Number <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="namaproject"
+                name="namaproject"
+                required
+                value={formData.network_no}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    network_no: e.target.value,
+                  })
+                }
+                className="input input-bordered mt-1"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label
                 htmlFor="pic"
                 className="text-sm font-semibold text-[#0066AE]"
               >
