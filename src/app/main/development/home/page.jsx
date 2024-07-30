@@ -1,7 +1,5 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
-import { Bar, Pie } from "react-chartjs-2";
 import axios from "axios";
 import {
     Chart as ChartJS,
@@ -16,7 +14,6 @@ import {
 import dynamic from "next/dynamic";
 import PleaseWait from "@/components/PleaseWait";
 
-// Register the required components, scales, and elements
 ChartJS.register(
     Title,
     Tooltip,
@@ -27,11 +24,11 @@ ChartJS.register(
     BarElement
 );
 
-// Use dynamic import to avoid server-side rendering issues
 const PieChart = dynamic(
     () => import("react-chartjs-2").then((mod) => mod.Pie),
     { ssr: false }
 );
+
 const BarChart = dynamic(
     () => import("react-chartjs-2").then((mod) => mod.Bar),
     { ssr: false }
@@ -40,7 +37,9 @@ const BarChart = dynamic(
 const ChartPie = () => {
     const [dataStatus, setDataStatus] = useState(null);
     const [dataJenisApp, setDataJenisApp] = useState(null);
+    const [dataJenisProject, setDataJenisProject] = useState(null);
     const [dataPersentaseStatus, setDataPersentaseStatus] = useState(null);
+    const [dataPersentaseJenisProject, setDataPersentaseJenisProject] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -50,6 +49,8 @@ const ChartPie = () => {
             setDataStatus(null);
             setDataJenisApp(null);
             setDataPersentaseStatus(null);
+            setDataJenisProject(null);
+            setDataPersentaseJenisProject(null);
             try {
                 const response = await axios.get(
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
@@ -66,19 +67,24 @@ const ChartPie = () => {
                         {
                             label: "Project",
                             data: dataValues,
-                            backgroundColor: ["#A9E399", "#5989BE", "#D9425D", "#FAC78A"],
+                            backgroundColor: [
+                                "#A9E399",
+                                "#5989BE",
+                                "#D9425D",
+                                "#FAC78A",
+                            ],
                         },
                     ],
                 });
-
+                
                 const response2 = await axios.get(
-                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata2`
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/persentase`
                 );
                 const fetchedData2 = response2.data;
                 setDataPersentaseStatus(fetchedData2);
 
                 const response3 = await axios.get(
-                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata3`
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jenisapp`
                 );
                 const fetchedData3 = response3.data;
 
@@ -103,8 +109,36 @@ const ChartPie = () => {
                     ],
                 });
 
+                const response4 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jenisproject`
+                );
+                const fetchedData4 = response4.data;
+                console.log(response4);
+                const labels4 = Object.keys(fetchedData4);
+                const dataValues4 = Object.values(fetchedData4);
 
-                
+                setDataJenisProject({
+                    labels: labels4,
+                    datasets: [
+                        {
+                            label: "Project",
+                            data: dataValues4,
+                            backgroundColor: [
+                                "#A9E399",
+                                "#5989BE",
+                                "#D9425D",
+                                "#FAC78A",
+                            ],
+                        },
+                    ],
+                });
+
+                const response5 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/persentase2`
+                );
+                const fetchedData5 = response5.data;
+                setDataPersentaseJenisProject(fetchedData5);
+                console.log(setDataPersentaseJenisProject)
             } catch (error) {
                 setError("Failed to fetch data");
                 console.log(error);
@@ -112,22 +146,17 @@ const ChartPie = () => {
                 setLoading(false);
             }
         };
-
         getDataCharts();
-    }, []); 
+    }, []);
 
-    
-
-    if (loading) return <PleaseWait/>;
+    if (loading) return <PleaseWait />;
     if (error) return <p>{error}</p>;
 
-   
     const barOptions = {
         responsive: true,
         plugins: {
             legend: {
                 display: false,
-                
             },
             tooltip: {
                 callbacks: {
@@ -141,16 +170,16 @@ const ChartPie = () => {
             x: {
                 beginAtZero: true,
                 grid: {
-                    display: false, 
+                    display: false,
                 },
                 ticks: {
-                    autoSkip: false, 
-                    maxRotation: 0,
-                    minRotation: 0, 
+                    autoSkip: false,
+                    maxRotation: 20,
+                    minRotation: 20,
                     font: {
-                        size: 10, 
+                        size: 12,
                     },
-                    padding: 10,
+                    padding: 5,
                 },
                 title: {
                     display: true,
@@ -165,14 +194,14 @@ const ChartPie = () => {
             y: {
                 beginAtZero: true,
                 grid: {
-                    display: true, 
+                    display: true,
                 },
                 ticks: {
                     stepSize: 1,
                 },
                 title: {
                     display: true,
-                    text: "Count", 
+                    text: "Count",
                     color: "#333",
                     font: {
                         size: 14,
@@ -185,9 +214,9 @@ const ChartPie = () => {
             bar: {
                 borderWidth: 1,
                 borderSkipped: false,
-                barThickness: 30, 
-                maxBarThickness: 50, 
-                minBarLength: 2, 
+                barThickness: 20,
+                maxBarThickness: 50,
+                minBarLength: 2,
             },
         },
         layout: {
@@ -201,30 +230,23 @@ const ChartPie = () => {
         datasets: {
             bar: {
                 barPercentage: 0.8,
-                categoryPercentage: 0.9, 
+                categoryPercentage: 0.8,
             },
         },
     };
 
-
     return (
         <div className="flex-grow justify-center items-center min-h-screen rounded-xl mt-1">
             <div className="flex w-grow">
-                <div
-                    className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 mr-2 shadow-lg"
-                    style={{
-                        background:
-                            "linear-gradient(360deg, rgba(54, 194, 206, 1), rgba(255, 255, 255, 1))",
-                    }}
-                >
-                    <div className=" w-[770px] rounded-box shadow-sm">
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 mr-2 shadow-lg">
+                    <div className=" w-[770px] rounded-box ">
                         <h1 className="font-bold p-4 items-center justify-center">
                             Project Berdasarkan Status
                         </h1>
                         <div className="flex items-center justify-center w-full my-4">
                             {dataStatus ? (
                                 <div>
-                                    <PieChart data={dataStatus}/>
+                                    <PieChart data={dataStatus} />
                                 </div>
                             ) : (
                                 <p>No data available</p>
@@ -239,26 +261,17 @@ const ChartPie = () => {
                                     Closed ({dataPersentaseStatus.Closed}%)
                                 </div>
                                 <div className="badge p-3 m-1">
-                                    Cancelled ({dataPersentaseStatus.Cancelled}%)
+                                    Cancelled ({dataPersentaseStatus.Cancelled}
+                                    %)
                                 </div>
                                 <div className="badge p-3 m-1">
                                     Initial ({dataPersentaseStatus.Initial}%)
                                 </div>
-                                
                             </div>
                         )}
                     </div>
                 </div>
-
-        
-
-                <div
-                    className="grid  w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 shadow-lg"
-                    style={{
-                        background:
-                            "linear-gradient(360deg, rgba(54, 194, 206, 1), rgba(255, 255, 255, 1))",
-                    }}
-                >
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 shadow-lg">
                     <div className="h-[50px] w-[770px] rounded-box">
                         <h1 className="font-bold p-4">
                             Project Berdasarkan Jenis Aplikasi
@@ -278,8 +291,39 @@ const ChartPie = () => {
                     </div>
                 </div>
             </div>
+            <div className="flex w-full mt-1 items-center justify-center">
+                <div
+                    className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm"
+                >
+                    <div className="w-[770px] rounded-box  mb-10">
+                        <h1 className="font-bold p-4">Project Berdasarkan Jenis Project</h1>
+                        <div className="flex items-center justify-center w-full my-4">
+                            {dataStatus ? (
+                                <div>
+                                    <PieChart data={dataJenisProject} />
+                                </div>
+                            ) : (
+                                <p>No data available</p>
+                            )}
+                        </div>
+                        {dataPersentaseJenisProject && (
+                            <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                                <div className="badge p-3 m-1">
+                                    PMO ({dataPersentaseJenisProject.PMO}%)
+                                </div>
+                                <div className="badge p-3 m-1">
+                                    Adhoc ({dataPersentaseJenisProject.Adhoc}%)
+                                </div>
+                                <div className="badge p-3 m-1">
+                                    Sebelum PMO ({dataPersentaseJenisProject["Sebelum PMO"]}
+                                    %)
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
-
 export default ChartPie;

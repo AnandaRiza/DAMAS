@@ -38,8 +38,8 @@ const TableSDLC = ({ headers, data, action, link }) => {
         }
     };
 
-    const handleDoubleClick = (id) => {
-        router.push(`${link}/detail/${id}`);
+    const handleDoubleClick = (recId) => {
+        router.push(`${link}/detail/${recId}`);
     };
 
     const getDisplayName = (header) => {
@@ -164,8 +164,8 @@ const TableSDLC = ({ headers, data, action, link }) => {
                         return (
                             <tr
                                 key={index}
-                                className={`${rowClassName} text-xs text-left leading-5`}
-                                onDoubleClick={() => handleDoubleClick(item.id)}
+                                className={`${rowClassName} text-xs text-left leading-4`}
+                                onDoubleClick={() => handleDoubleClick(item.recId)}
                             >
                                 {headers.map((header, headerIndex) => {
                                     console.log(header)
