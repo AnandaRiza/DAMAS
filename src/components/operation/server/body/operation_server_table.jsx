@@ -178,6 +178,7 @@ const Page = ({ headers, data, action, link }) => {
                 className={`py-3 px-6 uppercase font-bold ${
                   item === "server_id" ||
                   item === "server_description" ||
+                  item === "server_no" ||
                   item === "server_category" ||
                   item === "server_category_others" ||
                   item === "server_kickoff_start" ||
@@ -237,6 +238,7 @@ const Page = ({ headers, data, action, link }) => {
                     className={`py-3 px-6 text-center ${
                       header === "server_id" ||
                       header === "server_description" ||
+                      header === "server_no" ||
                       header === "server_category" ||
                       header === "server_category_others" ||
                       header === "server_kickoff_start" ||

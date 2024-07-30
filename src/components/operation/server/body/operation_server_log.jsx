@@ -12,6 +12,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
       deadline_approvement: " Deadline Approvement",
       status_approvement: "Status Approvement",
       server_perihal: "Project Name",
+      server_no:"Project Number",
       server_pic: "PIC",
       departement: "Departement",
       server_kickoff_start: "Kick Off Start",
