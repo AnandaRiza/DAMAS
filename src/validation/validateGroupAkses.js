@@ -8,6 +8,23 @@ export const IsOperator = () => {
     return false;
 };
 
+export const IsOperatorOps = () => {
+    const { userAplikasi } = useStateContext();
+    const expectedOperatorGroup = process.env.NEXT_PUBLIC_USER_OPERATOR;
+
+    if (userAplikasi && userAplikasi.groupakses === expectedOperatorGroup) {
+        const userId = userAplikasi.userid; 
+        if (userId) {
+            switch (userId) {
+                case 'DAMASOPS':
+                    return true;
+            }
+        }
+        return false;
+    }
+
+};
+
 export const IsSupervisor = () => {
     const { userAplikasi } = useStateContext();
     if (userAplikasi !==null && userAplikasi.groupakses !== null && userAplikasi.groupakses  === process.env.NEXT_PUBLIC_USER_SUPERVISOR) {

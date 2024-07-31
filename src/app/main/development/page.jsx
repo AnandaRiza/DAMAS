@@ -1,12 +1,11 @@
-"use client";
+"use client"
+import React, { useEffect, useState } from "react";
 import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
 import TableSDLC from "@/components/sdlc/TableSDLC";
 import HeaderDev from "@/components/sdlc/header/HeaderDev";
-
 import axios from "axios";
-import { useEffect, useState } from "react";
 
 const Page = () => {
     const [searchInput, setSearchInput] = useState("");
@@ -29,7 +28,7 @@ const Page = () => {
             );
             const fetchedData = response.data.data;
             setDataAllProject(fetchedData);
-            setHasMoreData(fetchedData.length === perPage);
+            setHasMoreData(fetchedData.length === perPage); // Set hasMoreData based on the fetched data length
         } catch (error) {
             console.log(error);
         }
@@ -38,11 +37,12 @@ const Page = () => {
     const handleSearch = async () => {
         try {
             const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allproject/getproject?input=${searchInput}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/allproject/search?input=${searchInput}`
             );
             setSearchResult(response.data.data);
             setCurrentPage(1);
             setStartIndex(0);
+            setHasMoreData(response.data.data.length === perPage); // Update hasMoreData based on search result length
         } catch (error) {
             console.log(error);
         }
@@ -67,7 +67,6 @@ const Page = () => {
                 {(!dataAllProject && !searchResult) && <PleaseWait />}
                 
                 {dataAllProject && dataAllProject.length > 0 && (!searchResult || searchInput === "") && (
-                    
                     <div>
                         <TableSDLC
                             headers={[
@@ -105,7 +104,6 @@ const Page = () => {
                             data={searchResult}
                             action={true}
                             link={"/main/development/"}
-                            rowClass={(item) => rowClass(item.deadlineproject)}
                         />
                     </div>
                 )}
@@ -131,8 +129,10 @@ const Page = () => {
                             type="button"
                             disabled={!hasMoreData}
                             onClick={() => {
-                                setCurrentPage(currentPage + 1);
-                                setStartIndex(startIndex + perPage);
+                                if (hasMoreData) {
+                                    setCurrentPage(currentPage + 1);
+                                    setStartIndex(startIndex + perPage);
+                                }
                             }}
                             className={`py-2 px-4 rounded-xl ${!hasMoreData ? 'bg-gray-400' : 'bg-[#00A6B4]'} text-white`}
                         >

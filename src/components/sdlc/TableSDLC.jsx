@@ -74,13 +74,13 @@ const TableSDLC = ({ headers, data, action, link }) => {
         const daysLeft = calculateTimeLeft(item.projectEndDate);
 
         if (daysLeft < 0) {
-            return "Past Deadline";
+            return status;
         } else if (daysLeft <= 3) {
-            return "Within 3 days";
+            return status;
         } else if (daysLeft <= 7) {
-            return "Within 7 days";
+            return status;
         } else {
-            return "Ongoing";
+            return status;
         }
     };
 
