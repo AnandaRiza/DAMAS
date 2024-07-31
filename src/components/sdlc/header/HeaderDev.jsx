@@ -14,7 +14,7 @@ const HeaderDev = ({title}) => {
               <div className="text-sm breadcrumbs">
                 <ul>
                   <li>
-                  <Link href="/main">
+                  <Link href="/main/development/home">
                     Home
                     </Link>
                   </li>

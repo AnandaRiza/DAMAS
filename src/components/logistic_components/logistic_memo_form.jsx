@@ -20,12 +20,18 @@ const MemoForm = () => {
     memo_createdBy: "",
     memo_reviewer: "",
     memo_deadline: "",
-    memo_status: "MEMO DRAFT",
+    memo_status: "",
     memo_notes: "",
     memo_upload: null,
     userdomain: "",
     userdomainpic: "",
     userdomainreviewer: "",
+    memo_category: "",
+    memo_surat_type: "",
+    memo_masuk: "",
+    memo_doc_type: "",
+    memo_keluar: "",
+    memo_terima: "",
   });
 
   const [error, setError] = useState("");
@@ -87,7 +93,13 @@ const MemoForm = () => {
         ...formData,
         memo_createdBy: userid,
         userdomain: user.userdomain,
-        memo_deadline: deadlinecoy(scheduleInput),
+        // memo_deadline: deadlinecoy(scheduleInput),
+        memo_category: formData.memo_category,
+        memo_surat_type: formData.memo_surat_type,
+        memo_masuk: formData.memo_masuk,
+        memo_keluar: formData.memo_keluar,
+        memo_terima: formData.memo_terima,
+        memo_doc_type: formData.memo_doc_type,
       };
 
       console.log("Data to be posted:", formDataToSend);
@@ -102,31 +114,31 @@ const MemoForm = () => {
           },
         }
       );
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/schedulesend-email`,
-        {
-            ...dataEmail,
-            text: `Assalamualaikum Warahmatullahi Wabarakatuh,
+//       await axios.post(
+//         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/schedulesend-email`,
+//         {
+//             ...dataEmail,
+//             text: `Assalamualaikum Warahmatullahi Wabarakatuh,
     
-            Yth. Bapak/Ibu,
+//             Yth. Bapak/Ibu,
             
-            Bersama ini kami memberitahukan bahwa deadline memo tinggal 1 hari lagi dengan detail project:
+//             Bersama ini kami memberitahukan bahwa deadline memo tinggal 1 hari lagi dengan detail project:
             
-            Nomer Memo  : ${formData.memo_num}
-            Perihal Memo: ${formData.memo_perihal}
-            PIC         : ${formData.memo_pic}
-            Departement : ${formData.memo_department}
-            Deadline    : ${deadlinecoy(scheduleInput)}
-            Website     : http://localhost:3000/main
+//             Nomer Memo  : ${formData.memo_num}
+//             Perihal Memo: ${formData.memo_perihal}
+//             PIC         : ${formData.memo_pic}
+//             Departement : ${formData.memo_department}
+//             Deadline    : ${deadlinecoy(scheduleInput)}
+//             Website     : http://localhost:3000/main
             
-            Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan memo selesai tepat waktu. Terima Kasih.
+//             Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan memo selesai tepat waktu. Terima Kasih.
             
-Wassalamualaikum Warahmatullahi Wabarakatuh`,
-            to: "ananda_riza@bcasyariah.co.id",
-            deadline: calculateDeadline(scheduleInput),
-            deadlinepro: calculateDeadline(scheduleInput),
-        }
-    );
+// Wassalamualaikum Warahmatullahi Wabarakatuh`,
+//             to: "ananda_riza@bcasyariah.co.id",
+//             deadline: calculateDeadline(scheduleInput),
+//             deadlinepro: calculateDeadline(scheduleInput),
+//         }
+//     );
 
       console.log("Memo creation response:", response.data);
 
@@ -222,7 +234,10 @@ const getMinDateTime = () => {
       <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
         <form className="space-y-4">
           <div className="flex flex-col">
-            <label htmlFor="memo_num" className="text-sm font-semibold text-gray-600">
+            <label
+              htmlFor="memo_num"
+              className="text-sm font-semibold text-gray-600"
+            >
               Nomor Memo
             </label>
             <input
@@ -241,7 +256,10 @@ const getMinDateTime = () => {
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="memo_perihal" className="text-sm font-semibold text-gray-600">
+            <label
+              htmlFor="memo_perihal"
+              className="text-sm font-semibold text-gray-600"
+            >
               Perihal Memo
             </label>
             <input
@@ -260,7 +278,10 @@ const getMinDateTime = () => {
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="memo_pic" className="text-sm font-semibold text-[#0066AE]">
+            <label
+              htmlFor="memo_pic"
+              className="text-sm font-semibold text-[#0066AE]"
+            >
               PIC <span className="text-red-500">*</span>
             </label>
             {dataAllPic && (
@@ -276,7 +297,9 @@ const getMinDateTime = () => {
                   name="memo_pic"
                   id="memo_pic"
                   className="input input-bordered mt-1"
-                  value={JSON.stringify(dataAllPic.find((item) => item.nama === formData.memo_pic))}
+                  value={JSON.stringify(
+                    dataAllPic.find((item) => item.nama === formData.memo_pic)
+                  )}
                   onChange={(e) => {
                     const selectedPic = JSON.parse(e.target.value);
                     setFormData({
@@ -288,7 +311,11 @@ const getMinDateTime = () => {
                     setSelectedDept(selectedPic.departemen);
                   }}
                 >
-                  <option disabled selected className="text-sm text-gray-600 opacity-50">
+                  <option
+                    disabled
+                    selected
+                    className="text-sm text-gray-600 opacity-50"
+                  >
                     Select PIC...
                   </option>
                   {filteredDataAllPic.map((item, index) => (
@@ -314,7 +341,11 @@ const getMinDateTime = () => {
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="memo_createdBy" className="text-sm font-semibold text-gray-600" hidden>
+            <label
+              htmlFor="memo_createdBy"
+              className="text-sm font-semibold text-gray-600"
+              hidden
+            >
               Created By
             </label>
             <input
@@ -333,7 +364,7 @@ const getMinDateTime = () => {
             />
           </div>
 
-          <div className="flex flex-col">
+          {/* <div className="flex flex-col">
             <label htmlFor="memo_reviewer" className="text-sm font-semibold text-gray-600">
               Reviewer
             </label>
@@ -362,9 +393,113 @@ const getMinDateTime = () => {
                 ))}
               </select>
             )}
+          </div> */}
+
+          <div className="flex flex-col">
+            <label
+              htmlFor="memo_category"
+              className="text-sm font-semibold text-gray-600"
+            >
+              Kategori Memo
+            </label>
+            <select
+              type="text"
+              id="memo_category"
+              name="memo_category"
+              value={formData.memo_category}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  memo_category: e.target.value,
+                })
+              }
+              className="input input-bordered mt-1"
+            >
+              <option value="" disabled>
+                Pilih Kategori Memo ...
+              </option>
+              <option value="Memo Masuk">Memo Masuk</option>
+              <option value="Memo Keluar">Memo Keluar</option>
+            </select>
           </div>
 
           <div className="flex flex-col">
+            <label
+              htmlFor="memo_surat_type"
+              className="text-sm font-semibold text-gray-600"
+            >
+    Tipe Surat
+    </label>
+            <select
+              type="text"
+              id="memo_surat_type"
+              name="memo_surat_type"
+              value={formData.memo_surat_type}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  memo_surat_type: e.target.value,
+                })
+              }
+              className="input input-bordered mt-1"
+            >
+                <option value="" disabled>
+      Pilih Tipe Surat ...
+    </option>
+    <option value="-">-</option>
+    <option value="MO">MO</option>
+    <option value="SE">SE</option>
+    <option value="SK">SK</option>
+    <option value="AGR">AGR</option>
+    <option value="NDA">NDA</option>
+    <option value="PKS">PKS</option>
+    <option value="SPJ">SPJ</option>
+    <option value="SKU">SKU</option>
+    <option value="BAST">BAST</option>
+  </select>
+          </div>
+
+          <div className="flex flex-col">
+            <label
+              htmlFor="memo_doc_type"
+              className="text-sm font-semibold text-gray-600"
+            >
+              Tipe Dokumen
+            </label>
+            <select
+              type="text"
+              id="memo_doc_type"
+              name="memo_doc_type"
+              value={formData.memo_doc_type}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  memo_doc_type: e.target.value,
+                })
+              }
+              className="input input-bordered mt-1"
+            >
+               <option value="" disabled>
+      Pilih Tipe Dokumen ...
+    </option>
+    <option value="-">-</option>
+    <option value="PKS">PKS</option>
+    <option value="BAST">BAST</option>
+    <option value="MEMO">MEMO</option>
+    <option value="INVOICE">INVOICE</option>
+    <option value="NDA">NDA</option>
+    <option value="PROGRAM KERJA">PROGRAM KERJA</option>
+    <option value="BON">BON</option>
+    <option value="DOKUMEN">DOKUMEN</option>
+    <option value="PAYMENT">PAYMENT</option>
+    <option value="FORM">FORM</option>
+    <option value="TANDA TERIMA">TANDA TERIMA</option>
+    <option value="SURAT">SURAT</option>
+    <option value="LAPORAN">LAPORAN</option>
+  </select>
+          </div>
+
+          {/* <div className="flex flex-col" hidden>
             <label htmlFor="memo_deadline" className="text-sm font-semibold text-gray-600">
               Deadline
             </label>
@@ -379,10 +514,80 @@ const getMinDateTime = () => {
               // placeholder="YYYY-MM-DD"
             />
             {error && <span className="text-red-600 text-xs mt-1">{error}</span>}
+          </div> */}
+
+          <div className="flex flex-col">
+            <label
+              htmlFor="memo_masuk"
+              className="text-sm font-semibold text-gray-600"
+            >
+              Tanggal Masuk Memo
+            </label>
+            <input
+              type="date"
+              id="memo_masuk"
+              name="memo_masuk"
+              value={formData.memo_masuk}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  memo_masuk: e.target.value,
+                })
+              }
+              className="input input-bordered mt-1"
+            />
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="memo_notes" hidden className="text-sm font-semibold text-gray-600">
+            <label
+              htmlFor="memo_keluar"
+              className="text-sm font-semibold text-gray-600"
+            >
+              Tanggal Keluar Memo
+            </label>
+            <input
+              type="date"
+              id="memo_keluar"
+              name="memo_keluar"
+              value={formData.memo_keluar}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  memo_keluar: e.target.value,
+                })
+              }
+              className="input input-bordered mt-1"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label
+              htmlFor="memo_masuk"
+              className="text-sm font-semibold text-gray-600"
+            >
+              Tanggal Terima Memo
+            </label>
+            <input
+              type="date"
+              id="memo_masuk"
+              name="memo_masuk"
+              value={formData.memo_masuk}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  memo_masuk: e.target.value,
+                })
+              }
+              className="input input-bordered mt-1"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label
+              htmlFor="memo_notes"
+              hidden
+              className="text-sm font-semibold text-gray-600"
+            >
               Notes
             </label>
             <textarea
@@ -402,7 +607,10 @@ const getMinDateTime = () => {
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="memo_status" className="text-sm font-semibold text-gray-600">
+            <label
+              htmlFor="memo_status"
+              className="text-sm font-semibold text-gray-600"
+            >
               Status
             </label>
             <select
@@ -416,9 +624,11 @@ const getMinDateTime = () => {
                 })
               }
               name="memo_status"
-              disabled
             >
-              <option value="MEMO DRAFT">DRAFT MEMO</option>
+              <option value="MEMO DRAFT">MEMO DRAFT</option>
+              <option value="MEMO ON HOLD">MEMO ON HOLD</option>
+              <option value="MEMO FINISHED">MEMO FINISHED</option>
+              <option value="MEMO CANCELED">MEMO CANCELED</option>
             </select>
           </div>
 
@@ -435,6 +645,7 @@ const getMinDateTime = () => {
             />
           </div>
            */}
+
           <button
             type="button"
             onClick={handleSubmit}

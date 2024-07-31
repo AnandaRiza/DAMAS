@@ -1,20 +1,5 @@
-import {
-    IsDacenOperator,
-    IsDevOperator,
-    IsItmoOperator,
-    IsItsecurityOperator,
-    IsItsupportOperator,
-    IsLogisticOperator,
-    IsNetworkOperator,
-    IsOperator,
-    IsPpoOperator,
-    IsServerOperator,
-    IsSkseOperator,
-} from "@/validation/validateGroupAkses";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { AiOutlineEdit } from "react-icons/ai";
-// import moment from "moment";
 
 const TableSDLC = ({ headers, data, action, link }) => {
     const router = useRouter();
@@ -38,7 +23,7 @@ const TableSDLC = ({ headers, data, action, link }) => {
             return daysLeft;
         };
 
-        if (status === "Finished") {
+        if (status === "Closed") {
             return "bg-green-200 hover:bg-green-300";
         }
 
@@ -53,18 +38,8 @@ const TableSDLC = ({ headers, data, action, link }) => {
         }
     };
 
-    const handleEdit = (id) => {
-        const updatedData = data.map((item) => {
-            if (item.id === id) {
-                item.status = "Finish";
-                router.push(`${link}/edit/${id}`);
-            }
-            return item;
-        });
-    };
-
-    const handleDoubleClick = (id) => {
-        router.push(`${link}/detail/${id}`);
+    const handleDoubleClick = (recId) => {
+        router.push(`${link}/detail/${recId}`);
     };
 
     const getDisplayName = (header) => {
@@ -92,8 +67,8 @@ const TableSDLC = ({ headers, data, action, link }) => {
 
         const { status } = item;
 
-        if (status === "Finished") {
-            return "Finished";
+        if (status === "Closed") {
+            return "Closed";
         }
 
         const daysLeft = calculateTimeLeft(item.projectEndDate);
@@ -119,8 +94,8 @@ const TableSDLC = ({ headers, data, action, link }) => {
             b.status
         );
 
-        const aIsFinished = a.status === "Finished";
-        const bIsFinished = b.status === "Finished";
+        const aIsFinished = a.status === "Closed";
+        const bIsFinished = b.status === "Closed";
 
         if (aIsFinished && bIsFinished) {
             // Sort "Finished" items by classA and classB
@@ -135,15 +110,15 @@ const TableSDLC = ({ headers, data, action, link }) => {
             return -1; // Move "Finished" (b) to the bottom
         }
 
-        if (a.status === "Finished" && b.status === "Finished") {
+        if (a.status === "Closed" && b.status === "Closed") {
             return classA.localeCompare(classB);
         }
 
-        if (a.status === "Finished") {
+        if (a.status === "Closed") {
             return 1; // Move 'Finished' projects to the bottom
         }
 
-        if (b.status === "Finished") {
+        if (b.status === "Closed") {
             return -1; // Move 'Finished' projects to the bottom
         }
 
@@ -171,28 +146,12 @@ const TableSDLC = ({ headers, data, action, link }) => {
 
     return (
         <div className="overflow-x-auto">
-            <table className="table cursor-pointer text-center ">
+            <table className="table cursor-pointer">
                 <thead>
                     <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm text-center uppercase">
                         {headers.map((item, index) => (
-                            <th key={index}>{getDisplayName(item)}</th>
+                            <th key={index} className="border">{getDisplayName(item)}</th>
                         ))}
-                        {(IsOperator() ||
-                            IsDevOperator() ||
-                            IsPpoOperator() ||
-                            IsSkseOperator() ||
-                            IsNetworkOperator() ||
-                            IsServerOperator() ||
-                            IsDacenOperator() ||
-                            IsItsupportOperator() ||
-                            IsItmoOperator() ||
-                            IsItsecurityOperator() ||
-                            IsLogisticOperator()) &&
-                            action && (
-                                <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                    Detail
-                                </th>
-                            )}
                     </tr>
                 </thead>
                 <tbody>
@@ -205,41 +164,17 @@ const TableSDLC = ({ headers, data, action, link }) => {
                         return (
                             <tr
                                 key={index}
-                                className={`${rowClassName} text-xs leading-5`}
-                                onDoubleClick={() => handleDoubleClick(item.id)}
+                                className={`${rowClassName} text-xs text-left leading-4`}
+                                onDoubleClick={() => handleDoubleClick(item.recId)}
                             >
                                 {headers.map((header, headerIndex) => {
                                     console.log(header)
-                                    return (<td key={headerIndex}>
+                                    return (<td key={headerIndex} className="border">
                                         {header === "status"
                                             ? status
                                             : (header === "createdDateTime" || header === "projectEndDate") ? item[header].slice(0,19) : item[header]}
                                     </td>);
                                 })}
-                                {(IsOperator() ||
-                                    IsDevOperator() ||
-                                    IsPpoOperator() ||
-                                    IsSkseOperator() ||
-                                    IsNetworkOperator() ||
-                                    IsServerOperator() ||
-                                    IsDacenOperator() ||
-                                    IsItsupportOperator() ||
-                                    IsItmoOperator() ||
-                                    IsItsecurityOperator() ||
-                                    IsLogisticOperator()) &&
-                                    action && (
-                                        <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    handleEdit(item.id)
-                                                }
-                                                className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
-                                            >
-                                                <AiOutlineEdit size={20} />
-                                            </button>
-                                        </td>
-                                    )}
                             </tr>
                         );
                     })}

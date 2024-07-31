@@ -6,7 +6,6 @@ import FormSearch from "@/components/FormSearch";
 import PleaseWait from "@/components/PleaseWait";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { getCountAllProjects, getCountOngoingProjects, getCountCompletedProjects } from '@/utils/api';
 
 import React from "react";
 
@@ -17,9 +16,6 @@ const page = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [startIndex, setStartIndex] = useState(0);
   const [perPage, setPerPage] = useState(10);
-  const [totalProjects, setTotalProjects] = useState(0);
-  const [ongoingProjects, setOngoingProjects] = useState(0);
-  const [completedProjects, setCompletedProjects] = useState(0);
 
 
   useEffect(() => {
@@ -49,34 +45,8 @@ const page = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const totalRes = await getCountAllProjects();
-        const ongoingRes = await getCountOngoingProjects();
-        const completedRes = await getCountCompletedProjects();
-
-        setTotalProjects(totalRes.data);
-        setOngoingProjects(ongoingRes.data);
-        setCompletedProjects(completedRes.data);
-      } catch (error) {
-        console.error('Error fetching data', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <>
-      <div>
-      <h1>Project Dashboard</h1>
-      <p>Total Projects: {totalProjects}</p>
-      <p>Ongoing Projects: {ongoingProjects}</p>
-      <p>Completed Projects: {completedProjects}</p>
-    </div>
-
-
       <div style={{ position: "absolute", top: 30, right: 45 }}>
         <FormSearch
           placeholder="Find Project"
