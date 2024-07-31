@@ -15,6 +15,8 @@ export default function RootLayout({ children }) {
             <body className={inter.className}>
             <ContexProvider>{children}</ContexProvider>
             </body>
+
+            <link rel='icon' href='/damas.png' />
         </html>
   );
 }

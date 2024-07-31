@@ -241,7 +241,7 @@ const ServerForm = ({ headers, data, action, link }) => {
         </thead>
         <tbody>
           {sortedData.map((item, index) => {
-            const status = getStatus(item);
+            const server_status = getStatus(item);
             const rowClassName = rowClass(
               item.server_deadline_project,
               item.server_status
@@ -290,7 +290,7 @@ const ServerForm = ({ headers, data, action, link }) => {
                         : ""
                     }`}
                   >
-                    {header === "status" ? status : item[header]}
+                    {header === "server_status" ? server_status : item[header]}
                   </td>
                 ))}
                 {(IsOperator() ||

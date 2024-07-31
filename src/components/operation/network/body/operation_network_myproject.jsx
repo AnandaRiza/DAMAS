@@ -245,7 +245,7 @@ const rowClass = (inputDate, network_status) => {
         </thead>
         <tbody>
           {sortedData && sortedData.map((item, index) => {
-            const status = getStatus(item);
+            const network_status = getStatus(item);
             const rowClassName = rowClass(item.network_deadline_project, item.network_status);
             return (
               <tr
@@ -287,7 +287,7 @@ const rowClass = (inputDate, network_status) => {
                         ? "hidden"
                         : ""
                     }`}>
-                    {header === "status" ? status : item[header]}
+                    {header === "network_status" ? network_status : item[header]}
                   </td>
                 ))}
                 {(IsOperator() ||

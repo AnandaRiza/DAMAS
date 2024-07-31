@@ -287,14 +287,31 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                       className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 mb-4"
                     >
                       <li>
-                        <a onClick={() => handleCategorySelect("H2H")}>H2H</a>
+                        <a
+                          onClick={() =>
+                            handleCategorySelect("Jaringan Cabang")
+                          }
+                        >
+                          Jaringan Cabang
+                        </a>
                       </li>
                       <li>
-                        <a onClick={() => handleCategorySelect("DC")}>DC</a>
+                        <a
+                          onClick={() =>
+                            handleCategorySelect("Jaringan Kantor Pusat")
+                          }
+                        >
+                          Jaringan Kantor Pusat
+                        </a>
                       </li>
                       <li>
-                        <a onClick={() => handleCategorySelect("SD-WAN")}>
-                          SD-WAN
+                        <a onClick={() => handleCategorySelect("Jaringan DRC")}>
+                          Jaringan DRC
+                        </a>
+                      </li>
+                      <li>
+                        <a onClick={() => handleCategorySelect("Cloud")}>
+                          Cloud
                         </a>
                       </li>
                       <hr className="my-1 border-gray-300" />
@@ -314,7 +331,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                       htmlFor="namaproject"
                       className="text-sm font-semibold text-[#0066AE] mx-3 my-3"
                     >
-                      Others
+                      Enter Category
                     </label>
                     <input
                       type="text"
