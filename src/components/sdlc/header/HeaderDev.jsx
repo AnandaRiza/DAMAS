@@ -15,7 +15,7 @@ const HeaderDev = ({title}) => {
                 <ul>
                   <li>
                   <Link href="/main/development/home">
-                    Home
+                    Dashboard
                     </Link>
                   </li>
                   <li>

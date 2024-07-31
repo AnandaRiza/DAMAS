@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useStateContext } from "@/context/ContextProvider";
+import Image from "next/image";
+import logo2 from '../assets/logo2.png'; // Correct relative path
 
 const Header = ({ title }) => {
   const router = useRouter();
@@ -32,70 +34,21 @@ const Header = ({ title }) => {
   return (
     <div className="navbar bg-[#FFFFFF] rounded shadow-lg w-full h-full">
       <div className="flex-1">
-        <a className="ml-10 text-xl font-bold text-[#0066AE]" href="/main">
-          DAMAS
+      <a href="/main" className="ml-4">
+          <Image src={logo2} alt="Damas Logo" width={150} />
         </a>
       </div>
       <div className="flex-none">
-        {/* <ul className="menu menu-horizontal px-1">
-                    <li>
-                        <details className="mr-10">
-                            <h3 className="font-bold text-[#0066AE]">
-                                Welcome,{" "}
-                                <span className="font-bold capitalize">
-                                    {user.username}
-                                </span>
-                            </h3>
-                            <ul className="rounded-t-none text-black absolute top-full right-10 z-10 shadow-md">
-                                <li>
-                                    <button
-                                        className="btn btn-error"
-                                        onClick={handleLogout}
-                                    >
-                                        Logout
-                                    </button>
-                                </li>
-                            </ul>
-                        </details>
-                    </li>
-                </ul> */}
-
-                {/* <div className="pr-3 relative">
-                    <h3
-                        onClick={() => setIsLogoutShow(!isLogoutShow)}
-                        className="font-bold text-[#0066AE] cursor-pointer"
-                    >
-                        Welcome,{" "}
-                        <span className="font-bold capitalize">
-                            {user?.username}
-                        </span>
-                    </h3>
-
-          {isLogoutShow && (
-            <div className="bg-white rounded-xl shadow-md py-5 px-10 absolute top-10 right-2 z-50">
-              <button className="btn" onClick={handleLogout}>
-                Logout
-              </button>
-            </div>
-          )}
-        </div> */}
-
-        <div className="flex-none">
-          <ul className="menu menu-horizontal px-1">
+        <div className="dropdown dropdown-hover">
+          <div tabIndex={0} role="button" className="btn m-1">
+            Welcome,{" "}
+            <span className="font-bold capitalize">{user?.userdomain}</span>
+          </div>
+          <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] p-2 shadow">
             <li>
-              <details className="mr-5">
-                <summary className="font-bold text-[#0066AE]" style={{ fontSize: '1rem' }}>
-                  Welcome,{" "}
-                  <span className="font-bold capitalize">{user?.username}</span>
-                </summary>
-                <ul className="rounded-t-none text-black absolute top-full right-10 z-10 shadow-md">
-                  <li>
-                    <button className="btn btn-error" onClick={handleLogout}>
-                      Logout
-                    </button>
-                  </li>
-                </ul>
-              </details>
+              <a className="btn btn-error" onClick={handleLogout}>
+                Logout
+              </a>
             </li>
           </ul>
         </div>
