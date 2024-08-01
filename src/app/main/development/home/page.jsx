@@ -235,6 +235,34 @@ const ChartPie = () => {
         },
     };
 
+    const pieOptions = {
+        plugins: {
+            legend: {
+                position: 'top', // Position the legend at the bottom
+                labels: {
+                    boxWidth: 20, // Width of the color box in the legend
+                    padding: 10, // Padding between legend items
+                    font: {
+                        size: 12, // Font size of the legend labels
+                        family: 'Arial', // Font family
+                    },
+                    color: '#333', // Color of the legend text
+                    // Set maxWidth to prevent long labels from wrapping
+                    maxWidth: 150, // Adjust based on your layout
+                },
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        return context.label + ': ' + context.raw;
+                    },
+                },
+            },
+        },
+        responsive: true, // Ensure the chart is responsive
+        maintainAspectRatio: false, // Allow the chart to resize freely
+    };
+
     return (
         <div className="flex-grow justify-center items-center min-h-screen rounded-xl mt-1">
             <div className="flex w-grow">
@@ -243,10 +271,10 @@ const ChartPie = () => {
                         <h1 className="font-bold p-4 items-center justify-center">
                             Project Berdasarkan Status
                         </h1>
-                        <div className="flex items-center justify-center w-full my-4">
+                        <div className="flex items-center justify-center w-full my-4 ">
                             {dataStatus ? (
-                                <div>
-                                    <PieChart data={dataStatus} />
+                                <div style={{ width: '500px', height: '250px', overflowX: 'auto' }}>
+                                    <PieChart data={dataStatus} options={pieOptions}/>
                                 </div>
                             ) : (
                                 <p>No data available</p>
@@ -295,12 +323,12 @@ const ChartPie = () => {
                 <div
                     className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm"
                 >
-                    <div className="w-[770px] rounded-box  mb-10">
+                    <div className="w-[770px] rounded-box">
                         <h1 className="font-bold p-4">Project Berdasarkan Jenis Project</h1>
                         <div className="flex items-center justify-center w-full my-4">
                             {dataStatus ? (
-                                <div>
-                                    <PieChart data={dataJenisProject} />
+                                <div style={{ width: '500px', height: '250px', overflowX: 'auto' }}>
+                                    <PieChart data={dataJenisProject} options={pieOptions} />
                                 </div>
                             ) : (
                                 <p>No data available</p>
