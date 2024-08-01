@@ -15,6 +15,7 @@ const NetworkForm = () => {
 
   // State to manage form data
   const [dataAllPic, setDataAllPic] = useState(null);
+  const [dataAllCategory, setDataAllCategory] = useState(null);
   const [selectedDept, setSelectedDept] = useState("");
   const [selectedUserDomain, setSelectedUserDomain] = useState("");
   const [scheduleInput, setScheduleInput] = useState("");
@@ -32,6 +33,9 @@ const NetworkForm = () => {
     network_category: "",
     network_category_others: "",
   });
+  // const [formData2, setFormData2] = useState({
+  //   network_category: ""
+  // })
 
   const handleCategorySelect = (category) => {
     if (category === "Others") {
@@ -125,6 +129,27 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
       ?.split("=")[1];
   }, []);
 
+  const getDataAllCategory = async () => {
+    setDataAllCategory(null);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/show-category`
+      );
+      setDataAllCategory(response.data.data);
+      // console.log(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDataAllCategory();
+    const userid = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("DAMAS-USERID="))
+      ?.split("=")[1];
+  }, []);
+
   const calculateDeadline = (date) => {
     const d = new Date(date);
     d.setDate(d.getDate() - 1);
@@ -150,7 +175,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
     const seconds = String(d.getSeconds()).padStart(2, "0");
 
     return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
-};
+  };
 
   const getMinDateTime = () => {
     const now = new Date();
@@ -298,6 +323,78 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
 
             <div>
               <label
+                htmlFor="category"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Category <span className="text-red-500">*</span>
+              </label>
+              <div
+                className="border rounded-xl"
+                style={{ borderColor: "#DADADA" }}
+              >
+                <div className="flex flex-col">
+                  <div className="mt-1 mx-3 my-3">
+                    {dataAllCategory && (
+                      <select
+                        name="pic"
+                        required
+                        id="pic"
+                        className="input input-bordered mt-1"
+                        value={formData.category}
+                        onChange={(e) => {
+                          const selectedCategory = JSON.parse(e.target.value);
+                          setFormData({
+                            ...formData,
+                            network_category: selectedCategory.category,
+                          });
+                        }}
+                      >
+                        <option
+                          disabled
+                          selected
+                          className=""
+                        >
+                          Select Category
+                        </option>
+                        {dataAllCategory.map((item, index) => (
+                          <option key={index} value={JSON.stringify(item)}>
+                            {item.category}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                    <div>
+                      {formData.network_category === "Others" && (
+                        <div className="flex flex-col">
+                          <label
+                            htmlFor="namaproject"
+                            className="text-sm font-semibold text-[#0066AE] my-3"
+                          >
+                            Enter Category
+                          </label>
+                          <input
+                            type="text"
+                            id="namaproject"
+                            name="namaproject"
+                            value={formData.network_category_others}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                network_category_others: e.target.value,
+                              })
+                            }
+                            className="input input-bordered mt-1 my-3"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* <div>
+              <label
                 htmlFor="status"
                 className="text-sm font-semibold text-[#0066AE]"
               >
@@ -360,7 +457,6 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                   </div>
                 </div>
 
-                {/* Conditional rendering of Others input */}
                 {formData.network_category === "Others" && (
                   <div className="flex flex-col">
                     <label
@@ -385,7 +481,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
 
             <div>
               <label
