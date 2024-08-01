@@ -126,7 +126,7 @@ const ChartPie = () => {
                             backgroundColor: [
                                 "#A9E399",
                                 "#5989BE",
-                                "#D9425D",
+                                "#6CAC46",
                                 "#FAC78A",
                             ],
                         },
@@ -264,14 +264,14 @@ const ChartPie = () => {
     };
 
     return (
-        <div className="flex-grow justify-center items-center min-h-screen rounded-xl mt-1">
+        <div className="flex-grow justify-center items-center min-h-screen rounded-xl">
             <div className="flex w-grow">
-                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 mr-2 shadow-lg">
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
                     <div className=" w-[770px] rounded-box ">
                         <h1 className="font-bold p-4 items-center justify-center">
-                            Project Berdasarkan Status
+                            PROJECT BERDASARKAN STATUS
                         </h1>
-                        <div className="flex items-center justify-center w-full my-4 ">
+                        <div className="flex items-center justify-center w-full my-4">
                             {dataStatus ? (
                                 <div style={{ width: '500px', height: '250px', overflowX: 'auto' }}>
                                     <PieChart data={dataStatus} options={pieOptions}/>
@@ -282,17 +282,17 @@ const ChartPie = () => {
                         </div>
                         {dataPersentaseStatus && (
                             <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                                <div className="badge p-3 m-1">
+                                <div className="P-3 m-1">
                                     Active ({dataPersentaseStatus.Active}%)
                                 </div>
-                                <div className="badge p-3 m-1">
+                                <div className="P-3 m-1">
                                     Closed ({dataPersentaseStatus.Closed}%)
                                 </div>
-                                <div className="badge p-3 m-1">
+                                <div className="P-3 m-1">
                                     Cancelled ({dataPersentaseStatus.Cancelled}
                                     %)
                                 </div>
-                                <div className="badge p-3 m-1">
+                                <div className="P-3 m-1">
                                     Initial ({dataPersentaseStatus.Initial}%)
                                 </div>
                             </div>
@@ -302,7 +302,7 @@ const ChartPie = () => {
                 <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 shadow-lg">
                     <div className="h-[50px] w-[770px] rounded-box">
                         <h1 className="font-bold p-4">
-                            Project Berdasarkan Jenis Aplikasi
+                            PROJECT BERDASARKAN JENIS APLIKASI
                         </h1>
                         <div className="flex items-center justify-center w-full my-4">
                             {dataJenisApp ? (
@@ -324,7 +324,7 @@ const ChartPie = () => {
                     className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm"
                 >
                     <div className="w-[770px] rounded-box">
-                        <h1 className="font-bold p-4">Project Berdasarkan Jenis Project</h1>
+                        <h1 className="font-bold p-4">PROJECT BERDASARKAN JENIS PROJECT</h1>
                         <div className="flex items-center justify-center w-full my-4">
                             {dataStatus ? (
                                 <div style={{ width: '500px', height: '250px', overflowX: 'auto' }}>
@@ -336,13 +336,13 @@ const ChartPie = () => {
                         </div>
                         {dataPersentaseJenisProject && (
                             <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                                <div className="badge p-3 m-1">
+                                <div className="m-1">
                                     PMO ({dataPersentaseJenisProject.PMO}%)
                                 </div>
-                                <div className="badge p-3 m-1">
+                                <div className="m-1">
                                     Adhoc ({dataPersentaseJenisProject.Adhoc}%)
                                 </div>
-                                <div className="badge p-3 m-1">
+                                <div className="m-1">
                                     Sebelum PMO ({dataPersentaseJenisProject["Sebelum PMO"]}
                                     %)
                                 </div>
