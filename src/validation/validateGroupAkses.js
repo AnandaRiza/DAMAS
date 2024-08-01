@@ -1,11 +1,19 @@
 import { useStateContext } from "@/context/ContextProvider";
 
-export const IsOperator = () => {
+export const IsOperatorDev = () => {
     const { userAplikasi } = useStateContext();
-    if (userAplikasi !==null && userAplikasi.groupakses !== null && userAplikasi.groupakses  === process.env.NEXT_PUBLIC_USER_OPERATOR) {
-        return true;
+    const expectedOperatorGroup = process.env.NEXT_PUBLIC_USER_OPERATOR;
+
+    if (userAplikasi && userAplikasi.groupakses === expectedOperatorGroup) {
+        const userId = userAplikasi.userid; 
+        if (userId) {
+            switch (userId) {
+                case 'DAMASOPR':
+                    return true;
+            }
+        }
+        return false;
     }
-    return false;
 };
 
 export const IsOperatorOps = () => {

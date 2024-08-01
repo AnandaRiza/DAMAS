@@ -28,6 +28,7 @@ import {
     IsNetworkOperator,
     IsOperationSupervisor,
     IsOperator,
+    IsOperatorDev,
     IsOperatorOps,
     IsPpoOperator,
     IsPpoSupervisor,
@@ -56,7 +57,7 @@ const Sidebar = () => {
             <div className="collapse collapse-arrow ">
                 <div>
                     <div>
-                        {(IsOperator() ||
+                        {(IsOperatorDev() ||
                             IsSupervisor()) && (
                             <div
                                 tabIndex={0}
@@ -72,7 +73,7 @@ const Sidebar = () => {
                                     Project
                                 </div>
                                 <div className="collapse-content">
-                                    {(IsOperator() ||
+                                    {(IsOperatorDev() ||
                             IsSupervisor()) && (
                                         <div>
                                             <Link href="/main/development/home">
@@ -242,7 +243,6 @@ const Sidebar = () => {
                             IsPpoSupervisor() ||
                             IsLogisticSupervisor() ||
                             IsOperationSupervisor() ||
-                            IsOperatorOps() ||
                             IsReviewerSupervisor()) && (
                             <div
                                 tabIndex={0}
@@ -290,8 +290,7 @@ const Sidebar = () => {
                                     )}
 
                                     {(IsSupervisor() ||
-                                        IsOperationSupervisor() ||
-                                        IsOperatorOps()) && (
+                                        IsOperationSupervisor()) && (
                                         <div>
                                             <Link href="/main/status/approveoperation/general/approval">
                                                 <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">

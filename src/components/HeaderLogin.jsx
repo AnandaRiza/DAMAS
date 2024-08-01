@@ -1,9 +1,11 @@
 import React from 'react'
+import Image from "next/image";
+import logo2 from '../assets/logo2.png'; // Correct relative path
 
 const HeaderLogin = ({title}) => {
     return (
-        <div className='flex justify-between items-center p-3 bg-[#00A6B4] bg-opacity-25 px-8 h-20 font-roboto text-5xl'>
-            <h1 className="text-2xl text-[#0066AE] font-bold">{title}</h1>
+        <div className='flex justify-between items-center p-3 bg-white px-8 h-20 font-roboto text-5xl'>
+            <Image src={logo2} alt="Damas Logo" width={150} />
             <div className="flex items-center">
         </div>
         </div>
