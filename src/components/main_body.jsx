@@ -1,74 +1,360 @@
 "use client";
-
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import React, { useState } from "react";
-import { DiVim } from "react-icons/di";
+import {
+    Chart as ChartJS,
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+} from "chart.js";
+import dynamic from "next/dynamic";
+import PleaseWait from "@/components/PleaseWait";
 
-const Page = () => {
-  return (
-    <div className="flex-grow justify-center items-center min-h-screen rounded-xl mt-1">
+ChartJS.register(
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement,
+    CategoryScale,
+    LinearScale,
+    BarElement
+);
 
-      <div className="flex w-grow">
+const PieChart = dynamic(
+    () => import("react-chartjs-2").then((mod) => mod.Pie),
+    { ssr: false }
+);
 
-        <div className="grid h-[450px] w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 mr-2 shadow-lg"
-        style={{ background: 'linear-gradient(360deg, rgba(54, 194, 206, 1), rgba(255, 255, 255, 1))' }}
-        >
-          <div className="h-[50px] w-[770px] rounded-box shadow-sm">
-          <h1 className="font-bold p-4 items-center justify-center">DEVELOPMENT</h1>
-          <p className="p-4 text-[#605A5A] font-semibold">Monitoring all STL Project From MBS</p>
-          <div className="badge badge-accent p-3 m-1 font-bold">SDLC</div>
-          </div>
+const BarChart = dynamic(
+    () => import("react-chartjs-2").then((mod) => mod.Bar),
+    { ssr: false }
+);
+
+const ChartPie = () => {
+    const [dataStatus, setDataStatus] = useState(null);
+    const [dataJenisApp, setDataJenisApp] = useState(null);
+    const [dataJenisProject, setDataJenisProject] = useState(null);
+    const [dataPersentaseStatus, setDataPersentaseStatus] = useState(null);
+    const [dataPersentaseJenisProject, setDataPersentaseJenisProject] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const getDataCharts = async () => {
+            setLoading(true);
+            setDataStatus(null);
+            setDataJenisApp(null);
+            setDataPersentaseStatus(null);
+            setDataJenisProject(null);
+            setDataPersentaseJenisProject(null);
+            try {
+                const response = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
+                );
+                const fetchedData = response.data;
+                console.log(response);
+
+                const labels = Object.keys(fetchedData);
+                const dataValues = Object.values(fetchedData);
+
+                setDataStatus({
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "Project",
+                            data: dataValues,
+                            backgroundColor: [
+                                "#A9E399",
+                                "#5989BE",
+                                "#D9425D",
+                                "#FAC78A",
+                            ],
+                            
+                        },
+                    ],
+                });
+                
+                const response2 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/persentase`
+                );
+                const fetchedData2 = response2.data;
+                setDataPersentaseStatus(fetchedData2);
+
+                const response3 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jenisapp`
+                );
+                const fetchedData3 = response3.data;
+
+                const labels3 = Object.keys(fetchedData3);
+                const dataValues3 = Object.values(fetchedData3);
+
+                setDataJenisApp({
+                    labels: labels3,
+                    datasets: [
+                        {
+                            label: "Project",
+                            data: dataValues3,
+                            backgroundColor: [
+                                "#A9E399",
+                                "#6CAC46",
+                                "#DF9222",
+                                "#5989BE",
+                                "#FAC78A",
+                                "#7E3D78",
+                            ],
+                        },
+                    ],
+                });
+
+                const response4 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jenisproject`
+                );
+                const fetchedData4 = response4.data;
+                console.log(response4);
+                const labels4 = Object.keys(fetchedData4);
+                const dataValues4 = Object.values(fetchedData4);
+
+                setDataJenisProject({
+                    labels: labels4,
+                    datasets: [
+                        {
+                            label: "Project",
+                            data: dataValues4,
+                            backgroundColor: [
+                                "#A9E399",
+                                "#5989BE",
+                                "#D9425D",
+                                "#FAC78A",
+                            ],
+                           
+                        },
+                    ],
+                });
+
+                const response5 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/persentase2`
+                );
+                const fetchedData5 = response5.data;
+                setDataPersentaseJenisProject(fetchedData5);
+                console.log(setDataPersentaseJenisProject)
+            } catch (error) {
+                setError("Failed to fetch data");
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        getDataCharts();
+    }, []);
+
+    if (loading) return <PleaseWait />;
+    if (error) return <p>{error}</p>;
+
+    const barOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        return context.dataset.label + ": " + context.raw;
+                    },
+                },
+            },
+        },
+        scales: {
+            x: {
+                beginAtZero: true,
+                grid: {
+                    display: false,
+                },
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 20,
+                    minRotation: 20,
+                    font: {
+                        size: 12,
+                    },
+                    padding: 10,
+                },
+                title: {
+                    display: true,
+                    text: "Jenis Aplikasi",
+                    color: "#333",
+                    font: {
+                        size: 14,
+                        weight: "bold",
+                    },
+                },
+            },
+            y: {
+                beginAtZero: true,
+                grid: {
+                    display: true,
+                },
+                ticks: {
+                    stepSize: 1,
+                },
+                title: {
+                    display: true,
+                    text: "Count",
+                    color: "#333",
+                    font: {
+                        size: 14,
+                        weight: "bold",
+                    },
+                },
+            },
+        },
+        elements: {
+            bar: {
+                borderWidth: 1,
+                borderSkipped: false,
+                barThickness: 20,
+                maxBarThickness: 50,
+                minBarLength: 2,
+            },
+        },
+        layout: {
+            padding: {
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+            },
+        },
+        datasets: {
+            bar: {
+                barPercentage: 0.8,
+                categoryPercentage: 0.8,
+            },
+        },
+    };
+
+    const pieOptions = {
+      plugins: {
+          legend: {
+              position: 'top', // Position the legend at the bottom
+              labels: {
+                  boxWidth: 20, // Width of the color box in the legend
+                  padding: 10, // Padding between legend items
+                  font: {
+                      size: 12, // Font size of the legend labels
+                      family: 'Arial', // Font family
+                  },
+                  color: '#333', // Color of the legend text
+                  // Set maxWidth to prevent long labels from wrapping
+                  maxWidth: 150, // Adjust based on your layout
+              },
+          },
+          tooltip: {
+              callbacks: {
+                  label: function (context) {
+                      return context.label + ': ' + context.raw;
+                  },
+              },
+          },
+      },
+      responsive: true, // Ensure the chart is responsive
+      maintainAspectRatio: false, // Allow the chart to resize freely
+  };
+  
+
+    return (
+        <div className="flex-grow justify-center items-center min-h-screen rounded-xl mt-1">
+            <div className="flex w-grow">
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 mr-2 shadow-lg">
+                    <div className=" w-[770px] rounded-box ">
+                        <h1 className="font-bold p-4 items-center justify-center">
+                            PROJECT 
+                        </h1>
+                        <div className="flex items-center justify-center w-full my-4 ">
+                            {dataStatus ? (
+                                <div style={{ width: '500px', height: '250px', overflowX: 'auto' }}>
+                                    <PieChart data={dataStatus} options={pieOptions}/>
+                                </div>
+                            ) : (
+                                <p>No data available</p>
+                            )}
+                        </div>
+                        {dataPersentaseStatus && (
+                            <div className="flex flex-col p-3 m-1 font-bold text-xs">
+                                <div className="badge p-3 m-1">
+                                    Active ({dataPersentaseStatus.Active}%)
+                                </div>
+                                <div className="badge p-3 m-1">
+                                    Closed ({dataPersentaseStatus.Closed}%)
+                                </div>
+                                <div className="badge p-3 m-1">
+                                    Cancelled ({dataPersentaseStatus.Cancelled}
+                                    %)
+                                </div>
+                                <div className="badge p-3 m-1">
+                                    Initial ({dataPersentaseStatus.Initial}%)
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 shadow-lg">
+                    <div className="h-[50px] w-[770px] rounded-box">
+                        <h1 className="font-bold p-4">
+                           OPERATION
+                        </h1>
+                        <div className="flex items-center justify-center w-full my-4">
+                            {dataJenisApp ? (
+                                <div className="w-full h-[332px]">
+                                    <BarChart
+                                        data={dataJenisApp}
+                                        options={barOptions}
+                                    />
+                                </div>
+                            ) : (
+                                <p>No data available</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="flex w-full mt-1 items-center justify-center">
+                <div
+                    className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm"
+                >
+                    <div className="w-[770px] rounded-box">
+                        <h1 className="font-bold p-4">LOGISTIC</h1>
+                        <div className="flex items-center justify-center w-full my-4">
+                            {dataStatus ? (
+                                <div style={{ width: '500px', height: '250px', overflowX: 'auto' }}>
+                                <PieChart data={dataJenisProject} options={pieOptions} />
+                            </div>
+                            ) : (
+                                <p>No data available</p>
+                            )}
+                        </div>
+                        {dataPersentaseJenisProject && (
+                            <div className="flex flex-col p-3 m-1 font-bold text-xs">
+                                <div className="badge p-3 m-1">
+                                    PMO ({dataPersentaseJenisProject.PMO}%)
+                                </div>
+                                <div className="badge p-3 m-1">
+                                    Adhoc ({dataPersentaseJenisProject.Adhoc}%)
+                                </div>
+                                <div className="badge p-3 m-1">
+                                    Sebelum PMO ({dataPersentaseJenisProject["Sebelum PMO"]}
+                                    %)
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
         </div>
-
-        {/* <div className="divider divider-horizontal"></div> */}
-
-        <div className="grid h-[450px] w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 shadow-lg"
-        style={{ background: 'linear-gradient(360deg, rgba(54, 194, 206, 1), rgba(255, 255, 255, 1))' }}>
-        <div className="h-[50px] w-[770px] rounded-box">
-          <h1 className="font-bold p-4">PPO</h1>
-          <p className="p-4 text-[#605A5A] font-semibold">Monitoring all STL Project From MBS and SK/SE Flow</p>
-          <div className="badge badge-accent p-3 m-1 font-bold">SDLC</div>
-          <div className="badge badge-accent p-3 m-1 font-bold">SK/SE</div>
-          </div>
-        </div>
-        
-      </div>
-
-      <div className="flex w-grow mt-1">
-
-        <div className="grid h-[450px] w-[90px] flex-grow card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-lg"
-        style={{ background: 'linear-gradient(360deg, rgba(54, 194, 206, 1), rgba(255, 255, 255, 1))' }}>
-        <div className="h-[50px] w-[770px] rounded-box shadow-sm mb-10">
-        <h1 className="font-bold p-4">OPERATION</h1>
-        <p className="p-4 text-[#605A5A] font-semibold">Monitoring all Project in Operation Division</p>
-        <div className="badge badge-accent p-3 m-1">Network</div>
-        <div className="badge badge-accent p-3 m-1">Server</div>
-        <div className="badge badge-accent p-3 m-1">Data Center</div>
-        <div className="badge badge-accent p-3 m-1">IT MO</div>
-        <div className="badge badge-accent p-3 m-1">IT Support</div>
-        <div className="badge badge-accent p-3 m-1">IT Security</div>
-        </div>
-        <br />
-        {/* <div className="flex flex-row items-center mt-10">
-        <button className="btn bg-[#ACC8E5] hover:bg-[#8DB5E1] text-[#000000] p-1 m-1 h-[75px] w-[175px]">My Project</button>
-        <button className="btn bg-[#ACC8E5] hover:bg-[#8DB5E1] text-[#000000] p-1 m-1 h-[75px] w-[175px]">All Project</button>
-        <button className="btn bg-[#00FF66] hover:bg-[#0EDF61] text-[#000000] p-1 m-1 h-[75px] w-[175px]">Create Project</button>
-        </div> */}
-        </div>
-
-        {/* <div className="divider divider-horizontal"></div> */}
-
-        <div className="grid h-[450px] w-[90px] flex-grow card bg-white rounded-box mt-2 p-1 font-bold shadow-lg"
-        style={{ background: 'linear-gradient(360deg, rgba(54, 194, 206, 1), rgba(255, 255, 255, 1))' }}>
-        <div className="h-[50px] w-[770px] rounded-box">
-        <h1 className="font-bold p-4">LOGISTIC</h1>
-        <p className="p-4 text-[#605A5A] font-semibold">Monitoring all Logistic Project and Everything Related with Logistic</p>
-        </div>
-        </div>
-
-      </div>
-    </div>
-  );
+    );
 };
-
-export default Page;
+export default ChartPie;

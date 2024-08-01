@@ -28,7 +28,7 @@ const Page = () => {
             );
             const fetchedData = response.data.data;
             setDataAllProject(fetchedData);
-            setHasMoreData(fetchedData.length === perPage); // Set hasMoreData based on the fetched data length
+            setHasMoreData(fetchedData.length === perPage); 
         } catch (error) {
             console.log(error);
         }
@@ -42,7 +42,7 @@ const Page = () => {
             setSearchResult(response.data.data);
             setCurrentPage(1);
             setStartIndex(0);
-            setHasMoreData(response.data.data.length === perPage); // Update hasMoreData based on search result length
+            setHasMoreData(response.data.data.length === perPage);
         } catch (error) {
             console.log(error);
         }
