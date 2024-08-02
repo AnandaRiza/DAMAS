@@ -180,6 +180,26 @@ const submitAtDate = () => {
 
               <div className="flex flex-col">
                 <label
+                  htmlFor="perihal"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                Project Number
+                </label>
+                <input
+                  type="text"
+                  value={dataAllNetwork.network_no}
+                  onChange={(e) =>
+                    setDataAllNetwork({
+                      ...dataAllNetwork,
+                      network_no: e.target.value,
+                    })
+                  }
+                  className="input input-bordered mt-1"
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label
                   htmlFor="pic"
                   className="text-sm font-semibold text-[#0066AE]"
                 >

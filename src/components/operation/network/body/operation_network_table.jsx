@@ -1,5 +1,5 @@
 "use client";
-import { IsNetworkOperator, IsOperator } from "@/validation/validateGroupAkses";
+import { IsNetworkOperator, IsOperator, IsOperatorOps } from "@/validation/validateGroupAkses";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -182,6 +182,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
                 className={`py-3 px-6 ${
                   item === "network_id" ||
                   item === "network_description" ||
+                  item === "network_no" ||
                   item === "network_category" ||
                   item === "network_category_others" ||
                   item === "network_kickoff_start" ||
@@ -211,7 +212,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
                 {getDisplayName(item)}
               </th>
             ))}
-            {(IsNetworkOperator() || IsOperator()) && action && (
+            {(IsNetworkOperator() || IsOperatorOps()) && action && (
               <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                 Edit
               </th>
@@ -238,6 +239,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
                     className={`py-3 px-6 text-center ${
                       header === "network_id" ||
                       header === "network_description" ||
+                      header === "network_no" ||
                       header === "network_category" ||
                       header === "network_category_others" |
                       header === "network_kickoff_start" ||
@@ -270,7 +272,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
                   </td>
                 ))}
 
-                {(IsOperator() || IsNetworkOperator()) && action && (
+                {(IsOperatorOps() || IsNetworkOperator()) && action && (
                   <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                     <button
                       type="button"

@@ -107,6 +107,27 @@ const page = () => {
 
               <div className="flex flex-col">
                 <label
+                  htmlFor="perihal"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                Project Number
+                </label>
+                <input
+                  disabled
+                  type="text"
+                  value={dataAllNetwork.network_no}
+                  onChange={(e) =>
+                    setDataAllNetwork({
+                      ...dataAllNetwork,
+                      network_no: e.target.value,
+                    })
+                  }
+                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label
                   htmlFor="pic"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
@@ -687,7 +708,7 @@ const page = () => {
                 </label>
                 <input
                   disabled
-                  type="date"
+                  // type="datetime-local"
                   className="input input-bordered mt-1 font-semibold"
                   value={dataAllNetwork.network_deadline_project}
                   onChange={(e) =>

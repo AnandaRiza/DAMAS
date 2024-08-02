@@ -12,6 +12,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
       deadline_approvement: " Deadline Approvement",
       status_approvement: "Status Approvement",
       network_perihal: "Project Name",
+      network_no: "Project Number",
       network_pic: "PIC",
       departement: "Departement",
       network_kickoff_start: "Kick Off Start",

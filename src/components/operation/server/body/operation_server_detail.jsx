@@ -94,6 +94,27 @@ const Page = () => {
 
               <div className="flex flex-col">
                 <label
+                  htmlFor="perihal"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                Project Number
+                </label>
+                <input
+                  disabled
+                  type="text"
+                  value={dataAllServer.server_no}
+                  onChange={(e) =>
+                    setDataAllServer({
+                      ...dataAllServer,
+                      server_no: e.target.value,
+                    })
+                  }
+                  className="input input-bordered mt-1 disabled:bg-gray-100 disabled font-semibold"
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label
                   htmlFor="pic"
                   className="text-sm font-semibold text-[#0066AE]"
                 >
