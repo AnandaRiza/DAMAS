@@ -181,9 +181,24 @@ const EditMemoPage = () => {
   // Function to handle file upload
   const handleFileUpload = async (event) => {
     const fileToUpload = event.target.files[0];
+    
+    // File size validation (e.g., max 5MB)
+    const maxSize = 5 * 1024 * 1024;
+    if (fileToUpload.size > maxSize) {
+      setError("File size exceeds the 5MB limit");
+      return;
+    }
+    
+    // File type validation (e.g., only PDF and image files)
+    const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
+    if (!allowedTypes.includes(fileToUpload.type)) {
+      setError("Only PDF, JPEG, and PNG files are allowed");
+      return;
+    }
+  
     const formData = new FormData();
     formData.append("file", fileToUpload);
-
+  
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/upload/${params.memoId}`,
@@ -194,17 +209,19 @@ const EditMemoPage = () => {
           },
         }
       );
+      console.log(response.data); // Check the response structure here
       setDataAllMemo((prevState) => ({
         ...prevState,
-        memo_upload: response.data.fileName, // Update state with uploaded file name
+        memo_upload: response.data.fileName, // Ensure this key exists
       }));
-      setFile(fileToUpload); // Update file state to track if a new file is uploaded
-      console.log(`File updated: ${response.data.fileName}`); // Console log the updated file name
+      setFile(fileToUpload);
+      console.log(`File updated: ${response.data.fileName}`);
     } catch (error) {
       console.error("Error uploading file: ", error);
       setError("Failed to upload file");
     }
   };
+  
 
   // Helper function to check if a string is Base64 encoded
   const isBase64 = (str) => {
@@ -219,24 +236,48 @@ const EditMemoPage = () => {
   const handleFileDownload = async () => {
     const { memo_upload } = dataAllMemo;
     try {
+      if (!memo_upload) {
+        throw new Error("No file available for download.");
+      }
+  
       const decodedFileName = decodeBase64(memo_upload);
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/download/${decodedFileName}`,
         {
-          responseType: "blob", // Important to specify blob response type
+          responseType: "blob",
         }
       );
+  
+      if (response.status !== 200) {
+        throw new Error(`Failed to download file. Server responded with status: ${response.status}`);
+      }
+  
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
       link.setAttribute("download", decodedFileName);
       document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
     } catch (error) {
+      let errorMessage = "Failed to download file";
+  
+      if (error.response) {
+        // Server responded with a status other than 2xx
+        errorMessage = `Server error: ${error.response.status} - ${error.response.statusText}`;
+      } else if (error.request) {
+        // Request was made but no response was received
+        errorMessage = "No response from server. Please check your network connection.";
+      } else if (error.message) {
+        // Other errors
+        errorMessage = error.message;
+      }
+  
       console.error("Error downloading file: ", error);
-      setError("Failed to download file");
+      setError(errorMessage);
     }
   };
+  
 
   // Decode base64 string if necessary
   const decodeBase64 = (encodedString) => {
@@ -265,49 +306,78 @@ const EditMemoPage = () => {
 
   // Function to handle form submission after edits
   const handleEditedData = async () => {
-
     // Define the required fields
-  const requiredFields = ["memo_num", "memo_perihal", "memo_category"];
-
-  // Validate required fields
-  const validationError = validateRequiredFields(dataAllMemo, requiredFields);
-  if (validationError) {
-    Swal.fire("Error", validationError, "error");
-    return;
-  }
-
-    if (window.confirm("Are you sure you want to save the changes?")) {
-      try {
-        if (!file) {
-          setDataAllMemo((prevState) => ({
-            ...prevState,
-            memo_upload: prevState.memo_upload, // Keep existing file name if no new file is uploaded
-          }));
-        }
-        const updatedData = {
-          ...dataAllMemo,
-          memo_upload: decodeBase64(dataAllMemo.memo_upload), // Decode base64 before sending if necessary
-        };
-
-        // Console log the data being posted
-        console.log("Data being posted:", updatedData);
-
-        const response = await axios.put(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
-          updatedData
-        );
-
-        console.log("Memo update response:", response.data);
-        console.log(`File updated: ${updatedData.memo_upload}`); // Console log the updated file name
-
-        Swal.fire("Success", "Memo updated successfully.", "success");
-        router.push("/main/logistic");
-      } catch (error) {
-        console.error("Error updating memo: ", error);
-        setError("Failed to update memo");
+    const requiredFields = ["memo_num", "memo_perihal", "memo_category"];
+  
+    // Validate required fields
+    const validationError = validateRequiredFields(dataAllMemo, requiredFields);
+    if (validationError) {
+      Swal.fire({
+        title: "Error",
+        text: validationError,
+        icon: "error",
+        confirmButtonText: "OK"
+      });
+      return;
+    }
+  
+    const confirmation = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to save the changes?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, save it!"
+    });
+  
+    if (!confirmation.isConfirmed) {
+      return;
+    }
+  
+    try {
+      if (!file) {
+        setDataAllMemo((prevState) => ({
+          ...prevState,
+          memo_upload: prevState.memo_upload, // Keep existing file name if no new file is uploaded
+        }));
       }
+  
+      const updatedData = {
+        ...dataAllMemo,
+        memo_upload: decodeBase64(dataAllMemo.memo_upload), // Decode base64 before sending if necessary
+      };
+  
+      console.log("Data being posted:", updatedData);
+  
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
+        updatedData
+      );
+  
+      console.log("Memo update response:", response.data);
+      console.log(`File updated: ${updatedData.memo_upload}`);
+  
+      await Swal.fire({
+        title: "Success",
+        text: "Memo updated successfully.",
+        icon: "success",
+        confirmButtonText: "OK"
+      });
+  
+      router.push("/main/logistic");
+    } catch (error) {
+      console.error("Error updating memo: ", error);
+  
+      Swal.fire({
+        title: "Error",
+        text: "Failed to update memo.",
+        icon: "error",
+        confirmButtonText: "OK"
+      });
     }
   };
+  
 
   if (loading) {
     return <PleaseWait />;

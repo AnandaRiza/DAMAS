@@ -197,7 +197,7 @@ const Sidebar = () => {
                                 </div>
 
                 <div className="collapse-content">
-                  {(IsLogisticOperator() || IsOperator()) && (
+                  {(IsLogisticOperator() || IsSupervisor()) && (
                     <div>
                       <Link href="/main/logistic/general/allproject">
                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -218,7 +218,7 @@ const Sidebar = () => {
                                         </div>
                                     </Link>
 
-                                    {IsLogisticOperator() && (
+                                    {IsLogisticOperator() || IsSupervisor() && (
                                         <div>
                                             <hr className="my-4 border-gray-300" />
 
