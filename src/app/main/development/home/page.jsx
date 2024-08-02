@@ -299,7 +299,7 @@ const ChartPie = () => {
                         )}
                     </div>
                 </div>
-                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 shadow-lg">
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
                     <div className="h-[50px] w-[770px] rounded-box">
                         <h1 className="font-bold p-4">
                             PROJECT BERDASARKAN JENIS APLIKASI
