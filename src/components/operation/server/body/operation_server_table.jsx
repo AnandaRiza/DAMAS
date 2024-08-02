@@ -1,5 +1,5 @@
 "use client";
-import { IsOperator, IsServerOperator } from "@/validation/validateGroupAkses";
+import { IsOperator, IsOperatorOps, IsServerOperator } from "@/validation/validateGroupAkses";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -211,7 +211,7 @@ const Page = ({ headers, data, action, link }) => {
                 {getDisplayName(item)}
               </th>
             ))}
-            {(IsOperator() || IsServerOperator()) && action && (
+            {(IsOperatorOps() || IsServerOperator()) && action && (
               <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                 Edit
               </th>
@@ -271,7 +271,7 @@ const Page = ({ headers, data, action, link }) => {
                     {header === "server_status" ? server_status : item[header]}
                   </td>
                 ))}
-                {(IsOperator() || IsServerOperator()) && action && (
+                {(IsOperatorOps() || IsServerOperator()) && action && (
                   <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                     <button
                       type="button"
