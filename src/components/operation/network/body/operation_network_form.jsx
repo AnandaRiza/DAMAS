@@ -505,7 +505,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.network_kickoff_start}
                     onChange={(e) =>
                       setFormData({
@@ -528,7 +528,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.network_kickoff_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -564,7 +564,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.network_mop_start}
                     onChange={(e) =>
                       setFormData({
@@ -587,7 +587,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.network_mop_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -623,7 +623,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.network_demomop_start}
                     onChange={(e) =>
                       setFormData({
@@ -646,7 +646,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.network_demomop_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -682,7 +682,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.network_implementasi_start}
                     onChange={(e) =>
                       setFormData({
@@ -705,7 +705,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.network_implementasi_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -798,7 +798,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.network_uat_start}
                     onChange={(e) =>
                       setFormData({
@@ -821,7 +821,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.network_uat_deadline}
                     onChange={(e) =>
                       setFormData({

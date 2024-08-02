@@ -324,7 +324,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_kickoff_start}
                     onChange={(e) =>
                       setFormData({
@@ -347,7 +347,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_kickoff_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -401,7 +401,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_peyiapanserver_start}
                     onChange={(e) =>
                       setFormData({
@@ -424,7 +424,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_peyiapanserver_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -478,7 +478,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_instalasiaplikasi_start}
                     onChange={(e) =>
                       setFormData({
@@ -501,7 +501,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_instalasiaplikasi_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -555,7 +555,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_instalcheckpoint_start}
                     onChange={(e) =>
                       setFormData({
@@ -578,7 +578,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_instalcheckpoint_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -632,7 +632,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_testingkoneksi_start}
                     onChange={(e) =>
                       setFormData({
@@ -655,7 +655,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_testingkoneksi_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -709,7 +709,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_serahterimaserver_start}
                     onChange={(e) =>
                       setFormData({
@@ -732,7 +732,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_serahterimaserver_deadline}
                     onChange={(e) =>
                       setFormData({
@@ -787,7 +787,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_implementasi_start}
                     onChange={(e) =>
                       setFormData({
@@ -810,7 +810,7 @@ const Page = () => {
                     type="date"
                     id="deadline"
                     name="deadline"
-                    // required
+                    required
                     value={formData.server_implementasi_deadline}
                     onChange={(e) =>
                       setFormData({
