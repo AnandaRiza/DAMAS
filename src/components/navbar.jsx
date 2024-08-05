@@ -6,7 +6,7 @@ import { useStateContext } from "@/context/ContextProvider";
 import Image from "next/image";
 import logo2 from "../assets/logo2.png"; // Correct relative path
 
-const Header = ({ title }) => {
+const Header = () => {
   const router = useRouter();
   const { user } = useStateContext();
   const [isProfileShow, setIsProfileShow] = useState(false);

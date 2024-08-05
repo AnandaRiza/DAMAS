@@ -37,6 +37,8 @@ const BarChart = dynamic(
 const Page = () => {
   const [dataStatus, setDataStatus] = useState(null);
   const [dataJenisApp, setDataJenisApp] = useState(null);
+  const [dataNetworkTotal, setDataNetworkTotal] = useState(null);
+  const [dataServerTotal, setDataServerTotal] = useState(null);
   const [dataJenisProject, setDataJenisProject] = useState(null);
   const [dataPersentaseStatus, setDataPersentaseStatus] = useState(null);
   const [dataPersentaseJenisProject, setDataPersentaseJenisProject] =
@@ -160,6 +162,20 @@ const Page = () => {
         const fetchedData5 = response5.data;
         setDataPersentaseJenisProject(fetchedData5);
         console.log(setDataPersentaseJenisProject);
+
+        const response6 = await axios.get(
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_total`
+        );
+        const fetchedData6 = response6.data;
+        setDataNetworkTotal(fetchedData6);
+        console.log(response6);
+
+        const response7 = await axios.get(
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_total`
+        );
+        const fetchedData7 = response7.data;
+        setDataServerTotal(fetchedData7);
+        console.log(response7);
       } catch (error) {
         setError("Failed to fetch data");
         console.log(error);
@@ -280,6 +296,7 @@ const Page = () => {
                 <div className="badge p-3 m-1">
                   Finished ({dataPersentaseStatus.Finished}%)
                 </div>
+                <div className="badge p-3 m-1">Total : {dataNetworkTotal} Project</div>
               </div>
             )}
           </div>
@@ -328,6 +345,7 @@ const Page = () => {
                 <div className="badge p-3 m-1">
                   Finished ({dataPersentaseServerStatus.Finished}%)
                 </div>
+                <div className="badge p-3 m-1">Total : {dataServerTotal} Project</div>
               </div>
             )}
           </div>
