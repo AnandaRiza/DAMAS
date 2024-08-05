@@ -4,11 +4,6 @@ import Footer from "@/components/Footer";
 import HeaderLogin from "@/components/HeaderLogin";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-
-
-
-
 
 const Page = () => {
     const router = useRouter();
@@ -34,7 +29,6 @@ const Page = () => {
             if (currentUserInfo.data.data.status == 1) {
                 document.cookie = `DAMAS-USERID=${form.userid}; expires=; path=/`;
                 router.push("/main");
-                setIsLoading(false);
             } else {
                 await axios.post(
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/secure/login`,
@@ -42,10 +36,9 @@ const Page = () => {
                 );
                 document.cookie = `DAMAS-USERID=${form.userid}; expires=; path=/`;
                 router.push("/main");
-                setIsLoading(false);
             }
         } catch (error) {
-            if (error.response.data.errors === "userid already in use!") {
+            if (error.response?.data?.errors === "userid already in use!") {
                 await axios.post(
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/secure/logout?userid=${form.userid}`
                 );
@@ -56,15 +49,14 @@ const Page = () => {
                     );
                     document.cookie = `DAMAS-USERID=${form.userid}; expires=; path=/`;
                     router.push("/main");
-                    setIsLoading(false);
                 } catch (error) {
-                    setErrors(error.response.data.errors);
-                    setIsLoading(false);
+                    setErrors(error.response?.data?.errors);
                 }
             } else {
-                setErrors(error.response.data.errors);
-                setIsLoading(false);
+                setErrors(error.response?.data?.errors);
             }
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -82,11 +74,11 @@ const Page = () => {
                                 </div>
                             )}
                             <h1 className="font-roboto font-bold text-2xl flex justify-center">
-                           Login Page
+                                Login Page
                             </h1>
                             <div className="w-full h-[0.5px] bg-black mt-3"></div>
                             <label
-                                htmlFor="email"
+                                htmlFor="username"
                                 className="block text-sm font-semibold text-gray-800 mt-4"
                             >
                                 Username
@@ -125,36 +117,30 @@ const Page = () => {
                             />
                         </div>
 
-                        <Link href="/main">
-                            <div className="mt-2">
-                                <button
-                                    className="w-full px-4 py-2 text-white transition-colors duration-200 transform bg-[#0066AE] rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-                                    onClick={() => handleLogin()}
-                                >
-                                    {isLoading ? (
-                                        <div className="flex justify-center gap-3">
+                        <div className="mt-2">
+                            <button
+                                type="button"
+                                className="w-full px-4 py-2 text-white transition-colors duration-200 transform bg-[#0066AE] rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+                                onClick={handleLogin}
+                                disabled={isLoading}
+                            >
+                                {isLoading ? (
+                                    <div className="flex justify-center gap-3">
                                         <p>Please wait</p>
                                         <span className="loading loading-spinner"></span>
                                     </div>
-                                    ) : (
-                                        <span className="text-sm font-semibold">
-                                            Login
-                                        </span>
-                                    )}
-                                </button>
-                            </div>
-                        </Link>
-
-                        {/* <div className="w-full h-[0.5px] bg-black mt-3"></div>
-                        <div className="mb-2">
-                            <a className="text-xs text-blue-600 hover:underline flex justify-center mt-2">
-                                Forget Password?
-                            </a>
-                        </div> */}
+                                ) : (
+                                    <span className="text-sm font-semibold">
+                                        Login
+                                    </span>
+                                )}
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     );
 };
+
 export default Page;

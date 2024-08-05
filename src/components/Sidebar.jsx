@@ -63,36 +63,37 @@ const Sidebar = () => {
               >
                 <input type="checkbox" className="peer" />
 
-                {/* start button Dev */}
-                <div className="collapse-title text-xl font-bold flex items-center">
-                  <div className="mr-2">
-                    <FaProjectDiagram />
-                  </div>
-                  Project
-                </div>
-                <div className="collapse-content">
-                  {(IsOperatorDev() || IsSupervisor()) && (
-                    <div>
-                      <Link href="/main/development/home">
-                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                          <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                            Dashboard Project
-                          </button>
-                        </div>
-                      </Link>
-                      <hr className="my-4 border-gray-300" />
-                    </div>
-                  )}
-                  <Link href="/main/development">
-                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                      <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                        All Project
-                      </button>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            )}
+                                {/* start button Dev */}
+                                <div className="collapse-title text-xl font-bold flex items-center">
+                                    <div className="mr-2">
+                                        <FaProjectDiagram />
+                                    </div>
+                                    Project
+                                </div>
+                                <div className="collapse-content">
+                                    {(IsOperatorDev() ||
+                            IsSupervisor()) && (
+                                        <div>
+                                            <Link href="/main/development/home">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        Project Dashboard 
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            <hr className="my-4 border-gray-300" />
+                                        </div>
+                                    )}
+                                    <Link href="/main/development">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                All Project
+                                            </button>
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                        )}
 
             {/* End Button Dev */}
 
