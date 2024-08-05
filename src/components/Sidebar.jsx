@@ -56,7 +56,7 @@ const Sidebar = () => {
       <div className="collapse collapse-arrow ">
         <div>
           <div>
-            {(IsOperatorDev() || IsSupervisor()) && (
+            {(IsOperatorDev() || IsSupervisor() || IsOperatorOps) && (
               <div
                 tabIndex={0}
                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
@@ -72,7 +72,7 @@ const Sidebar = () => {
                                 </div>
                                 <div className="collapse-content">
                                     {(IsOperatorDev() ||
-                            IsSupervisor()) && (
+                            IsSupervisor() || IsOperatorOps) && (
                                         <div>
                                             <Link href="/main/development/home">
                                                 <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -150,7 +150,8 @@ const Sidebar = () => {
                     IsItmoOperator() ||
                     IsItsecurityOperator() ||
                     IsItsupportOperator() ||
-                    IsOperatorOps()) && (
+                    IsOperatorOps() ||
+                    IsSupervisor) && (
                     <div>
                       <Link href="/main/operation/general/myproject">
                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -275,7 +276,8 @@ const Sidebar = () => {
               IsPpoSupervisor() ||
               IsLogisticSupervisor() ||
               IsOperationSupervisor() ||
-              IsReviewerSupervisor()) && (
+              IsReviewerSupervisor() ||
+              IsOperatorOps()) && (
               <div
                 tabIndex={0}
                 className="collapse collapse-arrow border border-base-300 bg-base-200"
@@ -319,7 +321,7 @@ const Sidebar = () => {
                     </div>
                   )}
 
-                  {(IsSupervisor() || IsOperationSupervisor()) && (
+                  {(IsSupervisor() || IsOperationSupervisor() || IsOperatorOps) && (
                     <div>
                       <Link href="/main/status/approveoperation/general/approval">
                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
