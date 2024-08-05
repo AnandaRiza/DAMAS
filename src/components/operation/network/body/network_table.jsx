@@ -16,10 +16,7 @@ const page = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [startIndex, setStartIndex] = useState(0);
   const [perPage, setPerPage] = useState(10);
-  const [totalProjects, setTotalProjects] = useState(0);
-  const [ongoingProjects, setOngoingProjects] = useState(0);
-  const [completedProjects, setCompletedProjects] = useState(0);
-  const [data, setData] = useState({ totalProjects: 0, ongoingProjects: 0, completedProjects: 0 });
+
 
   useEffect(() => {
     getDataAllNetwork();

@@ -37,6 +37,7 @@ const ServerForm = ({ headers, data, action, link }) => {
     const displayNames = {
       server_id: "Server ID",
       server_perihal: "Nama Project",
+      server_no: "Project Number",
       server_pic: "PIC",
       departement: "Departement",
       server_kickoff_start: "Kick Off Start",
@@ -188,6 +189,7 @@ const ServerForm = ({ headers, data, action, link }) => {
                     "id",
                     "server_id",
                     "server_description",
+                    "server_no",
                     "server_category",
                     "server_category_others",
                     "server_kickoff_start",
@@ -260,6 +262,7 @@ const ServerForm = ({ headers, data, action, link }) => {
                         "id",
                         "server_id",
                         "server_description",
+                        "server_no",
                         "server_category",
                         "server_category_others",
                         "server_kickoff_start",

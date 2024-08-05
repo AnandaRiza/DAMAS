@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useStateContext } from "@/context/ContextProvider";
+import Swal from 'sweetalert2';
 
 
 const MemoForm = () => {
@@ -71,39 +72,41 @@ const MemoForm = () => {
 
   
   const handleSubmit = async () => {
-    if (!window.confirm("Are you sure you want to create this memo?")) {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you really want to create this memo?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, create it!'
+    });
+  
+    if (!result.isConfirmed) {
       return;
     }
-
-    
   
     const userid = document.cookie
       .split("; ")
       .find((row) => row.startsWith("DAMAS-USERID="))
       ?.split("=")[1];
-
+  
     try {
-      // const regex = /^\d{4}-\d{2}-\d{2}$/;
-      // if (!regex.test(formData.memo_deadline)) {
-      //   setError("Date must be in the format YYYY-MM-DD");
-      //   return;
-      // }
-
       const formDataToSend = {
         ...formData,
         memo_createdBy: userid,
         userdomain: user.userdomain,
-        // memo_deadline: deadlinecoy(scheduleInput),
         memo_category: formData.memo_category,
         memo_surat_type: formData.memo_surat_type,
         memo_masuk: formData.memo_masuk,
         memo_keluar: formData.memo_keluar,
         memo_terima: formData.memo_terima,
         memo_doc_type: formData.memo_doc_type,
+        memo_status: formData.memo_status, 
       };
-
+  
       console.log("Data to be posted:", formDataToSend);
-
+  
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo`,
         formDataToSend,
@@ -114,35 +117,16 @@ const MemoForm = () => {
           },
         }
       );
-//       await axios.post(
-//         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/schedulesend-email`,
-//         {
-//             ...dataEmail,
-//             text: `Assalamualaikum Warahmatullahi Wabarakatuh,
-    
-//             Yth. Bapak/Ibu,
-            
-//             Bersama ini kami memberitahukan bahwa deadline memo tinggal 1 hari lagi dengan detail project:
-            
-//             Nomer Memo  : ${formData.memo_num}
-//             Perihal Memo: ${formData.memo_perihal}
-//             PIC         : ${formData.memo_pic}
-//             Departement : ${formData.memo_department}
-//             Deadline    : ${deadlinecoy(scheduleInput)}
-//             Website     : http://localhost:3000/main
-            
-//             Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan memo selesai tepat waktu. Terima Kasih.
-            
-// Wassalamualaikum Warahmatullahi Wabarakatuh`,
-//             to: "ananda_riza@bcasyariah.co.id",
-//             deadline: calculateDeadline(scheduleInput),
-//             deadlinepro: calculateDeadline(scheduleInput),
-//         }
-//     );
-
+  
       console.log("Memo creation response:", response.data);
-
-      alert("Create Memo Success");
+  
+      await Swal.fire({
+        title: 'Success!',
+        text: 'Memo has been created successfully!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+  
       router.push("/main/logistic");
     } catch (error) {
       console.error("Error response:", error.response);
@@ -153,9 +137,16 @@ const MemoForm = () => {
       } else {
         console.log("Error message:", error.message);
       }
-      alert("Create Memo Failed!");
+  
+      await Swal.fire({
+        title: 'Error!',
+        text: 'Failed to create memo!',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   };
+  
 
   const calculateDeadline = (date) => {
     const d = new Date(date);
@@ -614,22 +605,23 @@ const getMinDateTime = () => {
               Status
             </label>
             <select
-              id="memo_status"
-              className="input input-bordered mt-1"
-              value={formData.memo_status}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  memo_status: e.target.value,
-                })
-              }
-              name="memo_status"
-            >
-              <option value="MEMO DRAFT">MEMO DRAFT</option>
-              <option value="MEMO ON HOLD">MEMO ON HOLD</option>
-              <option value="MEMO FINISHED">MEMO FINISHED</option>
-              <option value="MEMO CANCELED">MEMO CANCELED</option>
-            </select>
+  id="memo_status"
+  className="input input-bordered mt-1"
+  value={formData.memo_status}
+  onChange={(e) =>
+    setFormData({
+      ...formData,
+      memo_status: e.target.value,
+    })
+  }
+  name="memo_status"
+  defaultValue="MEMO DRAFT"
+>
+  <option value="MEMO DRAFT">MEMO DRAFT</option>
+  <option value="MEMO ON HOLD">MEMO ON HOLD</option>
+  <option value="MEMO FINISHED">MEMO FINISHED</option>
+  <option value="MEMO CANCELED">MEMO CANCELED</option>
+</select>
           </div>
 
           {/* <div className="flex flex-col">

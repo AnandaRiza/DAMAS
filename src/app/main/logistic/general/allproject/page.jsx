@@ -6,8 +6,8 @@ import Body from '@/components/logistic_components/general/logistic_body_allproj
 const page = () => {
     return (
         <>
-        <Header />
-        <Body />
+        <Header/>
+        <Body/>
         </>
     );
   };

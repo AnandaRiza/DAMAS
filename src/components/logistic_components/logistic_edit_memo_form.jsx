@@ -9,7 +9,8 @@ import { useRouter } from "next/navigation";
 import { FaPenNib } from "react-icons/fa";
 import { useStateContext } from "@/context/ContextProvider";
 import LogisticSignature from "@/components/logistic_components/logistic_signature";
-import MemoApprovalForm from "@/components/logistic_components/approval_components/memo_approval"; // Make sure this is the correct import path
+import MemoApprovalForm from "@/components/logistic_components/approval_components/memo_approval"; 
+import Swal from 'sweetalert2';
 
 const EditMemoPage = () => {
   const [dataAllMemo, setDataAllMemo] = useState({
@@ -58,6 +59,14 @@ const EditMemoPage = () => {
       console.log(error);
     }
   };
+
+  const fieldDisplayNames = {
+    memo_num: "Nomor Memo",
+    memo_perihal: "Perihal Memo",
+    memo_category: "Kategori Memo",
+    // Add other fields as needed
+  };
+
 
   useEffect(() => {
     const getCurrentData = async () => {
@@ -172,9 +181,26 @@ const EditMemoPage = () => {
   // Function to handle file upload
   const handleFileUpload = async (event) => {
     const fileToUpload = event.target.files[0];
+    
+    
+    // File size validation (e.g., max 5MB)
+    const maxSize = 5 * 1024 * 1024;
+    if (fileToUpload.size > maxSize) {
+      setError("File size exceeds the 5MB limit");
+      return;
+    }
+    
+    // File type validation (e.g., only PDF and image files)
+    const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
+    if (!allowedTypes.includes(fileToUpload.type)) {
+      setError("Only PDF, JPEG, and PNG files are allowed");
+      return;
+    }
+  
     const formData = new FormData();
     formData.append("file", fileToUpload);
-
+  
+  
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/upload/${params.memoId}`,
@@ -185,17 +211,19 @@ const EditMemoPage = () => {
           },
         }
       );
+      console.log(response.data); // Check the response structure here
       setDataAllMemo((prevState) => ({
         ...prevState,
-        memo_upload: response.data.fileName, // Update state with uploaded file name
+        memo_upload: response.data.fileName, // Ensure this key exists
       }));
-      setFile(fileToUpload); // Update file state to track if a new file is uploaded
-      console.log(`File updated: ${response.data.fileName}`); // Console log the updated file name
+      setFile(fileToUpload);
+      console.log(`File updated: ${response.data.fileName}`);
     } catch (error) {
       console.error("Error uploading file: ", error);
       setError("Failed to upload file");
     }
   };
+  
 
   // Helper function to check if a string is Base64 encoded
   const isBase64 = (str) => {
@@ -206,28 +234,77 @@ const EditMemoPage = () => {
     }
   };
 
+  const handleFileDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setDataAllMemo((prevState) => ({
+          ...prevState,
+          memo_upload: "",
+        }));
+        setFile(null);
+        Swal.fire(
+          "Deleted!",
+          "Your file has been deleted.",
+          "success"
+        );
+      }
+    });
+  };
+
   // Function to handle file download
   const handleFileDownload = async () => {
     const { memo_upload } = dataAllMemo;
     try {
+      if (!memo_upload) {
+        throw new Error("No file available for download.");
+      }
+  
       const decodedFileName = decodeBase64(memo_upload);
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/logisticmemo/download/${decodedFileName}`,
         {
-          responseType: "blob", // Important to specify blob response type
+          responseType: "blob",
         }
       );
+  
+      if (response.status !== 200) {
+        throw new Error(`Failed to download file. Server responded with status: ${response.status}`);
+      }
+  
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
       link.setAttribute("download", decodedFileName);
       document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
     } catch (error) {
+      let errorMessage = "Failed to download file";
+  
+      if (error.response) {
+        // Server responded with a status other than 2xx
+        errorMessage = `Server error: ${error.response.status} - ${error.response.statusText}`;
+      } else if (error.request) {
+        // Request was made but no response was received
+        errorMessage = "No response from server. Please check your network connection.";
+      } else if (error.message) {
+        // Other errors
+        errorMessage = error.message;
+      }
+  
       console.error("Error downloading file: ", error);
-      setError("Failed to download file");
+      setError(errorMessage);
     }
   };
+  
 
   // Decode base64 string if necessary
   const decodeBase64 = (encodedString) => {
@@ -239,44 +316,95 @@ const EditMemoPage = () => {
     }
   };
 
+  // Function to check required fields
+  const validateRequiredFields = (data, requiredFields) => {
+    for (const field of requiredFields) {
+      if (!data[field] || data[field].trim() === "") {
+        return `The field ${fieldDisplayNames[field] || field} is required.`;
+      }
+    }
+    return null;
+  };
+  
+
   useEffect(() => {
     console.log("Updated dataAllMemo:", dataAllMemo);
   }, [dataAllMemo]);
 
   // Function to handle form submission after edits
   const handleEditedData = async () => {
-    if (window.confirm("Are you sure you want to save the changes?")) {
-      try {
-        if (!file) {
-          setDataAllMemo((prevState) => ({
-            ...prevState,
-            memo_upload: prevState.memo_upload, // Keep existing file name if no new file is uploaded
-          }));
-        }
-        const updatedData = {
-          ...dataAllMemo,
-          memo_upload: decodeBase64(dataAllMemo.memo_upload), // Decode base64 before sending if necessary
-        };
-
-        // Console log the data being posted
-        console.log("Data being posted:", updatedData);
-
-        const response = await axios.put(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
-          updatedData
-        );
-
-        console.log("Memo update response:", response.data);
-        console.log(`File updated: ${updatedData.memo_upload}`); // Console log the updated file name
-
-        alert("Memo Update Success");
-        router.push("/main/logistic/mymemo");
-      } catch (error) {
-        console.error("Error updating memo: ", error);
-        setError("Failed to update memo");
+    // Define the required fields
+    const requiredFields = ["memo_num", "memo_perihal", "memo_category"];
+  
+    // Validate required fields
+    const validationError = validateRequiredFields(dataAllMemo, requiredFields);
+    if (validationError) {
+      Swal.fire({
+        title: "Error",
+        text: validationError,
+        icon: "error",
+        confirmButtonText: "OK"
+      });
+      return;
+    }
+  
+    const confirmation = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to save the changes?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, save it!"
+    });
+  
+    if (!confirmation.isConfirmed) {
+      return;
+    }
+  
+    try {
+      if (!file) {
+        setDataAllMemo((prevState) => ({
+          ...prevState,
+          memo_upload: prevState.memo_upload, // Keep existing file name if no new file is uploaded
+        }));
       }
+  
+      const updatedData = {
+        ...dataAllMemo,
+        memo_upload: decodeBase64(dataAllMemo.memo_upload), // Decode base64 before sending if necessary
+      };
+  
+      console.log("Data being posted:", updatedData);
+  
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/editmemo?memoId=${params.memoId}`,
+        updatedData
+      );
+  
+      console.log("Memo update response:", response.data);
+      console.log(`File updated: ${updatedData.memo_upload}`);
+  
+      await Swal.fire({
+        title: "Success",
+        text: "Memo updated successfully.",
+        icon: "success",
+        confirmButtonText: "OK"
+      });
+  
+      router.push("/main/logistic");
+    } catch (error) {
+      console.error("Error updating memo: ", error);
+  
+      Swal.fire({
+        title: "Error",
+        text: "Failed to update memo.",
+        icon: "error",
+        confirmButtonText: "OK"
+      });
     }
   };
+  
 
   if (loading) {
     return <PleaseWait />;
@@ -287,8 +415,8 @@ const EditMemoPage = () => {
   return (
     <>
       <form className="space-y-4">
-        <Link href="/main/logistic/mymemo">
-          <button className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 flex gap-1 items-center">
+      <Link href={`/main/logistic/mymemo/detailmemo/${dataAllMemo.memo_id}`}>
+      <button className="py-2 px-4 rounded-xl bg-red-500 hover:bg-red-800 flex gap-1 items-center">
             <IoMdArrowRoundBack />
             <span>Back</span>
           </button>
@@ -688,32 +816,38 @@ const EditMemoPage = () => {
         )}
         {/* File Upload Field */}
         <div className="flex flex-col">
-          <label
-            htmlFor="memo_upload"
-            className="text-sm font-semibold text-gray-600"
-          >
-            Upload File <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="file"
-            id="memo_upload"
-            className="file-input file-input-bordered mt-1"
-            onChange={handleFileUpload}
-            name="memo_upload"
-            // disabled={isReadOnly}
-          />
-          {dataAllMemo.memo_upload && (
-            <div>
-              <button
-                type="button"
-                className="btn btn-sm btn-link text-blue-600 underline"
-                onClick={handleFileDownload}
-              >
-                Download Current File
-              </button>
-            </div>
-          )}
-        </div>
+  <label
+    htmlFor="memo_upload"
+    className="text-sm font-semibold text-gray-600"
+  >
+    Upload File 
+  </label>
+  <input
+    type="file"
+    id="memo_upload"
+    className="file-input file-input-bordered file-input-success mt-1"
+    onChange={handleFileUpload}
+    name="memo_upload"
+  />
+  {dataAllMemo.memo_upload && (
+    <div className="mt-2 flex items-center">
+      <button
+        type="button"
+        className="btn btn-sm btn-link text-blue-600 underline mr-2"
+        onClick={handleFileDownload}
+      >
+        Download: {decodeBase64(dataAllMemo.memo_upload)}
+      </button>
+      <button
+        type="button"
+        className="btn btn-sm btn-link text-red-600 underline"
+        onClick={handleFileDelete}
+      >
+        Delete File
+      </button>
+    </div>
+  )}
+</div>
         {/* Download Link */}
         {/* Error Handling */}
         {error && <p className="text-red-500">{error}</p>}

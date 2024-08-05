@@ -8,6 +8,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
   const router = useRouter();
 
+  // Filter the data to only include memos with category "MEMO KELUAR" or "Memo Keluar"
   const filteredData = useMemo(() => {
     return data.filter(
       (item) =>
@@ -15,6 +16,7 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     );
   }, [data]);
 
+  // Sort the filtered data based on the sort configuration
   const sortedData = useMemo(() => {
     let sortableItems = [...filteredData];
     if (sortConfig.key !== null) {
@@ -114,10 +116,11 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
       memo_doc_type: "TIPE DOKUMEN",
       memo_keluar: "TANGGAL MEMO KELUAR",
       memo_terima: "TANGGAL TERIMA MEMO", 
-      memo_category: "KATEGORI MEMO"// Add this if you've included memo_terima
+      memo_category: "KATEGORI MEMO"
     };
     return displayNames[header] || header;
   };
+
 
   const columnsToShow = [
     "memo_num",
@@ -127,16 +130,17 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
     "memo_surat_type",
     "memo_doc_type",
     "memo_masuk",
-    
     "memo_keluar",
     "memo_terima", // Add this if you want to show the receive date
+    "memo_category",
   ];
+
 
   const getStatusColor = (status) => {
     switch (status) {
       case "MEMO FINISHED":
         return "bg-green-100";
-      case "MEMO CANCELLED":
+      case "MEMO CANCELED":
         return "bg-red-100";
       case "MEMO DRAFT":
         return "bg-blue-100";
@@ -175,11 +179,6 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                   </div>
                 </th>
               ))}
-              {/* {action && (
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Edit
-                </th>
-              )} */}
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -218,19 +217,6 @@ const MyMemoTable = ({ headers, data, action, link, onSort, sortConfig }) => {
                     </td>
                   );
                 })}
-                {/* {action && (
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <button
-                      type="button"
-                      className="text-black-400 flex items-center justify-center"
-                      onClick={() =>
-                        router.push(`${link}mymemo/editmemo/${item.memo_id}`)
-                      }
-                    >
-                      <AiOutlineEdit size={20} />
-                    </button>
-                  </td>
-                )} */}
               </tr>
             ))}
           </tbody>
