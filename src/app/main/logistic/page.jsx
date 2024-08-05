@@ -6,6 +6,9 @@ import PleaseWait from "@/components/PleaseWait";
 import HeaderLogistic from "@/components/logistic_components/header/HeaderLogistic";
 import LogisticTable from "@/components/logistic_components/table/logistic_table_allmemo";
 import axios from "axios";
+import Header from '@/components/logistic_components/general/logistic_header_allproject';
+import Body from '@/components/logistic_components/general/logistic_body_allproject';
+
 
 const getDisplayName = (header) => {
   const displayNames = {
@@ -195,6 +198,8 @@ const Page = () => {
             Open Filters
           </button>
         </div>
+
+        
 
         <FilterModal
           isOpen={isFilterModalOpen}

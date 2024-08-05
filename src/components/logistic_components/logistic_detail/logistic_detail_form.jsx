@@ -731,8 +731,7 @@ const DetailMemoPage = () => {
                 className="btn btn-sm btn-link text-blue-600 underline"
                 onClick={handleFileDownload}
               >
-                Download Current File
-              </button>
+Download: {decodeBase64(dataAllMemo.memo_upload)}              </button>
             </div>
           )}
         </div>

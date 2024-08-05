@@ -182,6 +182,7 @@ const EditMemoPage = () => {
   const handleFileUpload = async (event) => {
     const fileToUpload = event.target.files[0];
     
+    
     // File size validation (e.g., max 5MB)
     const maxSize = 5 * 1024 * 1024;
     if (fileToUpload.size > maxSize) {
@@ -198,6 +199,7 @@ const EditMemoPage = () => {
   
     const formData = new FormData();
     formData.append("file", fileToUpload);
+  
   
     try {
       const response = await axios.post(
@@ -230,6 +232,31 @@ const EditMemoPage = () => {
     } catch (err) {
       return false;
     }
+  };
+
+  const handleFileDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setDataAllMemo((prevState) => ({
+          ...prevState,
+          memo_upload: "",
+        }));
+        setFile(null);
+        Swal.fire(
+          "Deleted!",
+          "Your file has been deleted.",
+          "success"
+        );
+      }
+    });
   };
 
   // Function to handle file download
@@ -789,32 +816,38 @@ const EditMemoPage = () => {
         )}
         {/* File Upload Field */}
         <div className="flex flex-col">
-          <label
-            htmlFor="memo_upload"
-            className="text-sm font-semibold text-gray-600"
-          >
-            Upload File 
-          </label>
-          <input
-            type="file"
-            id="memo_upload"
-            className="file-input file-input-bordered  file-input-success mt-1"
-            onChange={handleFileUpload}
-            name="memo_upload"
-            // disabled={isReadOnly}
-          />
-          {dataAllMemo.memo_upload && (
-            <div>
-              <button
-                type="button"
-                className="btn btn-sm btn-link text-blue-600 underline"
-                onClick={handleFileDownload}
-              >
-                Download Current File
-              </button>
-            </div>
-          )}
-        </div>
+  <label
+    htmlFor="memo_upload"
+    className="text-sm font-semibold text-gray-600"
+  >
+    Upload File 
+  </label>
+  <input
+    type="file"
+    id="memo_upload"
+    className="file-input file-input-bordered file-input-success mt-1"
+    onChange={handleFileUpload}
+    name="memo_upload"
+  />
+  {dataAllMemo.memo_upload && (
+    <div className="mt-2 flex items-center">
+      <button
+        type="button"
+        className="btn btn-sm btn-link text-blue-600 underline mr-2"
+        onClick={handleFileDownload}
+      >
+        Download: {decodeBase64(dataAllMemo.memo_upload)}
+      </button>
+      <button
+        type="button"
+        className="btn btn-sm btn-link text-red-600 underline"
+        onClick={handleFileDelete}
+      >
+        Delete File
+      </button>
+    </div>
+  )}
+</div>
         {/* Download Link */}
         {/* Error Handling */}
         {error && <p className="text-red-500">{error}</p>}
