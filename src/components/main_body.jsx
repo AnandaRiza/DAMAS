@@ -37,9 +37,11 @@ const BarChart = dynamic(
 const ChartPie = () => {
     const [dataStatus, setDataStatus] = useState(null);
     const [dataJenisApp, setDataJenisApp] = useState(null);
+    const [dataTotal, setDataTotal] = useState(null);
     const [dataJenisProject, setDataJenisProject] = useState(null);
     const [dataPersentaseStatus, setDataPersentaseStatus] = useState(null);
-    const [dataPersentaseJenisProject, setDataPersentaseJenisProject] = useState(null);
+    const [dataPersentaseJenisProject, setDataPersentaseJenisProject] =
+        useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -51,6 +53,7 @@ const ChartPie = () => {
             setDataPersentaseStatus(null);
             setDataJenisProject(null);
             setDataPersentaseJenisProject(null);
+            setDataTotal(null);
             try {
                 const response = await axios.get(
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
@@ -73,11 +76,10 @@ const ChartPie = () => {
                                 "#D9425D",
                                 "#FAC78A",
                             ],
-                            
                         },
                     ],
                 });
-                
+
                 const response2 = await axios.get(
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/persentase`
                 );
@@ -114,7 +116,6 @@ const ChartPie = () => {
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jenisproject`
                 );
                 const fetchedData4 = response4.data;
-                console.log(response4);
                 const labels4 = Object.keys(fetchedData4);
                 const dataValues4 = Object.values(fetchedData4);
 
@@ -127,10 +128,9 @@ const ChartPie = () => {
                             backgroundColor: [
                                 "#A9E399",
                                 "#5989BE",
-                                "#D9425D",
+                                "#6CAC46",
                                 "#FAC78A",
                             ],
-                           
                         },
                     ],
                 });
@@ -140,7 +140,13 @@ const ChartPie = () => {
                 );
                 const fetchedData5 = response5.data;
                 setDataPersentaseJenisProject(fetchedData5);
-                console.log(setDataPersentaseJenisProject)
+
+                const response6 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/total`
+                );
+                const fetchedData6 = response6.data;
+                setDataTotal(fetchedData6);
+                console.log(response6);
             } catch (error) {
                 setError("Failed to fetch data");
                 console.log(error);
@@ -176,12 +182,13 @@ const ChartPie = () => {
                 },
                 ticks: {
                     autoSkip: false,
-                    maxRotation: 20,
-                    minRotation: 20,
+                    maxRotation: 0,
+                    minRotation: 0,
                     font: {
-                        size: 12,
+                        size: 9,
                     },
-                    padding: 10,
+                    padding: 0,
+                    
                 },
                 title: {
                     display: true,
@@ -238,78 +245,97 @@ const ChartPie = () => {
     };
 
     const pieOptions = {
-      plugins: {
-          legend: {
-              position: 'top', // Position the legend at the bottom
-              labels: {
-                  boxWidth: 20, // Width of the color box in the legend
-                  padding: 10, // Padding between legend items
-                  font: {
-                      size: 12, // Font size of the legend labels
-                      family: 'Arial', // Font family
-                  },
-                  color: '#333', // Color of the legend text
-                  // Set maxWidth to prevent long labels from wrapping
-                  maxWidth: 150, // Adjust based on your layout
-              },
-          },
-          tooltip: {
-              callbacks: {
-                  label: function (context) {
-                      return context.label + ': ' + context.raw;
-                  },
-              },
-          },
-      },
-      responsive: true, // Ensure the chart is responsive
-      maintainAspectRatio: false, // Allow the chart to resize freely
-  };
-  
+        plugins: {
+            legend: {
+                position: "top", 
+                labels: {
+                    boxWidth: 20, 
+                    padding: 10,
+                    font: {
+                        size: 12, 
+                        family: "Arial", 
+                    },
+                    color: "#333", 
+                  
+                    maxWidth: 150,
+                },
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        return context.label + ": " + context.raw;
+                    },
+                },
+            },
+        },
+        responsive: true, // Ensure the chart is responsive
+        maintainAspectRatio: false, // Allow the chart to resize freely
+    };
 
     return (
-        <div className="flex-grow justify-center items-center min-h-screen rounded-xl mt-1">
+        <div className="flex-grow justify-center items-center min-h-screen rounded-xl">
             <div className="flex w-grow">
-                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 mr-2 shadow-lg">
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
                     <div className=" w-[770px] rounded-box ">
                         <h1 className="font-bold p-4 items-center justify-center">
-                            PROJECT 
+                            PROJECT
                         </h1>
-                        <div className="flex items-center justify-center w-full my-4 ">
+                        <div className="flex items-center justify-center w-full my-4">
                             {dataStatus ? (
-                                <div style={{ width: '500px', height: '250px', overflowX: 'auto' }}>
-                                    <PieChart data={dataStatus} options={pieOptions}/>
+                                <div
+                                    style={{
+                                        width: "500px",
+                                        height: "250px",
+                                        overflowX: "auto",
+                                    }}
+                                >
+                                    <PieChart
+                                        data={dataStatus}
+                                        options={pieOptions}
+                                    />
                                 </div>
                             ) : (
                                 <p>No data available</p>
                             )}
                         </div>
-                        {dataPersentaseStatus && (
-                            <div className="flex flex-col p-3 m-1 font-bold text-xs">
-                                <div className="badge p-3 m-1">
-                                    Active ({dataPersentaseStatus.Active}%)
+                        <div className="w-full flex justify-between items-end pr-4">
+                            {dataPersentaseStatus && (
+                                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                                    <div className="P-3 m-1">
+                                        Active ({dataPersentaseStatus.Active}%)
+                                    </div>
+                                    <div className="P-3 m-1">
+                                        Closed ({dataPersentaseStatus.Closed}%)
+                                    </div>
+                                    <div className="P-3 m-1">
+                                        Cancelled (
+                                        {dataPersentaseStatus.Cancelled}
+                                        %)
+                                    </div>
+                                    <div className="P-3 m-1">
+                                        Initial ({dataPersentaseStatus.Initial}
+                                        %)
+                                    </div>
                                 </div>
-                                <div className="badge p-3 m-1">
-                                    Closed ({dataPersentaseStatus.Closed}%)
+                            )}
+                            {dataTotal && (
+                                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                                    <div className="P-3 m-1">
+                                        Total : {dataTotal} Project
+                                    </div>
                                 </div>
-                                <div className="badge p-3 m-1">
-                                    Cancelled ({dataPersentaseStatus.Cancelled}
-                                    %)
-                                </div>
-                                <div className="badge p-3 m-1">
-                                    Initial ({dataPersentaseStatus.Initial}%)
-                                </div>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </div>
                 </div>
-                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 shadow-lg">
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
                     <div className="h-[50px] w-[770px] rounded-box">
                         <h1 className="font-bold p-4">
-                           OPERATION
+                            OPERATION
                         </h1>
                         <div className="flex items-center justify-center w-full my-4">
                             {dataJenisApp ? (
-                                <div className="w-full h-[332px]">
+                                <div className="w-full h-[332px] pl-6">
                                     <BarChart
                                         data={dataJenisApp}
                                         options={barOptions}
@@ -323,31 +349,36 @@ const ChartPie = () => {
                 </div>
             </div>
             <div className="flex w-full mt-1 items-center justify-center">
-                <div
-                    className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm"
-                >
+                <div className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm">
                     <div className="w-[770px] rounded-box">
-                        <h1 className="font-bold p-4">LOGISTIC</h1>
+                        <h1 className="font-bold p-4">
+                            MEMO
+                        </h1>
                         <div className="flex items-center justify-center w-full my-4">
                             {dataStatus ? (
-                                <div style={{ width: '500px', height: '250px', overflowX: 'auto' }}>
-                                <PieChart data={dataJenisProject} options={pieOptions} />
-                            </div>
+                                <div
+                                    style={{
+                                        width: "500px",
+                                        height: "250px",
+                                        overflowX: "auto",
+                                    }}
+                                >
+                                    <PieChart
+                                        data={dataJenisProject}
+                                        options={pieOptions}
+                                    />
+                                </div>
                             ) : (
                                 <p>No data available</p>
                             )}
                         </div>
                         {dataPersentaseJenisProject && (
-                            <div className="flex flex-col p-3 m-1 font-bold text-xs">
-                                <div className="badge p-3 m-1">
+                            <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                                <div className="m-1">
                                     PMO ({dataPersentaseJenisProject.PMO}%)
                                 </div>
-                                <div className="badge p-3 m-1">
+                                <div className="m-1">
                                     Adhoc ({dataPersentaseJenisProject.Adhoc}%)
-                                </div>
-                                <div className="badge p-3 m-1">
-                                    Sebelum PMO ({dataPersentaseJenisProject["Sebelum PMO"]}
-                                    %)
                                 </div>
                             </div>
                         )}
