@@ -201,7 +201,8 @@ const Sidebar = () => {
             {(IsLogisticSupervisor() ||
               IsLogisticOperator() ||
               IsSupervisor() ||
-              IsReviewerSupervisor()) && (
+              IsReviewerSupervisor() ||
+              IsOperatorOps) && (
               <div
                 tabIndex={0}
                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
@@ -215,13 +216,26 @@ const Sidebar = () => {
                   Logistic
                 </div>
 
+  
+
                 <div className="collapse-content">
-                  {IsLogisticOperator() && (
+                <div>
+                <Link href="/main/logistic/home">
+                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                      <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                      Memo Dashboard
+                      </button>
+                    </div>
+                  </Link>
+                  <hr className="my-4 border-gray-300" />
+                </div>
+
+                  {(IsLogisticOperator() || IsSupervisor()) && (
                     <div>
-                      <Link href="/main/logistic/mymemo">
+                      <Link href="/main/logistic/general/allproject">
                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                           <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                            My Memo
+                            Sorted Memo
                           </button>
                         </div>
                       </Link>
@@ -237,19 +251,20 @@ const Sidebar = () => {
                     </div>
                   </Link>
 
-                  {IsLogisticOperator() && (
-                    <div>
-                      <hr className="my-4 border-gray-300" />
+                  {IsLogisticOperator() ||
+                    (IsSupervisor() && (
+                      <div>
+                        <hr className="my-4 border-gray-300" />
 
-                      <Link href="/main/logistic/createnewmemo">
-                        <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                          <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                            Create New Memo
-                          </button>
-                        </div>
-                      </Link>
-                    </div>
-                  )}
+                        <Link href="/main/logistic/createnewmemo">
+                          <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                              Create New Memo
+                            </button>
+                          </div>
+                        </Link>
+                      </div>
+                    ))}
                 </div>
               </div>
             )}
