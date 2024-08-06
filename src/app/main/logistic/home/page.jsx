@@ -189,6 +189,7 @@ const LogisticMemoDashboard = () => {
                 },
             },
         },
+        
     };
 
     const pieOptions = {
@@ -222,7 +223,6 @@ const LogisticMemoDashboard = () => {
 
     const barOptions = {
         responsive: true,
-        ...chartOptions,
 
         plugins: {
             legend: {
@@ -237,10 +237,35 @@ const LogisticMemoDashboard = () => {
             },
         },
         scales: {
-            y: {
+            x: {
                 beginAtZero: true,
                 grid: {
                     display: false,
+                },
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 0,
+                    minRotation: 0,
+                    font: {
+                        size: 9,
+                    },
+                    padding: 0,
+                    
+                },
+                title: {
+                    display: true,
+                    text: "Document Type",
+                    color: "#333",
+                    font: {
+                        size: 14,
+                        weight: "bold",
+                    },
+                },
+            },
+            y: {
+                beginAtZero: true,
+                grid: {
+                    display: true,
                 },
                 ticks: {
                     stepSize: 1,
@@ -309,7 +334,9 @@ const LogisticMemoDashboard = () => {
                 <h1 className="font-bold text-lg mb-4">Memos by Document Type</h1>
                 <div className="h-64">
                     {dataDocType ? (
+                         <div className="w-full h-[300px] pl-12">
                         <BarChart data={dataDocType} options={barOptions} />
+                        </div>
                     ) : (
                         <p>No data available</p>
                     )}
