@@ -8,6 +8,7 @@ import {
   IsLogisticOperator,
   IsNetworkOperator,
   IsOperator,
+  IsOperatorOps,
   IsPpoOperator,
   IsServerOperator,
   IsSkseOperator,
@@ -225,7 +226,7 @@ const rowClass = (inputDate, network_status) => {
                 {getDisplayName(item)}
               </th>
             ))}
-            {(IsOperator() ||
+            {(IsOperatorOps() ||
               IsDevOperator() ||
               IsPpoOperator() ||
               IsSkseOperator() ||
@@ -290,7 +291,7 @@ const rowClass = (inputDate, network_status) => {
                     {header === "network_status" ? network_status : item[header]}
                   </td>
                 ))}
-                {(IsOperator() ||
+                {(IsOperatorOps() ||
                   IsDevOperator() ||
                   IsPpoOperator() ||
                   IsSkseOperator() ||

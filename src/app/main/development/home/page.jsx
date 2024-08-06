@@ -298,7 +298,6 @@ const ChartPie = () => {
                                 <p>No data available</p>
                             )}
                         </div>
-                        <div className="w-full flex justify-between items-end pr-4">
                             {dataPersentaseStatus && (
                                 <div className="flex flex-col p-3 m-1 font-bold text-sm">
                                     <div className="P-3 m-1">
@@ -325,7 +324,6 @@ const ChartPie = () => {
                                     </div>
                                 </div>
                             )}
-                        </div>
                     </div>
                 </div>
                 <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
