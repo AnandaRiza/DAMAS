@@ -20,6 +20,7 @@ const Page = () => {
   if (selectedOption === "Server") {
     componentToDisplay = <Server />;
   } else if (selectedOption === "Network") {
+    console.log(Network)
     componentToDisplay = <Network />;
   } else if (selectedOption === "Data Center") {
     componentToDisplay = <Dacen />;
