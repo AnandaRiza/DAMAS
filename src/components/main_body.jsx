@@ -38,6 +38,7 @@ const ChartPie = () => {
   const [dataStatus, setDataStatus] = useState(null);
   const [dataJumNetwork, setDataJumNetwork] = useState(null);
   const [dataJumServer, setDataJumServer] = useState(null);
+  const [dataJumProject, setDataJumProject] = useState(null);
   const [dataNetworkStatus, setDataNetworkStatus] = useState(null);
   const [dataServerStatus, setDataServerStatus] = useState(null);
   const [dataJenisApp, setDataJenisApp] = useState(null);
@@ -66,6 +67,7 @@ const ChartPie = () => {
       setDataTotal(null);
       setDataJumNetwork(null);
       setDataJumServer(null);
+      setDataJumProject(null);
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
@@ -92,6 +94,12 @@ const ChartPie = () => {
         );
         const fetchedData2 = response2.data;
         setDataPersentaseStatus(fetchedData2);
+
+        const responseJumProject = await axios.get(
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
+        );
+        const fetchedDataJumProject = responseJumProject.data;
+        setDataJumProject(fetchedDataJumProject);
 
         const response3 = await axios.get(
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jenisapp`
@@ -378,21 +386,19 @@ const ChartPie = () => {
               )}
             </div>
             <div className="w-full flex justify-between items-end pr-4">
-              {dataPersentaseStatus && (
+              {dataJumProject && (
                 <div className="flex flex-col p-3 m-1 font-bold text-sm">
                   <div className="P-3 m-1">
-                    Active ({dataPersentaseStatus.Active}%)
+                    Active = {dataJumProject.Active} Project
                   </div>
                   <div className="P-3 m-1">
-                    Closed ({dataPersentaseStatus.Closed}%)
+                    Closed = {dataJumProject.Closed} Project
                   </div>
                   <div className="P-3 m-1">
-                    Cancelled ({dataPersentaseStatus.Cancelled}
-                    %)
+                    Cancelled = {dataJumProject.Cancelled} Project
                   </div>
                   <div className="P-3 m-1">
-                    Initial ({dataPersentaseStatus.Initial}
-                    %)
+                    Initial = {dataJumProject.Initial} Project
                   </div>
                 </div>
               )}
