@@ -36,6 +36,8 @@ const BarChart = dynamic(
 
 const ChartPie = () => {
   const [dataStatus, setDataStatus] = useState(null);
+  const [dataJumNetwork, setDataJumNetwork] = useState(null);
+  const [dataJumServer, setDataJumServer] = useState(null);
   const [dataNetworkStatus, setDataNetworkStatus] = useState(null);
   const [dataServerStatus, setDataServerStatus] = useState(null);
   const [dataJenisApp, setDataJenisApp] = useState(null);
@@ -62,6 +64,8 @@ const ChartPie = () => {
       setDataJenisProject(null);
       setDataPersentaseJenisProject(null);
       setDataTotal(null);
+      setDataJumNetwork(null);
+      setDataJumServer(null);
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
@@ -175,47 +179,57 @@ const ChartPie = () => {
         setDataPersentaseNetworkStatus(fetchedDataNetwork2);
 
         const response_network3 = await axios.get(
-            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_total`
-          );
-          const fetchedDataNetwork3 = response_network3.data;
-          setDataNetworkTotal(fetchedDataNetwork3);
-          console.log(response_network3);
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_total`
+        );
+        const fetchedDataNetwork3 = response_network3.data;
+        setDataNetworkTotal(fetchedDataNetwork3);
+        console.log(response_network3);
+
+        const responseJumNetwork = await axios.get(
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata`
+        );
+        const fetchedDataJumNetwork = responseJumNetwork.data;
+        setDataJumNetwork(fetchedDataJumNetwork);
 
         //   OPS - SERVER
 
-         const response_server1 = await axios.get(
-            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_jumlahdata`
-          );
-          const fetchedDataServer = response_server1.data;
-          console.log(response);
-  
-          const labels_server = Object.keys(fetchedDataServer);
-          const dataValuesServer = Object.values(fetchedDataServer);
-  
-          setDataServerStatus({
-            labels: labels_server,
-            datasets: [
-              {
-                label: "Server",
-                data: dataValuesServer,
-                backgroundColor: ["#A9E399", "#5989BE", "#D9425D", "#FAC78A"],
-              },
-            ],
-          });
-  
-          const response_server2 = await axios.get(
-            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_persentase`
-          );
-          const fetchedDataServer2 = response_server2.data;
-          setDataPersentaseServerStatus(fetchedDataServer2);
-  
-          const response_server3 = await axios.get(
-              `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_total`
-            );
-            const fetchedDataServer3 = response_server3.data;
-            setDataServerTotal(fetchedDataServer3);
+        const response_server1 = await axios.get(
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_jumlahdata`
+        );
+        const fetchedDataServer = response_server1.data;
+        console.log(response);
 
+        const labels_server = Object.keys(fetchedDataServer);
+        const dataValuesServer = Object.values(fetchedDataServer);
 
+        setDataServerStatus({
+          labels: labels_server,
+          datasets: [
+            {
+              label: "Server",
+              data: dataValuesServer,
+              backgroundColor: ["#A9E399", "#5989BE", "#D9425D", "#FAC78A"],
+            },
+          ],
+        });
+
+        const response_server2 = await axios.get(
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_persentase`
+        );
+        const fetchedDataServer2 = response_server2.data;
+        setDataPersentaseServerStatus(fetchedDataServer2);
+
+        const response_server3 = await axios.get(
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_total`
+        );
+        const fetchedDataServer3 = response_server3.data;
+        setDataServerTotal(fetchedDataServer3);
+
+        const responseJumServer = await axios.get(
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_jumlahdata`
+        );
+        const fetchedDataJumServer = responseJumServer.data;
+        setDataJumServer(fetchedDataJumServer);
       } catch (error) {
         setError("Failed to fetch data");
         console.log(error);
@@ -427,20 +441,22 @@ const ChartPie = () => {
               )}
             </div>
             <div className="w-full flex justify-between items-end pr-4">
-              {dataPersentaseStatus && (
+              {dataJumNetwork && (
                 <div className="flex flex-col p-3 m-1 font-bold text-sm">
                   <div className="badge P-3 m-1">
-                    Ongoing ({dataPersentaseNetworkStatus.Ongoing}%)
+                    Ongoing = {dataJumNetwork.Ongoing} Project
                   </div>
                   <div className="badge P-3 m-1">
-                    Finished ({dataPersentaseNetworkStatus.Finished}%)
+                    Finished = {dataJumNetwork.Finished} Project
                   </div>
                   {/* <div className="badge p-3 m-1">Total : {dataNetworkTotal} Project</div> */}
                 </div>
               )}
               {dataNetworkTotal && (
                 <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                  <div className="P-3 m-1">Total : {dataNetworkTotal} Project</div>
+                  <div className="P-3 m-1">
+                    Total : {dataNetworkTotal} Project
+                  </div>
                 </div>
               )}
             </div>
@@ -467,20 +483,22 @@ const ChartPie = () => {
               )}
             </div>
             <div className="w-full flex justify-between items-end pr-4">
-              {dataPersentaseServerStatus && (
+              {dataJumServer && (
                 <div className="flex flex-col p-3 m-1 font-bold text-sm">
                   <div className="badge P-3 m-1">
-                    Ongoing ({dataPersentaseServerStatus.Ongoing}%)
+                    Ongoing = {dataJumServer.Ongoing} Project
                   </div>
                   <div className="badge P-3 m-1">
-                    Finished ({dataPersentaseServerStatus.Finished}%)
+                    Finished = {dataJumServer.Finished} Project
                   </div>
                   {/* <div className="badge p-3 m-1">Total : {dataServerTotal} Project</div> */}
                 </div>
               )}
               {dataServerTotal && (
                 <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                  <div className="P-3 m-1">Total : {dataServerTotal} Project</div>
+                  <div className="P-3 m-1">
+                    Total : {dataServerTotal} Project
+                  </div>
                 </div>
               )}
             </div>
