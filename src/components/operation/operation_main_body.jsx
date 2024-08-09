@@ -387,28 +387,28 @@ const Page = () => {
                 <hr />
                 <p>Ongoing : {dataStatusCategory.OthersOngoing}</p>
                 <p>Finished : {dataStatusCategory.OthersFinished}</p>
-                <p className="font-semibold">Total = {dataStatusCategory.OthersOngoing + dataStatusCategory.OthersOngoing }</p>
+                <p className="font-semibold">Total = {dataStatusCategory.OthersOngoing + dataStatusCategory.OthersFinished }</p>
               </div>
               <div className="bg-[#6CAC46] border rounded-xl p-2 mr-2">
                 <h2 className="font-bold">Jaringan DRC</h2>
                 <hr />
                 <p>Ongoing : {dataStatusCategory.JaringanDRCOngoing}</p>
                 <p>Finished : {dataStatusCategory.JaringanDRCFinished}</p>
-                <p className="font-semibold">Total = {dataStatusCategory.JaringanDRCOngoing + dataStatusCategory.JaringanDRCOngoing }</p>
+                <p className="font-semibold">Total = {dataStatusCategory.JaringanDRCOngoing + dataStatusCategory.JaringanDRCFinished }</p>
               </div>
               <div className="bg-[#DF9222] border rounded-xl p-2 mr-2">
                 <h2 className="font-bold">Cloud</h2>
                 <hr />
                 <p>Ongoing : {dataStatusCategory.CloudOngoing}</p>
                 <p>Finished : {dataStatusCategory.CloudFinished}</p>
-                <p className="font-semibold">Total = {dataStatusCategory.CloudOngoing + dataStatusCategory.CloudOngoing }</p>
+                <p className="font-semibold">Total = {dataStatusCategory.CloudOngoing + dataStatusCategory.CloudFinished }</p>
               </div>
               <div className="bg-[#5989BE] border rounded-xl p-2 mr-2">
                 <h2 className="font-bold">Jaringan Cabang</h2>
                 <hr />
                 <p>Ongoing : {dataStatusCategory.JaringanCabangOngoing}</p>
                 <p>Finished : {dataStatusCategory.JaringanCabangFinished}</p>
-                <p className="font-semibold">Total = {dataStatusCategory.JaringanCabangOngoing + dataStatusCategory.JaringanCabangOngoing }</p>
+                <p className="font-semibold">Total = {dataStatusCategory.JaringanCabangOngoing + dataStatusCategory.JaringanCabangFinished }</p>
               </div>
               <div className="bg-[#FAC78A] border rounded-xl p-2 mr-2">
                 <h2 className="font-bold">Jaringan Kantor Pusat</h2>
