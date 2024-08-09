@@ -348,7 +348,7 @@ const Page = () => {
             </div>
             <div className="w-full flex justify-between items-end mt-20">
               {dataJumNetwork && (
-                <div className="flex flex-col p-3 m-1 mt-10 font-bold text-sm">
+                <div className="flex flex-col p-3 m-1 mt-14 font-bold text-sm">
                   <div className="P-3 m-1">
                     Ongoing = {dataJumNetwork.Ongoing} Project
                   </div>
@@ -387,30 +387,35 @@ const Page = () => {
                 <hr />
                 <p>Ongoing : {dataStatusCategory.OthersOngoing}</p>
                 <p>Finished : {dataStatusCategory.OthersFinished}</p>
+                <p className="font-semibold">Total = {dataStatusCategory.OthersOngoing + dataStatusCategory.OthersOngoing }</p>
               </div>
               <div className="bg-[#6CAC46] border rounded-xl p-2 mr-2">
                 <h2 className="font-bold">Jaringan DRC</h2>
                 <hr />
-                <p>Ongoing :{dataStatusCategory.JaringanDRCOngoing}</p>
+                <p>Ongoing : {dataStatusCategory.JaringanDRCOngoing}</p>
                 <p>Finished : {dataStatusCategory.JaringanDRCFinished}</p>
+                <p className="font-semibold">Total = {dataStatusCategory.JaringanDRCOngoing + dataStatusCategory.JaringanDRCOngoing }</p>
               </div>
               <div className="bg-[#DF9222] border rounded-xl p-2 mr-2">
                 <h2 className="font-bold">Cloud</h2>
                 <hr />
                 <p>Ongoing : {dataStatusCategory.CloudOngoing}</p>
                 <p>Finished : {dataStatusCategory.CloudFinished}</p>
+                <p className="font-semibold">Total = {dataStatusCategory.CloudOngoing + dataStatusCategory.CloudOngoing }</p>
               </div>
               <div className="bg-[#5989BE] border rounded-xl p-2 mr-2">
                 <h2 className="font-bold">Jaringan Cabang</h2>
                 <hr />
                 <p>Ongoing : {dataStatusCategory.JaringanCabangOngoing}</p>
                 <p>Finished : {dataStatusCategory.JaringanCabangFinished}</p>
+                <p className="font-semibold">Total = {dataStatusCategory.JaringanCabangOngoing + dataStatusCategory.JaringanCabangOngoing }</p>
               </div>
               <div className="bg-[#FAC78A] border rounded-xl p-2 mr-2">
                 <h2 className="font-bold">Jaringan Kantor Pusat</h2>
                 <hr />
                 <p>Ongoing : {dataStatusCategory.JaringanKantorPusatOngoing}</p>
                 <p>Finished : {dataStatusCategory.JaringanKantorPusatFinished}</p>
+                <p className="font-semibold">Total = {dataStatusCategory.JaringanKantorPusatOngoing + dataStatusCategory.JaringanKantorPusatFinished }</p>
               </div>
             </div>
           </div>
