@@ -72,6 +72,7 @@ const rowClass = (inputDate, network_status) => {
     const displayNames = {
       network_id: "Network ID",
       network_perihal: "Nama Project",
+      network_no: "Network No",
       network_pic: "PIC",
       network_kickoff_start: "Kick Off Start",
       network_kickoff_deadline: "Kick Off Deadline",
@@ -195,6 +196,7 @@ const rowClass = (inputDate, network_status) => {
                   [
                     "id",
                     "network_id",
+                    "network_no",
                     "network_description",
                     "network_category",
                     "network_category_others",
@@ -261,6 +263,7 @@ const rowClass = (inputDate, network_status) => {
                         [
                             "id",
                             "network_id",
+                            "network_no",
                             "network_description",
                             "network_category",
                             "network_category_others",
