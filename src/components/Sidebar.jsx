@@ -135,7 +135,7 @@ const Sidebar = () => {
                       <Link href="/main/operation/general">
                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                           <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                            Home
+                            Operation Dashboard
                           </button>
                         </div>
                       </Link>
@@ -201,7 +201,8 @@ const Sidebar = () => {
             {(IsLogisticSupervisor() ||
               IsLogisticOperator() ||
               IsSupervisor() ||
-              IsReviewerSupervisor()) && (
+              IsReviewerSupervisor() ||
+              IsOperatorOps) && (
               <div
                 tabIndex={0}
                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"

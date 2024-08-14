@@ -36,11 +36,14 @@ const BarChart = dynamic(
 
 const Page = () => {
   const [dataStatus, setDataStatus] = useState(null);
+  const [dataJumNetwork, setDataJumNetwork] = useState(null);
+  const [dataJumServer, setDataJumServer] = useState(null);
   const [dataJenisApp, setDataJenisApp] = useState(null);
   const [dataNetworkTotal, setDataNetworkTotal] = useState(null);
   const [dataServerTotal, setDataServerTotal] = useState(null);
   const [dataJenisProject, setDataJenisProject] = useState(null);
   const [dataPersentaseStatus, setDataPersentaseStatus] = useState(null);
+  const [dataStatusCategory, setDataStatusCategory] = useState(null);
   const [dataPersentaseJenisProject, setDataPersentaseJenisProject] =
     useState(null);
   const [dataStatusServer, setDataStatusServer] = useState(null);
@@ -55,9 +58,12 @@ const Page = () => {
       setDataStatus(null);
       setDataJenisApp(null);
       setDataPersentaseStatus(null);
+      setDataPersentaseStatus(null);
       setDataJenisProject(null);
       setDataPersentaseJenisProject(null);
       setDataPersentaseStatus(null);
+      setDataJumNetwork(null);
+      setDataJumServer(null);
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata`
@@ -104,6 +110,24 @@ const Page = () => {
         );
         const fetchedData2 = response2.data;
         setDataPersentaseStatus(fetchedData2);
+
+        const responseJumNetwork = await axios.get(
+            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata`
+          );
+          const fetchedDataJumNetwork = responseJumNetwork.data;
+          setDataJumNetwork(fetchedDataJumNetwork);
+
+          const responseJumServer = await axios.get(
+            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_jumlahdata`
+          );
+          const fetchedDataJumServer = responseJumServer.data;
+          setDataJumServer(fetchedDataJumServer);
+
+        const response_statuscategory = await axios.get(
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata-status-category`
+        );
+        const fetchedDataStatusCategory = response_statuscategory.data;
+        setDataStatusCategory(fetchedDataStatusCategory);
 
         const responseServer = await axios.get(
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_persentase`
@@ -211,8 +235,8 @@ const Page = () => {
         },
         ticks: {
           autoSkip: false,
-          maxRotation: 20,
-          minRotation: 20,
+          maxRotation: 0,
+          minRotation: 0,
           font: {
             size: 12,
           },
@@ -220,7 +244,7 @@ const Page = () => {
         },
         title: {
           display: true,
-          text: "Kategori Aplikasi",
+          // text: "Kategori Aplikasi",
           color: "#333",
           font: {
             size: 14,
@@ -266,92 +290,177 @@ const Page = () => {
     },
     datasets: {
       bar: {
-        barPercentage: 0.8,
-        categoryPercentage: 0.8,
+        barPercentage: 0.7,
+        categoryPercentage: 0.7,
       },
     },
   };
+
+  const pieOptions = {
+    plugins: {
+      legend: {
+        position: "top",
+        labels: {
+          boxWidth: 20,
+          padding: 10,
+          font: {
+            size: 12,
+            family: "Arial",
+          },
+          color: "#333",
+
+          maxWidth: 150,
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            return context.label + ": " + context.raw;
+          },
+        },
+      },
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+  };
   return (
-    <div className="flex-grow justify-center items-center min-h-screen rounded-xl mt-1">
+    <div className="flex-grow justify-center items-center min-h-screen rounded-xl">
       <div className="flex w-grow">
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 mr-2 shadow-lg">
+        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
           <div className=" w-[770px] rounded-box ">
             <h1 className="font-bold p-4 items-center justify-center">
-              Project Network Berdasarkan Status
+              PROJECT NETWORK BERDASARKAN STATUS
             </h1>
             <div className="flex items-center justify-center w-full my-4">
               {dataStatus ? (
-                <div>
-                  <PieChart data={dataStatus} />
+                <div
+                  style={{
+                    width: "500px",
+                    height: "250px",
+                    overflowX: "auto",
+                  }}
+                >
+                  <PieChart data={dataStatus} options={pieOptions} />
                 </div>
               ) : (
                 <p>No data available</p>
               )}
             </div>
-            {dataPersentaseStatus && (
-              <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                <div className="badge p-3 m-1">
-                  Ongoing ({dataPersentaseStatus.Ongoing}%)
+            <div className="w-full flex justify-between items-end mt-20">
+              {dataJumNetwork && (
+                <div className="flex flex-col p-3 m-1 mt-14 font-bold text-sm">
+                  <div className="P-3 m-1">
+                    Ongoing = {dataJumNetwork.Ongoing} Project
+                  </div>
+                  <div className="P-3 m-1">
+                    Finished = {dataJumNetwork.Finished} Project
+                  </div>
                 </div>
-                <div className="badge p-3 m-1">
-                  Finished ({dataPersentaseStatus.Finished}%)
+              )}
+              {dataNetworkTotal && (
+                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                  <div className="P-3 m-1">
+                    Total : {dataNetworkTotal} Project
+                  </div>
                 </div>
-                <div className="badge p-3 m-1">Total : {dataNetworkTotal} Project</div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
-
-        {/* <div className="divider divider-horizontal"></div> */}
-
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 shadow-lg">
-          <div className="h-[50px] w-[770px] rounded-box">
+        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
+          <div className="h-full w-full rounded-box">
             <h1 className="font-bold p-4">
-              Project Network Berdasarkan Jenis Kategori
+              PROJECT NETWORK BERDASARKAN JENIS KATEGORI
             </h1>
             <div className="flex items-center justify-center w-full my-4">
               {dataJenisApp ? (
-                <div className="w-full h-[332px]">
+                <div className="w-full h-[332px] pl-6">
                   <BarChart data={dataJenisApp} options={barOptions} />
                 </div>
               ) : (
                 <p>No data available</p>
               )}
             </div>
+            <div className="flex flex-wrap justify-center mt-4 p-4">
+              <div className="bg-[#A9E399] border rounded-xl p-2 mr-2">
+                <h2 className="font-bold">Others</h2>
+                <hr />
+                <p>Ongoing : {dataStatusCategory.OthersOngoing}</p>
+                <p>Finished : {dataStatusCategory.OthersFinished}</p>
+                <p className="font-semibold">Total = {dataStatusCategory.OthersOngoing + dataStatusCategory.OthersFinished }</p>
+              </div>
+              <div className="bg-[#6CAC46] border rounded-xl p-2 mr-2">
+                <h2 className="font-bold">Jaringan DRC</h2>
+                <hr />
+                <p>Ongoing : {dataStatusCategory.JaringanDRCOngoing}</p>
+                <p>Finished : {dataStatusCategory.JaringanDRCFinished}</p>
+                <p className="font-semibold">Total = {dataStatusCategory.JaringanDRCOngoing + dataStatusCategory.JaringanDRCFinished }</p>
+              </div>
+              <div className="bg-[#DF9222] border rounded-xl p-2 mr-2">
+                <h2 className="font-bold">Cloud</h2>
+                <hr />
+                <p>Ongoing : {dataStatusCategory.CloudOngoing}</p>
+                <p>Finished : {dataStatusCategory.CloudFinished}</p>
+                <p className="font-semibold">Total = {dataStatusCategory.CloudOngoing + dataStatusCategory.CloudFinished }</p>
+              </div>
+              <div className="bg-[#5989BE] border rounded-xl p-2 mr-2">
+                <h2 className="font-bold">Jaringan Cabang</h2>
+                <hr />
+                <p>Ongoing : {dataStatusCategory.JaringanCabangOngoing}</p>
+                <p>Finished : {dataStatusCategory.JaringanCabangFinished}</p>
+                <p className="font-semibold">Total = {dataStatusCategory.JaringanCabangOngoing + dataStatusCategory.JaringanCabangFinished }</p>
+              </div>
+              <div className="bg-[#FAC78A] border rounded-xl p-2 mr-2">
+                <h2 className="font-bold">Jaringan Kantor Pusat</h2>
+                <hr />
+                <p>Ongoing : {dataStatusCategory.JaringanKantorPusatOngoing}</p>
+                <p>Finished : {dataStatusCategory.JaringanKantorPusatFinished}</p>
+                <p className="font-semibold">Total = {dataStatusCategory.JaringanKantorPusatOngoing + dataStatusCategory.JaringanKantorPusatFinished }</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div className="flex w-grow mt-1">
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-4 p-1 mr-2 shadow-lg">
-          <div className=" w-[770px] rounded-box ">
-            <h1 className="font-bold p-4 items-center justify-center">
-              Project Server Berdasarkan Status
-            </h1>
+      <div className="flex w-full mt-1 items-center justify-center">
+        <div className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm">
+          <div className="w-[770px] rounded-box">
+            <h1 className="font-bold p-4">PROJECT SERVER BERDASARKAN STATUS</h1>
             <div className="flex items-center justify-center w-full my-4">
               {dataStatusServer ? (
-                <div>
-                  <PieChart data={dataStatusServer} />
+                <div
+                  style={{
+                    width: "500px",
+                    height: "250px",
+                    overflowX: "auto",
+                  }}
+                >
+                  <PieChart data={dataStatusServer} options={pieOptions} />
                 </div>
               ) : (
                 <p>No data available</p>
               )}
             </div>
-            {dataPersentaseServerStatus && (
-              <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                <div className="badge p-3 m-1">
-                  Ongoing ({dataPersentaseServerStatus.Ongoing}%)
+            <div className="w-full flex justify-between items-end pr-4">
+              {dataPersentaseServerStatus && (
+                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                  <div className="m-1">
+                    Ongoing = {dataJumServer.Ongoing} Project
+                  </div>
+                  <div className="m-1">
+                    Finished = {dataJumServer.Finished} Project
+                  </div>
                 </div>
-                <div className="badge p-3 m-1">
-                  Finished ({dataPersentaseServerStatus.Finished}%)
+              )}
+              {dataServerTotal && (
+                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                  <div className="P-3 m-1">
+                    Total : {dataServerTotal} Project
+                  </div>
                 </div>
-                <div className="badge p-3 m-1">Total : {dataServerTotal} Project</div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
-
-        {/* <div className="divider divider-horizontal"></div> */}
       </div>
     </div>
   );

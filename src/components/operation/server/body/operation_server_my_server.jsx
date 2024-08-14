@@ -8,6 +8,7 @@ import {
   IsLogisticOperator,
   IsNetworkOperator,
   IsOperator,
+  IsOperatorOps,
   IsPpoOperator,
   IsServerOperator,
   IsSkseOperator,
@@ -223,7 +224,7 @@ const ServerForm = ({ headers, data, action, link }) => {
                 {getDisplayName(item)}
               </th>
             ))}
-            {(IsOperator() ||
+            {(IsOperatorOps() ||
               IsDevOperator() ||
               IsPpoOperator() ||
               IsSkseOperator() ||
@@ -296,7 +297,7 @@ const ServerForm = ({ headers, data, action, link }) => {
                     {header === "server_status" ? server_status : item[header]}
                   </td>
                 ))}
-                {(IsOperator() ||
+                {(IsOperatorOps() ||
                   IsDevOperator() ||
                   IsPpoOperator() ||
                   IsSkseOperator() ||
