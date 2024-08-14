@@ -36,12 +36,14 @@ const BarChart = dynamic(
 
 const ChartPie = () => {
   const [dataStatus, setDataStatus] = useState(null);
+  const [dataStatusCategory, setDataStatusCategory] = useState(null);
   const [dataJumNetwork, setDataJumNetwork] = useState(null);
   const [dataJumServer, setDataJumServer] = useState(null);
   const [dataJumProject, setDataJumProject] = useState(null);
   const [dataNetworkStatus, setDataNetworkStatus] = useState(null);
   const [dataServerStatus, setDataServerStatus] = useState(null);
   const [dataJenisApp, setDataJenisApp] = useState(null);
+  const [dataJenisAppNetwork, setDataJenisAppNetwork] = useState(null);
   const [dataTotal, setDataTotal] = useState(null);
   const [dataNetworkTotal, setDataNetworkTotal] = useState(null);
   const [dataServerTotal, setDataServerTotal] = useState(null);
@@ -68,6 +70,7 @@ const ChartPie = () => {
       setDataJumNetwork(null);
       setDataJumServer(null);
       setDataJumProject(null);
+      setDataJenisAppNetwork(null);
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
@@ -198,6 +201,40 @@ const ChartPie = () => {
         );
         const fetchedDataJumNetwork = responseJumNetwork.data;
         setDataJumNetwork(fetchedDataJumNetwork);
+
+        const responseJenisAppNetwork = await axios.get(
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_category`
+        );
+        const fetchedDataJenisAppNetwork = responseJenisAppNetwork.data;
+
+        const labelsJenisAppNetwork = Object.keys(fetchedDataJenisAppNetwork);
+        const dataValuesJenisAppNetwork = Object.values(
+          fetchedDataJenisAppNetwork
+        );
+
+        setDataJenisAppNetwork({
+          labels: labelsJenisAppNetwork,
+          datasets: [
+            {
+              label: "Project",
+              data: dataValuesJenisAppNetwork,
+              backgroundColor: [
+                "#A9E399",
+                "#6CAC46",
+                "#DF9222",
+                "#5989BE",
+                "#FAC78A",
+                "#7E3D78",
+              ],
+            },
+          ],
+        });
+
+        const response_statuscategory = await axios.get(
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata-status-category`
+        );
+        const fetchedDataStatusCategory = response_statuscategory.data;
+        setDataStatusCategory(fetchedDataStatusCategory);
 
         //   OPS - SERVER
 
@@ -425,6 +462,8 @@ const ChartPie = () => {
           </div>
         </div>
       </div>
+      {/* new new */}
+
       <div className="flex w-grow">
         <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
           <div className=" w-[770px] rounded-box ">
@@ -446,9 +485,9 @@ const ChartPie = () => {
                 <p>No data available</p>
               )}
             </div>
-            <div className="w-full flex justify-between items-end pr-4">
+            <div className="w-full flex justify-between items-end mt-20">
               {dataJumNetwork && (
-                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                <div className="flex flex-col p-3 mt-14 font-bold text-sm">
                   <div className="badge P-3 m-1">
                     Ongoing = {dataJumNetwork.Ongoing} Project
                   </div>
@@ -469,47 +508,124 @@ const ChartPie = () => {
           </div>
         </div>
         <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
-          <div className=" w-[770px] rounded-box ">
-            <h1 className="font-bold p-4 items-center justify-center">
-              OPERATION - SERVER
+          <div className="h-full w-full rounded-box">
+            <h1 className="font-bold p-4">
+              PROJECT NETWORK BERDASARKAN JENIS KATEGORI
             </h1>
             <div className="flex items-center justify-center w-full my-4">
-              {dataStatus ? (
-                <div
-                  style={{
-                    width: "500px",
-                    height: "250px",
-                    overflowX: "auto",
-                  }}
-                >
-                  <PieChart data={dataServerStatus} options={pieOptions} />
+              {dataJenisAppNetwork ? (
+                <div className="w-full h-[332px] pl-6">
+                  <BarChart data={dataJenisAppNetwork} options={barOptions} />
                 </div>
               ) : (
                 <p>No data available</p>
               )}
             </div>
-            <div className="w-full flex justify-between items-end pr-4">
-              {dataJumServer && (
-                <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                  <div className="badge P-3 m-1">
-                    Ongoing = {dataJumServer.Ongoing} Project
-                  </div>
-                  <div className="badge P-3 m-1">
-                    Finished = {dataJumServer.Finished} Project
-                  </div>
-                  {/* <div className="badge p-3 m-1">Total : {dataServerTotal} Project</div> */}
-                </div>
-              )}
-              {dataServerTotal && (
-                <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                  <div className="P-3 m-1">
-                    Total : {dataServerTotal} Project
-                  </div>
-                </div>
-              )}
+            <div className="flex flex-wrap justify-center mt-4 p-4">
+              <div className="bg-[#A9E399] border rounded-xl p-2 mr-2">
+                <h2 className="font-bold">Others</h2>
+                <hr />
+                <p>Ongoing : {dataStatusCategory.OthersOngoing}</p>
+                <p>Finished : {dataStatusCategory.OthersFinished}</p>
+                <p className="font-semibold">
+                  Total ={" "}
+                  {dataStatusCategory.OthersOngoing +
+                    dataStatusCategory.OthersFinished}
+                </p>
+              </div>
+              <div className="bg-[#6CAC46] border rounded-xl p-2 mr-2">
+                <h2 className="font-bold">Jaringan DRC</h2>
+                <hr />
+                <p>Ongoing : {dataStatusCategory.JaringanDRCOngoing}</p>
+                <p>Finished : {dataStatusCategory.JaringanDRCFinished}</p>
+                <p className="font-semibold">
+                  Total ={" "}
+                  {dataStatusCategory.JaringanDRCOngoing +
+                    dataStatusCategory.JaringanDRCFinished}
+                </p>
+              </div>
+              <div className="bg-[#DF9222] border rounded-xl p-2 mr-2">
+                <h2 className="font-bold">Cloud</h2>
+                <hr />
+                <p>Ongoing : {dataStatusCategory.CloudOngoing}</p>
+                <p>Finished : {dataStatusCategory.CloudFinished}</p>
+                <p className="font-semibold">
+                  Total ={" "}
+                  {dataStatusCategory.CloudOngoing +
+                    dataStatusCategory.CloudFinished}
+                </p>
+              </div>
+              <div className="bg-[#5989BE] border rounded-xl p-2 mr-2">
+                <h2 className="font-bold">Jaringan Cabang</h2>
+                <hr />
+                <p>Ongoing : {dataStatusCategory.JaringanCabangOngoing}</p>
+                <p>Finished : {dataStatusCategory.JaringanCabangFinished}</p>
+                <p className="font-semibold">
+                  Total ={" "}
+                  {dataStatusCategory.JaringanCabangOngoing +
+                    dataStatusCategory.JaringanCabangFinished}
+                </p>
+              </div>
+              <div className="bg-[#FAC78A] border rounded-xl p-2 mr-2">
+                <h2 className="font-bold">Jaringan Kantor Pusat</h2>
+                <hr />
+                <p>Ongoing : {dataStatusCategory.JaringanKantorPusatOngoing}</p>
+                <p>
+                  Finished : {dataStatusCategory.JaringanKantorPusatFinished}
+                </p>
+                <p className="font-semibold">
+                  Total ={" "}
+                  {dataStatusCategory.JaringanKantorPusatOngoing +
+                    dataStatusCategory.JaringanKantorPusatFinished}
+                </p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* new */}
+      <div className="flex w-full mt-1 items-center justify-center">
+      <div className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm">
+        <div className=" w-[770px] rounded-box ">
+          <h1 className="font-bold p-4 items-center justify-center">
+            OPERATION - SERVER
+          </h1>
+          <div className="flex items-center justify-center w-full my-4">
+            {dataStatus ? (
+              <div
+                style={{
+                  width: "500px",
+                  height: "250px",
+                  overflowX: "auto",
+                }}
+              >
+                <PieChart data={dataServerStatus} options={pieOptions} />
+              </div>
+            ) : (
+              <p>No data available</p>
+            )}
+          </div>
+          <div className="w-full flex justify-between items-end pr-4">
+            {dataJumServer && (
+              <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                <div className="badge P-3 m-1">
+                  Ongoing = {dataJumServer.Ongoing} Project
+                </div>
+                <div className="badge P-3 m-1">
+                  Finished = {dataJumServer.Finished} Project
+                </div>
+                {/* <div className="badge p-3 m-1">Total : {dataServerTotal} Project</div> */}
+              </div>
+            )}
+            {dataServerTotal && (
+              <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                <div className="P-3 m-1">Total : {dataServerTotal} Project</div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   );
