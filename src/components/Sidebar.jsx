@@ -45,16 +45,13 @@ const Sidebar = () => {
   const [IsOpsMonitorSystemShow, setIsOpsMonitorSystemShow] = useState(false);
   const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] = useState(false);
   const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
  
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
  
   return (
-    <div className="bg-[#00A6B4]/[0.5] text-w w-full h-full p-4 ml-4 mt-3 rounded-xl shadow-r-md">
-      <div className="collapse collapse-arrow ">
-        <div>
+    <div className={`flex w-64 transition-width duration-300 bg-[#00A6B4]/[0.5] text-w h-full p-4 ml-4 mt-3 rounded-xl shadow-r-md`}>
+      <div className={`flex flex-col w-full`}>
+        
+        <div className="collapse collapse-arrow">
           <div>
             {(IsOperatorDev() || IsSupervisor()) && (
               <div
@@ -62,33 +59,30 @@ const Sidebar = () => {
                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
               >
                 <input type="checkbox" className="peer" />
- 
-                                {/* start button Dev */}
-                                <div className="collapse-title text-xl font-bold flex items-center">
-                                    <div className="mr-2">
-                                        <FaProjectDiagram />
-                                    </div>
-                                    Project
-                                </div>
-                                <div className="collapse-content">
-                                    {(IsOperatorDev() ||
-                            IsSupervisor() || IsOperatorOps) && (
-                                        <div>
-                                            <Link href="/main/development/home">
-                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                                        Project Dashboard
-                                                    </button>
-                                                </div>
-                                            </Link>
-                                            <hr className="my-4 border-gray-300" />
-                                        </div>
-                                    )}
-                                    <Link href="/main/development">
-                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                                All Project
-                                            </button>
+                <div className="collapse-title text-xl font-bold flex items-center">
+                  <div className="mr-2">
+                    <FaProjectDiagram />
+                  </div>
+                  Project
+                </div>
+                <div className="collapse-content">
+                  {(IsOperatorDev() || IsSupervisor() || IsOperatorOps) && (
+                    <div>
+                      <Link href="/main/development/home">
+                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                          <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                            Project Dashboard
+                          </button>
+                        </div>
+                      </Link>
+                      <hr className="my-4 border-gray-300" />
+                    </div>
+                  )}
+                  <Link href="/main/development">
+                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                      <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                        All Project
+                      </button>
                                         </div>
                                     </Link>
                                 </div>
@@ -344,6 +338,12 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
+       {/* <button
+        onClick={toggleSidebar}
+        className="absolute top-4 right-4 px-4 py-2 text-white bg-gray-800 rounded"
+      >
+        {isSidebarOpen ? 'Close' : 'Open'}
+      </button> */}
     </div>
   );
 };
