@@ -19,7 +19,7 @@ const layout = ({ children }) => {
         <IsLogin>
             <div className="w-full h-full relative bg-[#00A6B4] bg-opacity-25 ">
                 <Header title="DAMAS" />
-                <button onClick={toggleSidebar}>open</button>
+                {/* <button onClick={toggleSidebar}>open</button> */}
                 <div className="w-full h-full relative pb-10 flex">
                     <div className={`relative ${isSidebarOpen ? "w-[15%]" : "w-0 -translate-x-[1000px]"} `}>
                     {/* <div className="hidden lg:block lg:w-[15%]"> */}
