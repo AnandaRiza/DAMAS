@@ -31,7 +31,7 @@ const Page = () => {
   }
 
   return (
-    <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
+    <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen rounded-xl">
       <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
         <details className="dropdown">
         <summary className="btn m-1">{selectedOption ? selectedOption.charAt(0).toUpperCase() + selectedOption.slice(1) : "Choose Team"}</summary>

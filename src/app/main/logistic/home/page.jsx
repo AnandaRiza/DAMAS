@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import dynamic from "next/dynamic";
+import PleaseWait from "@/components/PleaseWait";
 import {
     Chart as ChartJS,
     Title,
@@ -11,9 +13,9 @@ import {
     LinearScale,
     BarElement,
 } from "chart.js";
-import dynamic from "next/dynamic";
-import PleaseWait from "@/components/PleaseWait";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
+// Register Chart.js components and plugins
 ChartJS.register(
     Title,
     Tooltip,
@@ -21,7 +23,8 @@ ChartJS.register(
     ArcElement,
     CategoryScale,
     LinearScale,
-    BarElement
+    BarElement,
+    ChartDataLabels
 );
 
 const PieChart = dynamic(
@@ -75,26 +78,34 @@ const LogisticMemoDashboard = () => {
                         },
                     ],
                 });
-                
+
                 const response3 = await axios.get(
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memostype`
                 );
                 const fetchedData3 = response3.data;
-                
+
                 const sortedData = Object.entries(fetchedData3)
                     .map(([type, count]) => ({ type, count }))
                     .sort((a, b) => b.count - a.count);
-                
-                const totalCount = sortedData.reduce((sum, item) => sum + item.count, 0);
-                
+
+                const totalCount = sortedData.reduce(
+                    (sum, item) => sum + item.count,
+                    0
+                );
+
                 setDataDocType({
-                    labels: sortedData.map(item => item.type),
+                    labels: sortedData.map((item) => item.type),
                     datasets: [
                         {
                             label: "Count",
-                            data: sortedData.map(item => item.count),
+                            data: sortedData.map((item) => item.count),
                             backgroundColor: [
-                                "#A9E399", "#6CAC46", "#DF9222", "#5989BE", "#FAC78A", "#7E3D78"
+                                "#A9E399",
+                                "#6CAC46",
+                                "#DF9222",
+                                "#5989BE",
+                                "#FAC78A",
+                                "#7E3D78",
                             ],
                         },
                     ],
@@ -145,15 +156,14 @@ const LogisticMemoDashboard = () => {
                         {
                             label: "Count",
                             data: Object.values(filteredCategories),
-                            backgroundColor: [
-                                "#FF6384",
-                                "#36A2EB",
-                            ],
+                            backgroundColor: ["#FF6384", "#36A2EB"],
                         },
                     ],
-                    total: Object.values(filteredCategories).reduce((a, b) => a + b, 0),
+                    total: Object.values(filteredCategories).reduce(
+                        (a, b) => a + b,
+                        0
+                    ),
                 });
-
             } catch (error) {
                 setError("Failed to fetch data");
                 console.log(error);
@@ -172,7 +182,7 @@ const LogisticMemoDashboard = () => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'bottom',
+                position: "bottom",
                 labels: {
                     boxWidth: 12,
                     padding: 8,
@@ -184,57 +194,87 @@ const LogisticMemoDashboard = () => {
             tooltip: {
                 callbacks: {
                     label: function (context) {
-                        return context.label + ': ' + context.raw;
+                        return context.label + ": " + context.raw;
                     },
                 },
             },
         },
-        
     };
 
     const pieOptions = {
-        ...chartOptions,
-
         plugins: {
             legend: {
-                position: 'top',
-                labels: {
-                    boxWidth: 20,
-                    padding: 10,
-                    font: {
-                        size: 12,
-                        family: 'Arial',
-                    },
-                    color: '#333',
-                    maxWidth: 150,
-                },
+                display: false,
+                position: "bottom",
             },
             tooltip: {
                 callbacks: {
                     label: function (context) {
-                        return context.label + ': ' + context.raw;
+                        return context.label
+                            ? `${context.label}: ${context.raw}`
+                            : `${context.raw}`;
                     },
                 },
+            },
+            datalabels: {
+                display: true,
+                color: "black",
+                font: {
+                    weight: "bold",
+                    size: 16,
+                },
+                formatter: (value, context) => {
+                    const label =
+                        context.dataIndex !== undefined
+                            ? context.chart.data.labels[context.dataIndex]
+                            : "Unknown";
+                    return `${label}: ${value}`;
+                },
+                anchor: "end",
+                align: "end",
+                padding: 5,
             },
         },
         responsive: true,
         maintainAspectRatio: false,
+        layout: {
+            padding: {
+                top: 20,
+            },
+        },
     };
 
     const barOptions = {
         responsive: true,
-
         plugins: {
             legend: {
                 display: false,
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
-                        return `Count: ${context.raw}`;
+                    label: function (context) {
+                        return `${context.dataset.label}: ${context.raw}`;
+                    },
+                    title: function () {
+                        return "";
                     },
                 },
+                usePointStyle: true,
             },
+            datalabels: {
+              display: true,
+              color: 'black',
+              font: {
+                  weight: 'bold',
+                  size: 14,
+              },
+              formatter: (value) => {
+                  return `${value}`;
+              },
+              anchor: 'center',
+              align: 'center',
+              padding: 5,
+          },
         },
         scales: {
             x: {
@@ -250,12 +290,11 @@ const LogisticMemoDashboard = () => {
                         size: 9,
                     },
                     padding: 0,
-                    
                 },
                 title: {
                     display: true,
-                    text: "Document Type",
-                    color: "#333",
+                    text: "Jenis Aplikasi",
+                    color: "black",
                     font: {
                         size: 14,
                         weight: "bold",
@@ -269,11 +308,14 @@ const LogisticMemoDashboard = () => {
                 },
                 ticks: {
                     stepSize: 1,
+                    font: {
+                        size: 9,
+                    },
                 },
                 title: {
                     display: true,
                     text: "Count",
-                    color: "#333",
+                    color: "black",
                     font: {
                         size: 14,
                         weight: "bold",
@@ -318,24 +360,27 @@ const LogisticMemoDashboard = () => {
                         <p>No data available</p>
                     )}
                 </div>
-                {dataMemoStatus && (
+                {/* {dataMemoStatus && (
                     <div className="flex flex-wrap justify-center mt-4">
                         {dataMemoStatus.labels.map((status, index) => (
                             <div key={status} className="badge m-1 p-2">
-                                {status}: {dataMemoStatus.datasets[0].data[index]}
+                                {status}:{" "}
+                                {dataMemoStatus.datasets[0].data[index]}
                             </div>
                         ))}
                     </div>
-                )}
+                )} */}
             </div>
-    
+
             {/* Memos by Document Type */}
             <div className="card bg-white rounded-box p-4 shadow-lg">
-                <h1 className="font-bold text-lg mb-4">Memos by Document Type</h1>
+                <h1 className="font-bold text-lg mb-4">
+                    Memos by Document Type
+                </h1>
                 <div className="h-64">
                     {dataDocType ? (
-                         <div className="w-full h-[300px] pl-12">
-                        <BarChart data={dataDocType} options={barOptions} />
+                        <div className="w-full h-[300px] pl-12">
+                            <BarChart data={dataDocType} options={barOptions} />
                         </div>
                     ) : (
                         <p>No data available</p>
@@ -351,7 +396,7 @@ const LogisticMemoDashboard = () => {
                                 </tr>
                             </thead> */}
                             <tbody>
-                            {/* <div className="flex flex-wrap justify-center mt-4">
+                                {/* <div className="flex flex-wrap justify-center mt-4">
                         {dataDocType.labels.map((category, index) => (
                             <div key={category} className="badge m-1 p-2">
                                 {category}: {dataDocType.datasets[0].data[index]}
@@ -363,7 +408,7 @@ const LogisticMemoDashboard = () => {
                     </div>
                 )}
             </div>
-    
+
             {/* Memos by Year */}
             <div className="card bg-white rounded-box p-4 shadow-lg">
                 <h1 className="font-bold text-lg mb-4">Memos by Year</h1>
@@ -384,7 +429,7 @@ const LogisticMemoDashboard = () => {
                     </div>
                 )}
             </div>
-    
+
             {/* Memos by Category */}
             <div className="card bg-white rounded-box p-4 shadow-lg">
                 <h1 className="font-bold text-lg mb-4">Memos by Category</h1>
@@ -399,7 +444,8 @@ const LogisticMemoDashboard = () => {
                     <div className="flex flex-wrap justify-center mt-4">
                         {dataCategory.labels.map((category, index) => (
                             <div key={category} className="badge m-1 p-2">
-                                {category}: {dataCategory.datasets[0].data[index]}
+                                {category}:{" "}
+                                {dataCategory.datasets[0].data[index]}
                             </div>
                         ))}
                     </div>

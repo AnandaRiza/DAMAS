@@ -1,41 +1,30 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { FaUsersGear } from "react-icons/fa6";
 import { FaProjectDiagram } from "react-icons/fa";
-import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { BsBuildingFillGear } from "react-icons/bs";
 import { FaTools } from "react-icons/fa";
-import { IoIosGitNetwork } from "react-icons/io";
-import { FaServer } from "react-icons/fa";
-import { MdMonitor } from "react-icons/md";
-import { GoWorkflow } from "react-icons/go";
-import { AiOutlineMail } from "react-icons/ai";
-import { FaDatabase } from "react-icons/fa";
-import { BiSupport } from "react-icons/bi";
-import { GrUserManager } from "react-icons/gr";
-import { MdOutlineSecurity } from "react-icons/md";
 import { MdApproval } from "react-icons/md";
 import {
-  IsDacenOperator,
-  IsDevOperator,
-  IsDevSupervisor,
-  IsItmoOperator,
-  IsItsecurityOperator,
-  IsItsupportOperator,
-  IsLogisticOperator,
-  IsLogisticSupervisor,
-  IsNetworkOperator,
-  IsOperationSupervisor,
-  IsOperator,
-  IsOperatorDev,
-  IsOperatorOps,
-  IsPpoOperator,
-  IsPpoSupervisor,
-  IsReviewerSupervisor,
-  IsServerOperator,
-  IsSkseOperator,
-  IsSupervisor,
+    IsDacenOperator,
+    IsDevOperator,
+    IsDevSupervisor,
+    IsItmoOperator,
+    IsItsecurityOperator,
+    IsItsupportOperator,
+    IsLogisticOperator,
+    IsLogisticSupervisor,
+    IsNetworkOperator,
+    IsOperationSupervisor,
+    IsOperator,
+    IsOperatorDev,
+    IsOperatorOps,
+    IsPpoOperator,
+    IsPpoSupervisor,
+    IsReviewerSupervisor,
+    IsServerOperator,
+    IsSkseOperator,
+    IsSupervisor,
 } from "@/validation/validateGroupAkses";
 
 const Sidebar = () => {
