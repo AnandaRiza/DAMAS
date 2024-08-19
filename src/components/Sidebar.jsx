@@ -61,7 +61,7 @@ const Sidebar = () => {
         className={`text-black 
                   min-h-screen transition-all
                   duration-300 z-10 rounded
-                  ${isOpen ? "w-full" : "w-0 overflow-hidden px-0 py-0"}`}
+                  ${isOpen ? "w-full" : "w-0 overflow-hidden"}`}
       >
         <div className="bg-[#00A6B4]/[0.5] text-w w-full h-full p-4 ml-4 mt-3 rounded-xl shadow-r-md">
           <div className="collapse collapse-arrow ">

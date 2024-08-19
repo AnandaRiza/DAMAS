@@ -326,8 +326,8 @@ const Page = () => {
   return (
     <div className="flex-grow justify-center items-center min-h-screen rounded-xl">
       <div className="flex w-full">
-      <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
-          <div className="h-full w-full rounded-box">
+      <div className="w-full flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg mx-auto">
+          <div className="">
             <h1 className="font-bold p-4">
               PROJECT NETWORK BERDASARKAN JENIS KATEGORI
             </h1>
@@ -399,8 +399,8 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 ml-2 shadow-lg">
-        <div className="w-[770px] rounded-box">
+        <div className="grid w-full flex-grow card bg-white rounded-box mt-3 p-1 ml-2 shadow-lg mx-auto">
+        <div className="w-full rounded-box">
             <h1 className="font-bold p-4">PROJECT SERVER BERDASARKAN STATUS</h1>
             <div className="flex items-center justify-center w-full my-4">
               {dataStatusServer ? (
