@@ -37,6 +37,7 @@ import {
   IsSkseOperator,
   IsSupervisor,
 } from "@/validation/validateGroupAkses";
+import { CiMemoPad } from "react-icons/ci";
 
 const Sidebar = () => {
   const [isSdlcShow, setIsSdlcShow] = useState(false);
@@ -211,9 +212,9 @@ const Sidebar = () => {
 
                 <div className="collapse-title text-xl  font-bold flex items-center">
                   <div className="mr-2">
-                    <FaTools />
+                    <CiMemoPad  />
                   </div>
-                  Logistic
+                  Memo
                 </div>
 
   

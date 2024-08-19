@@ -59,6 +59,7 @@ const LogisticMemoDashboard = () => {
 
                 const labels = Object.keys(fetchedData);
                 const dataValues = Object.values(fetchedData);
+                const total = dataValues.reduce((sum, value) => sum + value, 0);
 
                 setDataMemoStatus({
                     labels: labels,
@@ -74,6 +75,7 @@ const LogisticMemoDashboard = () => {
                             ],
                         },
                     ],
+                    total: total,
                 });
                 
                 const response3 = await axios.get(
@@ -108,6 +110,7 @@ const LogisticMemoDashboard = () => {
                 console.log(response4);
                 const labels4 = Object.keys(fetchedData4);
                 const dataValues4 = Object.values(fetchedData4);
+                const totalYear = dataValues4.reduce((sum, value) => sum + value, 0);
 
                 setDataYear({
                     labels: labels4,
@@ -123,21 +126,23 @@ const LogisticMemoDashboard = () => {
                             ],
                         },
                     ],
+                    total: totalYear,
                 });
 
                 const response5 = await axios.get(
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memocategory`
                 );
                 const fetchedData5 = response5.data;
-                console.log(response5);
 
-                // Filter out categories with a count of 0
+                // Filter out categories with a count of 0 and remove unnamed category
                 const filteredCategories = Object.entries(fetchedData5)
-                    .filter(([category, count]) => count > 0)
+                    .filter(([category, count]) => count > 0 && category.trim() !== "")
                     .reduce((acc, [category, count]) => {
                         acc[category] = count;
                         return acc;
                     }, {});
+
+                const totalCategory = Object.values(filteredCategories).reduce((a, b) => a + b, 0);
 
                 setDataCategory({
                     labels: Object.keys(filteredCategories),
@@ -148,10 +153,14 @@ const LogisticMemoDashboard = () => {
                             backgroundColor: [
                                 "#FF6384",
                                 "#36A2EB",
+                                "#FFCE56",
+                                "#4BC0C0",
+                                "#9966FF",
+                                "#FF9F40",
                             ],
                         },
                     ],
-                    total: Object.values(filteredCategories).reduce((a, b) => a + b, 0),
+                    total: totalCategory,
                 });
 
             } catch (error) {
@@ -189,51 +198,31 @@ const LogisticMemoDashboard = () => {
                 },
             },
         },
-        
     };
 
     const pieOptions = {
         ...chartOptions,
-
         plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    boxWidth: 20,
-                    padding: 10,
-                    font: {
-                        size: 12,
-                        family: 'Arial',
-                    },
-                    color: '#333',
-                    maxWidth: 150,
-                },
-            },
-            tooltip: {
-                callbacks: {
-                    label: function (context) {
-                        return context.label + ': ' + context.raw;
-                    },
-                },
+            ...chartOptions.plugins,
+            title: {
+                display: true,
+                // text: (context) => `Total: ${context.chart.data.total || 0}`,
+                position: 'bottom',
             },
         },
-        responsive: true,
-        maintainAspectRatio: false,
     };
 
     const barOptions = {
-        responsive: true,
-
+        ...chartOptions,
         plugins: {
+            ...chartOptions.plugins,
             legend: {
                 display: false,
             },
-            tooltip: {
-                callbacks: {
-                    label: function(context) {
-                        return `Count: ${context.raw}`;
-                    },
-                },
+            title: {
+                display: true,
+                // text: (context) => `Total: ${context.chart.data.total || 0}`,
+                position: 'bottom',
             },
         },
         scales: {
@@ -250,7 +239,6 @@ const LogisticMemoDashboard = () => {
                         size: 9,
                     },
                     padding: 0,
-                    
                 },
                 title: {
                     display: true,
@@ -319,13 +307,18 @@ const LogisticMemoDashboard = () => {
                     )}
                 </div>
                 {dataMemoStatus && (
-                    <div className="flex flex-wrap justify-center mt-4">
-                        {dataMemoStatus.labels.map((status, index) => (
-                            <div key={status} className="badge m-1 p-2">
-                                {status}: {dataMemoStatus.datasets[0].data[index]}
-                            </div>
-                        ))}
-                    </div>
+                    <>
+                        <div className="flex flex-wrap justify-center mt-4">
+                            {dataMemoStatus.labels.map((status, index) => (
+                                <div key={status} className="badge m-1 p-2">
+                                    {status}: {dataMemoStatus.datasets[0].data[index]}
+                                </div>
+                            ))}
+                        </div>
+                        <div className="text-center mt-2 font-bold">
+                            Total: {dataMemoStatus.total}
+                        </div>
+                    </>
                 )}
             </div>
     
@@ -343,21 +336,24 @@ const LogisticMemoDashboard = () => {
                 </div>
                 {dataDocType && (
                     <div className="mt-4 overflow-x-auto">
-                        <table className="table-auto w-full">
-                            {/* <thead>
+                        <table className="table-auto w-full text-sm">
+                            <thead>
                                 <tr>
-                                    <th className="px-2 py-1">Document Type</th>
-                                    <th className="px-2 py-1">Count</th>
+                                    <th className="px-4 py-2 text-left">Document Type</th>
+                                    <th className="px-4 py-2 text-right">Count</th>
                                 </tr>
-                            </thead> */}
+                            </thead>
                             <tbody>
-                            {/* <div className="flex flex-wrap justify-center mt-4">
-                        {dataDocType.labels.map((category, index) => (
-                            <div key={category} className="badge m-1 p-2">
-                                {category}: {dataDocType.datasets[0].data[index]}
-                            </div>
-                        ))}
-                    </div> */}
+                                {dataDocType.labels.map((type, index) => (
+                                    <tr key={type}>
+                                        <td className="px-4 py-2">{type}</td>
+                                        <td className="px-4 py-2 text-right">{dataDocType.datasets[0].data[index]}</td>
+                                    </tr>
+                                ))}
+                                <tr className="font-bold">
+                                    <td className="px-4 py-2">Total</td>
+                                    <td className="px-4 py-2 text-right">{dataDocType.total}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -375,13 +371,18 @@ const LogisticMemoDashboard = () => {
                     )}
                 </div>
                 {dataYear && (
-                    <div className="flex flex-wrap justify-center mt-4">
-                        {dataYear.labels.map((year, index) => (
-                            <div key={year} className="badge m-1 p-2">
-                                {year}: {dataYear.datasets[0].data[index]}
-                            </div>
-                        ))}
-                    </div>
+                    <>
+                        <div className="flex flex-wrap justify-center mt-4">
+                            {dataYear.labels.map((year, index) => (
+                                <div key={year} className="badge m-1 p-2">
+                                    {year}: {dataYear.datasets[0].data[index]}
+                                </div>
+                            ))}
+                        </div>
+                        <div className="text-center mt-2 font-bold">
+                            Total: {dataYear.total}
+                        </div>
+                    </>
                 )}
             </div>
     
@@ -396,13 +397,18 @@ const LogisticMemoDashboard = () => {
                     )}
                 </div>
                 {dataCategory && (
-                    <div className="flex flex-wrap justify-center mt-4">
-                        {dataCategory.labels.map((category, index) => (
-                            <div key={category} className="badge m-1 p-2">
-                                {category}: {dataCategory.datasets[0].data[index]}
-                            </div>
-                        ))}
-                    </div>
+                    <>
+                        <div className="flex flex-wrap justify-center mt-4">
+                            {dataCategory.labels.map((category, index) => (
+                                <div key={category} className="badge m-1 p-2">
+                                    {category}: {dataCategory.datasets[0].data[index]}
+                                </div>
+                            ))}
+                        </div>
+                        <div className="text-center mt-2 font-bold">
+                            Total: {dataCategory.total}
+                        </div>
+                    </>
                 )}
             </div>
         </div>

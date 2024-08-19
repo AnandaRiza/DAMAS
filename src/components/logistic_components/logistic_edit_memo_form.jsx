@@ -815,7 +815,7 @@ const EditMemoPage = () => {
           </div>
         )}
         {/* File Upload Field */}
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
   <label
     htmlFor="memo_upload"
     className="text-sm font-semibold text-gray-600"
@@ -847,7 +847,7 @@ const EditMemoPage = () => {
       </button>
     </div>
   )}
-</div>
+</div> */}
         {/* Download Link */}
         {/* Error Handling */}
         {error && <p className="text-red-500">{error}</p>}

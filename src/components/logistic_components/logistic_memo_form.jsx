@@ -271,9 +271,9 @@ const getMinDateTime = () => {
           <div className="flex flex-col">
             <label
               htmlFor="memo_pic"
-              className="text-sm font-semibold text-[#0066AE]"
+              className="text-sm font-semibold"
             >
-              PIC <span className="text-red-500">*</span>
+              PIC 
             </label>
             {dataAllPic && (
               <>
@@ -560,13 +560,13 @@ const getMinDateTime = () => {
             </label>
             <input
               type="date"
-              id="memo_masuk"
-              name="memo_masuk"
-              value={formData.memo_masuk}
+              id="memo_terima"
+              name="memo_terima"
+              value={formData.memo_terima}
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  memo_masuk: e.target.value,
+                  memo_terima: e.target.value,
                 })
               }
               className="input input-bordered mt-1"
