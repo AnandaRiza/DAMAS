@@ -325,49 +325,8 @@ const Page = () => {
   };
   return (
     <div className="flex-grow justify-center items-center min-h-screen rounded-xl">
-      <div className="flex w-grow">
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
-          <div className=" w-[770px] rounded-box ">
-            <h1 className="font-bold p-4 items-center justify-center">
-              PROJECT NETWORK BERDASARKAN STATUS
-            </h1>
-            <div className="flex items-center justify-center w-full my-4">
-              {dataStatus ? (
-                <div
-                  style={{
-                    width: "500px",
-                    height: "250px",
-                    overflowX: "auto",
-                  }}
-                >
-                  <PieChart data={dataStatus} options={pieOptions} />
-                </div>
-              ) : (
-                <p>No data available</p>
-              )}
-            </div>
-            <div className="w-full flex justify-between items-end mt-20">
-              {dataJumNetwork && (
-                <div className="flex flex-col p-3 m-1 mt-14 font-bold text-sm">
-                  <div className="P-3 m-1">
-                    Ongoing = {dataJumNetwork.Ongoing} Project
-                  </div>
-                  <div className="P-3 m-1">
-                    Finished = {dataJumNetwork.Finished} Project
-                  </div>
-                </div>
-              )}
-              {dataNetworkTotal && (
-                <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                  <div className="P-3 m-1">
-                    Total : {dataNetworkTotal} Project
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
+      <div className="flex w-full">
+      <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
           <div className="h-full w-full rounded-box">
             <h1 className="font-bold p-4">
               PROJECT NETWORK BERDASARKAN JENIS KATEGORI
@@ -377,6 +336,7 @@ const Page = () => {
                 <div className="w-full h-[332px] pl-6">
                   <BarChart data={dataJenisApp} options={barOptions} />
                 </div>
+                
               ) : (
                 <p>No data available</p>
               )}
@@ -418,12 +378,29 @@ const Page = () => {
                 <p className="font-semibold">Total = {dataStatusCategory.JaringanKantorPusatOngoing + dataStatusCategory.JaringanKantorPusatFinished }</p>
               </div>
             </div>
+            <div className="w-full flex justify-between items-end">
+              {dataJumNetwork && (
+                <div className="flex flex-col p-3 font-bold text-sm">
+                  <div className="P-3 m-1">
+                    Ongoing = {dataJumNetwork.Ongoing} Project
+                  </div>
+                  <div className="P-3 m-1">
+                    Finished = {dataJumNetwork.Finished} Project
+                  </div>
+                </div>
+              )}
+              {dataNetworkTotal && (
+                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                  <div className="P-3 m-1">
+                    Total : {dataNetworkTotal} Project
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex w-full mt-1 items-center justify-center">
-        <div className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm">
-          <div className="w-[770px] rounded-box">
+        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 ml-2 shadow-lg">
+        <div className="w-[770px] rounded-box">
             <h1 className="font-bold p-4">PROJECT SERVER BERDASARKAN STATUS</h1>
             <div className="flex items-center justify-center w-full my-4">
               {dataStatusServer ? (
@@ -440,13 +417,13 @@ const Page = () => {
                 <p>No data available</p>
               )}
             </div>
-            <div className="w-full flex justify-between items-end pr-4">
+            <div className="w-full flex justify-between items-end mt-24">
               {dataPersentaseServerStatus && (
-                <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                  <div className="m-1">
+                <div className="flex flex-col p-3 mt-20 font-bold text-sm">
+                  <div className="mt-20">
                     Ongoing = {dataJumServer.Ongoing} Project
                   </div>
-                  <div className="m-1">
+                  <div className="mt-1">
                     Finished = {dataJumServer.Finished} Project
                   </div>
                 </div>
