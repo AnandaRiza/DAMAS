@@ -41,58 +41,51 @@ const Sidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  return (
-    <div className="flex">
-      {/* Sidebar */}
-      <div
-        // Conditional class based on isOpen
-        // state to control width and visibility
-        className={`text-black 
-                  min-h-screen transition-all
-                  duration-300 z-10 rounded
-                  ${isOpen ? "w-full" : "w-0 overflow-hidden"}`}
-      >
-        <div className="bg-[#00A6B4]/[0.5] text-w w-full h-full p-4 ml-4 mt-3 rounded-xl shadow-r-md">
-          <div className="collapse collapse-arrow ">
-            <div>
-              <div>
-                {(IsOperatorDev() || IsSupervisor()) && (
-                  <div
-                    tabIndex={0}
-                    className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
-                  >
-                    <input type="checkbox" className="peer" />
-
-                    {/* start button Dev */}
-                    <div className="collapse-title text-xl font-bold flex items-center">
-                      <div className="mr-2">
-                        <FaProjectDiagram />
-                      </div>
-                      Project
-                    </div>
-                    <div className="collapse-content">
-                      {(IsOperatorDev() || IsSupervisor() || IsOperatorOps) && (
-                        <div>
-                          <Link href="/main/development/home">
-                            <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                              <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                Project Dashboard
-                              </button>
+    return (
+        <div
+            className={`fixed top-0 flex w-64 transition-width duration-300 h-full bg-[#00A6B4]/[0.5] text-w
+                 p-4 ml-4 mt-20 rounded-xl shadow-r-md`}
+        >
+            <div className={`flex flex-col w-full`}>
+                <div className="collapse collapse-arrow">
+                    <div>
+                        {(IsOperatorDev() || IsSupervisor()) && (
+                            <div
+                                tabIndex={0}
+                                className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
+                            >
+                                <input type="checkbox" className="peer" />
+                                <div className="collapse-title text-xl font-bold flex items-center">
+                                    <div className="mr-2">
+                                        <FaProjectDiagram />
+                                    </div>
+                                    List Project
+                                </div>
+                                <div className="collapse-content">
+                                    {(IsOperatorDev() ||
+                                        IsSupervisor() ||
+                                        IsOperatorOps) && (
+                                        <div>
+                                            <Link href="/main/development/home">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        Project Dashboard
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            <hr className="my-4 border-gray-300" />
+                                        </div>
+                                    )}
+                                    <Link href="/main/development">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                All Project
+                                            </button>
+                                        </div>
+                                    </Link>
+                                </div>
                             </div>
-                          </Link>
-                          <hr className="my-4 border-gray-300" />
-                        </div>
-                      )}
-                      <Link href="/main/development">
-                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                          <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                            All Project
-                          </button>
-                        </div>
-                      </Link>
-                    </div>
-                  </div>
-                )}
+                        )}
 
                 {/* End Button Dev */}
 
@@ -207,12 +200,12 @@ const Sidebar = () => {
                   >
                     <input type="checkbox" className="peer" />
 
-                    <div className="collapse-title text-xl  font-bold flex items-center">
-                      <div className="mr-2">
-                        <FaTools />
-                      </div>
-                      Logistic
-                    </div>
+                                <div className="collapse-title text-xl  font-bold flex items-center">
+                                    <div className="mr-2">
+                                        <FaTools />
+                                    </div>
+                                    Memo
+                                </div>
 
                     <div className="collapse-content">
                       <div>
