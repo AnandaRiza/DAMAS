@@ -6,7 +6,7 @@ import Body from "@/components/main_body"
 const page = () => {
   return (
       <>
-      <Header />
+      {/* <Header /> */}
       <Body />
       
     </>

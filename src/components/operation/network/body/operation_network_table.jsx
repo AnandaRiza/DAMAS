@@ -1,5 +1,5 @@
 "use client";
-import { IsNetworkOperator, IsOperator, IsOperatorOps } from "@/validation/validateGroupAkses";
+import { IsNetworkOperator, IsOperator, IsOperatorOps, IsSupervisor } from "@/validation/validateGroupAkses";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -212,7 +212,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
                 {getDisplayName(item)}
               </th>
             ))}
-            {(IsNetworkOperator() || IsOperatorOps()) && action && (
+            {(IsNetworkOperator() || IsOperatorOps() || IsSupervisor()) && action && (
               <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                 Edit
               </th>
@@ -272,7 +272,7 @@ const operation_network_table = ({ headers, data, action, link }) => {
                   </td>
                 ))}
 
-                {(IsOperatorOps() || IsNetworkOperator()) && action && (
+                {(IsOperatorOps() || IsNetworkOperator() || IsSupervisor()) && action && (
                   <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                     <button
                       type="button"

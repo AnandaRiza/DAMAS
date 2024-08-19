@@ -37,6 +37,7 @@ import {
   IsSkseOperator,
   IsSupervisor,
 } from "@/validation/validateGroupAkses";
+ 
 import { CiMemoPad } from "react-icons/ci";
 
 const Sidebar = () => {
@@ -46,60 +47,54 @@ const Sidebar = () => {
   const [IsOpsMonitorSystemShow, setIsOpsMonitorSystemShow] = useState(false);
   const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] = useState(false);
   const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
+ 
+ 
   return (
-    <div className="bg-[#00A6B4]/[0.5] text-w w-full h-full p-4 ml-4 mt-3 rounded-xl shadow-r-md">
-      <div className="collapse collapse-arrow ">
-        <div>
+    <div className={`flex w-64 transition-width duration-300 bg-[#00A6B4]/[0.5] text-w h-full p-4 ml-4 mt-3 rounded-xl shadow-r-md`}>
+      <div className={`flex flex-col w-full`}>
+        
+        <div className="collapse collapse-arrow">
           <div>
-            {(IsOperatorDev() || IsSupervisor() || IsOperatorOps) && (
+            {(IsOperatorDev() || IsSupervisor()) && (
               <div
                 tabIndex={0}
                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
               >
                 <input type="checkbox" className="peer" />
-
-                                {/* start button Dev */}
-                                <div className="collapse-title text-xl font-bold flex items-center">
-                                    <div className="mr-2">
-                                        <FaProjectDiagram />
-                                    </div>
-                                    Project
-                                </div>
-                                <div className="collapse-content">
-                                    {(IsOperatorDev() ||
-                            IsSupervisor() || IsOperatorOps) && (
-                                        <div>
-                                            <Link href="/main/development/home">
-                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                                        Project Dashboard 
-                                                    </button>
-                                                </div>
-                                            </Link>
-                                            <hr className="my-4 border-gray-300" />
-                                        </div>
-                                    )}
-                                    <Link href="/main/development">
-                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                                All Project
-                                            </button>
+                <div className="collapse-title text-xl font-bold flex items-center">
+                  <div className="mr-2">
+                    <FaProjectDiagram />
+                  </div>
+                  Project
+                </div>
+                <div className="collapse-content">
+                  {(IsOperatorDev() || IsSupervisor() || IsOperatorOps) && (
+                    <div>
+                      <Link href="/main/development/home">
+                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                          <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                            Project Dashboard
+                          </button>
+                        </div>
+                      </Link>
+                      <hr className="my-4 border-gray-300" />
+                    </div>
+                  )}
+                  <Link href="/main/development">
+                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                      <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                        All Project
+                      </button>
                                         </div>
                                     </Link>
                                 </div>
                             </div>
                         )}
-
+ 
             {/* End Button Dev */}
-
+ 
             {/* Start New Operation */}
-
+ 
             {(IsSupervisor() ||
               IsOperationSupervisor() ||
               IsNetworkOperator() ||
@@ -114,7 +109,7 @@ const Sidebar = () => {
                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
               >
                 <input type="checkbox" className="peer" />
-
+ 
                 {/* start button NEWOP */}
                 <div className="collapse-title text-xl font-bold flex items-center">
                   <div className="mr-2">
@@ -122,7 +117,7 @@ const Sidebar = () => {
                   </div>
                   Operation
                 </div>
-
+ 
                 <div className="collapse-content">
                   {(IsOperationSupervisor() ||
                     IsNetworkOperator() ||
@@ -131,7 +126,7 @@ const Sidebar = () => {
                     IsItmoOperator() ||
                     IsItsecurityOperator() ||
                     IsItsupportOperator() ||
-                    IsOperatorOps()) && (
+                    IsOperatorOps() || IsSupervisor()) && (
                     <div>
                       <Link href="/main/operation/general">
                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -143,7 +138,7 @@ const Sidebar = () => {
                       <hr className="my-4 border-gray-300" />
                     </div>
                   )}
-
+ 
                   {(IsOperationSupervisor() ||
                     IsNetworkOperator() ||
                     IsServerOperator() ||
@@ -164,7 +159,7 @@ const Sidebar = () => {
                       <hr className="my-4 border-gray-300" />
                     </div>
                   )}
-
+ 
                   <Link href="/main/operation/general/allproject">
                     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                       <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -172,7 +167,7 @@ const Sidebar = () => {
                       </button>
                     </div>
                   </Link>
-
+ 
                   {(IsOperationSupervisor() ||
                     IsNetworkOperator() ||
                     IsServerOperator() ||
@@ -180,7 +175,7 @@ const Sidebar = () => {
                     IsItmoOperator() ||
                     IsItsecurityOperator() ||
                     IsItsupportOperator() ||
-                    IsOperatorOps()) && (
+                    IsOperatorOps() || IsSupervisor()) && (
                     <div>
                       <hr className="my-4 border-gray-300" />
                       <Link href="/main/operation/general/createproject">
@@ -195,30 +190,29 @@ const Sidebar = () => {
                 </div>
               </div>
             )}
-
+ 
             {/* End Button NEW OP */}
-
+ 
             {/* start button Logistic */}
             {(IsLogisticSupervisor() ||
               IsLogisticOperator() ||
               IsSupervisor() ||
-              IsReviewerSupervisor() ||
-              IsOperatorOps) && (
+              IsReviewerSupervisor()) && (
               <div
                 tabIndex={0}
                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
               >
                 <input type="checkbox" className="peer" />
-
+ 
                 <div className="collapse-title text-xl  font-bold flex items-center">
                   <div className="mr-2">
                     <CiMemoPad  />
                   </div>
                   Memo
                 </div>
-
-  
-
+ 
+ 
+ 
                 <div className="collapse-content">
                 <div>
                 <Link href="/main/logistic/home">
@@ -230,7 +224,7 @@ const Sidebar = () => {
                   </Link>
                   <hr className="my-4 border-gray-300" />
                 </div>
-
+ 
                   {(IsLogisticOperator() || IsSupervisor()) && (
                     <div>
                       <Link href="/main/logistic/general/allproject">
@@ -243,7 +237,7 @@ const Sidebar = () => {
                       <hr className="my-4 border-gray-300" />
                     </div>
                   )}
-
+ 
                   <Link href="/main/logistic">
                     <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                       <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -251,12 +245,12 @@ const Sidebar = () => {
                       </button>
                     </div>
                   </Link>
-
+ 
                   {IsLogisticOperator() ||
                     (IsSupervisor() && (
                       <div>
                         <hr className="my-4 border-gray-300" />
-
+ 
                         <Link href="/main/logistic/createnewmemo">
                           <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                             <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -270,9 +264,9 @@ const Sidebar = () => {
               </div>
             )}
             {/* end button Logistic */}
-
+ 
             {/* start button Approvement */}
-
+ 
             {(IsSupervisor() ||
               IsDevSupervisor() ||
               IsPpoSupervisor() ||
@@ -285,7 +279,7 @@ const Sidebar = () => {
                 className="collapse collapse-arrow border border-base-300 bg-base-200"
               >
                 <input type="checkbox" className="peer" />
-
+ 
                 {/* start button Approval */}
                 <div className="collapse-title text-xl  font-bold flex items-center">
                   <div className="mr-2">
@@ -293,9 +287,9 @@ const Sidebar = () => {
                   </div>
                   Approval
                 </div>
-
+ 
                 <div className="collapse-content">
-                  {(IsLogisticSupervisor() || IsSupervisor()) && (
+                  {IsLogisticSupervisor() && (
                     <div>
                       <Link href="/main/status/approvelogistic">
                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -307,11 +301,11 @@ const Sidebar = () => {
                       {/* <hr className="my-4 border-gray-300" /> */}
                     </div>
                   )}
-
-                  {(IsReviewerSupervisor() || IsSupervisor()) && (
+ 
+                  {IsReviewerSupervisor() && (
                     <div>
                       <hr className="my-4 border-gray-300" />
-
+ 
                       <Link href="/main/status/approvelogistic_supervisor">
                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                           <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -322,7 +316,7 @@ const Sidebar = () => {
                       <hr className="my-4 border-gray-300" />
                     </div>
                   )}
-
+ 
                   {(IsSupervisor() || IsOperationSupervisor() || IsOperatorOps) && (
                     <div>
                       <Link href="/main/status/approveoperation/general/approval">
@@ -335,9 +329,9 @@ const Sidebar = () => {
                       {/* <hr className="my-4 border-gray-300" /> */}
                     </div>
                   )}
-
+ 
                   {/* start button Operation */}
-
+ 
                   {/* end button Operation */}
                 </div>
               </div>
@@ -346,8 +340,14 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
+       {/* <button
+        onClick={toggleSidebar}
+        className="absolute top-4 right-4 px-4 py-2 text-white bg-gray-800 rounded"
+      >
+        {isSidebarOpen ? 'Close' : 'Open'}
+      </button> */}
     </div>
   );
 };
-
+ 
 export default Sidebar;
