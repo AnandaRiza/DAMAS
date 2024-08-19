@@ -56,7 +56,7 @@ const Sidebar = () => {
       <div className="collapse collapse-arrow ">
         <div>
           <div>
-            {(IsOperatorDev() || IsSupervisor() || IsOperatorOps) && (
+            {(IsOperatorDev() || IsSupervisor()) && (
               <div
                 tabIndex={0}
                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
@@ -201,8 +201,7 @@ const Sidebar = () => {
             {(IsLogisticSupervisor() ||
               IsLogisticOperator() ||
               IsSupervisor() ||
-              IsReviewerSupervisor() ||
-              IsOperatorOps) && (
+              IsReviewerSupervisor()) && (
               <div
                 tabIndex={0}
                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
