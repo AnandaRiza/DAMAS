@@ -111,7 +111,7 @@ const ChartPie = () => {
         setDataJumProject(fetchedDataJumProject);
 
         const response3 = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jenisapp`
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memostype`
         );
         const fetchedData3 = response3.data;
 
