@@ -76,10 +76,10 @@ const ChartPie = () => {
                             label: "Project",
                             data: dataValues,
                             backgroundColor: [
-                                "#E6F69D",
-                                "#AADEA7",
+                      
+                                "#FEAE65",
                                 "#D9425D", //merah
-                                "#FAC78A",
+                                "#AADEA7",
                             ],
                         },
                     ],
