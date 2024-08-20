@@ -30,7 +30,6 @@ export const IsOperatorOps = () => {
         }
         return false;
     }
-
 };
 
 export const IsOperatorMemo = () => {
