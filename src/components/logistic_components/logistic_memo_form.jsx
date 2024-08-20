@@ -35,6 +35,13 @@ const MemoForm = () => {
     memo_terima: "",
   });
 
+  const [validationErrors, setValidationErrors] = useState({
+    memo_num: false,
+    memo_perihal: false,
+    memo_category: false,
+  });
+
+
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -72,6 +79,26 @@ const MemoForm = () => {
 
   
   const handleSubmit = async () => {
+    // Validate required fields
+    const newValidationErrors = {
+      memo_num: !formData.memo_num,
+      memo_perihal: !formData.memo_perihal,
+      memo_category: !formData.memo_category,
+    };
+
+    setValidationErrors(newValidationErrors);
+
+    // Check if there are any validation errors
+    if (Object.values(newValidationErrors).some(error => error)) {
+      Swal.fire({
+        title: 'Validation Error',
+        text: 'Please fill in all required fields.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
     const result = await Swal.fire({
       title: 'Are you sure?',
       text: "Do you really want to create this memo?",
@@ -96,12 +123,6 @@ const MemoForm = () => {
         ...formData,
         memo_createdBy: userid,
         userdomain: user.userdomain,
-        memo_category: formData.memo_category,
-        memo_surat_type: formData.memo_surat_type,
-        memo_masuk: formData.memo_masuk,
-        memo_keluar: formData.memo_keluar,
-        memo_terima: formData.memo_terima,
-        memo_doc_type: formData.memo_doc_type,
         memo_status: formData.memo_status, 
       };
   
@@ -229,7 +250,7 @@ const getMinDateTime = () => {
               htmlFor="memo_num"
               className="text-sm font-semibold text-gray-600"
             >
-              Nomor Memo
+              Nomor Memo*
             </label>
             <input
               type="text"
@@ -242,8 +263,9 @@ const getMinDateTime = () => {
                   memo_num: e.target.value,
                 })
               }
-              className="input input-bordered mt-1"
+              className={`input input-bordered mt-1 ${validationErrors.memo_num ? 'border-red-500' : ''}`}
             />
+            {validationErrors.memo_num && <p className="text-red-500 text-xs mt-1">This field is required</p>}
           </div>
 
           <div className="flex flex-col">
@@ -251,7 +273,7 @@ const getMinDateTime = () => {
               htmlFor="memo_perihal"
               className="text-sm font-semibold text-gray-600"
             >
-              Perihal Memo
+              Perihal Memo*
             </label>
             <input
               type="text"
@@ -264,16 +286,17 @@ const getMinDateTime = () => {
                   memo_perihal: e.target.value,
                 })
               }
-              className="input input-bordered mt-1"
+              className={`input input-bordered mt-1 ${validationErrors.memo_perihal ? 'border-red-500' : ''}`}
             />
+            {validationErrors.memo_perihal && <p className="text-red-500 text-xs mt-1">This field is required</p>}
           </div>
 
           <div className="flex flex-col">
             <label
               htmlFor="memo_pic"
-              className="text-sm font-semibold text-[#0066AE]"
+              className="text-sm font-semibold"
             >
-              PIC <span className="text-red-500">*</span>
+              PIC 
             </label>
             {dataAllPic && (
               <>
@@ -386,12 +409,12 @@ const getMinDateTime = () => {
             )}
           </div> */}
 
-          <div className="flex flex-col">
+<div className="flex flex-col">
             <label
               htmlFor="memo_category"
               className="text-sm font-semibold text-gray-600"
             >
-              Kategori Memo
+              Kategori Memo*
             </label>
             <select
               type="text"
@@ -404,7 +427,7 @@ const getMinDateTime = () => {
                   memo_category: e.target.value,
                 })
               }
-              className="input input-bordered mt-1"
+              className={`input input-bordered mt-1 ${validationErrors.memo_category ? 'border-red-500' : ''}`}
             >
               <option value="" disabled>
                 Pilih Kategori Memo ...
@@ -412,6 +435,7 @@ const getMinDateTime = () => {
               <option value="Memo Masuk">Memo Masuk</option>
               <option value="Memo Keluar">Memo Keluar</option>
             </select>
+            {validationErrors.memo_category && <p className="text-red-500 text-xs mt-1">This field is required</p>}
           </div>
 
           <div className="flex flex-col">
@@ -560,13 +584,13 @@ const getMinDateTime = () => {
             </label>
             <input
               type="date"
-              id="memo_masuk"
-              name="memo_masuk"
-              value={formData.memo_masuk}
+              id="memo_terima"
+              name="memo_terima"
+              value={formData.memo_terima}
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  memo_masuk: e.target.value,
+                  memo_terima: e.target.value,
                 })
               }
               className="input input-bordered mt-1"

@@ -709,7 +709,7 @@ const DetailMemoPage = () => {
           </div>
         )}
         {/* File Upload Field */}
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <label
             htmlFor="memo_upload"
             className="text-sm font-semibold text-gray-600"
@@ -734,7 +734,7 @@ const DetailMemoPage = () => {
 Download: {decodeBase64(dataAllMemo.memo_upload)}              </button>
             </div>
           )}
-        </div>
+        </div> */}
         {/* Download Link */}
         {/* Error Handling */}
         {error && <p className="text-red-500">{error}</p>}

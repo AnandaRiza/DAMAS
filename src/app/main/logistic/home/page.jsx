@@ -1,8 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import dynamic from "next/dynamic";
-import PleaseWait from "@/components/PleaseWait";
 import {
     Chart as ChartJS,
     Title,
@@ -13,9 +11,10 @@ import {
     LinearScale,
     BarElement,
 } from "chart.js";
+import dynamic from "next/dynamic";
+import PleaseWait from "@/components/PleaseWait";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-// Register Chart.js components and plugins
 ChartJS.register(
     Title,
     Tooltip,
@@ -30,6 +29,7 @@ ChartJS.register(
 const PieChart = dynamic(
     () => import("react-chartjs-2").then((mod) => mod.Pie),
     { ssr: false }
+    
 );
 
 const BarChart = dynamic(
@@ -62,6 +62,7 @@ const LogisticMemoDashboard = () => {
 
                 const labels = Object.keys(fetchedData);
                 const dataValues = Object.values(fetchedData);
+                const total = dataValues.reduce((sum, value) => sum + value, 0);
 
                 setDataMemoStatus({
                     labels: labels,
@@ -77,35 +78,28 @@ const LogisticMemoDashboard = () => {
                             ],
                         },
                     ],
+                    total: total,
                 });
-
+                
                 const response3 = await axios.get(
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memostype`
                 );
                 const fetchedData3 = response3.data;
-
+                
                 const sortedData = Object.entries(fetchedData3)
                     .map(([type, count]) => ({ type, count }))
                     .sort((a, b) => b.count - a.count);
-
-                const totalCount = sortedData.reduce(
-                    (sum, item) => sum + item.count,
-                    0
-                );
-
+                
+                const totalCount = sortedData.reduce((sum, item) => sum + item.count, 0);
+                
                 setDataDocType({
-                    labels: sortedData.map((item) => item.type),
+                    labels: sortedData.map(item => item.type),
                     datasets: [
                         {
                             label: "Count",
-                            data: sortedData.map((item) => item.count),
+                            data: sortedData.map(item => item.count),
                             backgroundColor: [
-                                "#A9E399",
-                                "#6CAC46",
-                                "#DF9222",
-                                "#5989BE",
-                                "#FAC78A",
-                                "#7E3D78",
+                                "#A9E399", "#6CAC46", "#DF9222", "#5989BE", "#FAC78A", "#7E3D78"
                             ],
                         },
                     ],
@@ -119,6 +113,7 @@ const LogisticMemoDashboard = () => {
                 console.log(response4);
                 const labels4 = Object.keys(fetchedData4);
                 const dataValues4 = Object.values(fetchedData4);
+                const totalYear = dataValues4.reduce((sum, value) => sum + value, 0);
 
                 setDataYear({
                     labels: labels4,
@@ -134,21 +129,23 @@ const LogisticMemoDashboard = () => {
                             ],
                         },
                     ],
+                    total: totalYear,
                 });
 
                 const response5 = await axios.get(
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memocategory`
                 );
                 const fetchedData5 = response5.data;
-                console.log(response5);
 
-                // Filter out categories with a count of 0
+                // Filter out categories with a count of 0 and remove unnamed category
                 const filteredCategories = Object.entries(fetchedData5)
-                    .filter(([category, count]) => count > 0)
+                    .filter(([category, count]) => count > 0 && category.trim() !== "")
                     .reduce((acc, [category, count]) => {
                         acc[category] = count;
                         return acc;
                     }, {});
+
+                const totalCategory = Object.values(filteredCategories).reduce((a, b) => a + b, 0);
 
                 setDataCategory({
                     labels: Object.keys(filteredCategories),
@@ -156,13 +153,17 @@ const LogisticMemoDashboard = () => {
                         {
                             label: "Count",
                             data: Object.values(filteredCategories),
-                            backgroundColor: ["#FF6384", "#36A2EB"],
+                            backgroundColor: [
+                                "#FF6384",
+                                "#36A2EB",
+                                "#FFCE56",
+                                "#4BC0C0",
+                                "#9966FF",
+                                "#FF9F40",
+                            ],
                         },
                     ],
-                    total: Object.values(filteredCategories).reduce(
-                        (a, b) => a + b,
-                        0
-                    ),
+                    total: totalCategory,
                 });
             } catch (error) {
                 setError("Failed to fetch data");
@@ -176,30 +177,6 @@ const LogisticMemoDashboard = () => {
 
     if (loading) return <PleaseWait />;
     if (error) return <p>{error}</p>;
-
-    const chartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: "bottom",
-                labels: {
-                    boxWidth: 12,
-                    padding: 8,
-                    font: {
-                        size: 10,
-                    },
-                },
-            },
-            tooltip: {
-                callbacks: {
-                    label: function (context) {
-                        return context.label + ": " + context.raw;
-                    },
-                },
-            },
-        },
-    };
 
     const pieOptions = {
         plugins: {
@@ -262,19 +239,19 @@ const LogisticMemoDashboard = () => {
                 usePointStyle: true,
             },
             datalabels: {
-              display: true,
-              color: 'black',
-              font: {
-                  weight: 'bold',
-                  size: 14,
-              },
-              formatter: (value) => {
-                  return `${value}`;
-              },
-              anchor: 'center',
-              align: 'center',
-              padding: 5,
-          },
+                display: true,
+                color: 'black',
+                font: {
+                    weight: 'bold',
+                    size: 14,
+                },
+                formatter: (value) => {
+                    return `${value}`;
+                },
+                anchor: 'center',
+                align: 'center',
+                padding: 5,
+            },
         },
         scales: {
             x: {
@@ -293,7 +270,7 @@ const LogisticMemoDashboard = () => {
                 },
                 title: {
                     display: true,
-                    text: "Jenis Aplikasi",
+                    text: "Document Type",
                     color: "black",
                     font: {
                         size: 14,
@@ -349,107 +326,113 @@ const LogisticMemoDashboard = () => {
     };
 
     return (
-        <div className="grid grid-cols-2 gap-4 p-4">
-            {/* Memos by Status */}
-            <div className="card bg-white rounded-box p-4 shadow-lg">
-                <h1 className="font-bold text-lg mb-4">Memos by Status</h1>
-                <div className="h-64">
-                    {dataMemoStatus ? (
-                        <PieChart data={dataMemoStatus} options={pieOptions} />
-                    ) : (
-                        <p>No data available</p>
-                    )}
-                </div>
-                {/* {dataMemoStatus && (
-                    <div className="flex flex-wrap justify-center mt-4">
-                        {dataMemoStatus.labels.map((status, index) => (
-                            <div key={status} className="badge m-1 p-2">
-                                {status}:{" "}
-                                {dataMemoStatus.datasets[0].data[index]}
+        <div className="flex-grow justify-center items-center min-h-screen rounded-xl">
+            <div className="flex w-grow">
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
+                    <div className="w-[770px] rounded-box">
+                        <h1 className="font-bold p-4 items-center justify-center pb-0">
+                            MEMOS BY STATUS
+                        </h1>
+                        {dataMemoStatus ? (
+                            <div className="flex items-end justify-center h-[400px] relative">
+                                {dataMemoStatus.total && (
+                                    <div className="flex flex-col p-3 pl-8 m-1 font-bold text-base absolute left-0">
+                                        <div className="P-3 m-1 mt-4">
+                                            Total = {dataMemoStatus.total} Memos
+                                        </div>
+                                    </div>
+                                )}
+                                <div className="h-[450px] flex items-center">
+                                    <div
+                                        style={{
+                                            width: "800px",
+                                            height: "300px",
+                                            overflowX: "auto",
+                                        }}
+                                    >
+                                        <PieChart
+                                            data={dataMemoStatus}
+                                            options={pieOptions}
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                        ))}
+                        ) : (
+                            <p>No data available</p>
+                        )}
                     </div>
-                )} */}
-            </div>
-
-            {/* Memos by Document Type */}
-            <div className="card bg-white rounded-box p-4 shadow-lg">
-                <h1 className="font-bold text-lg mb-4">
-                    Memos by Document Type
-                </h1>
-                <div className="h-64">
-                    {dataDocType ? (
-                        <div className="w-full h-[300px] pl-12">
-                            <BarChart data={dataDocType} options={barOptions} />
+                </div>
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
+                    <div className="h-[50px] w-[770px] rounded-box">
+                        <h1 className="font-bold p-4">
+                            MEMOS BY DOCUMENT TYPE
+                        </h1>
+                        <div className="flex items-center justify-center w-full my-4">
+                            {dataDocType ? (
+                                <div className="w-full h-[332px] pl-6">
+                                    <BarChart
+                                        data={dataDocType}
+                                        options={barOptions}
+                                    />
+                                </div>
+                            ) : (
+                                <p>No data available</p>
+                            )}
                         </div>
-                    ) : (
-                        <p>No data available</p>
-                    )}
-                </div>
-                {dataDocType && (
-                    <div className="mt-4 overflow-x-auto">
-                        <table className="table-auto w-full">
-                            {/* <thead>
-                                <tr>
-                                    <th className="px-2 py-1">Document Type</th>
-                                    <th className="px-2 py-1">Count</th>
-                                </tr>
-                            </thead> */}
-                            <tbody>
-                                {/* <div className="flex flex-wrap justify-center mt-4">
-                        {dataDocType.labels.map((category, index) => (
-                            <div key={category} className="badge m-1 p-2">
-                                {category}: {dataDocType.datasets[0].data[index]}
-                            </div>
-                        ))}
-                    </div> */}
-                            </tbody>
-                        </table>
                     </div>
-                )}
+                </div>
             </div>
-
-            {/* Memos by Year */}
-            <div className="card bg-white rounded-box p-4 shadow-lg">
-                <h1 className="font-bold text-lg mb-4">Memos by Year</h1>
-                <div className="h-64">
-                    {dataYear ? (
-                        <PieChart data={dataYear} options={pieOptions} />
-                    ) : (
-                        <p>No data available</p>
-                    )}
-                </div>
-                {dataYear && (
-                    <div className="flex flex-wrap justify-center mt-4">
-                        {dataYear.labels.map((year, index) => (
-                            <div key={year} className="badge m-1 p-2">
-                                {year}: {dataYear.datasets[0].data[index]}
-                            </div>
-                        ))}
+            <div className="flex w-full mt-1 items-center justify-center">
+                <div className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm">
+                    <div className="w-[770px] rounded-box">
+                        <h1 className="font-bold p-4">
+                            MEMOS BY YEAR
+                        </h1>
+                        <div className="flex items-center justify-center w-full my-4">
+                            {dataYear ? (
+                                <div
+                                    style={{
+                                        width: "200px",
+                                        height: "300px",
+                                        overflowX: "auto",
+                                    }}
+                                >
+                                    <PieChart
+                                        data={dataYear}
+                                        options={pieOptions}
+                                    />
+                                </div>
+                            ) : (
+                                <p>No data available</p>
+                            )}
+                        </div>
                     </div>
-                )}
-            </div>
-
-            {/* Memos by Category */}
-            <div className="card bg-white rounded-box p-4 shadow-lg">
-                <h1 className="font-bold text-lg mb-4">Memos by Category</h1>
-                <div className="h-64">
-                    {dataCategory ? (
-                        <PieChart data={dataCategory} options={pieOptions} />
-                    ) : (
-                        <p>No data available</p>
-                    )}
                 </div>
-                {dataCategory && (
-                    <div className="flex flex-wrap justify-center mt-4">
-                        {dataCategory.labels.map((category, index) => (
-                            <div key={category} className="badge m-1 p-2">
-                                {category}:{" "}
-                                {dataCategory.datasets[0].data[index]}
-                            </div>
-                        ))}
+                <div className="card bg-white rounded-box mt-2 p-1 font-bold shadow-sm">
+                    <div className="w-[770px] rounded-box">
+                        <h1 className="font-bold p-4">
+                            MEMOS BY CATEGORY
+                        </h1>
+                        <div className="flex items-center justify-center w-full my-4">
+                            {dataCategory ? (
+                                <div
+                                    style={{
+                                        width: "600px",
+                                        height: "300px",
+                                        overflowX: "auto",
+                                    }}
+                                >
+                                    <PieChart
+                                        data={dataCategory}
+                                        options={pieOptions}
+                                    />
+                                </div>
+                            ) : (
+                                <p>No data available</p>
+                            )}
+                        </div>
                     </div>
-                )}
+                </div>
             </div>
         </div>
     );
