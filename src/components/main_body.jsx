@@ -304,7 +304,7 @@ const ChartPie = () => {
         tooltip: {
             callbacks: {
                 label: function (context) {
-                    return `<b>${context.dataset.label}: ${context.raw}</b>`;
+                    return `${context.dataset.label}: ${context.raw}`;
                 },
                 title: function () {
                     return "";
@@ -443,7 +443,7 @@ const pieOptions = {
 };
 
   return (
-    <div className="flex-grow justify-center items-center min-h-screen rounded-xl">
+    <div className="flex-grow justify-center items-center rounded-xl pb-10">
       <div className="flex w-grow">
         <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
           <div className=" w-[770px] rounded-box ">

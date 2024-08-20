@@ -176,7 +176,7 @@ const ChartPie = () => {
             tooltip: {
                 callbacks: {
                     label: function (context) {
-                        return `<b>${context.dataset.label}: ${context.raw}</b>`;
+                        return `${context.dataset.label}: ${context.raw}`;
                     },
                     title: function () {
                         return "";
@@ -315,10 +315,10 @@ const ChartPie = () => {
     };
 
     return (
-        <div className="flex-grow justify-center items-center min-h-screen rounded-xl">
+        <div className="flex-grow justify-center items-center rounded-xl pb-10">
             <div className="flex w-grow">
                 <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
-                    <div className=" w-[770px] rounded-box ">
+                    <div className=" w-[770px] rounded-box mx-auto">
                         <h1 className="font-bold p-4 items-center justify-center pb-0">
                             JUMLAH PROJECT BERDASARKAN STATUS
                         </h1>
@@ -352,7 +352,7 @@ const ChartPie = () => {
                     </div>
                 </div>
                 <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
-                    <div className="h-[50px] w-[770px] rounded-box">
+                    <div className="h-[50px] w-[770px] rounded-box mx-auto ">
                         <h1 className="font-bold p-4">
                             JUMLAH PROJECT BERDASARKAN JENIS APLIKASI
                         </h1>
@@ -373,7 +373,7 @@ const ChartPie = () => {
             </div>
             <div className="flex w-full mt-1 items-center justify-center">
                 <div className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm">
-                    <div className="w-[770px] rounded-box">
+                    <div className="w-[770px] rounded-box mx-auto">
                         <h1 className="font-bold p-4">
                             JUMLAH PROJECT BERDASARKAN JENIS PROJECT
                         </h1>

@@ -230,7 +230,7 @@ const LogisticMemoDashboard = () => {
             tooltip: {
                 callbacks: {
                     label: function (context) {
-                        return `<b>${context.dataset.label}: ${context.raw}</b>`;
+                        return `${context.dataset.label}: ${context.raw}`;
                     },
                     title: function () {
                         return "";
