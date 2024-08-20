@@ -141,6 +141,7 @@ const ChartPie = () => {
                         },
                     ],
                 });
+            
 
                 const response5 = await axios.get(
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/persentase2`

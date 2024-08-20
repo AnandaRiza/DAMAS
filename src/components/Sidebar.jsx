@@ -54,7 +54,7 @@ const Sidebar = () => {
                                     <div className="mr-2">
                                         <FaProjectDiagram />
                                     </div>
-                                    Project
+                                    List Project
                                 </div>
                                 <div className="collapse-content">
                                     {(IsOperatorDev() ||
@@ -201,7 +201,7 @@ const Sidebar = () => {
                                     <div className="mr-2">
                                         <FaTools />
                                     </div>
-                                    Logistic
+                                    Memo
                                 </div>
 
                                 <div className="collapse-content">
