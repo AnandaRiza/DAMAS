@@ -304,7 +304,7 @@ const Page = () => {
           boxWidth: 20,
           padding: 10,
           font: {
-            size: 12,
+            size: 14,
             family: "Arial",
           },
           color: "#333",
@@ -329,7 +329,7 @@ const Page = () => {
       <div className="w-full flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg mx-auto">
           <div className="">
             <h1 className="font-bold p-4">
-              PROJECT NETWORK BERDASARKAN JENIS KATEGORI
+              OPERATION - NETWORK
             </h1>
             <div className="flex items-center justify-center w-full my-4">
               {dataJenisApp ? (
@@ -401,7 +401,7 @@ const Page = () => {
         </div>
         <div className="grid w-full flex-grow card bg-white rounded-box mt-3 p-1 ml-2 shadow-lg mx-auto">
         <div className="w-full rounded-box">
-            <h1 className="font-bold p-4">PROJECT SERVER BERDASARKAN STATUS</h1>
+            <h1 className="font-bold p-4">OPERATION - SERVER</h1>
             <div className="flex items-center justify-center w-full my-4">
               {dataStatusServer ? (
                 <div

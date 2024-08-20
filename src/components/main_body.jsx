@@ -4,27 +4,27 @@ import axios from "axios";
 import dynamic from "next/dynamic";
 import PleaseWait from "@/components/PleaseWait";
 import {
-    Chart as ChartJS,
-    Title,
-    Tooltip,
-    Legend,
-    ArcElement,
-    CategoryScale,
-    LinearScale,
-    BarElement,
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
 // Register Chart.js components and plugins
 ChartJS.register(
-    Title,
-    Tooltip,
-    Legend,
-    ArcElement,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    ChartDataLabels
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ChartDataLabels
 );
 
 const PieChart = dynamic(
@@ -51,6 +51,8 @@ const ChartPie = () => {
   const [dataNetworkTotal, setDataNetworkTotal] = useState(null);
   const [dataServerTotal, setDataServerTotal] = useState(null);
   const [dataJenisProject, setDataJenisProject] = useState(null);
+  const [dataMemoType, setDataMemoType] = useState(null);
+
   const [dataPersentaseStatus, setDataPersentaseStatus] = useState(null);
   const [dataPersentaseNetworkStatus, setDataPersentaseNetworkStatus] =
     useState(null);
@@ -74,12 +76,12 @@ const ChartPie = () => {
       setDataJumServer(null);
       setDataJumProject(null);
       setDataJenisAppNetwork(null);
+      setDataMemoType(null);
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
         );
         const fetchedData = response.data;
-        console.log(response);
 
         const labels = Object.keys(fetchedData);
         const dataValues = Object.values(fetchedData);
@@ -90,10 +92,12 @@ const ChartPie = () => {
             {
               label: "Project",
               data: dataValues,
-              backgroundColor: [ "#E6F69D",
+              backgroundColor: [
+                "#E6F69D",
                 "#AADEA7",
                 "#D9425D", //merah
-                "#FAC78A",],
+                "#FAC78A",
+              ],
             },
           ],
         });
@@ -118,7 +122,7 @@ const ChartPie = () => {
         const labels3 = Object.keys(fetchedData3);
         const dataValues3 = Object.values(fetchedData3);
 
-        setDataJenisApp({
+        setDataMemoType({
           labels: labels3,
           datasets: [
             {
@@ -126,12 +130,12 @@ const ChartPie = () => {
               data: dataValues3,
               backgroundColor: [
                 "#F66D44",
-                                "#FEAE65",
-                                "#E6F69D",
-                                "#AADEA7",
-                                "#64C2A6",
-                                "#2D87BB",
-                                "#7CDDDD",
+                "#FEAE65",
+                "#E6F69D",
+                "#AADEA7",
+                "#64C2A6",
+                "#2D87BB",
+                "#7CDDDD",
               ],
             },
           ],
@@ -166,7 +170,17 @@ const ChartPie = () => {
         );
         const fetchedData6 = response6.data;
         setDataTotal(fetchedData6);
-        console.log(response6);
+
+        const response7 = await axios.get(
+          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jenisapp`
+        );
+        const fetchedData7 = response7.data;
+
+        const labels7 = Object.keys(fetchedData7);
+        const dataValues7 = Object.values(fetchedData7);
+
+        setDataJenisApp(fetchedData7);
+        console.log(response7);
 
         // OPS NETWORK
 
@@ -174,7 +188,6 @@ const ChartPie = () => {
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata`
         );
         const fetchedDataNetwork = response_network1.data;
-        console.log(response);
 
         const labels_network = Object.keys(fetchedDataNetwork);
         const dataValuesNetwork = Object.values(fetchedDataNetwork);
@@ -201,7 +214,6 @@ const ChartPie = () => {
         );
         const fetchedDataNetwork3 = response_network3.data;
         setDataNetworkTotal(fetchedDataNetwork3);
-        console.log(response_network3);
 
         const responseJumNetwork = await axios.get(
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata`
@@ -249,7 +261,6 @@ const ChartPie = () => {
           `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_jumlahdata`
         );
         const fetchedDataServer = response_server1.data;
-        console.log(response);
 
         const labels_server = Object.keys(fetchedDataServer);
         const dataValuesServer = Object.values(fetchedDataServer);
@@ -284,7 +295,6 @@ const ChartPie = () => {
         setDataJumServer(fetchedDataJumServer);
       } catch (error) {
         setError("Failed to fetch data");
-        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -298,195 +308,254 @@ const ChartPie = () => {
   const barOptions = {
     responsive: true,
     plugins: {
-        legend: {
-            display: false,
-        },
-        tooltip: {
-            callbacks: {
-                label: function (context) {
-                    return `${context.dataset.label}: ${context.raw}`;
-                },
-                title: function () {
-                    return "";
-                },
-            },
-            usePointStyle: true,
-        },
-        datalabels: {
-          display: true,
-          color: 'black',
-          font: {
-              weight: 'bold',
-              size: 14,
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            return `${context.dataset.label}: ${context.raw}`;
           },
-          formatter: (value) => {
-              return `${value}`;
+          title: function () {
+            return "";
           },
-          anchor: 'center',
-          align: 'center',
-          padding: 5,
+        },
+        usePointStyle: true,
+      },
+      datalabels: {
+        display: true,
+        color: "black",
+        font: {
+          weight: "bold",
+          size: 14,
+        },
+        formatter: (value) => {
+          return `${value}`;
+        },
+        anchor: "center",
+        align: "center",
+        padding: 5,
       },
     },
     scales: {
-        x: {
-            beginAtZero: true,
-            grid: {
-                display: false,
-            },
-            ticks: {
-                autoSkip: false,
-                maxRotation: 0,
-                minRotation: 0,
-                font: {
-                    size: 9,
-                },
-                padding: 0,
-            },
-            title: {
-                display: true,
-                text: "Jenis Aplikasi",
-                color: "black",
-                font: {
-                    size: 14,
-                    weight: "bold",
-                },
-            },
+      x: {
+        beginAtZero: true,
+        grid: {
+          display: false,
         },
-        y: {
-            beginAtZero: true,
-            grid: {
-                display: true,
-            },
-            ticks: {
-                stepSize: 1,
-                font: {
-                    size: 9,
-                },
-            },
-            title: {
-                display: true,
-                text: "Count",
-                color: "black",
-                font: {
-                    size: 14,
-                    weight: "bold",
-                },
-            },
+        ticks: {
+          autoSkip: false,
+          maxRotation: 0,
+          minRotation: 0,
+          font: {
+            size: 9,
+          },
+          padding: 0,
         },
+        title: {
+          display: true,
+          text: "Jenis Aplikasi",
+          color: "black",
+          font: {
+            size: 14,
+            weight: "bold",
+          },
+        },
+      },
+      y: {
+        beginAtZero: true,
+        grid: {
+          display: true,
+        },
+        ticks: {
+          stepSize: 1,
+          font: {
+            size: 9,
+          },
+        },
+        title: {
+          display: true,
+          text: "Count",
+          color: "black",
+          font: {
+            size: 14,
+            weight: "bold",
+          },
+        },
+      },
     },
     elements: {
-        bar: {
-            borderWidth: 1,
-            borderSkipped: false,
-            barThickness: 20,
-            maxBarThickness: 50,
-            minBarLength: 2,
-        },
+      bar: {
+        borderWidth: 1,
+        borderSkipped: false,
+        barThickness: 20,
+        maxBarThickness: 50,
+        minBarLength: 2,
+      },
     },
     layout: {
-        padding: {
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-        },
+      padding: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+      },
     },
     datasets: {
-        bar: {
-            barPercentage: 0.8,
-            categoryPercentage: 0.8,
-        },
+      bar: {
+        barPercentage: 0.8,
+        categoryPercentage: 0.8,
+      },
     },
-};
+  };
 
-const pieOptions = {
+  const pieOptions = {
     plugins: {
-        legend: {
-            display: false,
-            position: "bottom",
+      legend: {
+        display: false,
+        position: "bottom",
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            return context.label
+              ? `${context.label}: ${context.raw}`
+              : `${context.raw}`;
+          },
         },
-        tooltip: {
-            callbacks: {
-                label: function (context) {
-                    return context.label
-                        ? `${context.label}: ${context.raw}`
-                        : `${context.raw}`;
-                },
-            },
+      },
+      datalabels: {
+        display: true,
+        color: "black",
+        font: {
+          weight: "bold",
+          size: 16,
         },
-        datalabels: {
-            display: true,
-            color: "black",
-            font: {
-                weight: "bold",
-                size: 16,
-            },
-            formatter: (value, context) => {
-                const label =
-                    context.dataIndex !== undefined
-                        ? context.chart.data.labels[context.dataIndex]
-                        : "Unknown";
-                return `${label}: ${value}`;
-            },
-            anchor: "end",
-            align: "end",
-            padding: 5,
+        formatter: (value, context) => {
+          const label =
+            context.dataIndex !== undefined
+              ? context.chart.data.labels[context.dataIndex]
+              : "Unknown";
+          return `${label}: ${value}`;
         },
+        anchor: "end",
+        align: "end",
+        padding: 5,
+      },
     },
     responsive: true,
     maintainAspectRatio: false,
     layout: {
-        padding: {
-            top: 20,
-        },
+      padding: {
+        top: 20,
+      },
     },
-};
+  };
+
+  const pieOptions2 = {
+    plugins: {
+      legend: {
+        position: "top",
+        labels: {
+          boxWidth: 20,
+          padding: 10,
+          font: {
+            size: 14,
+            family: "Arial",
+          },
+          color: "#333",
+
+          maxWidth: 150,
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            return context.label + ": " + context.raw;
+          },
+        },
+      },
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+  };
 
   return (
     <div className="flex-grow justify-center items-center rounded-xl pb-10">
       <div className="flex w-grow">
         <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
-          <div className=" w-[770px] rounded-box ">
+          <div className=" w-[770px] rounded-box mx-auto">
             <h1 className="font-bold p-4 items-center justify-center">
               PROJECT
             </h1>
             {dataStatus ? (
-                            <div className="flex items-end justify-center h-[400px] relative">
-                                {dataTotal && (
-                                    <div className="flex flex-col p-3 pl-8 m-1 font-bold text-base absolute left-0">
-                                        <div className="P-3 m-1 mt-4">
-                                            Total = {dataTotal} Project
-                                        </div>
-                                    </div>
-                                )}
-                                <div className=" h-[450px] flex items-center">
-                                    <div
-                                        style={{
-                                            width: "500px",
-                                            height: "300px",
-                                            overflowX: "auto",
-                                        }}
-                                    >
-                                        <PieChart
-                                            data={dataStatus}
-                                            options={pieOptions}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <p>No data available</p>
-                        )}
+              <div className="flex items-center justify-center h-[400px]">
+                {dataTotal && dataJenisApp ? (
+                  <div className="flex flex-col pl-8 font-bold text-base">
+                    <div className="m-1">
+                      Core Bank System: {dataJenisApp["Core Bank System"]}{" "}
+                      Projects
                     </div>
+                    <div className="m-1">
+                      Aplikasi Lainnya : {dataJenisApp["Aplikasi Lainnya"]}{" "}
+                      Projects
+                    </div>
+                    {/* <div className="m-1">
+                                            Database: {dataJenisApp.Database}{" "}
+                                            Projects
+                                        </div> */}
+                    {/* <div className="m-1">
+                                            Download: {dataJenisApp.Download}{" "}
+                                            Projects
+                                        </div> */}
+                    {/* <div className="m-1">
+                                            Reporting: {dataJenisApp.Reporting}{" "}
+                                            Projects
+                                        </div> */}
+                    {/* <div className="m-1">
+                                            Utility atau BI, OJK :{" "}
+                                            {
+                                                dataJenisApp[
+                                                    "Utility atau BI, OJK"
+                                                ]
+                                            }{" "}
+                                            Projects
+                                        </div> */}
+                    <div className="m-1">
+                      eChannel : {dataJenisApp["eChannel (non website)"]}{" "}
+                      Projects
+                    </div>
+                    <div className="m-1 mt-4">Total: {dataTotal} Projects</div>
+                  </div>
+                ) : (
+                  <p>Data is loading or incomplete</p>
+                )}
+
+                <div className=" h-[450px] flex items-center">
+                  <div
+                    style={{
+                      width: "500px",
+                      height: "250px",
+                      overflowX: "auto",
+                    }}
+                  >
+                    <PieChart data={dataStatus} options={pieOptions} />
+                  </div>
                 </div>
-            
+              </div>
+            ) : (
+              <p>No data available</p>
+            )}
+          </div>
+        </div>
+
         <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
-          <div className="h-[50px] w-[770px] rounded-box">
+          <div className="h-[50px] w-[770px] rounded-box mx-auto">
             <h1 className="font-bold p-4">MEMO</h1>
             <div className="flex items-center justify-center w-full my-4">
-              {dataJenisApp ? (
+              {dataMemoType ? (
                 <div className="w-full h-[332px] pl-6">
-                  <BarChart data={dataJenisApp} options={barOptions} />
+                  <BarChart data={dataMemoType} options={barOptions} />
                 </div>
               ) : (
                 <p>No data available</p>
@@ -497,53 +566,11 @@ const pieOptions = {
       </div>
       {/* new new */}
 
-      <div className="flex w-grow">
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
-          <div className=" w-[770px] rounded-box ">
-            <h1 className="font-bold p-4 items-center justify-center">
-              OPERATION - NETWORK
-            </h1>
-            <div className="flex items-center justify-center w-full my-4">
-              {dataStatus ? (
-                <div
-                  style={{
-                    width: "500px",
-                    height: "250px",
-                    overflowX: "auto",
-                  }}
-                >
-                  <PieChart data={dataNetworkStatus} options={pieOptions} />
-                </div>
-              ) : (
-                <p>No data available</p>
-              )}
-            </div>
-            <div className="w-full flex justify-between items-end mt-20">
-              {dataJumNetwork && (
-                <div className="flex flex-col p-3 mt-14 font-bold text-sm">
-                  <div className="badge P-3 m-1">
-                    Ongoing = {dataJumNetwork.Ongoing} Project
-                  </div>
-                  <div className="badge P-3 m-1">
-                    Finished = {dataJumNetwork.Finished} Project
-                  </div>
-                  {/* <div className="badge p-3 m-1">Total : {dataNetworkTotal} Project</div> */}
-                </div>
-              )}
-              {dataNetworkTotal && (
-                <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                  <div className="P-3 m-1">
-                    Total : {dataNetworkTotal} Project
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
-          <div className="h-full w-full rounded-box">
+      <div className="flex w-full">
+        <div className="w-full flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg mx-auto">
+          <div className="">
             <h1 className="font-bold p-4">
-              PROJECT NETWORK BERDASARKAN JENIS KATEGORI
+              OPERATION - NETWORK
             </h1>
             <div className="flex items-center justify-center w-full my-4">
               {dataJenisAppNetwork ? (
@@ -613,53 +640,72 @@ const pieOptions = {
                 </p>
               </div>
             </div>
+            <div className="w-full flex justify-between items-end">
+              {dataJumNetwork && (
+                <div className="flex flex-col p-3 font-bold text-sm">
+                  <div className="P-3 m-1">
+                    Ongoing = {dataJumNetwork.Ongoing} Project
+                  </div>
+                  <div className="P-3 m-1">
+                    Finished = {dataJumNetwork.Finished} Project
+                  </div>
+                </div>
+              )}
+              {dataNetworkTotal && (
+                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                  <div className="P-3 m-1">
+                    Total : {dataNetworkTotal} Project
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="w-full flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg mx-auto ml-2">
+          <div className="">
+            <h1 className="font-bold p-4">
+              OPERATION - SERVER
+            </h1>
+            <div className="flex items-center justify-center w-full my-4">
+              {dataServerStatus ? (
+                <div
+                  style={{
+                    width: "500px",
+                    height: "250px",
+                    overflowX: "auto",
+                  }}
+                >
+                  <PieChart data={dataServerStatus} options={pieOptions2} />
+                </div>
+              ) : (
+                <p>No data available</p>
+              )}
+            </div>
+            <div className="w-full flex justify-between items-end mt-24">
+              {dataPersentaseServerStatus && (
+                <div className="flex flex-col p-3 mt-20 font-bold text-sm">
+                  <div className="mt-20">
+                    Ongoing = {dataJumServer.Ongoing} Project
+                  </div>
+                  <div className="mt-1">
+                    Finished = {dataJumServer.Finished} Project
+                  </div>
+                </div>
+              )}
+              {dataServerTotal && (
+                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                  <div className="P-3 m-1">
+                    Total : {dataServerTotal} Project
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
       {/* new */}
-      <div className="flex w-full mt-1 items-center justify-center">
-      <div className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm">
-        <div className=" w-[770px] rounded-box ">
-          <h1 className="font-bold p-4 items-center justify-center">
-            OPERATION - SERVER
-          </h1>
-          <div className="flex items-center justify-center w-full my-4">
-            {dataStatus ? (
-              <div
-                style={{
-                  width: "500px",
-                  height: "250px",
-                  overflowX: "auto",
-                }}
-              >
-                <PieChart data={dataServerStatus} options={pieOptions} />
-              </div>
-            ) : (
-              <p>No data available</p>
-            )}
-          </div>
-          <div className="w-full flex justify-between items-end pr-4">
-            {dataJumServer && (
-              <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                <div className="badge P-3 m-1">
-                  Ongoing = {dataJumServer.Ongoing} Project
-                </div>
-                <div className="badge P-3 m-1">
-                  Finished = {dataJumServer.Finished} Project
-                </div>
-                {/* <div className="badge p-3 m-1">Total : {dataServerTotal} Project</div> */}
-              </div>
-            )}
-            {dataServerTotal && (
-              <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                <div className="P-3 m-1">Total : {dataServerTotal} Project</div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-      </div>
     </div>
   );
 };
