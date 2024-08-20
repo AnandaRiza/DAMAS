@@ -14,10 +14,10 @@ const page = () => {
   
   return (
     <>
-      <div className="flex-grow justify-center items-center bg-white rounded-xl bg-[#FFFFFF] shadow-md">
+      <div className="flex-grow justify-center items-center bg-white rounded-xl  shadow-md">
         <div>
         <div className="text-[#0066AE] font-semibold ml-12 mt-3 py-2">
-            All Memo
+            Sorted Memo
           </div>
           <div>
             <span className="flex text-[#0066AE] ml-12 mt-2">
@@ -27,7 +27,7 @@ const page = () => {
                     <a>Home</a>
                   </li>
                   <li>
-                    <a>Logistic</a>
+                    <a>Memo</a>
                   </li>
                   <li>
                     <a>All Memo</a>

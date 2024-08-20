@@ -20,7 +20,7 @@ const HeaderLogistic = ({title}) => {
                   </li>
                   <li>
                   <Link href="/main/logistic">
-                    Logistic
+                    Memo
                     </Link>
                   </li>
                   <li>
