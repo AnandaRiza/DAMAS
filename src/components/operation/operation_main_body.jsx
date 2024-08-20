@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import dynamic from "next/dynamic";
+import PleaseWait from "@/components/PleaseWait";
 import {
   Chart as ChartJS,
   Title,
@@ -11,9 +13,9 @@ import {
   LinearScale,
   BarElement,
 } from "chart.js";
-import dynamic from "next/dynamic";
-import PleaseWait from "@/components/PleaseWait";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
+// Register Chart.js components and plugins
 ChartJS.register(
   Title,
   Tooltip,
@@ -21,7 +23,8 @@ ChartJS.register(
   ArcElement,
   CategoryScale,
   LinearScale,
-  BarElement
+  BarElement,
+  ChartDataLabels
 );
 
 const PieChart = dynamic(
@@ -216,124 +219,160 @@ const Page = () => {
   const barOptions = {
     responsive: true,
     plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        callbacks: {
-          label: function (context) {
-            return context.dataset.label + ": " + context.raw;
-          },
+        legend: {
+            display: false,
         },
+        tooltip: {
+            callbacks: {
+                label: function (context) {
+                    return `${context.dataset.label}: ${context.raw}`;
+                },
+                title: function () {
+                    return "";
+                },
+            },
+            usePointStyle: true,
+        },
+        datalabels: {
+          display: true,
+          color: 'black',
+          font: {
+              weight: 'bold',
+              size: 14,
+          },
+          formatter: (value) => {
+              return `${value}`;
+          },
+          anchor: 'center',
+          align: 'center',
+          padding: 5,
       },
     },
     scales: {
-      x: {
-        beginAtZero: true,
-        grid: {
-          display: false,
+        x: {
+            beginAtZero: true,
+            grid: {
+                display: false,
+            },
+            ticks: {
+                autoSkip: false,
+                maxRotation: 0,
+                minRotation: 0,
+                font: {
+                    size: 9,
+                },
+                padding: 0,
+            },
+            title: {
+                display: true,
+                text: "Jenis Aplikasi",
+                color: "black",
+                font: {
+                    size: 14,
+                    weight: "bold",
+                },
+            },
         },
-        ticks: {
-          autoSkip: false,
-          maxRotation: 0,
-          minRotation: 0,
-          font: {
-            size: 12,
-          },
-          padding: 5,
+        y: {
+            beginAtZero: true,
+            grid: {
+                display: true,
+            },
+            ticks: {
+                stepSize: 1,
+                font: {
+                    size: 9,
+                },
+            },
+            title: {
+                display: true,
+                text: "Count",
+                color: "black",
+                font: {
+                    size: 14,
+                    weight: "bold",
+                },
+            },
         },
-        title: {
-          display: true,
-          // text: "Kategori Aplikasi",
-          color: "#333",
-          font: {
-            size: 14,
-            weight: "bold",
-          },
-        },
-      },
-      y: {
-        beginAtZero: true,
-        grid: {
-          display: true,
-        },
-        ticks: {
-          stepSize: 1,
-        },
-        title: {
-          display: true,
-          text: "Count",
-          color: "#333",
-          font: {
-            size: 14,
-            weight: "bold",
-          },
-        },
-      },
     },
     elements: {
-      bar: {
-        borderWidth: 1,
-        borderSkipped: false,
-        barThickness: 20,
-        maxBarThickness: 50,
-        minBarLength: 2,
-      },
+        bar: {
+            borderWidth: 1,
+            borderSkipped: false,
+            barThickness: 20,
+            maxBarThickness: 50,
+            minBarLength: 2,
+        },
     },
     layout: {
-      padding: {
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-      },
+        padding: {
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+        },
     },
     datasets: {
-      bar: {
-        barPercentage: 0.7,
-        categoryPercentage: 0.7,
-      },
+        bar: {
+            barPercentage: 0.8,
+            categoryPercentage: 0.8,
+        },
     },
-  };
+};
 
   const pieOptions = {
     plugins: {
-      legend: {
-        position: "top",
-        labels: {
-          boxWidth: 20,
-          padding: 10,
-          font: {
-            size: 12,
-            family: "Arial",
-          },
-          color: "#333",
-
-          maxWidth: 150,
+        legend: {
+            display: false,
+            position: "bottom",
         },
-      },
-      tooltip: {
-        callbacks: {
-          label: function (context) {
-            return context.label + ": " + context.raw;
-          },
+        tooltip: {
+            callbacks: {
+                label: function (context) {
+                    return context.label
+                        ? `${context.label}: ${context.raw}`
+                        : `${context.raw}`;
+                },
+            },
         },
-      },
+        datalabels: {
+            display: true,
+            color: "black",
+            font: {
+                weight: "bold",
+                size: 16,
+            },
+            formatter: (value, context) => {
+                const label =
+                    context.dataIndex !== undefined
+                        ? context.chart.data.labels[context.dataIndex]
+                        : "Unknown";
+                return `${label}: ${value}`;
+            },
+            anchor: "end",
+            align: "end",
+            padding: 5,
+        },
     },
     responsive: true,
     maintainAspectRatio: false,
-  };
+    layout: {
+        padding: {
+            top: 20,
+        },
+    },
+};
   return (
     <div className="flex-grow justify-center items-center min-h-screen rounded-xl">
       <div className="flex w-full">
-      <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
-          <div className="h-full w-full rounded-box">
+      <div className="w-full flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg mx-auto">
+          <div className="">
             <h1 className="font-bold p-4">
-              PROJECT NETWORK BERDASARKAN JENIS KATEGORI
+              OPERATION - NETWORK
             </h1>
-            <div className="flex items-center justify-center w-full my-4">
+            <div className="flex items-center justify-center w-full my-4 mx-auto">
               {dataJenisApp ? (
-                <div className="w-full h-[332px] pl-6">
+                <div className="w-full h-[300px] pl-6 mx-auto justify-center">
                   <BarChart data={dataJenisApp} options={barOptions} />
                 </div>
                 
@@ -399,9 +438,9 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 ml-2 shadow-lg">
-        <div className="w-[770px] rounded-box">
-            <h1 className="font-bold p-4">PROJECT SERVER BERDASARKAN STATUS</h1>
+        <div className="grid w-full flex-grow card bg-white rounded-box mt-3 p-1 ml-2 shadow-lg mx-auto">
+        <div className="w-full rounded-box">
+            <h1 className="font-bold p-4">OPERATION - SERVER</h1>
             <div className="flex items-center justify-center w-full my-4">
               {dataStatusServer ? (
                 <div

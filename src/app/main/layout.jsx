@@ -2,7 +2,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/navbar";
 import Sidebar from "@/components/Sidebar";
-import Sidebarold from "@/components/Trash/sidebarterakhir";
 import { IsLogin } from "@/validation/IsLogin";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -39,7 +38,6 @@ const layout = ({ children }) => {
                         {/* <div className="hidden lg:block lg:w-[15%]"> */}
                         {/* <div className="relative w-relative"> */}
                         <Sidebar />
-                        {/* <Sidebarold /> */}
                     </div>
                     <div
                         className={`px-6 ${

@@ -464,16 +464,44 @@ const ChartPie = () => {
         },
     };
 
+    const pieOptions2 = {
+        plugins: {
+            legend: {
+                position: "top",
+                labels: {
+                    boxWidth: 20,
+                    padding: 10,
+                    font: {
+                        size: 14,
+                        family: "Arial",
+                    },
+                    color: "#333",
+
+                    maxWidth: 150,
+                },
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        return context.label + ": " + context.raw;
+                    },
+                },
+            },
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+    };
+
     return (
         <div className="flex-grow justify-center items-center rounded-xl pb-10">
-            <div className="flex w-grow">
+            <div className="flex w-grow mt-3">
                 <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
-                    <div className=" w-[770px] rounded-box mx-auto">
+                    <div className=" w-[770px] h-[380px] rounded-box mx-auto">
                         <h1 className="font-bold p-4 items-center justify-center">
                             PROJECT
                         </h1>
                         {dataStatus ? (
-                            <div className="flex items-center justify-center h-[400px]">
+                            <div className="flex items-center justify-center ">
                                 {dataTotal && dataJenisApp ? (
                                     <div className="flex flex-col pl-8 font-bold text-base">
                                         <div className="m-1">
@@ -517,18 +545,18 @@ const ChartPie = () => {
                                             Projects
                                         </div>
                                         <div className="m-1 mt-4">
-                                            Total: {dataTotal} Projects
+                                            Total : {dataTotal} Projects
                                         </div>
                                     </div>
                                 ) : (
                                     <p>Data is loading or incomplete</p>
                                 )}
 
-                                <div className=" h-[450px] flex items-center">
+                                <div className=" h-[300px] flex items-center">
                                     <div
                                         style={{
-                                            width: "500px",
-                                            height: "250px",
+                                            width: "400px",
+                                            height: "200px",
                                             overflowX: "auto",
                                         }}
                                     >
@@ -546,7 +574,7 @@ const ChartPie = () => {
                 </div>
 
                 <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
-                    <div className="h-[50px] w-[770px] rounded-box mx-auto">
+                    <div className="h-[50px] w-[600px] rounded-box mx-auto">
                         <h1 className="font-bold p-4">MEMO</h1>
                         <div className="flex items-center justify-center w-full my-4">
                             {dataMemoType ? (
@@ -565,72 +593,41 @@ const ChartPie = () => {
             </div>
             {/* new new */}
 
-            <div className="flex w-grow">
-                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
-                    <div className=" w-[770px] rounded-box mx-auto ">
-                        <h1 className="font-bold p-4 items-center justify-center">
-                            OPERATION - NETWORK
-                        </h1>
-                        <div className="flex items-center justify-center w-full my-4">
-                            {dataStatus ? (
-                                <div
-                                    style={{
-                                        width: "500px",
-                                        height: "250px",
-                                        overflowX: "auto",
-                                    }}
-                                >
-                                    <PieChart
-                                        data={dataNetworkStatus}
-                                        options={pieOptions}
-                                    />
-                                </div>
-                            ) : (
-                                <p>No data available</p>
-                            )}
-                        </div>
-                        <div className="w-full flex justify-between items-end mt-20">
-                            {dataJumNetwork && (
-                                <div className="flex flex-col p-3 mt-14 font-bold text-sm">
-                                    <div className="badge P-3 m-1">
-                                        Ongoing = {dataJumNetwork.Ongoing}{" "}
+            <div className="flex w-full">
+                <div className="w-full flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg mx-auto">
+                    <div className="mx-auto">
+                        <h1 className="font-bold p-4">OPERATION - NETWORK</h1>
+                        <div className="flex items-center justify-between w-full my-4">
+                            {dataJumNetwork && dataNetworkTotal && (
+                                <div className="flex flex-col p-3 font-bold text-md w-[35%]">
+                                    <div className="P-3 m-1">
+                                        Ongoing : {dataJumNetwork.Ongoing}{" "}
                                         Project
                                     </div>
-                                    <div className="badge P-3 m-1">
-                                        Finished = {dataJumNetwork.Finished}{" "}
+                                    <div className="P-3 m-1">
+                                        Finished : {dataJumNetwork.Finished}{" "}
                                         Project
                                     </div>
-                                    {/* <div className="badge p-3 m-1">Total : {dataNetworkTotal} Project</div> */}
-                                </div>
-                            )}
-                            {dataNetworkTotal && (
-                                <div className="flex flex-col p-3 m-1 font-bold text-sm">
                                     <div className="P-3 m-1">
                                         Total : {dataNetworkTotal} Project
                                     </div>
                                 </div>
                             )}
+
+                            <div className="w-[65%]">
+                                {dataJenisAppNetwork ? (
+                                    <div className="">
+                                        <BarChart
+                                            data={dataJenisAppNetwork}
+                                            options={barOptions}
+                                        />
+                                    </div>
+                                ) : (
+                                    <p>No data available</p>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
-                    <div className="h-[50px] w-[770px] rounded-box mx-auto">
-                        <h1 className="font-bold p-4">
-                            PROJECT NETWORK BERDASARKAN JENIS KATEGORI
-                        </h1>
-                        <div className="flex items-center justify-center w-full my-4">
-                            {dataJenisAppNetwork ? (
-                                <div className="w-full h-[332px] pl-6">
-                                    <BarChart
-                                        data={dataJenisAppNetwork}
-                                        options={barOptions}
-                                    />
-                                </div>
-                            ) : (
-                                <p>No data available</p>
-                            )}
-                        </div>
-                        <div className="flex flex-wrap justify-center ">
+                        <div className="flex flex-wrap justify-center mt-4 p-4">
                             <div className="bg-[#A9E399] border rounded-xl p-2 mr-2">
                                 <h2 className="font-bold">Others</h2>
                                 <hr />
@@ -723,21 +720,16 @@ const ChartPie = () => {
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* new */}
-            <div className="flex w-full mt-1 items-center justify-center">
-                <div className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm">
-                    <div className=" w-[770px] rounded-box mx-auto ">
-                        <h1 className="font-bold p-4 items-center justify-center">
-                            OPERATION - SERVER
-                        </h1>
+                <div className="w-full card bg-white rounded-box mt-3 p-1 shadow-lg mx-auto ml-2">
+                    <div className=" flex flex-col justify-between h-full">
+                        <h1 className="font-bold p-4">OPERATION - SERVER</h1>
                         <div className="flex items-center justify-center w-full my-4">
-                            {dataStatus ? (
+                            {dataServerStatus ? (
                                 <div
                                     style={{
-                                        width: "500px",
-                                        height: "250px",
+                                        width: "400px",
+                                        height: "200px",
                                         overflowX: "auto",
                                     }}
                                 >
@@ -750,18 +742,17 @@ const ChartPie = () => {
                                 <p>No data available</p>
                             )}
                         </div>
-                        <div className="w-full flex justify-between items-end pr-4">
-                            {dataJumServer && (
-                                <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                                    <div className="badge P-3 m-1">
+                        <div className="w-full flex justify-between items-end">
+                            {dataPersentaseServerStatus && (
+                                <div className="flex flex-col p-3 font-bold text-sm">
+                                    <div className="mt-1">
                                         Ongoing = {dataJumServer.Ongoing}{" "}
                                         Project
                                     </div>
-                                    <div className="badge P-3 m-1">
+                                    <div className="mt-1">
                                         Finished = {dataJumServer.Finished}{" "}
                                         Project
                                     </div>
-                                    {/* <div className="badge p-3 m-1">Total : {dataServerTotal} Project</div> */}
                                 </div>
                             )}
                             {dataServerTotal && (
@@ -775,6 +766,8 @@ const ChartPie = () => {
                     </div>
                 </div>
             </div>
+
+            {/* new */}
         </div>
     );
 };
