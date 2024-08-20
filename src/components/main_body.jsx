@@ -28,442 +28,507 @@ ChartJS.register(
 );
 
 const PieChart = dynamic(
-  () => import("react-chartjs-2").then((mod) => mod.Pie),
-  { ssr: false }
+    () => import("react-chartjs-2").then((mod) => mod.Pie),
+    { ssr: false }
 );
 
 const BarChart = dynamic(
-  () => import("react-chartjs-2").then((mod) => mod.Bar),
-  { ssr: false }
+    () => import("react-chartjs-2").then((mod) => mod.Bar),
+    { ssr: false }
 );
 
 const ChartPie = () => {
-  const [dataStatus, setDataStatus] = useState(null);
-  const [dataStatusCategory, setDataStatusCategory] = useState(null);
-  const [dataJumNetwork, setDataJumNetwork] = useState(null);
-  const [dataJumServer, setDataJumServer] = useState(null);
-  const [dataJumProject, setDataJumProject] = useState(null);
-  const [dataNetworkStatus, setDataNetworkStatus] = useState(null);
-  const [dataServerStatus, setDataServerStatus] = useState(null);
-  const [dataJenisApp, setDataJenisApp] = useState(null);
-  const [dataJenisAppNetwork, setDataJenisAppNetwork] = useState(null);
-  const [dataTotal, setDataTotal] = useState(null);
-  const [dataNetworkTotal, setDataNetworkTotal] = useState(null);
-  const [dataServerTotal, setDataServerTotal] = useState(null);
-  const [dataJenisProject, setDataJenisProject] = useState(null);
-  const [dataPersentaseStatus, setDataPersentaseStatus] = useState(null);
-  const [dataPersentaseNetworkStatus, setDataPersentaseNetworkStatus] =
-    useState(null);
-  const [dataPersentaseServerStatus, setDataPersentaseServerStatus] =
-    useState(null);
-  const [dataPersentaseJenisProject, setDataPersentaseJenisProject] =
-    useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+    const [dataStatus, setDataStatus] = useState(null);
+    const [dataStatusCategory, setDataStatusCategory] = useState(null);
+    const [dataJumNetwork, setDataJumNetwork] = useState(null);
+    const [dataJumServer, setDataJumServer] = useState(null);
+    const [dataJumProject, setDataJumProject] = useState(null);
+    const [dataNetworkStatus, setDataNetworkStatus] = useState(null);
+    const [dataServerStatus, setDataServerStatus] = useState(null);
+    const [dataJenisApp, setDataJenisApp] = useState(null);
+    const [dataJenisAppNetwork, setDataJenisAppNetwork] = useState(null);
+    const [dataTotal, setDataTotal] = useState(null);
+    const [dataNetworkTotal, setDataNetworkTotal] = useState(null);
+    const [dataServerTotal, setDataServerTotal] = useState(null);
+    const [dataJenisProject, setDataJenisProject] = useState(null);
+    const [dataMemoType, setDataMemoType] = useState(null);
 
-  useEffect(() => {
-    const getDataCharts = async () => {
-      setLoading(true);
-      setDataStatus(null);
-      setDataJenisApp(null);
-      setDataPersentaseStatus(null);
-      setDataJenisProject(null);
-      setDataPersentaseJenisProject(null);
-      setDataTotal(null);
-      setDataJumNetwork(null);
-      setDataJumServer(null);
-      setDataJumProject(null);
-      setDataJenisAppNetwork(null);
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
-        );
-        const fetchedData = response.data;
-        console.log(response);
+    const [dataPersentaseStatus, setDataPersentaseStatus] = useState(null);
+    const [dataPersentaseNetworkStatus, setDataPersentaseNetworkStatus] =
+        useState(null);
+    const [dataPersentaseServerStatus, setDataPersentaseServerStatus] =
+        useState(null);
+    const [dataPersentaseJenisProject, setDataPersentaseJenisProject] =
+        useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-        const labels = Object.keys(fetchedData);
-        const dataValues = Object.values(fetchedData);
+    useEffect(() => {
+        const getDataCharts = async () => {
+            setLoading(true);
+            setDataStatus(null);
+            setDataJenisApp(null);
+            setDataPersentaseStatus(null);
+            setDataJenisProject(null);
+            setDataPersentaseJenisProject(null);
+            setDataTotal(null);
+            setDataJumNetwork(null);
+            setDataJumServer(null);
+            setDataJumProject(null);
+            setDataJenisAppNetwork(null);
+            setDataMemoType(null);
+            try {
+                const response = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
+                );
+                const fetchedData = response.data;
 
-        setDataStatus({
-          labels: labels,
-          datasets: [
-            {
-              label: "Project",
-              data: dataValues,
-              backgroundColor: [ "#E6F69D",
-                "#AADEA7",
-                "#D9425D", //merah
-                "#FAC78A",],
-            },
-          ],
-        });
+                const labels = Object.keys(fetchedData);
+                const dataValues = Object.values(fetchedData);
 
-        const response2 = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/persentase`
-        );
-        const fetchedData2 = response2.data;
-        setDataPersentaseStatus(fetchedData2);
+                setDataStatus({
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "Project",
+                            data: dataValues,
+                            backgroundColor: [
+                                "#E6F69D",
+                                "#AADEA7",
+                                "#D9425D", //merah
+                                "#FAC78A",
+                            ],
+                        },
+                    ],
+                });
 
-        const responseJumProject = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
-        );
-        const fetchedDataJumProject = responseJumProject.data;
-        setDataJumProject(fetchedDataJumProject);
+                const response2 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/persentase`
+                );
+                const fetchedData2 = response2.data;
+                setDataPersentaseStatus(fetchedData2);
 
-        const response3 = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memostype`
-        );
-        const fetchedData3 = response3.data;
+                const responseJumProject = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
+                );
+                const fetchedDataJumProject = responseJumProject.data;
+                setDataJumProject(fetchedDataJumProject);
 
-        const labels3 = Object.keys(fetchedData3);
-        const dataValues3 = Object.values(fetchedData3);
+                const response3 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memostype`
+                );
+                const fetchedData3 = response3.data;
 
-        setDataJenisApp({
-          labels: labels3,
-          datasets: [
-            {
-              label: "Project",
-              data: dataValues3,
-              backgroundColor: [
-                "#F66D44",
+                const labels3 = Object.keys(fetchedData3);
+                const dataValues3 = Object.values(fetchedData3);
+
+                setDataMemoType({
+                    labels: labels3,
+                    datasets: [
+                        {
+                            label: "Project",
+                            data: dataValues3,
+                            backgroundColor: [
+                                "#F66D44",
                                 "#FEAE65",
                                 "#E6F69D",
                                 "#AADEA7",
                                 "#64C2A6",
                                 "#2D87BB",
                                 "#7CDDDD",
-              ],
-            },
-          ],
-        });
+                            ],
+                        },
+                    ],
+                });
 
-        const response4 = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jenisproject`
-        );
-        const fetchedData4 = response4.data;
-        const labels4 = Object.keys(fetchedData4);
-        const dataValues4 = Object.values(fetchedData4);
+                const response4 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jenisproject`
+                );
+                const fetchedData4 = response4.data;
+                const labels4 = Object.keys(fetchedData4);
+                const dataValues4 = Object.values(fetchedData4);
 
-        setDataJenisProject({
-          labels: labels4,
-          datasets: [
-            {
-              label: "Project",
-              data: dataValues4,
-              backgroundColor: ["#FEAE65", "#E6F69D"],
-            },
-          ],
-        });
+                setDataJenisProject({
+                    labels: labels4,
+                    datasets: [
+                        {
+                            label: "Project",
+                            data: dataValues4,
+                            backgroundColor: ["#FEAE65", "#E6F69D"],
+                        },
+                    ],
+                });
 
-        const response5 = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/persentase2`
-        );
-        const fetchedData5 = response5.data;
-        setDataPersentaseJenisProject(fetchedData5);
+                const response5 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/persentase2`
+                );
+                const fetchedData5 = response5.data;
+                setDataPersentaseJenisProject(fetchedData5);
 
-        const response6 = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/total`
-        );
-        const fetchedData6 = response6.data;
-        setDataTotal(fetchedData6);
-        console.log(response6);
+                const response6 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/total`
+                );
+                const fetchedData6 = response6.data;
+                setDataTotal(fetchedData6);
 
-        // OPS NETWORK
+                const response7 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jenisapp`
+                );
+                const fetchedData7 = response7.data;
 
-        const response_network1 = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata`
-        );
-        const fetchedDataNetwork = response_network1.data;
-        console.log(response);
+                const labels7 = Object.keys(fetchedData7);
+                const dataValues7 = Object.values(fetchedData7);
 
-        const labels_network = Object.keys(fetchedDataNetwork);
-        const dataValuesNetwork = Object.values(fetchedDataNetwork);
+                setDataJenisApp(fetchedData7);
+                console.log(response7);
 
-        setDataNetworkStatus({
-          labels: labels_network,
-          datasets: [
-            {
-              label: "Network",
-              data: dataValuesNetwork,
-              backgroundColor: ["#A9E399", "#5989BE", "#D9425D", "#FAC78A"],
-            },
-          ],
-        });
+                // OPS NETWORK
 
-        const response_network2 = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_persentase`
-        );
-        const fetchedDataNetwork2 = response_network2.data;
-        setDataPersentaseNetworkStatus(fetchedDataNetwork2);
+                const response_network1 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata`
+                );
+                const fetchedDataNetwork = response_network1.data;
 
-        const response_network3 = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_total`
-        );
-        const fetchedDataNetwork3 = response_network3.data;
-        setDataNetworkTotal(fetchedDataNetwork3);
-        console.log(response_network3);
+                const labels_network = Object.keys(fetchedDataNetwork);
+                const dataValuesNetwork = Object.values(fetchedDataNetwork);
 
-        const responseJumNetwork = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata`
-        );
-        const fetchedDataJumNetwork = responseJumNetwork.data;
-        setDataJumNetwork(fetchedDataJumNetwork);
+                setDataNetworkStatus({
+                    labels: labels_network,
+                    datasets: [
+                        {
+                            label: "Network",
+                            data: dataValuesNetwork,
+                            backgroundColor: [
+                                "#A9E399",
+                                "#5989BE",
+                                "#D9425D",
+                                "#FAC78A",
+                            ],
+                        },
+                    ],
+                });
 
-        const responseJenisAppNetwork = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_category`
-        );
-        const fetchedDataJenisAppNetwork = responseJenisAppNetwork.data;
+                const response_network2 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_persentase`
+                );
+                const fetchedDataNetwork2 = response_network2.data;
+                setDataPersentaseNetworkStatus(fetchedDataNetwork2);
 
-        const labelsJenisAppNetwork = Object.keys(fetchedDataJenisAppNetwork);
-        const dataValuesJenisAppNetwork = Object.values(
-          fetchedDataJenisAppNetwork
-        );
+                const response_network3 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_total`
+                );
+                const fetchedDataNetwork3 = response_network3.data;
+                setDataNetworkTotal(fetchedDataNetwork3);
 
-        setDataJenisAppNetwork({
-          labels: labelsJenisAppNetwork,
-          datasets: [
-            {
-              label: "Project",
-              data: dataValuesJenisAppNetwork,
-              backgroundColor: [
-                "#A9E399",
-                "#6CAC46",
-                "#DF9222",
-                "#5989BE",
-                "#FAC78A",
-                "#7E3D78",
-              ],
-            },
-          ],
-        });
+                const responseJumNetwork = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata`
+                );
+                const fetchedDataJumNetwork = responseJumNetwork.data;
+                setDataJumNetwork(fetchedDataJumNetwork);
 
-        const response_statuscategory = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata-status-category`
-        );
-        const fetchedDataStatusCategory = response_statuscategory.data;
-        setDataStatusCategory(fetchedDataStatusCategory);
+                const responseJenisAppNetwork = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_category`
+                );
+                const fetchedDataJenisAppNetwork = responseJenisAppNetwork.data;
 
-        //   OPS - SERVER
+                const labelsJenisAppNetwork = Object.keys(
+                    fetchedDataJenisAppNetwork
+                );
+                const dataValuesJenisAppNetwork = Object.values(
+                    fetchedDataJenisAppNetwork
+                );
 
-        const response_server1 = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_jumlahdata`
-        );
-        const fetchedDataServer = response_server1.data;
-        console.log(response);
+                setDataJenisAppNetwork({
+                    labels: labelsJenisAppNetwork,
+                    datasets: [
+                        {
+                            label: "Project",
+                            data: dataValuesJenisAppNetwork,
+                            backgroundColor: [
+                                "#A9E399",
+                                "#6CAC46",
+                                "#DF9222",
+                                "#5989BE",
+                                "#FAC78A",
+                                "#7E3D78",
+                            ],
+                        },
+                    ],
+                });
 
-        const labels_server = Object.keys(fetchedDataServer);
-        const dataValuesServer = Object.values(fetchedDataServer);
+                const response_statuscategory = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/network_jumlahdata-status-category`
+                );
+                const fetchedDataStatusCategory = response_statuscategory.data;
+                setDataStatusCategory(fetchedDataStatusCategory);
 
-        setDataServerStatus({
-          labels: labels_server,
-          datasets: [
-            {
-              label: "Server",
-              data: dataValuesServer,
-              backgroundColor: ["#A9E399", "#5989BE", "#D9425D", "#FAC78A"],
-            },
-          ],
-        });
+                //   OPS - SERVER
 
-        const response_server2 = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_persentase`
-        );
-        const fetchedDataServer2 = response_server2.data;
-        setDataPersentaseServerStatus(fetchedDataServer2);
+                const response_server1 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_jumlahdata`
+                );
+                const fetchedDataServer = response_server1.data;
 
-        const response_server3 = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_total`
-        );
-        const fetchedDataServer3 = response_server3.data;
-        setDataServerTotal(fetchedDataServer3);
+                const labels_server = Object.keys(fetchedDataServer);
+                const dataValuesServer = Object.values(fetchedDataServer);
 
-        const responseJumServer = await axios.get(
-          `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_jumlahdata`
-        );
-        const fetchedDataJumServer = responseJumServer.data;
-        setDataJumServer(fetchedDataJumServer);
-      } catch (error) {
-        setError("Failed to fetch data");
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getDataCharts();
-  }, []);
+                setDataServerStatus({
+                    labels: labels_server,
+                    datasets: [
+                        {
+                            label: "Server",
+                            data: dataValuesServer,
+                            backgroundColor: [
+                                "#A9E399",
+                                "#5989BE",
+                                "#D9425D",
+                                "#FAC78A",
+                            ],
+                        },
+                    ],
+                });
 
-  if (loading) return <PleaseWait />;
-  if (error) return <p>{error}</p>;
+                const response_server2 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_persentase`
+                );
+                const fetchedDataServer2 = response_server2.data;
+                setDataPersentaseServerStatus(fetchedDataServer2);
 
-  const barOptions = {
-    responsive: true,
-    plugins: {
-        legend: {
-            display: false,
-        },
-        tooltip: {
-            callbacks: {
-                label: function (context) {
-                    return `${context.dataset.label}: ${context.raw}`;
-                },
-                title: function () {
-                    return "";
-                },
-            },
-            usePointStyle: true,
-        },
-        datalabels: {
-          display: true,
-          color: 'black',
-          font: {
-              weight: 'bold',
-              size: 14,
-          },
-          formatter: (value) => {
-              return `${value}`;
-          },
-          anchor: 'center',
-          align: 'center',
-          padding: 5,
-      },
-    },
-    scales: {
-        x: {
-            beginAtZero: true,
-            grid: {
+                const response_server3 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_total`
+                );
+                const fetchedDataServer3 = response_server3.data;
+                setDataServerTotal(fetchedDataServer3);
+
+                const responseJumServer = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/server_jumlahdata`
+                );
+                const fetchedDataJumServer = responseJumServer.data;
+                setDataJumServer(fetchedDataJumServer);
+            } catch (error) {
+                setError("Failed to fetch data");
+            } finally {
+                setLoading(false);
+            }
+        };
+        getDataCharts();
+    }, []);
+
+    if (loading) return <PleaseWait />;
+    if (error) return <p>{error}</p>;
+
+    const barOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
                 display: false,
             },
-            ticks: {
-                autoSkip: false,
-                maxRotation: 0,
-                minRotation: 0,
-                font: {
-                    size: 9,
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        return `${context.dataset.label}: ${context.raw}`;
+                    },
+                    title: function () {
+                        return "";
+                    },
                 },
-                padding: 0,
+                usePointStyle: true,
             },
-            title: {
+            datalabels: {
                 display: true,
-                text: "Jenis Aplikasi",
                 color: "black",
                 font: {
-                    size: 14,
                     weight: "bold",
+                    size: 14,
+                },
+                formatter: (value) => {
+                    return `${value}`;
+                },
+                anchor: "center",
+                align: "center",
+                padding: 5,
+            },
+        },
+        scales: {
+            x: {
+                beginAtZero: true,
+                grid: {
+                    display: false,
+                },
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 0,
+                    minRotation: 0,
+                    font: {
+                        size: 9,
+                    },
+                    padding: 0,
+                },
+                title: {
+                    display: true,
+                    text: "Jenis Aplikasi",
+                    color: "black",
+                    font: {
+                        size: 14,
+                        weight: "bold",
+                    },
+                },
+            },
+            y: {
+                beginAtZero: true,
+                grid: {
+                    display: true,
+                },
+                ticks: {
+                    stepSize: 1,
+                    font: {
+                        size: 9,
+                    },
+                },
+                title: {
+                    display: true,
+                    text: "Count",
+                    color: "black",
+                    font: {
+                        size: 14,
+                        weight: "bold",
+                    },
                 },
             },
         },
-        y: {
-            beginAtZero: true,
-            grid: {
-                display: true,
+        elements: {
+            bar: {
+                borderWidth: 1,
+                borderSkipped: false,
+                barThickness: 20,
+                maxBarThickness: 50,
+                minBarLength: 2,
             },
-            ticks: {
-                stepSize: 1,
-                font: {
-                    size: 9,
+        },
+        layout: {
+            padding: {
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+            },
+        },
+        datasets: {
+            bar: {
+                barPercentage: 0.8,
+                categoryPercentage: 0.8,
+            },
+        },
+    };
+
+    const pieOptions = {
+        plugins: {
+            legend: {
+                display: false,
+                position: "bottom",
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        return context.label
+                            ? `${context.label}: ${context.raw}`
+                            : `${context.raw}`;
+                    },
                 },
             },
-            title: {
+            datalabels: {
                 display: true,
-                text: "Count",
                 color: "black",
                 font: {
-                    size: 14,
                     weight: "bold",
+                    size: 16,
                 },
-            },
-        },
-    },
-    elements: {
-        bar: {
-            borderWidth: 1,
-            borderSkipped: false,
-            barThickness: 20,
-            maxBarThickness: 50,
-            minBarLength: 2,
-        },
-    },
-    layout: {
-        padding: {
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-        },
-    },
-    datasets: {
-        bar: {
-            barPercentage: 0.8,
-            categoryPercentage: 0.8,
-        },
-    },
-};
-
-const pieOptions = {
-    plugins: {
-        legend: {
-            display: false,
-            position: "bottom",
-        },
-        tooltip: {
-            callbacks: {
-                label: function (context) {
-                    return context.label
-                        ? `${context.label}: ${context.raw}`
-                        : `${context.raw}`;
+                formatter: (value, context) => {
+                    const label =
+                        context.dataIndex !== undefined
+                            ? context.chart.data.labels[context.dataIndex]
+                            : "Unknown";
+                    return `${label}: ${value}`;
                 },
+                anchor: "end",
+                align: "end",
+                padding: 5,
             },
         },
-        datalabels: {
-            display: true,
-            color: "black",
-            font: {
-                weight: "bold",
-                size: 16,
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+            padding: {
+                top: 20,
             },
-            formatter: (value, context) => {
-                const label =
-                    context.dataIndex !== undefined
-                        ? context.chart.data.labels[context.dataIndex]
-                        : "Unknown";
-                return `${label}: ${value}`;
-            },
-            anchor: "end",
-            align: "end",
-            padding: 5,
         },
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-    layout: {
-        padding: {
-            top: 20,
-        },
-    },
-};
+    };
 
-  return (
-    <div className="flex-grow justify-center items-center rounded-xl pb-10">
-      <div className="flex w-grow">
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
-          <div className=" w-[770px] rounded-box ">
-            <h1 className="font-bold p-4 items-center justify-center">
-              PROJECT
-            </h1>
-            {dataStatus ? (
-                            <div className="flex items-end justify-center h-[400px] relative">
-                                {dataTotal && (
-                                    <div className="flex flex-col p-3 pl-8 m-1 font-bold text-base absolute left-0">
-                                        <div className="P-3 m-1 mt-4">
-                                            Total = {dataTotal} Project
+    return (
+        <div className="flex-grow justify-center items-center rounded-xl pb-10">
+            <div className="flex w-grow">
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
+                    <div className=" w-[770px] rounded-box mx-auto">
+                        <h1 className="font-bold p-4 items-center justify-center">
+                            PROJECT
+                        </h1>
+                        {dataStatus ? (
+                            <div className="flex items-center justify-center h-[400px]">
+                                {dataTotal && dataJenisApp ? (
+                                    <div className="flex flex-col pl-8 font-bold text-base">
+                                        <div className="m-1">
+                                            Core Bank System:{" "}
+                                            {dataJenisApp["Core Bank System"]}{" "}
+                                            Projects
+                                        </div>
+                                        <div className="m-1">
+                                            Aplikasi Lainnya :{" "}
+                                            {dataJenisApp["Aplikasi Lainnya"]}{" "}
+                                            Projects
+                                        </div>
+                                        {/* <div className="m-1">
+                                            Database: {dataJenisApp.Database}{" "}
+                                            Projects
+                                        </div> */}
+                                        {/* <div className="m-1">
+                                            Download: {dataJenisApp.Download}{" "}
+                                            Projects
+                                        </div> */}
+                                        {/* <div className="m-1">
+                                            Reporting: {dataJenisApp.Reporting}{" "}
+                                            Projects
+                                        </div> */}
+                                        {/* <div className="m-1">
+                                            Utility atau BI, OJK :{" "}
+                                            {
+                                                dataJenisApp[
+                                                    "Utility atau BI, OJK"
+                                                ]
+                                            }{" "}
+                                            Projects
+                                        </div> */}
+                                        <div className="m-1">
+                                            eChannel :{" "}
+                                            {
+                                                dataJenisApp[
+                                                    "eChannel (non website)"
+                                                ]
+                                            }{" "}
+                                            Projects
+                                        </div>
+                                        <div className="m-1 mt-4">
+                                            Total: {dataTotal} Projects
                                         </div>
                                     </div>
+                                ) : (
+                                    <p>Data is loading or incomplete</p>
                                 )}
+
                                 <div className=" h-[450px] flex items-center">
                                     <div
                                         style={{
                                             width: "500px",
-                                            height: "300px",
+                                            height: "250px",
                                             overflowX: "auto",
                                         }}
                                     >
@@ -479,188 +544,238 @@ const pieOptions = {
                         )}
                     </div>
                 </div>
-            
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
-          <div className="h-[50px] w-[770px] rounded-box">
-            <h1 className="font-bold p-4">MEMO</h1>
-            <div className="flex items-center justify-center w-full my-4">
-              {dataJenisApp ? (
-                <div className="w-full h-[332px] pl-6">
-                  <BarChart data={dataJenisApp} options={barOptions} />
-                </div>
-              ) : (
-                <p>No data available</p>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* new new */}
 
-      <div className="flex w-grow">
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
-          <div className=" w-[770px] rounded-box ">
-            <h1 className="font-bold p-4 items-center justify-center">
-              OPERATION - NETWORK
-            </h1>
-            <div className="flex items-center justify-center w-full my-4">
-              {dataStatus ? (
-                <div
-                  style={{
-                    width: "500px",
-                    height: "250px",
-                    overflowX: "auto",
-                  }}
-                >
-                  <PieChart data={dataNetworkStatus} options={pieOptions} />
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
+                    <div className="h-[50px] w-[770px] rounded-box mx-auto">
+                        <h1 className="font-bold p-4">MEMO</h1>
+                        <div className="flex items-center justify-center w-full my-4">
+                            {dataMemoType ? (
+                                <div className="w-full h-[332px] pl-6">
+                                    <BarChart
+                                        data={dataMemoType}
+                                        options={barOptions}
+                                    />
+                                </div>
+                            ) : (
+                                <p>No data available</p>
+                            )}
+                        </div>
+                    </div>
                 </div>
-              ) : (
-                <p>No data available</p>
-              )}
             </div>
-            <div className="w-full flex justify-between items-end mt-20">
-              {dataJumNetwork && (
-                <div className="flex flex-col p-3 mt-14 font-bold text-sm">
-                  <div className="badge P-3 m-1">
-                    Ongoing = {dataJumNetwork.Ongoing} Project
-                  </div>
-                  <div className="badge P-3 m-1">
-                    Finished = {dataJumNetwork.Finished} Project
-                  </div>
-                  {/* <div className="badge p-3 m-1">Total : {dataNetworkTotal} Project</div> */}
-                </div>
-              )}
-              {dataNetworkTotal && (
-                <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                  <div className="P-3 m-1">
-                    Total : {dataNetworkTotal} Project
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
-          <div className="h-full w-full rounded-box">
-            <h1 className="font-bold p-4">
-              PROJECT NETWORK BERDASARKAN JENIS KATEGORI
-            </h1>
-            <div className="flex items-center justify-center w-full my-4">
-              {dataJenisAppNetwork ? (
-                <div className="w-full h-[332px] pl-6">
-                  <BarChart data={dataJenisAppNetwork} options={barOptions} />
-                </div>
-              ) : (
-                <p>No data available</p>
-              )}
-            </div>
-            <div className="flex flex-wrap justify-center mt-4 p-4">
-              <div className="bg-[#A9E399] border rounded-xl p-2 mr-2">
-                <h2 className="font-bold">Others</h2>
-                <hr />
-                <p>Ongoing : {dataStatusCategory.OthersOngoing}</p>
-                <p>Finished : {dataStatusCategory.OthersFinished}</p>
-                <p className="font-semibold">
-                  Total ={" "}
-                  {dataStatusCategory.OthersOngoing +
-                    dataStatusCategory.OthersFinished}
-                </p>
-              </div>
-              <div className="bg-[#6CAC46] border rounded-xl p-2 mr-2">
-                <h2 className="font-bold">Jaringan DRC</h2>
-                <hr />
-                <p>Ongoing : {dataStatusCategory.JaringanDRCOngoing}</p>
-                <p>Finished : {dataStatusCategory.JaringanDRCFinished}</p>
-                <p className="font-semibold">
-                  Total ={" "}
-                  {dataStatusCategory.JaringanDRCOngoing +
-                    dataStatusCategory.JaringanDRCFinished}
-                </p>
-              </div>
-              <div className="bg-[#DF9222] border rounded-xl p-2 mr-2">
-                <h2 className="font-bold">Cloud</h2>
-                <hr />
-                <p>Ongoing : {dataStatusCategory.CloudOngoing}</p>
-                <p>Finished : {dataStatusCategory.CloudFinished}</p>
-                <p className="font-semibold">
-                  Total ={" "}
-                  {dataStatusCategory.CloudOngoing +
-                    dataStatusCategory.CloudFinished}
-                </p>
-              </div>
-              <div className="bg-[#5989BE] border rounded-xl p-2 mr-2">
-                <h2 className="font-bold">Jaringan Cabang</h2>
-                <hr />
-                <p>Ongoing : {dataStatusCategory.JaringanCabangOngoing}</p>
-                <p>Finished : {dataStatusCategory.JaringanCabangFinished}</p>
-                <p className="font-semibold">
-                  Total ={" "}
-                  {dataStatusCategory.JaringanCabangOngoing +
-                    dataStatusCategory.JaringanCabangFinished}
-                </p>
-              </div>
-              <div className="bg-[#FAC78A] border rounded-xl p-2 mr-2">
-                <h2 className="font-bold">Jaringan Kantor Pusat</h2>
-                <hr />
-                <p>Ongoing : {dataStatusCategory.JaringanKantorPusatOngoing}</p>
-                <p>
-                  Finished : {dataStatusCategory.JaringanKantorPusatFinished}
-                </p>
-                <p className="font-semibold">
-                  Total ={" "}
-                  {dataStatusCategory.JaringanKantorPusatOngoing +
-                    dataStatusCategory.JaringanKantorPusatFinished}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            {/* new new */}
 
-      {/* new */}
-      <div className="flex w-full mt-1 items-center justify-center">
-      <div className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm">
-        <div className=" w-[770px] rounded-box ">
-          <h1 className="font-bold p-4 items-center justify-center">
-            OPERATION - SERVER
-          </h1>
-          <div className="flex items-center justify-center w-full my-4">
-            {dataStatus ? (
-              <div
-                style={{
-                  width: "500px",
-                  height: "250px",
-                  overflowX: "auto",
-                }}
-              >
-                <PieChart data={dataServerStatus} options={pieOptions} />
-              </div>
-            ) : (
-              <p>No data available</p>
-            )}
-          </div>
-          <div className="w-full flex justify-between items-end pr-4">
-            {dataJumServer && (
-              <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                <div className="badge P-3 m-1">
-                  Ongoing = {dataJumServer.Ongoing} Project
+            <div className="flex w-grow">
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 mr-2 shadow-lg">
+                    <div className=" w-[770px] rounded-box mx-auto ">
+                        <h1 className="font-bold p-4 items-center justify-center">
+                            OPERATION - NETWORK
+                        </h1>
+                        <div className="flex items-center justify-center w-full my-4">
+                            {dataStatus ? (
+                                <div
+                                    style={{
+                                        width: "500px",
+                                        height: "250px",
+                                        overflowX: "auto",
+                                    }}
+                                >
+                                    <PieChart
+                                        data={dataNetworkStatus}
+                                        options={pieOptions}
+                                    />
+                                </div>
+                            ) : (
+                                <p>No data available</p>
+                            )}
+                        </div>
+                        <div className="w-full flex justify-between items-end mt-20">
+                            {dataJumNetwork && (
+                                <div className="flex flex-col p-3 mt-14 font-bold text-sm">
+                                    <div className="badge P-3 m-1">
+                                        Ongoing = {dataJumNetwork.Ongoing}{" "}
+                                        Project
+                                    </div>
+                                    <div className="badge P-3 m-1">
+                                        Finished = {dataJumNetwork.Finished}{" "}
+                                        Project
+                                    </div>
+                                    {/* <div className="badge p-3 m-1">Total : {dataNetworkTotal} Project</div> */}
+                                </div>
+                            )}
+                            {dataNetworkTotal && (
+                                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                                    <div className="P-3 m-1">
+                                        Total : {dataNetworkTotal} Project
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
-                <div className="badge P-3 m-1">
-                  Finished = {dataJumServer.Finished} Project
+                <div className="grid w-[90px] flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg">
+                    <div className="h-[50px] w-[770px] rounded-box mx-auto">
+                        <h1 className="font-bold p-4">
+                            PROJECT NETWORK BERDASARKAN JENIS KATEGORI
+                        </h1>
+                        <div className="flex items-center justify-center w-full my-4">
+                            {dataJenisAppNetwork ? (
+                                <div className="w-full h-[332px] pl-6">
+                                    <BarChart
+                                        data={dataJenisAppNetwork}
+                                        options={barOptions}
+                                    />
+                                </div>
+                            ) : (
+                                <p>No data available</p>
+                            )}
+                        </div>
+                        <div className="flex flex-wrap justify-center ">
+                            <div className="bg-[#A9E399] border rounded-xl p-2 mr-2">
+                                <h2 className="font-bold">Others</h2>
+                                <hr />
+                                <p>
+                                    Ongoing : {dataStatusCategory.OthersOngoing}
+                                </p>
+                                <p>
+                                    Finished :{" "}
+                                    {dataStatusCategory.OthersFinished}
+                                </p>
+                                <p className="font-semibold">
+                                    Total ={" "}
+                                    {dataStatusCategory.OthersOngoing +
+                                        dataStatusCategory.OthersFinished}
+                                </p>
+                            </div>
+                            <div className="bg-[#6CAC46] border rounded-xl p-2 mr-2">
+                                <h2 className="font-bold">Jaringan DRC</h2>
+                                <hr />
+                                <p>
+                                    Ongoing :{" "}
+                                    {dataStatusCategory.JaringanDRCOngoing}
+                                </p>
+                                <p>
+                                    Finished :{" "}
+                                    {dataStatusCategory.JaringanDRCFinished}
+                                </p>
+                                <p className="font-semibold">
+                                    Total ={" "}
+                                    {dataStatusCategory.JaringanDRCOngoing +
+                                        dataStatusCategory.JaringanDRCFinished}
+                                </p>
+                            </div>
+                            <div className="bg-[#DF9222] border rounded-xl p-2 mr-2">
+                                <h2 className="font-bold">Cloud</h2>
+                                <hr />
+                                <p>
+                                    Ongoing : {dataStatusCategory.CloudOngoing}
+                                </p>
+                                <p>
+                                    Finished :{" "}
+                                    {dataStatusCategory.CloudFinished}
+                                </p>
+                                <p className="font-semibold">
+                                    Total ={" "}
+                                    {dataStatusCategory.CloudOngoing +
+                                        dataStatusCategory.CloudFinished}
+                                </p>
+                            </div>
+                            <div className="bg-[#5989BE] border rounded-xl p-2 mr-2">
+                                <h2 className="font-bold">Jaringan Cabang</h2>
+                                <hr />
+                                <p>
+                                    Ongoing :{" "}
+                                    {dataStatusCategory.JaringanCabangOngoing}
+                                </p>
+                                <p>
+                                    Finished :{" "}
+                                    {dataStatusCategory.JaringanCabangFinished}
+                                </p>
+                                <p className="font-semibold">
+                                    Total ={" "}
+                                    {dataStatusCategory.JaringanCabangOngoing +
+                                        dataStatusCategory.JaringanCabangFinished}
+                                </p>
+                            </div>
+                            <div className="bg-[#FAC78A] border rounded-xl p-2 mr-2">
+                                <h2 className="font-bold">
+                                    Jaringan Kantor Pusat
+                                </h2>
+                                <hr />
+                                <p>
+                                    Ongoing :{" "}
+                                    {
+                                        dataStatusCategory.JaringanKantorPusatOngoing
+                                    }
+                                </p>
+                                <p>
+                                    Finished :{" "}
+                                    {
+                                        dataStatusCategory.JaringanKantorPusatFinished
+                                    }
+                                </p>
+                                <p className="font-semibold">
+                                    Total ={" "}
+                                    {dataStatusCategory.JaringanKantorPusatOngoing +
+                                        dataStatusCategory.JaringanKantorPusatFinished}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                {/* <div className="badge p-3 m-1">Total : {dataServerTotal} Project</div> */}
-              </div>
-            )}
-            {dataServerTotal && (
-              <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                <div className="P-3 m-1">Total : {dataServerTotal} Project</div>
-              </div>
-            )}
-          </div>
+            </div>
+
+            {/* new */}
+            <div className="flex w-full mt-1 items-center justify-center">
+                <div className="card bg-white rounded-box mt-2 p-1 mr-2 font-bold shadow-sm">
+                    <div className=" w-[770px] rounded-box mx-auto ">
+                        <h1 className="font-bold p-4 items-center justify-center">
+                            OPERATION - SERVER
+                        </h1>
+                        <div className="flex items-center justify-center w-full my-4">
+                            {dataStatus ? (
+                                <div
+                                    style={{
+                                        width: "500px",
+                                        height: "250px",
+                                        overflowX: "auto",
+                                    }}
+                                >
+                                    <PieChart
+                                        data={dataServerStatus}
+                                        options={pieOptions}
+                                    />
+                                </div>
+                            ) : (
+                                <p>No data available</p>
+                            )}
+                        </div>
+                        <div className="w-full flex justify-between items-end pr-4">
+                            {dataJumServer && (
+                                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                                    <div className="badge P-3 m-1">
+                                        Ongoing = {dataJumServer.Ongoing}{" "}
+                                        Project
+                                    </div>
+                                    <div className="badge P-3 m-1">
+                                        Finished = {dataJumServer.Finished}{" "}
+                                        Project
+                                    </div>
+                                    {/* <div className="badge p-3 m-1">Total : {dataServerTotal} Project</div> */}
+                                </div>
+                            )}
+                            {dataServerTotal && (
+                                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                                    <div className="P-3 m-1">
+                                        Total : {dataServerTotal} Project
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      </div>
-    </div>
-  );
+    );
 };
 export default ChartPie;
