@@ -27,7 +27,7 @@ import {
     IsSkseOperator,
     IsSupervisor,
 } from "@/validation/validateGroupAkses";
-
+ 
 const Sidebar = () => {
     const [isSdlcShow, setIsSdlcShow] = useState(false);
     const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
@@ -36,7 +36,7 @@ const Sidebar = () => {
     const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] =
         useState(false);
     const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
-
+ 
     return (
         <div
             className={`fixed top-0 flex w-64 transition-width duration-300 h-full bg-[#00A6B4]/[0.5] text-w
@@ -82,11 +82,11 @@ const Sidebar = () => {
                                 </div>
                             </div>
                         )}
-
+ 
                         {/* End Button Dev */}
-
+ 
                         {/* Start New Operation */}
-
+ 
                         {(IsSupervisor() ||
                             IsOperationSupervisor() ||
                             IsNetworkOperator() ||
@@ -101,7 +101,7 @@ const Sidebar = () => {
                                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
                             >
                                 <input type="checkbox" className="peer" />
-
+ 
                                 {/* start button NEWOP */}
                                 <div className="collapse-title text-xl font-bold flex items-center">
                                     <div className="mr-2">
@@ -109,7 +109,7 @@ const Sidebar = () => {
                                     </div>
                                     Operation
                                 </div>
-
+ 
                                 <div className="collapse-content">
                                     {(IsOperationSupervisor() ||
                                         IsNetworkOperator() ||
@@ -131,8 +131,8 @@ const Sidebar = () => {
                                             <hr className="my-4 border-gray-300" />
                                         </div>
                                     )}
-
-                                    {(IsOperationSupervisor() ||
+ 
+                                    {/* {(IsOperationSupervisor() ||
                                         IsNetworkOperator() ||
                                         IsServerOperator() ||
                                         IsDacenOperator() ||
@@ -150,8 +150,8 @@ const Sidebar = () => {
                                             </Link>
                                             <hr className="my-4 border-gray-300" />
                                         </div>
-                                    )}
-
+                                    )} */}
+ 
                                     <Link href="/main/operation/general/allproject">
                                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                             <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -159,7 +159,7 @@ const Sidebar = () => {
                                             </button>
                                         </div>
                                     </Link>
-
+ 
                                     {(IsOperationSupervisor() ||
                                         IsNetworkOperator() ||
                                         IsServerOperator() ||
@@ -182,9 +182,9 @@ const Sidebar = () => {
                                 </div>
                             </div>
                         )}
-
+ 
                         {/* End Button NEW OP */}
-
+ 
                         {/* start button Logistic */}
                         {(IsOperatorMemo() || IsSupervisor()) && (
                             <div
@@ -192,14 +192,14 @@ const Sidebar = () => {
                                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
                             >
                                 <input type="checkbox" className="peer" />
-
+ 
                                 <div className="collapse-title text-xl  font-bold flex items-center">
                                     <div className="mr-2">
                                         <FaTools />
                                     </div>
                                     Memo
                                 </div>
-
+ 
                                 <div className="collapse-content">
                                     <div>
                                         <Link href="/main/logistic/home">
@@ -224,7 +224,7 @@ const Sidebar = () => {
                                             <hr className="my-4 border-gray-300" />
                                         </div>
                                     )}
-
+ 
                                     <Link href="/main/logistic">
                                         <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                             <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -236,7 +236,7 @@ const Sidebar = () => {
                                     { IsOperatorMemo() && (
                                             <div>
                                                 <hr className="my-4 border-gray-300" />
-
+ 
                                                 <Link href="/main/logistic/createnewmemo">
                                                     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                                                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -250,9 +250,9 @@ const Sidebar = () => {
                             </div>
                         )}
                         {/* end button Logistic */}
-
+ 
                         {/* start button Approvement */}
-
+ 
                         {(IsSupervisor() ||
                             IsDevSupervisor() ||
                             IsPpoSupervisor() ||
@@ -264,7 +264,7 @@ const Sidebar = () => {
                                 className="collapse collapse-arrow border border-base-300 bg-base-200"
                             >
                                 <input type="checkbox" className="peer" />
-
+ 
                                 {/* start button Approval */}
                                 <div className="collapse-title text-xl  font-bold flex items-center">
                                     <div className="mr-2">
@@ -272,7 +272,7 @@ const Sidebar = () => {
                                     </div>
                                     Approval
                                 </div>
-
+ 
                                 <div className="collapse-content">
                                     {IsLogisticSupervisor() && (
                                         <div>
@@ -286,11 +286,11 @@ const Sidebar = () => {
                                             {/* <hr className="my-4 border-gray-300" /> */}
                                         </div>
                                     )}
-
+ 
                                     {IsReviewerSupervisor() && (
                                         <div>
                                             <hr className="my-4 border-gray-300" />
-
+ 
                                             <Link href="/main/status/approvelogistic_supervisor">
                                                 <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
                                                     <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
@@ -301,7 +301,7 @@ const Sidebar = () => {
                                             <hr className="my-4 border-gray-300" />
                                         </div>
                                     )}
-
+ 
                                     {(IsSupervisor() ||
                                         IsOperationSupervisor() ||
                                         IsOperatorOps) && (
@@ -316,9 +316,9 @@ const Sidebar = () => {
                                             {/* <hr className="my-4 border-gray-300" /> */}
                                         </div>
                                     )}
-
+ 
                                     {/* start button Operation */}
-
+ 
                                     {/* end button Operation */}
                                 </div>
                             </div>
@@ -336,5 +336,5 @@ const Sidebar = () => {
         </div>
     );
 };
-
+ 
 export default Sidebar;
