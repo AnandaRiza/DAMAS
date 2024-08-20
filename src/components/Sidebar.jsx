@@ -26,21 +26,16 @@ import {
     IsSkseOperator,
     IsSupervisor,
 } from "@/validation/validateGroupAkses";
-
+ 
 const Sidebar = () => {
-  const [isSdlcShow, setIsSdlcShow] = useState(false);
-  const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
-  const [isPpoSkseShow, setIsPpoSkseShow] = useState(false);
-  const [IsOpsMonitorSystemShow, setIsOpsMonitorSystemShow] = useState(false);
-  const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] = useState(false);
-  const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isOpen, setIsOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
+    const [isSdlcShow, setIsSdlcShow] = useState(false);
+    const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
+    const [isPpoSkseShow, setIsPpoSkseShow] = useState(false);
+    const [IsOpsMonitorSystemShow, setIsOpsMonitorSystemShow] = useState(false);
+    const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] =
+        useState(false);
+    const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
+ 
     return (
         <div
             className={`fixed top-0 flex w-64 transition-width duration-300 h-full bg-[#00A6B4]/[0.5] text-w
@@ -86,304 +81,267 @@ const Sidebar = () => {
                                 </div>
                             </div>
                         )}
-
-                {/* End Button Dev */}
-
-                {/* Start New Operation */}
-
-                {(IsSupervisor() ||
-                  IsOperationSupervisor() ||
-                  IsNetworkOperator() ||
-                  IsServerOperator() ||
-                  IsDacenOperator() ||
-                  IsItmoOperator() ||
-                  IsItsecurityOperator() ||
-                  IsItsupportOperator() ||
-                  IsOperatorOps()) && (
-                  <div
-                    tabIndex={0}
-                    className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
-                  >
-                    <input type="checkbox" className="peer" />
-
-                    {/* start button NEWOP */}
-                    <div className="collapse-title text-xl font-bold flex items-center">
-                      <div className="mr-2">
-                        <BsBuildingFillGear />
-                      </div>
-                      Operation
-                    </div>
-
-                    <div className="collapse-content">
-                      {(IsOperationSupervisor() ||
-                        IsNetworkOperator() ||
-                        IsServerOperator() ||
-                        IsDacenOperator() ||
-                        IsItmoOperator() ||
-                        IsItsecurityOperator() ||
-                        IsItsupportOperator() ||
-                        IsOperatorOps()) && (
-                        <div>
-                          <Link href="/main/operation/general">
-                            <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                              <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                Operation Dashboard
-                              </button>
+ 
+                        {/* End Button Dev */}
+ 
+                        {/* Start New Operation */}
+ 
+                        {(IsSupervisor() ||
+                            IsOperationSupervisor() ||
+                            IsNetworkOperator() ||
+                            IsServerOperator() ||
+                            IsDacenOperator() ||
+                            IsItmoOperator() ||
+                            IsItsecurityOperator() ||
+                            IsItsupportOperator() ||
+                            IsOperatorOps()) && (
+                            <div
+                                tabIndex={0}
+                                className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
+                            >
+                                <input type="checkbox" className="peer" />
+ 
+                                {/* start button NEWOP */}
+                                <div className="collapse-title text-xl font-bold flex items-center">
+                                    <div className="mr-2">
+                                        <BsBuildingFillGear />
+                                    </div>
+                                    Operation
+                                </div>
+ 
+                                <div className="collapse-content">
+                                    {(IsOperationSupervisor() ||
+                                        IsNetworkOperator() ||
+                                        IsServerOperator() ||
+                                        IsDacenOperator() ||
+                                        IsItmoOperator() ||
+                                        IsItsecurityOperator() ||
+                                        IsItsupportOperator() ||
+                                        IsOperatorOps() ||
+                                        IsSupervisor()) && (
+                                        <div>
+                                            <Link href="/main/operation/general">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        Operation Dashboard
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            <hr className="my-4 border-gray-300" />
+                                        </div>
+                                    )}
+ 
+                                    {(IsOperationSupervisor() ||
+                                        IsNetworkOperator() ||
+                                        IsServerOperator() ||
+                                        IsDacenOperator() ||
+                                        IsItmoOperator() ||
+                                        IsItsecurityOperator() ||
+                                        IsItsupportOperator() ||
+                                        IsOperatorOps() ||
+                                        IsSupervisor) && (
+                                        <div>
+                                            <Link href="/main/operation/general/myproject">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        My Project
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            <hr className="my-4 border-gray-300" />
+                                        </div>
+                                    )}
+ 
+                                    <Link href="/main/operation/general/allproject">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                All Project
+                                            </button>
+                                        </div>
+                                    </Link>
+ 
+                                    {(IsOperationSupervisor() ||
+                                        IsNetworkOperator() ||
+                                        IsServerOperator() ||
+                                        IsDacenOperator() ||
+                                        IsItmoOperator() ||
+                                        IsItsecurityOperator() ||
+                                        IsItsupportOperator() ||
+                                        IsOperatorOps() ||
+                                        IsSupervisor()) && (
+                                        <div>
+                                            <hr className="my-4 border-gray-300" />
+                                            <Link href="/main/operation/general/createproject">
+                                                <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        Create New Project
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                          </Link>
-                          <hr className="my-4 border-gray-300" />
-                        </div>
-                      )}
-
-                      {/* {(IsOperationSupervisor() ||
-                        IsNetworkOperator() ||
-                        IsServerOperator() ||
-                        IsDacenOperator() ||
-                        IsItmoOperator() ||
-                        IsItsecurityOperator() ||
-                        IsItsupportOperator() ||
-                        IsOperatorOps() ||
-                        IsSupervisor) && (
-                        <div>
-                          <Link href="/main/operation/general/myproject">
-                            <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                              <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                My Project
-                              </button>
-                            </div>
-                          </Link>
-                          <hr className="my-4 border-gray-300" />
-                        </div>
-                      )} */}
-
-                      <Link href="/main/operation/general/allproject">
-                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                          <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                            All Project
-                          </button>
-                        </div>
-                      </Link>
-
-                      {(IsOperationSupervisor() ||
-                        IsNetworkOperator() ||
-                        IsServerOperator() ||
-                        IsDacenOperator() ||
-                        IsItmoOperator() ||
-                        IsItsecurityOperator() ||
-                        IsItsupportOperator() ||
-                        IsOperatorOps()) && (
-                        <div>
-                          <hr className="my-4 border-gray-300" />
-                          <Link href="/main/operation/general/createproject">
-                            <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                              <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                Create New Project
-                              </button>
-                            </div>
-                          </Link>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* End Button NEW OP */}
-
-                {/* start button Logistic */}
-                {(IsLogisticSupervisor() ||
-                  IsLogisticOperator() ||
-                  IsSupervisor() ||
-                  IsReviewerSupervisor()) && (
-                  <div
-                    tabIndex={0}
-                    className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
-                  >
-                    <input type="checkbox" className="peer" />
-
+                        )}
+ 
+                        {/* End Button NEW OP */}
+ 
+                        {/* start button Logistic */}
+                        {(IsLogisticSupervisor() ||
+                            IsLogisticOperator() ||
+                            IsSupervisor() ||
+                            IsReviewerSupervisor()) && (
+                            <div
+                                tabIndex={0}
+                                className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
+                            >
+                                <input type="checkbox" className="peer" />
+ 
                                 <div className="collapse-title text-xl  font-bold flex items-center">
                                     <div className="mr-2">
                                         <FaTools />
                                     </div>
                                     Memo
                                 </div>
-
-                    <div className="collapse-content">
-                      <div>
-                        <Link href="/main/logistic/home">
-                          <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                              Memo Dashboard
-                            </button>
-                          </div>
-                        </Link>
-                        <hr className="my-4 border-gray-300" />
-                      </div>
-
-                      {(IsLogisticOperator() || IsSupervisor()) && (
-                        <div>
-                          <Link href="/main/logistic/general/allproject">
-                            <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                              <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                Sorted Memo
-                              </button>
+ 
+                                <div className="collapse-content">
+                                    <div>
+                                        <Link href="/main/logistic/home">
+                                            <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                    Memo Dashboard
+                                                </button>
+                                            </div>
+                                        </Link>
+                                        <hr className="my-4 border-gray-300" />
+                                    </div>
+ 
+                                    {(IsLogisticOperator() ||
+                                        IsSupervisor()) && (
+                                        <div>
+                                            <Link href="/main/logistic/general/allproject">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        Sorted Memo
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            <hr className="my-4 border-gray-300" />
+                                        </div>
+                                    )}
+ 
+                                    <Link href="/main/logistic">
+                                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                            <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                All Memo
+                                            </button>
+                                        </div>
+                                    </Link>
+ 
+                                    {IsLogisticOperator() ||
+                                        (IsSupervisor() && (
+                                            <div>
+                                                <hr className="my-4 border-gray-300" />
+ 
+                                                <Link href="/main/logistic/createnewmemo">
+                                                    <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            Create New Memo
+                                                        </button>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        ))}
+                                </div>
                             </div>
-                          </Link>
-                          <hr className="my-4 border-gray-300" />
-                        </div>
-                      )}
-
-                      <Link href="/main/logistic">
-                        <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                          <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                            All Memo
-                          </button>
-                        </div>
-                      </Link>
-
-                      {IsLogisticOperator() ||
-                        (IsSupervisor() && (
-                          <div>
-                            <hr className="my-4 border-gray-300" />
-
-                            <Link href="/main/logistic/createnewmemo">
-                              <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
-                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                  Create New Memo
-                                </button>
-                              </div>
-                            </Link>
-                          </div>
-                        ))}
+                        )}
+                        {/* end button Logistic */}
+ 
+                        {/* start button Approvement */}
+ 
+                        {(IsSupervisor() ||
+                            IsDevSupervisor() ||
+                            IsPpoSupervisor() ||
+                            IsLogisticSupervisor() ||
+                            IsOperationSupervisor() ||
+                            IsReviewerSupervisor() ||
+                            IsOperatorOps()) && (
+                            <div
+                                tabIndex={0}
+                                className="collapse collapse-arrow border border-base-300 bg-base-200"
+                            >
+                                <input type="checkbox" className="peer" />
+ 
+                                {/* start button Approval */}
+                                <div className="collapse-title text-xl  font-bold flex items-center">
+                                    <div className="mr-2">
+                                        <MdApproval />
+                                    </div>
+                                    Approval
+                                </div>
+ 
+                                <div className="collapse-content">
+                                    {IsLogisticSupervisor() && (
+                                        <div>
+                                            <Link href="/main/status/approvelogistic">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        Logistic Reviewer
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            {/* <hr className="my-4 border-gray-300" /> */}
+                                        </div>
+                                    )}
+ 
+                                    {IsReviewerSupervisor() && (
+                                        <div>
+                                            <hr className="my-4 border-gray-300" />
+ 
+                                            <Link href="/main/status/approvelogistic_supervisor">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        Logistic Supervisor
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            <hr className="my-4 border-gray-300" />
+                                        </div>
+                                    )}
+ 
+                                    {(IsSupervisor() ||
+                                        IsOperationSupervisor() ||
+                                        IsOperatorOps) && (
+                                        <div>
+                                            <Link href="/main/status/approveoperation/general/approval">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        Operation
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            {/* <hr className="my-4 border-gray-300" /> */}
+                                        </div>
+                                    )}
+ 
+                                    {/* start button Operation */}
+ 
+                                    {/* end button Operation */}
+                                </div>
+                            </div>
+                        )}
+                        {/* End Button Approvement */}
                     </div>
-                  </div>
-                )}
-                {/* end button Logistic */}
-
-                {/* start button Approvement */}
-
-                {(IsSupervisor() ||
-                  IsDevSupervisor() ||
-                  IsPpoSupervisor() ||
-                  IsLogisticSupervisor() ||
-                  IsOperationSupervisor() ||
-                  IsReviewerSupervisor() ||
-                  IsOperatorOps()) && (
-                  <div
-                    tabIndex={0}
-                    className="collapse collapse-arrow border border-base-300 bg-base-200"
-                  >
-                    <input type="checkbox" className="peer" />
-
-                    {/* start button Approval */}
-                    <div className="collapse-title text-xl  font-bold flex items-center">
-                      <div className="mr-2">
-                        <MdApproval />
-                      </div>
-                      Approval
-                    </div>
-
-                    <div className="collapse-content">
-                      {(IsLogisticSupervisor() || IsSupervisor()) && (
-                        <div>
-                          <Link href="/main/status/approvelogistic">
-                            <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                              <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                Logistic Reviewer
-                              </button>
-                            </div>
-                          </Link>
-                          {/* <hr className="my-4 border-gray-300" /> */}
-                        </div>
-                      )}
-
-                      {(IsReviewerSupervisor() || IsSupervisor()) && (
-                        <div>
-                          <hr className="my-4 border-gray-300" />
-
-                          <Link href="/main/status/approvelogistic_supervisor">
-                            <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                              <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                Logistic Supervisor
-                              </button>
-                            </div>
-                          </Link>
-                          <hr className="my-4 border-gray-300" />
-                        </div>
-                      )}
-
-                      {(IsSupervisor() ||
-                        IsOperationSupervisor() ||
-                        IsOperatorOps) && (
-                        <div>
-                          <Link href="/main/status/approveoperation/general/approval">
-                            <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
-                              <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                Operation
-                              </button>
-                            </div>
-                          </Link>
-                          {/* <hr className="my-4 border-gray-300" /> */}
-                        </div>
-                      )}
-
-                      {/* start button Operation */}
-
-                      {/* end button Operation */}
-                    </div>
-                  </div>
-                )}
-                {/* End Button Approvement */}
-              </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className={`flex-1 
-                        ${isOpen ? "ml-30" : "ml-0"}`}
+            {/* <button
+        onClick={toggleSidebar}
+        className="absolute top-4 right-4 px-4 py-2 text-white bg-gray-800 rounded"
       >
-        {/* Button to toggle sidebar */}
-        <div style={{ position: "absolute", top: -50, right: 25 }}>
-          <button
-            className="bg-[#00A6B4] hover:bg-blue-700 
-                       text-white font-bold py-2 px-4 rounded"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {/* Toggle icon based on isOpen state */}
-            {isOpen ? (
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            ) : (
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
-              </svg>
-            )}
-          </button>
+        {isSidebarOpen ? 'Close' : 'Open'}
+      </button> */}
         </div>
-      </div>
-    </div>
-  );
+    );
 };
-
+ 
 export default Sidebar;
