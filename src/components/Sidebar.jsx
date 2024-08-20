@@ -18,6 +18,7 @@ import {
     IsOperationSupervisor,
     IsOperator,
     IsOperatorDev,
+    IsOperatorMemo,
     IsOperatorOps,
     IsPpoOperator,
     IsPpoSupervisor,
@@ -138,8 +139,7 @@ const Sidebar = () => {
                                         IsItmoOperator() ||
                                         IsItsecurityOperator() ||
                                         IsItsupportOperator() ||
-                                        IsOperatorOps() ||
-                                        IsSupervisor) && (
+                                        IsOperatorOps()) && (
                                         <div>
                                             <Link href="/main/operation/general/myproject">
                                                 <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -167,8 +167,7 @@ const Sidebar = () => {
                                         IsItmoOperator() ||
                                         IsItsecurityOperator() ||
                                         IsItsupportOperator() ||
-                                        IsOperatorOps() ||
-                                        IsSupervisor()) && (
+                                        IsOperatorOps()) && (
                                         <div>
                                             <hr className="my-4 border-gray-300" />
                                             <Link href="/main/operation/general/createproject">
@@ -187,10 +186,7 @@ const Sidebar = () => {
                         {/* End Button NEW OP */}
 
                         {/* start button Logistic */}
-                        {(IsLogisticSupervisor() ||
-                            IsLogisticOperator() ||
-                            IsSupervisor() ||
-                            IsReviewerSupervisor()) && (
+                        {(IsOperatorMemo() || IsSupervisor()) && (
                             <div
                                 tabIndex={0}
                                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
@@ -216,8 +212,7 @@ const Sidebar = () => {
                                         <hr className="my-4 border-gray-300" />
                                     </div>
 
-                                    {(IsLogisticOperator() ||
-                                        IsSupervisor()) && (
+                                    {(IsOperatorMemo() || IsSupervisor()) && (
                                         <div>
                                             <Link href="/main/logistic/general/allproject">
                                                 <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
@@ -238,8 +233,7 @@ const Sidebar = () => {
                                         </div>
                                     </Link>
 
-                                    {IsLogisticOperator() ||
-                                        (IsSupervisor() && (
+                                    { IsOperatorMemo() && (
                                             <div>
                                                 <hr className="my-4 border-gray-300" />
 
@@ -251,7 +245,7 @@ const Sidebar = () => {
                                                     </div>
                                                 </Link>
                                             </div>
-                                        ))}
+                                        )}
                                 </div>
                             </div>
                         )}
@@ -264,8 +258,7 @@ const Sidebar = () => {
                             IsPpoSupervisor() ||
                             IsLogisticSupervisor() ||
                             IsOperationSupervisor() ||
-                            IsReviewerSupervisor() ||
-                            IsOperatorOps()) && (
+                            IsReviewerSupervisor()) && (
                             <div
                                 tabIndex={0}
                                 className="collapse collapse-arrow border border-base-300 bg-base-200"

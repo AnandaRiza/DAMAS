@@ -33,6 +33,24 @@ export const IsOperatorOps = () => {
 
 };
 
+export const IsOperatorMemo = () => {
+    const { userAplikasi } = useStateContext();
+    const expectedOperatorGroup = process.env.NEXT_PUBLIC_USER_OPERATOR;
+
+    if (userAplikasi && userAplikasi.groupakses.toUpperCase() === expectedOperatorGroup) {
+        const userId = userAplikasi.userid; 
+        if (userId) {
+            switch (userId) {
+                case 'ACSYSOPT2':
+                    return true;
+            }
+        }
+        return false;
+    }
+    console.log(userAplikasi.groupakses)
+    
+};
+
 export const IsSupervisor = () => {
     const { userAplikasi } = useStateContext();
     if (userAplikasi !==null && userAplikasi.groupakses !== null && userAplikasi.groupakses  === process.env.NEXT_PUBLIC_USER_SUPERVISOR) {
