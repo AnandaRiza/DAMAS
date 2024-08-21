@@ -180,7 +180,7 @@ const ChartPie = () => {
                 const dataValues7 = Object.values(fetchedData7);
 
                 setDataJenisApp(fetchedData7);
-                console.log(response7);
+                // console.log(response7);
 
                 // OPS NETWORK
 

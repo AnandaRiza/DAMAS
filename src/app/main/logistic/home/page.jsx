@@ -58,7 +58,6 @@ const LogisticMemoDashboard = () => {
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memostatus`
                 );
                 const fetchedData = response.data;
-                console.log(response);
 
                 const labels = Object.keys(fetchedData);
                 const dataValues = Object.values(fetchedData);
@@ -110,7 +109,7 @@ const LogisticMemoDashboard = () => {
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/memoyear`
                 );
                 const fetchedData4 = response4.data;
-                console.log(response4);
+          
                 const labels4 = Object.keys(fetchedData4);
                 const dataValues4 = Object.values(fetchedData4);
                 const totalYear = dataValues4.reduce((sum, value) => sum + value, 0);

@@ -31,7 +31,7 @@ const Page = () => {
                 ...item,
                 memo_deadline: item.memo_deadline ? new Date(item.memo_deadline).toLocaleDateString() : ''
             }));
-            console.log("Fetched data:", fetchedData);
+           
             setDataAllMemo(fetchedData);
             setHasMoreData(fetchedData.length === perPage);
         } catch (error) {

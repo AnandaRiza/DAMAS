@@ -64,7 +64,7 @@ const ChartPie = () => {
                     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/jumlahdata`
                 );
                 const fetchedData = response.data;
-                console.log(response);
+               
 
                 const labels = Object.keys(fetchedData);
                 const dataValues = Object.values(fetchedData);
@@ -154,7 +154,6 @@ const ChartPie = () => {
                 );
                 const fetchedData6 = response6.data;
                 setDataTotal(fetchedData6);
-                console.log(response6);
             } catch (error) {
                 setError("Failed to fetch data");
                 console.log(error);
