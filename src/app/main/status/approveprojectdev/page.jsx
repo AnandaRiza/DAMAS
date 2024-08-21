@@ -68,7 +68,9 @@ const Page = () => {
                 <div className=" bw-full px-5 py-2 mt-4">
                     <div className="w-full flex justify-between items-center "></div>
                 </div>
-                {dataLog && dataLog.length !==0 && (!searchResult || searchInput == "") ? (
+                {dataLog &&
+                dataLog.length !== 0 &&
+                (!searchResult || searchInput == "") ? (
                     <TableApprove
                         headers={Object.keys(dataLog[0]).slice(
                             0,
@@ -78,7 +80,6 @@ const Page = () => {
                         parameter={"projectdev"}
                         action={true}
                         isRefresh={handleRefresh}
-                        
                     />
                 ) : (
                     !(searchResult && searchInput != "") && <PleaseWait />
@@ -96,7 +97,6 @@ const Page = () => {
                                 parameter={"projectdev"}
                                 action={true}
                                 isRefresh={handleRefresh}
-                                
                             />
                         </div>
                     )}
@@ -107,37 +107,35 @@ const Page = () => {
 
                 {dataLog && (
                     <div className="w-full flex justify-end items-center gap-3">
-                       <button
-    type="button"
-    disabled={currentPage === 1 || startIndex === 0}
-    onClick={() => {
-        setCurrentPage(currentPage - 1);
-        setStartIndex(startIndex - perPage);
-    }}
-    className={`py-2 px-4 rounded-xl ${
-        currentPage === 1 || startIndex === 0
-            ? "bg-gray-400"
-            : "bg-[#00A6B4]"
-    } text-white`}
->
-    Prev
-</button>
+                        <button
+                            type="button"
+                            disabled={currentPage === 1 || startIndex === 0}
+                            onClick={() => {
+                                setCurrentPage(currentPage - 1);
+                                setStartIndex(startIndex - perPage);
+                            }}
+                            className={`py-2 px-4 rounded-xl ${
+                                currentPage === 1 || startIndex === 0
+                                    ? "bg-gray-400"
+                                    : "bg-[#00A6B4]"
+                            } text-white`}
+                        >
+                            Prev
+                        </button>
                         <h5 className="font-semibold">{currentPage}</h5>
                         <button
-    type="button"
-    disabled={!hasMoreData}
-    onClick={() => {
-        setCurrentPage(currentPage + 1);
-        setStartIndex(startIndex + perPage);
-    }}
-    className={`py-2 px-4 rounded-xl ${
-        !hasMoreData
-            ? "bg-gray-400"
-            : "bg-[#00A6B4]"
-    } text-white`}
->
-    Next
-</button>
+                            type="button"
+                            disabled={!hasMoreData}
+                            onClick={() => {
+                                setCurrentPage(currentPage + 1);
+                                setStartIndex(startIndex + perPage);
+                            }}
+                            className={`py-2 px-4 rounded-xl ${
+                                !hasMoreData ? "bg-gray-400" : "bg-[#00A6B4]"
+                            } text-white`}
+                        >
+                            Next
+                        </button>
                     </div>
                 )}
             </div>
