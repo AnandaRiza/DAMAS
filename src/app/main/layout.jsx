@@ -29,7 +29,7 @@ const layout = ({ children }) => {
                 </button>
                 <div className="w-full h-full overflow-hidden relative flex">
                     <div
-                        className={`relative ${
+                        className={`overflow-auto relative ${
                             isSidebarOpen
                                 ? "w-[15%]"
                                 : "w-0 -translate-x-[1000px]"

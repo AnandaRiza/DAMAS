@@ -40,10 +40,12 @@ const Sidebar = () => {
  
     return (
         <div
-            className={`fixed top-0 flex w-64 transition-width duration-300 h-full bg-[#00A6B4]/[0.5] text-w
+            className={`fixed top-0 flex w-64 transition-width duration-300 h-full overflow-auto bg-[#00A6B4]/[0.5] text-w
                  p-4 ml-4 mt-20 rounded-xl shadow-r-md`}
         >
-            <div className={`flex flex-col w-full`}>
+            <div className="">
+
+            <div className={`flex flex-col w-full pb-40`}>
                 <div className="collapse collapse-arrow">
                     <div>
                         {(IsOperatorDev() || IsSupervisor()) && (
@@ -327,6 +329,7 @@ const Sidebar = () => {
                         {/* End Button Approvement */}
                     </div>
                 </div>
+            </div>
             </div>
             {/* <button
         onClick={toggleSidebar}
