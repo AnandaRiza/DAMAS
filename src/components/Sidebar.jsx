@@ -40,8 +40,8 @@ const Sidebar = () => {
  
     return (
         <div
-            className={`fixed top-0 flex w-64 transition-width duration-300 h-full overflow-auto bg-[#00A6B4]/[0.5] text-w
-                 p-4 ml-4 mt-20 rounded-xl shadow-r-md`}
+            className={`fixed top-0 flex w-[270px] transition-width duration-300 h-full overflow-auto bg-[#00A6B4]/[0.5] text-w
+                 p-2 ml-4 mt-20 rounded-xl shadow-r-md`}
         >
             <div className="">
 
@@ -54,11 +54,11 @@ const Sidebar = () => {
                                 className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
                             >
                                 <input type="checkbox" className="peer" />
-                                <div className="collapse-title text-xl font-bold flex items-center">
+                                <div className="collapse-title text-lg font-bold flex items-center">
                                     <div className="mr-2">
                                         <FaProjectDiagram />
                                     </div>
-                                    List Project
+                                    Project Application
                                 </div>
                                 <div className="collapse-content">
                                     {(IsOperatorDev() ||
@@ -106,11 +106,11 @@ const Sidebar = () => {
                                 <input type="checkbox" className="peer" />
  
                                 {/* start button NEWOP */}
-                                <div className="collapse-title text-xl font-bold flex items-center">
+                                <div className="collapse-title text-lg font-bold flex items-center">
                                     <div className="mr-2">
                                         <BsBuildingFillGear />
                                     </div>
-                                    Operation
+                                    Project Operation
                                 </div>
  
                                 <div className="collapse-content">
@@ -196,7 +196,7 @@ const Sidebar = () => {
                             >
                                 <input type="checkbox" className="peer" />
  
-                                <div className="collapse-title text-xl  font-bold flex items-center">
+                                <div className="collapse-title text-lg  font-bold flex items-center">
                                     <div className="mr-2">
                                     <CiMemoPad />
                                     </div>
@@ -269,7 +269,7 @@ const Sidebar = () => {
                                 <input type="checkbox" className="peer" />
  
                                 {/* start button Approval */}
-                                <div className="collapse-title text-xl  font-bold flex items-center">
+                                <div className="collapse-title text-lg font-bold flex items-center">
                                     <div className="mr-2">
                                         <MdApproval />
                                     </div>
