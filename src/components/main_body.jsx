@@ -504,48 +504,86 @@ const ChartPie = () => {
                             <div className="flex items-center justify-center ">
                                 {dataTotal && dataJenisApp ? (
                                     <div className="flex flex-col pl-8 font-bold text-base">
-                                        <div className="m-1">
-                                            Core Bank System:{" "}
-                                            {dataJenisApp["Core Bank System"]}{" "}
-                                            Projects
+                                        <div className="m-1 flex">
+                                            <div className="w-40">
+                                                Core Bank System
+                                            </div>
+                                            <div>
+                                                :{" "}
+                                                {
+                                                    dataJenisApp[
+                                                        "Core Bank System"
+                                                    ]
+                                                }{" "}
+                                                Projects
+                                            </div>
                                         </div>
-                                        <div className="m-1">
-                                            Aplikasi Lainnya :{" "}
-                                            {dataJenisApp["Aplikasi Lainnya"]}{" "}
-                                            Projects
+                                        <div className="m-1 flex">
+                                            <div className="w-40">
+                                                Aplikasi Lainnya
+                                            </div>
+                                            <div>
+                                                :{" "}
+                                                {
+                                                    dataJenisApp[
+                                                        "Aplikasi Lainnya"
+                                                    ]
+                                                }{" "}
+                                                Projects
+                                            </div>
                                         </div>
-                                        {/* <div className="m-1">
-                                            Database: {dataJenisApp.Database}{" "}
-                                            Projects
-                                        </div> */}
-                                        {/* <div className="m-1">
-                                            Download: {dataJenisApp.Download}{" "}
-                                            Projects
-                                        </div> */}
-                                        {/* <div className="m-1">
-                                            Reporting: {dataJenisApp.Reporting}{" "}
-                                            Projects
-                                        </div> */}
-                                        {/* <div className="m-1">
-                                            Utility atau BI, OJK :{" "}
-                                            {
-                                                dataJenisApp[
-                                                    "Utility atau BI, OJK"
-                                                ]
-                                            }{" "}
-                                            Projects
-                                        </div> */}
-                                        <div className="m-1">
-                                            eChannel :{" "}
-                                            {
-                                                dataJenisApp[
-                                                    "eChannel (non website)"
-                                                ]
-                                            }{" "}
-                                            Projects
+                                        <div className="m-1 flex">
+                                            <div className="w-40">Database</div>
+                                            <div>
+                                                : {dataJenisApp.Database}{" "}
+                                                Projects
+                                            </div>
                                         </div>
-                                        <div className="m-1 mt-4">
-                                            Total : {dataTotal} Projects
+                                        <div className="m-1 flex">
+                                            <div className="w-40">Download</div>
+                                            <div>
+                                                : {dataJenisApp.Download}{" "}
+                                                Projects
+                                            </div>
+                                        </div>
+                                        <div className="m-1 flex">
+                                            <div className="w-40">
+                                                Reporting
+                                            </div>
+                                            <div className="">
+                                                : {dataJenisApp.Reporting}{" "}
+                                                Projects
+                                            </div>
+                                        </div>
+                                        <div className="m-1 flex">
+                                            <div className="w-40">
+                                                Utility atau BI, OJK
+                                            </div>
+                                            <div>
+                                                :{" "}
+                                                {
+                                                    dataJenisApp[
+                                                        "Utility atau BI, OJK"
+                                                    ]
+                                                }{" "}
+                                                Projects
+                                            </div>
+                                        </div>
+                                        <div className="m-1 flex">
+                                            <div className="w-40">eChannel</div>
+                                            <div>
+                                                :{" "}
+                                                {
+                                                    dataJenisApp[
+                                                        "eChannel (non website)"
+                                                    ]
+                                                }{" "}
+                                                Projects
+                                            </div>
+                                        </div>
+                                        <div className="m-1 flex">
+                                            <div className="w-40"> Total</div>
+                                            <div>: {dataTotal} Projects</div>
                                         </div>
                                     </div>
                                 ) : (
@@ -600,16 +638,22 @@ const ChartPie = () => {
                         <div className="flex items-center justify-between w-full my-4">
                             {dataJumNetwork && dataNetworkTotal && (
                                 <div className="flex flex-col p-3 font-bold text-md w-[35%]">
-                                    <div className="P-3 m-1">
-                                        Ongoing : {dataJumNetwork.Ongoing}{" "}
-                                        Project
+                                    <div className="m-1 flex">
+                                        <div className="w-20">Ongoing</div>
+                                        <div>
+                                            : {dataJumNetwork.Ongoing} Project
+                                        </div>
                                     </div>
-                                    <div className="P-3 m-1">
-                                        Finished : {dataJumNetwork.Finished}{" "}
-                                        Project
+                                    <div className="m-1 flex">
+                                        <div className="w-20">Finished</div>
+                                        <div> : {dataJumNetwork.Finished}{" "}
+                                        Project</div> 
                                     </div>
-                                    <div className="P-3 m-1">
-                                        Total : {dataNetworkTotal} Project
+                                    <div className="m-1 flex">
+                                    <div className="w-20">Total</div>
+                                    <div>
+                                    : {dataNetworkTotal} Project
+                                    </div>
                                     </div>
                                 </div>
                             )}
@@ -746,11 +790,11 @@ const ChartPie = () => {
                             {dataPersentaseServerStatus && (
                                 <div className="flex flex-col p-3 font-bold text-sm">
                                     <div className="mt-1">
-                                        Ongoing = {dataJumServer.Ongoing}{" "}
+                                        Ongoing : {dataJumServer.Ongoing}{" "}
                                         Project
                                     </div>
                                     <div className="mt-1">
-                                        Finished = {dataJumServer.Finished}{" "}
+                                        Finished : {dataJumServer.Finished}{" "}
                                         Project
                                     </div>
                                 </div>
