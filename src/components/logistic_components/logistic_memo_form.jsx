@@ -101,7 +101,7 @@ const MemoForm = () => {
 
     const result = await Swal.fire({
       title: 'Are you sure?',
-      text: "Do you really want to create this memo?",
+      text: "Do you really want to register this memo?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -161,7 +161,7 @@ const MemoForm = () => {
   
       await Swal.fire({
         title: 'Error!',
-        text: 'Failed to create memo!',
+        text: 'Failed to register memo!',
         icon: 'error',
         confirmButtonText: 'OK'
       });
@@ -667,7 +667,7 @@ const getMinDateTime = () => {
             onClick={handleSubmit}
             className="bg-blue-500 text-white py-2 px-4 rounded-md"
           >
-            Create Memo
+            Register Memo
           </button>
         </form>
       </div>

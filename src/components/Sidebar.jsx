@@ -243,7 +243,7 @@ const Sidebar = () => {
                                                 <Link href="/main/logistic/createnewmemo">
                                                     <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
                                                         <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
-                                                            Create New Memo
+                                                            Register Memo
                                                         </button>
                                                     </div>
                                                 </Link>
