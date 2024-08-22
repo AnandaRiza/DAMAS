@@ -27,7 +27,6 @@ import {
     IsSkseOperator,
     IsSupervisor,
 } from "@/validation/validateGroupAkses";
-import { CiMemoPad } from "react-icons/ci";
  
 const Sidebar = () => {
     const [isSdlcShow, setIsSdlcShow] = useState(false);
@@ -40,12 +39,10 @@ const Sidebar = () => {
  
     return (
         <div
-            className={`fixed top-0 flex w-64 transition-width duration-300 h-full overflow-auto bg-[#00A6B4]/[0.5] text-w
+            className={`fixed top-0 flex w-64 transition-width duration-300 h-full bg-[#00A6B4]/[0.5] text-w
                  p-4 ml-4 mt-20 rounded-xl shadow-r-md`}
         >
-            <div className="">
-
-            <div className={`flex flex-col w-full pb-40`}>
+            <div className={`flex flex-col w-full`}>
                 <div className="collapse collapse-arrow">
                     <div>
                         {(IsOperatorDev() || IsSupervisor()) && (
@@ -198,7 +195,7 @@ const Sidebar = () => {
  
                                 <div className="collapse-title text-xl  font-bold flex items-center">
                                     <div className="mr-2">
-                                    <CiMemoPad />
+                                        <FaTools />
                                     </div>
                                     Memo
                                 </div>
@@ -329,7 +326,6 @@ const Sidebar = () => {
                         {/* End Button Approvement */}
                     </div>
                 </div>
-            </div>
             </div>
             {/* <button
         onClick={toggleSidebar}
