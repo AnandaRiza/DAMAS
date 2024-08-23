@@ -18,7 +18,7 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleToggle = (event) => {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault();
     setShowPassword(!showPassword);
   };
 
@@ -66,6 +66,7 @@ const Page = () => {
     } finally {
       setIsLoading(false);
     }
+    console.log(errors)
   };
 
   return (
