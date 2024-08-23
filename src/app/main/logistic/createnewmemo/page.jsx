@@ -7,7 +7,7 @@ const page = () => {
         <>
             <div>
                <div>
-               <HeaderLogistic title="Create New Memo" />
+               <HeaderLogistic title="Register Memo" />
                </div>                   
                 <div>
                     <MemoForm />

@@ -92,8 +92,8 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
-      <div className="rounded-xl border border-gray-300">
+    <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl">
+      <div className="rounded-xl border border-gray-300 pb-20">
         <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
           <form
             onSubmit={(e) => {

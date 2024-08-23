@@ -80,14 +80,15 @@ const page = () => {
     }
     setIsLoading(true);
     try {
+      // console.log(submitAtDate())
       await axios.post(
         `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationnetwork/log`,
         {
           ...dataAllNetwork,
           submitter: userid,
           authorizer: "SUPERVISOR",
-          submitAt: submitAtDate(),
-          deadline: calculateDeadline(scheduleInput),
+          submit_at: submitAtDate(),
+          // deadline: calculateDeadline(scheduleInput),
           status_approvement: "PENDING",
           network_id: dataAllNetwork.network_id,
           userdomain: dataAllNetwork.userdomain,
@@ -103,7 +104,7 @@ const page = () => {
       router.push("/main/operation/general/allproject");
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+     console.log(error)
     }
   };
 
@@ -132,9 +133,10 @@ const page = () => {
 
     return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
   };
+ 
 
   return (
-    <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl ">
+    <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl ">
       <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
         <div className="space-y">
           {dataAllNetwork ? (
