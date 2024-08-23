@@ -15,10 +15,15 @@ const Page = () => {
     const [perPage, setPerPage] = useState(8);
     const [currentPage, setCurrentPage] = useState(1);
     const [refresh, setRefresh] = useState(false);
+    const [hasMoreData, setHasMoreData] = useState(true);
 
-    useEffect(() => {
-        getAllDataLog();
-    }, [startIndex], [refresh]);
+    useEffect(
+        () => {
+            getAllDataLog();
+        },
+        [startIndex],
+        [refresh]
+    );
 
     const getAllDataLog = async () => {
         setDataLog(null);
@@ -26,7 +31,9 @@ const Page = () => {
             const response = await axios.get(
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationnetworklog?start=${startIndex}&size=${perPage}`
             );
-            setDataLog(response.data.data);
+            const fetchedData = response.data.data;
+            setDataLog(fetchedData);
+            setHasMoreData(fetchedData.length === perPage);
         } catch (error) {
             console.log(error);
         }
@@ -63,7 +70,9 @@ const Page = () => {
                 <div className=" bw-full">
                     <div className="w-full flex justify-between items-center"></div>
                 </div>
-                {dataLog && dataLog.length !==0 && (!searchResult || searchInput == "") ? (
+                {dataLog &&
+                dataLog.length !== 0 &&
+                (!searchResult || searchInput == "") ? (
                     <Body
                         headers={Object.keys(dataLog[0]).slice(
                             0,
@@ -77,6 +86,7 @@ const Page = () => {
                 ) : (
                     !(searchResult && searchInput != "") && <PleaseWait />
                 )}
+
                 {searchResult &&
                     searchInput != "" &&
                     searchResult.length !== 0 && (
@@ -90,11 +100,10 @@ const Page = () => {
                                 parameter={"operationnetwork"}
                                 action={true}
                                 isRefresh={handleRefresh}
-                                
                             />
                         </div>
                     )}
-
+{dataLog && dataLog.length === 0 && <NotFound />}
                 {searchResult &&
                     searchInput != "" &&
                     searchResult.length === 0 && <NotFound />}
@@ -106,23 +115,29 @@ const Page = () => {
                             disabled={currentPage === 1 || startIndex === 0}
                             onClick={() => {
                                 setCurrentPage(currentPage - 1);
-                                setStartIndex(startIndex - 8);
+                                setStartIndex(startIndex - perPage);
                             }}
-                            className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
+                            className={`py-2 px-4 rounded-xl ${
+                                currentPage === 1 || startIndex === 0
+                                    ? "bg-gray-400"
+                                    : "bg-[#00A6B4]"
+                            } text-white`}
                         >
                             Prev
                         </button>
                         <h5 className="font-semibold">{currentPage}</h5>
                         <button
                             typr="button"
-                            disabled={
-                                startIndex + perPage >= dataLog[0].maxSize
-                            }
+                            disabled={!hasMoreData}
                             onClick={() => {
-                                setCurrentPage(currentPage + 1);
-                                setStartIndex(startIndex + 8);
+                                if (hasMoreData) {
+                                    setCurrentPage(currentPage + 1);
+                                    setStartIndex(startIndex + perPage);
+                                }
                             }}
-                            className="py-2 px-4 rounded-xl bg-[#00A6B4] text-white"
+                            className={`py-2 px-4 rounded-xl ${
+                                !hasMoreData ? "bg-gray-400" : "bg-[#00A6B4]"
+                            } text-white`}
                         >
                             Next
                         </button>
