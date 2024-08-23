@@ -566,144 +566,185 @@ const ChartPie = () => {
       </div>
       {/* new new */}
 
-      <div className="flex w-full">
-        <div className="w-full flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg mx-auto">
-          <div className="">
-            <h1 className="font-bold p-4">
-              OPERATION - NETWORK
-            </h1>
-            <div className="flex items-center justify-center w-full my-4">
-              {dataJenisAppNetwork ? (
-                <div className="w-full h-[332px] pl-6">
-                  <BarChart data={dataJenisAppNetwork} options={barOptions} />
-                </div>
-              ) : (
-                <p>No data available</p>
-              )}
-            </div>
-            <div className="flex flex-wrap justify-center mt-4 p-4">
-              <div className="bg-[#A9E399] border rounded-xl p-2 mr-2">
-                <h2 className="font-bold">Others</h2>
-                <hr />
-                <p>Ongoing : {dataStatusCategory.OthersOngoing}</p>
-                <p>Finished : {dataStatusCategory.OthersFinished}</p>
-                <p className="font-semibold">
-                  Total ={" "}
-                  {dataStatusCategory.OthersOngoing +
-                    dataStatusCategory.OthersFinished}
-                </p>
-              </div>
-              <div className="bg-[#6CAC46] border rounded-xl p-2 mr-2">
-                <h2 className="font-bold">Jaringan DRC</h2>
-                <hr />
-                <p>Ongoing : {dataStatusCategory.JaringanDRCOngoing}</p>
-                <p>Finished : {dataStatusCategory.JaringanDRCFinished}</p>
-                <p className="font-semibold">
-                  Total ={" "}
-                  {dataStatusCategory.JaringanDRCOngoing +
-                    dataStatusCategory.JaringanDRCFinished}
-                </p>
-              </div>
-              <div className="bg-[#DF9222] border rounded-xl p-2 mr-2">
-                <h2 className="font-bold">Cloud</h2>
-                <hr />
-                <p>Ongoing : {dataStatusCategory.CloudOngoing}</p>
-                <p>Finished : {dataStatusCategory.CloudFinished}</p>
-                <p className="font-semibold">
-                  Total ={" "}
-                  {dataStatusCategory.CloudOngoing +
-                    dataStatusCategory.CloudFinished}
-                </p>
-              </div>
-              <div className="bg-[#5989BE] border rounded-xl p-2 mr-2">
-                <h2 className="font-bold">Jaringan Cabang</h2>
-                <hr />
-                <p>Ongoing : {dataStatusCategory.JaringanCabangOngoing}</p>
-                <p>Finished : {dataStatusCategory.JaringanCabangFinished}</p>
-                <p className="font-semibold">
-                  Total ={" "}
-                  {dataStatusCategory.JaringanCabangOngoing +
-                    dataStatusCategory.JaringanCabangFinished}
-                </p>
-              </div>
-              <div className="bg-[#FAC78A] border rounded-xl p-2 mr-2">
-                <h2 className="font-bold">Jaringan Kantor Pusat</h2>
-                <hr />
-                <p>Ongoing : {dataStatusCategory.JaringanKantorPusatOngoing}</p>
-                <p>
-                  Finished : {dataStatusCategory.JaringanKantorPusatFinished}
-                </p>
-                <p className="font-semibold">
-                  Total ={" "}
-                  {dataStatusCategory.JaringanKantorPusatOngoing +
-                    dataStatusCategory.JaringanKantorPusatFinished}
-                </p>
-              </div>
-            </div>
-            <div className="w-full flex justify-between items-end">
-              {dataJumNetwork && (
-                <div className="flex flex-col p-3 font-bold text-sm">
-                  <div className="P-3 m-1">
-                    Ongoing = {dataJumNetwork.Ongoing} Project
-                  </div>
-                  <div className="P-3 m-1">
-                    Finished = {dataJumNetwork.Finished} Project
-                  </div>
-                </div>
-              )}
-              {dataNetworkTotal && (
-                <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                  <div className="P-3 m-1">
-                    Total : {dataNetworkTotal} Project
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+            <div className="flex w-full">
+                <div className="w-full flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg mx-auto">
+                    <div className="mx-auto">
+                        <h1 className="font-bold p-4">OPERATION - NETWORK</h1>
+                        <div className="flex items-center justify-between w-full my-4">
+                            {dataJumNetwork && dataNetworkTotal && (
+                                <div className="flex flex-col p-3 font-bold text-md w-[35%]">
+                                    <div className="m-1 flex">
+                                        <div className="w-20">Ongoing</div>
+                                        <div>
+                                            : {dataJumNetwork.Ongoing} Project
+                                        </div>
+                                    </div>
+                                    <div className="m-1 flex">
+                                        <div className="w-20">Finished</div>
+                                        <div> : {dataJumNetwork.Finished}{" "}
+                                        Project</div> 
+                                    </div>
+                                    <div className="m-1 flex">
+                                    <div className="w-20">Total</div>
+                                    <div>
+                                    : {dataNetworkTotal} Project
+                                    </div>
+                                    </div>
+                                </div>
+                            )}
 
-        <div className="w-full flex-grow card bg-white rounded-box mt-3 p-1 shadow-lg mx-auto ml-2">
-          <div className="">
-            <h1 className="font-bold p-4">
-              OPERATION - SERVER
-            </h1>
-            <div className="flex items-center justify-center w-full my-4">
-              {dataServerStatus ? (
-                <div
-                  style={{
-                    width: "500px",
-                    height: "250px",
-                    overflowX: "auto",
-                  }}
-                >
-                  <PieChart data={dataServerStatus} options={pieOptions2} />
+                            <div className="w-[65%]">
+                                {dataJenisAppNetwork ? (
+                                    <div className="">
+                                        <BarChart
+                                            data={dataJenisAppNetwork}
+                                            options={barOptions}
+                                        />
+                                    </div>
+                                ) : (
+                                    <p>No data available</p>
+                                )}
+                            </div>
+                        </div>
+                        <div className="flex flex-wrap justify-center mt-4 p-4">
+                            <div className="bg-[#A9E399] border rounded-xl p-2 mr-2">
+                                <h2 className="font-bold">Others</h2>
+                                <hr />
+                                <p>
+                                    Ongoing : {dataStatusCategory.OthersOngoing}
+                                </p>
+                                <p>
+                                    Finished :{" "}
+                                    {dataStatusCategory.OthersFinished}
+                                </p>
+                                <p className="font-semibold">
+                                    Total ={" "}
+                                    {dataStatusCategory.OthersOngoing +
+                                        dataStatusCategory.OthersFinished}
+                                </p>
+                            </div>
+                            <div className="bg-[#6CAC46] border rounded-xl p-2 mr-2">
+                                <h2 className="font-bold">Jaringan DRC</h2>
+                                <hr />
+                                <p>
+                                    Ongoing :{" "}
+                                    {dataStatusCategory.JaringanDRCOngoing}
+                                </p>
+                                <p>
+                                    Finished :{" "}
+                                    {dataStatusCategory.JaringanDRCFinished}
+                                </p>
+                                <p className="font-semibold">
+                                    Total ={" "}
+                                    {dataStatusCategory.JaringanDRCOngoing +
+                                        dataStatusCategory.JaringanDRCFinished}
+                                </p>
+                            </div>
+                            <div className="bg-[#DF9222] border rounded-xl p-2 mr-2">
+                                <h2 className="font-bold">Cloud</h2>
+                                <hr />
+                                <p>
+                                    Ongoing : {dataStatusCategory.CloudOngoing}
+                                </p>
+                                <p>
+                                    Finished :{" "}
+                                    {dataStatusCategory.CloudFinished}
+                                </p>
+                                <p className="font-semibold">
+                                    Total ={" "}
+                                    {dataStatusCategory.CloudOngoing +
+                                        dataStatusCategory.CloudFinished}
+                                </p>
+                            </div>
+                            <div className="bg-[#5989BE] border rounded-xl p-2 mr-2">
+                                <h2 className="font-bold">Jaringan Cabang</h2>
+                                <hr />
+                                <p>
+                                    Ongoing :{" "}
+                                    {dataStatusCategory.JaringanCabangOngoing}
+                                </p>
+                                <p>
+                                    Finished :{" "}
+                                    {dataStatusCategory.JaringanCabangFinished}
+                                </p>
+                                <p className="font-semibold">
+                                    Total ={" "}
+                                    {dataStatusCategory.JaringanCabangOngoing +
+                                        dataStatusCategory.JaringanCabangFinished}
+                                </p>
+                            </div>
+                            <div className="bg-[#FAC78A] border rounded-xl p-2 mr-2">
+                                <h2 className="font-bold">
+                                    Jaringan Kantor Pusat
+                                </h2>
+                                <hr />
+                                <p>
+                                    Ongoing :{" "}
+                                    {
+                                        dataStatusCategory.JaringanKantorPusatOngoing
+                                    }
+                                </p>
+                                <p>
+                                    Finished :{" "}
+                                    {
+                                        dataStatusCategory.JaringanKantorPusatFinished
+                                    }
+                                </p>
+                                <p className="font-semibold">
+                                    Total ={" "}
+                                    {dataStatusCategory.JaringanKantorPusatOngoing +
+                                        dataStatusCategory.JaringanKantorPusatFinished}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              ) : (
-                <p>No data available</p>
-              )}
+
+                <div className="w-full card bg-white rounded-box mt-3 p-1 shadow-lg mx-auto ml-2">
+                    <div className=" flex flex-col justify-between h-full">
+                        <h1 className="font-bold p-4">OPERATION - SERVER</h1>
+                        <div className="flex items-center justify-center w-full my-4">
+                            {dataServerStatus ? (
+                                <div
+                                    style={{
+                                        width: "400px",
+                                        height: "200px",
+                                        overflowX: "auto",
+                                    }}
+                                >
+                                    <PieChart
+                                        data={dataServerStatus}
+                                        options={pieOptions}
+                                    />
+                                </div>
+                            ) : (
+                                <p>No data available</p>
+                            )}
+                        </div>
+                        <div className="w-full flex justify-between items-end">
+                            {dataPersentaseServerStatus && (
+                                <div className="flex flex-col p-3 font-bold text-sm">
+                                    <div className="mt-1">
+                                        Ongoing : {dataJumServer.Ongoing}{" "}
+                                        Project
+                                    </div>
+                                    <div className="mt-1">
+                                        Finished : {dataJumServer.Finished}{" "}
+                                        Project
+                                    </div>
+                                </div>
+                            )}
+                            {dataServerTotal && (
+                                <div className="flex flex-col p-3 m-1 font-bold text-sm">
+                                    <div className="P-3 m-1">
+                                        Total : {dataServerTotal} Project
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="w-full flex justify-between items-end mt-24">
-              {dataPersentaseServerStatus && (
-                <div className="flex flex-col p-3 mt-20 font-bold text-sm">
-                  <div className="mt-20">
-                    Ongoing = {dataJumServer.Ongoing} Project
-                  </div>
-                  <div className="mt-1">
-                    Finished = {dataJumServer.Finished} Project
-                  </div>
-                </div>
-              )}
-              {dataServerTotal && (
-                <div className="flex flex-col p-3 m-1 font-bold text-sm">
-                  <div className="P-3 m-1">
-                    Total : {dataServerTotal} Project
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* new */}
     </div>

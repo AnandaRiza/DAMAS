@@ -95,7 +95,7 @@ const NetworkForm = () => {
             Mohon pastikan semua persiapan dan tahapan terakhir telah diselesaikan untuk memastikan proyek selesai tepat waktu. Terima Kasih.
             
 Wassalamualaikum Warahmatullahi Wabarakatuh`,
-          to: "ridhwan_rifky@bcasyariah.co.id",
+          to: "mayastri_devana@bcasyariah.co.id",
           deadline: calculateDeadline(scheduleInput),
           deadlinepro: calculateDeadline(scheduleInput),
         }

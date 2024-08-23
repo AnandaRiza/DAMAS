@@ -21,7 +21,7 @@ const layout = ({ children }) => {
                     <Header title="DAMAS" />
                 </div>
                 <button
-                    className={`rounded-full fixed z-50 ${isSidebarOpen ? "left-64" : "left-0" }`}
+                    className={`rounded-full fixed z-50 ${isSidebarOpen ? "left-[270px]" : "left-0" }`}
                     onClick={toggleSidebar}
                 >
                     {isSidebarOpen ? <FaAngleDoubleLeft size={24} /> : <FaAngleDoubleRight size={20} /> }
