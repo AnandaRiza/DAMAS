@@ -99,6 +99,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                     "server_deadline_project",
                     "userdomain",
                     "userdomain_pic",
+                    "deadline_approvement",
                   ].includes(item)
                     ? "hidden"
                     : ""
@@ -193,6 +194,7 @@ const Page = ({ headers, data, parameter, action, isRefresh }) => {
                       "server_deadline_project",
                       "userdomain",
                       "userdomain_pic",
+                      "deadline_approvement",
                     ].includes(header)
                       ? "hidden"
                       : ""
