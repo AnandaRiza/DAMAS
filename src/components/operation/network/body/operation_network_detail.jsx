@@ -301,6 +301,27 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
+                      Actual Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_kickoff_acstart}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_kickoff_acstart: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
                       Done
                     </label>
                     <input
@@ -316,6 +337,28 @@ const page = () => {
                       disabled
                     />
                   </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Note
+                    </label>
+                    <input
+                      type="text"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_kickoff_note}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_kickoff_note: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
                 </div>
               </div>
 
@@ -377,6 +420,27 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
+                      Actual Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_mop_acstart}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_mop_acstart: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
                       Done
                     </label>
                     <input
@@ -392,6 +456,28 @@ const page = () => {
                       }
                     />
                   </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Note
+                    </label>
+                    <input
+                      type="text"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_mop_note}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_mop_note: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
                 </div>
               </div>
 
@@ -453,6 +539,27 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
+                      Actual Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_demomop_acstart}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_demomop_acstart: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
                       Done
                     </label>
                     <input
@@ -468,6 +575,28 @@ const page = () => {
                       disabled
                     />
                   </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Note
+                    </label>
+                    <input
+                      type="text"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_demomop_note}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_demomop_note: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
                 </div>
               </div>
 
@@ -529,6 +658,27 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
+                      Actual Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_implementasi_acstart}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_implementasi_acstart: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
                       Done
                     </label>
                     <input
@@ -544,6 +694,28 @@ const page = () => {
                       }
                     />
                   </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Note
+                    </label>
+                    <input
+                      type="text"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_implementasi_note}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_implementasi_note: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
                 </div>
               </div>
 
@@ -605,6 +777,27 @@ const page = () => {
                       htmlFor="deadline"
                       className="text-sm font-semibold text-[#0066AE]"
                     >
+                      Actual Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_skse_acstart}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_skse_acstart: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
                       Done
                     </label>
                     <input
@@ -620,6 +813,28 @@ const page = () => {
                       }
                     />
                   </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Note
+                    </label>
+                    <input
+                      type="text"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_skse_note}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_skse_note: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
                 </div>
               </div>
 
@@ -670,6 +885,48 @@ const page = () => {
                         setDataAllNetwork({
                           ...dataAllNetwork,
                           network_uat_deadline: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Actual Start
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_uat_acstart}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_uat_acstart: e.target.value,
+                        })
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Note
+                    </label>
+                    <input
+                      type="text"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_uat_note}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_uat_note: e.target.value,
                         })
                       }
                       disabled
