@@ -134,7 +134,7 @@ const Sidebar = () => {
                                             </div>
                                         )}
 
-                                        {/* {(IsOperationSupervisor() ||
+                                        {(IsOperationSupervisor() ||
                                         IsNetworkOperator() ||
                                         IsServerOperator() ||
                                         IsDacenOperator() ||
@@ -152,7 +152,7 @@ const Sidebar = () => {
                                             </Link>
                                             <hr className="my-4 border-gray-300" />
                                         </div>
-                                    )} */}
+                                    )}
 
                                         <Link href="/main/operation/general/allproject">
                                             <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">

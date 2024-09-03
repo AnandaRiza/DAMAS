@@ -912,6 +912,27 @@ const page = () => {
                     />
                   </div>
 
+                  <div className="flex flex-col mx-3 my-3 mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Done
+                    </label>
+                    <input
+                      disabled
+                      type="date"
+                      className="input input-bordered mt-1 font-semibold"
+                      value={dataAllNetwork.network_uat_done}
+                      onChange={(e) =>
+                        setDataAllNetwork({
+                          ...dataAllNetwork,
+                          network_uat_done: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+
                   <div className="flex flex-col mx-3 my-3">
                     <label
                       htmlFor="deadline"
@@ -933,26 +954,6 @@ const page = () => {
                     />
                   </div>
 
-                  <div className="flex flex-col mx-3 my-3 mx-3 my-3">
-                    <label
-                      htmlFor="deadline"
-                      className="text-sm font-semibold text-[#0066AE]"
-                    >
-                      Done
-                    </label>
-                    <input
-                      disabled
-                      type="date"
-                      className="input input-bordered mt-1 font-semibold"
-                      value={dataAllNetwork.network_uat_done}
-                      onChange={(e) =>
-                        setDataAllNetwork({
-                          ...dataAllNetwork,
-                          network_uat_done: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
                 </div>
               </div>
 
