@@ -183,25 +183,39 @@ const Page = ({ headers, data, action, link }) => {
                   item === "server_category_others" ||
                   item === "server_kickoff_start" ||
                   item === "server_kickoff_deadline" ||
+                  item === "server_kickoff_acstart" ||
                   item === "server_kickoff_done" ||
+                  item === "server_kickoff_note" ||
                   item === "server_peyiapanserver_start" ||
                   item === "server_peyiapanserver_deadline" ||
+                  item === "server_peyiapanserver_acstart" ||
                   item === "server_peyiapanserver_done" ||
+                  item === "server_peyiapanserver_note" ||
                   item === "server_instalasiaplikasi_start" ||
                   item === "server_instalasiaplikasi_deadline" ||
+                  item === "server_instalasiaplikasi_acstart" ||
                   item === "server_instalasiaplikasi_done" ||
+                  item === "server_instalasiaplikasi_note" ||
                   item === "server_instalcheckpoint_start" ||
                   item === "server_instalcheckpoint_deadline" ||
+                  item === "server_instalcheckpoint_acstart" ||
                   item === "server_instalcheckpoint_done" ||
+                  item === "server_instalcheckpoint_note" ||
                   item === "server_testingkoneksi_start" ||
                   item === "server_testingkoneksi_deadline" ||
+                  item === "server_testingkoneksi_acstart" ||
                   item === "server_testingkoneksi_done" ||
+                  item === "server_testingkoneksi_note" ||
                   item === "server_serahterimaserver_start" ||
                   item === "server_serahterimaserver_deadline" ||
+                  item === "server_serahterimaserver_acstart" ||
                   item === "server_serahterimaserver_done" ||
+                  item === "server_serahterimaserver_note" ||
                   item === "server_implementasi_start" ||
                   item === "server_implementasi_deadline" ||
+                  item === "server_implementasi_acstart" ||
                   item === "server_implementasi_done" ||
+                  item === "server_implementasi_note" ||
                   item === "userdomain" ||
                   item === "userdomain_pic"
                     ? "hidden"
@@ -243,25 +257,39 @@ const Page = ({ headers, data, action, link }) => {
                       header === "server_category_others" ||
                       header === "server_kickoff_start" ||
                       header === "server_kickoff_deadline" ||
+                      header === "server_kickoff_acstart" ||
                       header === "server_kickoff_done" ||
+                      header === "server_kickoff_note" ||
                       header === "server_peyiapanserver_start" ||
                       header === "server_peyiapanserver_deadline" ||
+                      header === "server_peyiapanserver_acstart" ||
                       header === "server_peyiapanserver_done" ||
+                      header === "server_peyiapanserver_note" ||
                       header === "server_instalasiaplikasi_start" ||
                       header === "server_instalasiaplikasi_deadline" ||
+                      header === "server_instalasiaplikasi_acstart" ||
                       header === "server_instalasiaplikasi_done" ||
+                      header === "server_instalasiaplikasi_note" ||
                       header === "server_instalcheckpoint_start" ||
                       header === "server_instalcheckpoint_deadline" ||
+                      header === "server_instalcheckpoint_acstart" ||
                       header === "server_instalcheckpoint_done" ||
+                      header === "server_instalcheckpoint_note" ||
                       header === "server_testingkoneksi_start" ||
                       header === "server_testingkoneksi_deadline" ||
+                      header === "server_testingkoneksi_acstart" ||
                       header === "server_testingkoneksi_done" ||
+                      header === "server_testingkoneksi_note" ||
                       header === "server_serahterimaserver_start" ||
                       header === "server_serahterimaserver_deadline" ||
+                      header === "server_serahterimaserver_acstart" ||
                       header === "server_serahterimaserver_done" ||
+                      header === "server_serahterimaserver_note" ||
                       header === "server_implementasi_start" ||
                       header === "server_implementasi_deadline" ||
+                      header === "server_implementasi_acstart" ||
                       header === "server_implementasi_done" ||
+                      header === "server_implementasi_note" ||
                       header === "userdomain" ||
                       header === "userdomain_pic"
                         ? "hidden"

@@ -181,7 +181,7 @@ const Sidebar = () => {
                                                 </Link>
                                             </div>
                                         )}
-                                        {IsSupervisor() &&
+                                        {(IsSupervisor() || IsOperatorOps()) &&
 
                                         <div>  
                                         <hr className="my-4 border-gray-300" />
