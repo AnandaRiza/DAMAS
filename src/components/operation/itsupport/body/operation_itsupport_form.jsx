@@ -1,0 +1,1053 @@
+"use client";
+
+import { useStateContext } from "@/context/ContextProvider";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { CiSquarePlus } from "react-icons/ci";
+
+const page = () => {
+  const userid = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("DAMAS-USERID="))
+    ?.split("=")[1];
+
+  const { user } = useStateContext();
+  const [dataAllPic, setDataAllPic] = useState(null);
+  const [selectedDept, setSelectedDept] = useState("");
+  const [selectedUserDomain, setSelectedUserDomain] = useState("");
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    server_perihal: "",
+    server_pic: "",
+    server_deadline: "",
+    server_status: "",
+    createdBy: "",
+    userdomain: "",
+    userdomain_pic: "",
+  });
+
+  const [showPhase, setShowPhase] = useState(0);
+
+  const handleSubmit = async () => {
+    try {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/operationitsupport`,
+        {
+          ...formData,
+          createdBy: userid,
+          userdomain: user.userdomain,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "USER-ID": userid,
+          },
+        }
+      );
+      router.push("/main/operation/general/allproject");
+      // console.log(createdby)
+    } catch (error) {
+      console.log(error);
+      alert("Create Project Failed!");
+    }
+  };
+
+  const getDataAllPic = async () => {
+    setDataAllPic(null);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
+      );
+      setDataAllPic(response.data.data);
+      // console.log(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDataAllPic();
+    const userid = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("DAMAS-USERID="))
+      ?.split("=")[1];
+  }, []);
+
+  return (
+    <div className="flex-grow bg-[#FFFFFF] justify-center items-center min-h-screen bg-white rounded-xl">
+      <div className="rounded-xl border border-gray-300">
+        <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            className="space-y-4"
+          >
+            {/* Input fields for memo attributes */}
+            <div className="flex flex-col">
+              <label
+                htmlFor="namaproject"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Nama Project <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="namaproject"
+                name="namaproject"
+                required
+                value={formData.itsupport_perihal}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    itsupport_perihal: e.target.value,
+                  })
+                }
+                className="input input-bordered mt-1"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label
+                htmlFor="pic"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                PIC <span className="text-red-500">*</span>
+              </label>
+              {dataAllPic && (
+                <select
+                  name="pic"
+                  required
+                  id="pic"
+                  className="input input-bordered mt-1"
+                  value={formData.nama}
+                  onChange={(e) => {
+                    const selectedPic = JSON.parse(e.target.value);
+                    setFormData({
+                      ...formData,
+                      itsupport_pic: selectedPic.nama,
+                      departement: selectedPic.departemen,
+                      userdomain_pic: selectedPic.userdomain,
+                    });
+                    setSelectedDept(selectedPic.departemen);
+                    setSelectedUserDomain(selectedPic.userdomain);
+                  }}
+                >
+                  <option
+                    disabled
+                    selected
+                    className="text-sm text-gray-600 opacity-50"
+                  >
+                    Select PIC...
+                  </option>
+                  {dataAllPic.map((item, index) => (
+                    <option key={index} value={JSON.stringify(item)}>
+                      {item.nama}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+
+            <div className="flex flex-col">
+              <label
+                htmlFor="departemen"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Departement
+              </label>
+              <input
+                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                type="text"
+                value={selectedDept}
+                disabled
+              />
+            </div>
+
+            {showPhase <= 0 && (
+              <button
+                type="button"
+                className="btn btn-warning mt-4 border border-gray"
+                onClick={() => setShowPhase(1)}
+              >
+                <div className=" text-black">Tambah Phase</div>
+              </button>
+            )}
+
+            {showPhase >= 1 && (
+              <div>
+                <label
+                  htmlFor="deadline"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Phase 1
+                </label>
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="namaproject"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Nama Phase
+                    </label>
+                    <input
+                      type="text"
+                      id="namaphase1"
+                      name="namaphase1"
+                      value={formData.itsupport_phase1}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase1: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase1_start}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase1_start: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase1_deadline}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase1_deadline: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  {/* <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Phase 1 Done
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase1_done}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase1_done: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div> */}
+                </div>
+                {showPhase <= 1 && (
+                  <button
+                    type="button"
+                    className="btn btn-warning mt-4 border border-gray"
+                    onClick={() => setShowPhase(2)}
+                  >
+                    <div className=" text-black">Tambah Phase</div>
+                  </button>
+                )}
+              </div>
+            )}
+
+            {showPhase >= 2 && (
+              <div>
+                <label
+                  htmlFor="deadline"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Phase 2
+                </label>
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="namaproject"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Nama Phase
+                    </label>
+                    <input
+                      type="text"
+                      id="namaphase1"
+                      name="namaphase1"
+                      value={formData.itsupport_phase2}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase2: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase2_start}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase2_start: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase2_deadline}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase2_deadline: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  {/* <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Phase 2 Done
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase2_done}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase2_done: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div> */}
+                </div>
+                {showPhase <= 2 && (
+                  <button
+                    type="button"
+                    className="btn btn-warning mt-4 border border-gray"
+                    onClick={() => setShowPhase(3)}
+                  >
+                    <div className=" text-black">Tambah Phase</div>
+                  </button>
+                )}
+              </div>
+            )}
+
+            {showPhase >= 3 && (
+              <div>
+                <label
+                  htmlFor="deadline"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Phase 3
+                </label>
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="namaproject"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Nama Phase
+                    </label>
+                    <input
+                      type="text"
+                      id="namaphase1"
+                      name="namaphase1"
+                      value={formData.itsupport_phase1}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase3: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase3_start}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase3_start: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase3_deadline}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase3_deadline: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  {/* <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Phase 3 Done
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase3_done}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase3_done: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div> */}
+                </div>
+                {showPhase <= 3 && (
+                  <button
+                    type="button"
+                    className="btn btn-warning mt-4 border border-gray"
+                    onClick={() => setShowPhase(4)}
+                  >
+                    <div className=" text-black">Tambah Phase</div>
+                  </button>
+                )}
+              </div>
+            )}
+
+            {showPhase >= 4 && (
+              <div>
+                <label
+                  htmlFor="deadline"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Phase 4
+                </label>
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="namaproject"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Nama Phase
+                    </label>
+                    <input
+                      type="text"
+                      id="namaphase1"
+                      name="namaphase1"
+                      value={formData.itsupport_phase1}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase4: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase4_start}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase4_start: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase4_deadline}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase4_deadline: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  {/* <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Phase 4 Done
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase4_done}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase4_done: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div> */}
+                </div>
+                {showPhase <= 4 && (
+                  <button
+                    type="button"
+                    className="btn btn-warning mt-4 border border-gray"
+                    onClick={() => setShowPhase(5)}
+                  >
+                    <div className=" text-black">Tambah Phase</div>
+                  </button>
+                )}
+              </div>
+            )}
+
+            {showPhase >= 5 && (
+              <div>
+                <label
+                  htmlFor="deadline"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Phase 5
+                </label>
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="namaproject"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Nama Phase
+                    </label>
+                    <input
+                      type="text"
+                      id="namaphase1"
+                      name="namaphase1"
+                      value={formData.itsupport_phase5}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase5: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase5_start}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase5_start: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase1_deadline}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase5_deadline: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  {/* <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Phase 5 Done
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase5_done}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase5_done: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div> */}
+                </div>
+                {showPhase <= 5 && (
+                  <button
+                    type="button"
+                    className="btn btn-warning mt-4 border border-gray"
+                    onClick={() => setShowPhase(6)}
+                  >
+                    <div className=" text-black">Tambah Phase</div>
+                  </button>
+                )}
+              </div>
+            )}
+
+            {showPhase >= 6 && (
+              <div>
+                <label
+                  htmlFor="deadline"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Phase 6
+                </label>
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="namaproject"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Nama Phase
+                    </label>
+                    <input
+                      type="text"
+                      id="namaphase1"
+                      name="namaphase1"
+                      value={formData.itsupport_phase6}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase6: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase6_start}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase6_start: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase6_deadline}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase6_deadline: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  {/* <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Phase 6 Done
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase6_done}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase6_done: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div> */}
+                </div>
+                {showPhase <= 6 && (
+                  <button
+                    type="button"
+                    className="btn btn-warning mt-4 border border-gray"
+                    onClick={() => setShowPhase(7)}
+                  >
+                    <div className=" text-black">Tambah Phase</div>
+                  </button>
+                )}
+              </div>
+            )}
+
+            {showPhase >= 7 && (
+              <div>
+                <label
+                  htmlFor="deadline"
+                  className="text-sm font-semibold text-[#0066AE]"
+                >
+                  Phase 7
+                </label>
+                <div
+                  className="border rounded-xl"
+                  style={{ borderColor: "#DADADA" }}
+                >
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="namaproject"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Nama Phase
+                    </label>
+                    <input
+                      type="text"
+                      id="namaphase1"
+                      name="namaphase1"
+                      value={formData.itsupport_phase7}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase6: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Start
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase7_start}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase7_start: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase7_deadline}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase7_deadline: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div>
+
+                  {/* <div className="flex flex-col mx-3 my-3">
+                    <label
+                      htmlFor="deadline"
+                      className="text-sm font-semibold text-[#0066AE]"
+                    >
+                      Phase 7 Done
+                    </label>
+                    <input
+                      type="date"
+                      id="deadline"
+                      name="deadline"
+                      value={formData.itsupport_phase7_done}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          itsupport_phase7_done: e.target.value,
+                        })
+                      }
+                      className="input input-bordered mt-1"
+                    />
+                  </div> */}
+                </div>
+              </div>
+            )}
+
+            <div className="flex flex-col">
+              <label
+                htmlFor="deadline"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Project Deadline <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                required
+                value={formData.itsupport_deadline_project}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    itsupport_deadline_project: e.target.value,
+                  })
+                }
+                className="input input-bordered mt-1"
+              />
+            </div>
+
+            {/* Status dropdown */}
+
+            <div className="flex flex-col">
+              <label
+                htmlFor="status"
+                className="text-sm font-semibold text-[#0066AE]"
+              >
+                Status <span className="text-red-500">*</span>
+              </label>
+              <div className="dropdown mt-1 ">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn m-1 w-52 bg-white hover:bg-gray text-gray-600"
+                >
+                  {formData.itsupport_status
+                    ? formData.itsupport_status
+                    : "Select Status"}
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52 mb-4"
+                >
+                  <li>
+                    <a
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          itsupport_status: "Ongoing",
+                        })
+                      }
+                    >
+                      Ongoing
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          itsupport_status: "Finished",
+                        })
+                      }
+                    >
+                      Finished
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          itsupport_status: "Past-Deadline",
+                        })
+                      }
+                    >
+                      Past Deadline
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            {/* Submit button */}
+            <button
+              type="submit"
+              className="btn btn-success mt-4 border border-gray"
+            >
+              <div className=" text-black">Create Project</div>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default page;

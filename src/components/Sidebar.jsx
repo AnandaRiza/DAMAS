@@ -1,320 +1,348 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { PiPath } from "react-icons/pi";
-import { GoFile } from "react-icons/go";
-import { IoMdSettings } from "react-icons/io";
-import { CiMemoPad } from "react-icons/ci";
-import { IoStatsChartOutline } from "react-icons/io5";
-import { MdArrowDropDown } from "react-icons/md";
-import { IoCreateOutline } from "react-icons/io5";
-import { GoTasklist } from "react-icons/go";
-import { FaRegFolderOpen } from "react-icons/fa";
 import Link from "next/link";
+import { FaProjectDiagram } from "react-icons/fa";
+import { BsBuildingFillGear } from "react-icons/bs";
+import { FaTools } from "react-icons/fa";
+import { MdApproval } from "react-icons/md";
+import {
+    IsDacenOperator,
+    IsDevOperator,
+    IsDevSupervisor,
+    IsItmoOperator,
+    IsItsecurityOperator,
+    IsItsupportOperator,
+    IsLogisticOperator,
+    IsLogisticSupervisor,
+    IsNetworkOperator,
+    IsOperationSupervisor,
+    IsOperator,
+    IsOperatorDev,
+    IsOperatorMemo,
+    IsOperatorOps,
+    IsPpoOperator,
+    IsPpoSupervisor,
+    IsReviewerSupervisor,
+    IsServerOperator,
+    IsSkseOperator,
+    IsSupervisor,
+} from "@/validation/validateGroupAkses";
+import { CiMemoPad } from "react-icons/ci";
 
 const Sidebar = () => {
-  // const [user, setUser] = useState(null);
+    const [isSdlcShow, setIsSdlcShow] = useState(false);
+    const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
+    const [isPpoSkseShow, setIsPpoSkseShow] = useState(false);
+    const [IsOpsMonitorSystemShow, setIsOpsMonitorSystemShow] = useState(false);
+    const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] =
+        useState(false);
+    const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const response = await fetch('/api/login', {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           // Pastikan untuk mengirimkan token autentikasi jika diperlukan
-  //           'Authorization': 'Bearer ' + localStorage.getItem('token')
-  //         }
-  //       });
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       const data = await response.json();
-  //       setUser(data);
-  //     } catch (error) {
-  //       console.error('Failed to fetch user:', error);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
-
-  const [isSdlcShow, setIsSdlcShow] = useState(false);
-  const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
-  const [isPpoSkseShow, setIsPpoSkseShow] = useState(false);
-  const [IsOpsMonitorSystemShow, setIsOpsMonitorSystemShow] = useState(false);
-  const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] = useState(false);
-  // const [isOperationMonitoringSystemShow, setOperationMonitoringSystemShow] =
-  //   useState(false);
-  const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
-  // const user = {
-  //   role: "SUPER_ADMIN",
-  //   role: "DEV_ADMIN"
-  // };
-  return (
-
-    // Start Button Development
-    <div className="bg-[#00A6B4]/[0.5] text-black w-80 min-h-screen p-4">
-      <span className="text-[#0066AE] font-semibold">Development</span>
-      <div className="h-[0.5px] bg-black"></div>
-      <div className="">
-        {/* {user && user.role === "SUPER_ADMIN" &&(
+    return (
+        <div
+            className={`fixed top-0 flex w-[270px] transition-width duration-300 h-full overflow-auto bg-[#00A6B4]/[0.5] text-w
+                 p-2 ml-4 mt-20 rounded-xl shadow-r-md`}
+        >
             <div className="">
-            menampilkan yg diinginkan
+                <div className={`flex flex-col w-full pb-40`}>
+                    <div className="collapse collapse-arrow">
+                        <div>
+                            {(IsOperatorDev() || IsSupervisor()) && (
+                                <div
+                                    tabIndex={0}
+                                    className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
+                                >
+                                    <input type="checkbox" className="peer" />
+                                    <div className="collapse-title text-lg font-bold flex items-center">
+                                        <div className="mr-2">
+                                            <FaProjectDiagram />
+                                        </div>
+                                        Project Application
+                                    </div>
+                                    <div className="collapse-content">
+                                        {(IsOperatorDev() ||
+                                            IsSupervisor() ||
+                                            IsOperatorOps) && (
+                                            <div>
+                                                <Link href="/main/development/home">
+                                                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            Project Dashboard
+                                                        </button>
+                                                    </div>
+                                                </Link>
+                                                <hr className="my-4 border-gray-300" />
+                                            </div>
+                                        )}
+                                        <Link href="/main/development">
+                                            <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                    All Project
+                                                </button>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* End Button Dev */}
+
+                            {/* Start New Operation */}
+
+                            {(IsSupervisor() ||
+                                IsOperationSupervisor() ||
+                                IsNetworkOperator() ||
+                                IsServerOperator() ||
+                                IsDacenOperator() ||
+                                IsItmoOperator() ||
+                                IsItsecurityOperator() ||
+                                IsItsupportOperator() ||
+                                IsOperatorOps()) && (
+                                <div
+                                    tabIndex={0}
+                                    className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
+                                >
+                                    <input type="checkbox" className="peer" />
+
+                                    {/* start button NEWOP */}
+                                    <div className="collapse-title text-lg font-bold flex items-center">
+                                        <div className="mr-2">
+                                            <BsBuildingFillGear />
+                                        </div>
+                                        Project Operation
+                                    </div>
+
+                                    <div className="collapse-content">
+                                        {(IsOperationSupervisor() ||
+                                            IsNetworkOperator() ||
+                                            IsServerOperator() ||
+                                            IsDacenOperator() ||
+                                            IsItmoOperator() ||
+                                            IsItsecurityOperator() ||
+                                            IsItsupportOperator() ||
+                                            IsOperatorOps() ||
+                                            IsSupervisor()) && (
+                                            <div>
+                                                <Link href="/main/operation/general">
+                                                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            Operation Dashboard
+                                                        </button>
+                                                    </div>
+                                                </Link>
+                                                <hr className="my-4 border-gray-300" />
+                                            </div>
+                                        )}
+
+                                        {/* {(IsOperationSupervisor() ||
+                                        IsNetworkOperator() ||
+                                        IsServerOperator() ||
+                                        IsDacenOperator() ||
+                                        IsItmoOperator() ||
+                                        IsItsecurityOperator() ||
+                                        IsItsupportOperator() ||
+                                        IsOperatorOps()) && (
+                                        <div>
+                                            <Link href="/main/operation/general/myproject">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        My Project
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            <hr className="my-4 border-gray-300" />
+                                        </div>
+                                    )} */}
+
+                                        <Link href="/main/operation/general/allproject">
+                                            <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                    All Project
+                                                </button>
+                                            </div>
+                                        </Link>
+
+                                        {(IsOperationSupervisor() ||
+                                            IsNetworkOperator() ||
+                                            IsServerOperator() ||
+                                            IsDacenOperator() ||
+                                            IsItmoOperator() ||
+                                            IsItsecurityOperator() ||
+                                            IsItsupportOperator() ||
+                                            IsOperatorOps()) && (
+                                            <div>
+                                                <hr className="my-4 border-gray-300" />
+                                                <Link href="/main/operation/general/createproject">
+                                                    <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            Create New Project
+                                                        </button>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        )}
+                                        {IsSupervisor() &&
+
+                                        <div>  
+                                        <hr className="my-4 border-gray-300" />
+                                            <Link href="/main/status/approveoperation/general/approval">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        Approval
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            {/* <hr className="my-4 border-gray-300" /> */}
+                                        </div>
+                                    }
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* End Button NEW OP */}
+
+                            {/* start button Logistic */}
+                            {(IsOperatorMemo() || IsSupervisor()) && (
+                                <div
+                                    tabIndex={0}
+                                    className="collapse collapse-arrow border border-base-300 bg-base-200 mb-5"
+                                >
+                                    <input type="checkbox" className="peer" />
+
+                                    <div className="collapse-title text-lg  font-bold flex items-center">
+                                        <div className="mr-2">
+                                            <CiMemoPad />
+                                        </div>
+                                        Memo
+                                    </div>
+
+                                    <div className="collapse-content">
+                                        <div>
+                                            <Link href="/main/logistic/home">
+                                                <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                    <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                        Memo Dashboard
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                            <hr className="my-4 border-gray-300" />
+                                        </div>
+
+                                        {(IsOperatorMemo() ||
+                                            IsSupervisor()) && (
+                                            <div>
+                                                <Link href="/main/logistic/general/allproject">
+                                                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            Sorted Memo
+                                                        </button>
+                                                    </div>
+                                                </Link>
+                                                <hr className="my-4 border-gray-300" />
+                                            </div>
+                                        )}
+
+                                        <Link href="/main/logistic">
+                                            <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                    All Memo
+                                                </button>
+                                            </div>
+                                        </Link>
+
+                                        {IsOperatorMemo() && (
+                                            <div>
+                                                <hr className="my-4 border-gray-300" />
+
+                                                <Link href="/main/logistic/createnewmemo">
+                                                    <div className="hover:bg-[#85E495] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            Register Memo
+                                                        </button>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                            {/* end button Logistic */}
+
+                            {/* start button Approvement */}
+
+                            {(IsDevSupervisor() ||
+                                IsPpoSupervisor() ||
+                                IsLogisticSupervisor() ||
+                                IsOperationSupervisor() ||
+                                IsReviewerSupervisor()) && (
+                                <div
+                                    tabIndex={0}
+                                    className="collapse collapse-arrow border border-base-300 bg-base-200"
+                                >
+                                    <input type="checkbox" className="peer" />
+
+                                    {/* start button Approval */}
+                                    <div className="collapse-title text-lg font-bold flex items-center">
+                                        <div className="mr-2">
+                                            <MdApproval />
+                                        </div>
+                                        Approval
+                                    </div>
+
+                                    <div className="collapse-content">
+                                        {IsLogisticSupervisor() && (
+                                            <div>
+                                                <Link href="/main/status/approvelogistic">
+                                                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            Logistic Reviewer
+                                                        </button>
+                                                    </div>
+                                                </Link>
+                                                {/* <hr className="my-4 border-gray-300" /> */}
+                                            </div>
+                                        )}
+
+                                        {IsReviewerSupervisor() && (
+                                            <div>
+                                                <hr className="my-4 border-gray-300" />
+
+                                                <Link href="/main/status/approvelogistic_supervisor">
+                                                    <div className="hover:bg-[#ACC8E5] rounded mb-2 bg-base-200">
+                                                        <button className="mb-2 text-[#112A46] font-bold p-3 mt-2">
+                                                            Logistic Supervisor
+                                                        </button>
+                                                    </div>
+                                                </Link>
+                                                <hr className="my-4 border-gray-300" />
+                                            </div>
+                                        )}
+
+                                        {/* {(IsSupervisor() ||
+                                        IsOperationSupervisor() ||
+                                        IsOperatorOps) && (
+                                       
+                                    )} */}
+
+                                        {/* start button Operation */}
+
+                                        {/* end button Operation */}
+                                    </div>
+                                </div>
+                            )}
+                            {/* End Button Approvement */}
+                        </div>
+                    </div>
+                </div>
             </div>
-        )} */}
-        <button
-            className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
-            onClick={() => setIsSdlcShow(!isSdlcShow)}
-          >
-            
-            <span className="flex items-center">
-              <MdArrowDropDown className="mr-1" />
-              SDLC
-            </span>
-          </button>
-        <div
-          className={`${
-            isSdlcShow ? "flex flex-col items-start pl-5 mt-2" : "hidden"
-          }  `}
-        >
-          <Link href="/main/development">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-              <PiPath className="mr-1" />
-              All Project
-            </button>
-          </Link>
-          <Link href="/main/development/myproject">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-              <GoTasklist className="mr-1" />
-              My Project
-            </button>
-          </Link>
-          <Link href="/main/development/createnewproject">
-            <button className="flex items-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-              <IoCreateOutline className="mr-1" />
-              Create New Project
-            </button>
-          </Link>
+            {/* <button
+        onClick={toggleSidebar}
+        className="absolute top-4 right-4 px-4 py-2 text-white bg-gray-800 rounded"
+      >
+        {isSidebarOpen ? 'Close' : 'Open'}
+      </button> */}
         </div>
-      </div>
-      {/* End Button Development */}
-      
-
-      {/* Start Button PPO */}
-      <div className="mt-3">
-        <span className="text-[#0066AE] font-semibold">PPO</span>
-        <div className="h-[0.5px] bg-black"></div>
-        <div className="">
-          <button
-            className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
-            onClick={() => setIsPpoSdlcShow(!isPpoSdlcShow)}
-          >
-            <span className="flex items-center">
-              <MdArrowDropDown className="mr-1" />
-              SDLC
-            </span>
-          </button>
-        </div>
-        <div
-          className={`${
-            isPpoSdlcShow ? "flex  flex-col items-start pl-5 mt-2" : "hidden"
-          }  `}
-        >
-          <Link href="/main/ppo">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-              <PiPath className="mr-1" />
-              All Project
-            </button>
-          </Link>
-          <Link href="/main/ppo/myproject">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-              <GoTasklist className="mr-1" />
-              My Project
-            </button>
-          </Link>
-          <Link href="/main/ppo/createnewproject">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
-              <IoCreateOutline className="mr-1" />
-              Create New Project
-            </button>
-          </Link>
-        </div>
-      </div>
-      <div className="">
-        <button
-          className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-gray-600 mb-4"
-          onClick={() => setIsPpoSkseShow(!isPpoSkseShow)}
-        >
-          <span className="flex items-center">
-            <MdArrowDropDown className="mr-1" />
-            SK/SE
-          </span>
-        </button>
-        <div
-          className={`${
-            isPpoSkseShow ? "flex  flex-col items-start pl-5 mt-2" : "hidden"
-          }  `}
-        >
-          <Link href="/main/ppo/allskse">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-              <GoFile className="mr-1" />
-              All SK/SE
-            </button>
-          </Link>
-          <Link href="/main/ppo/myskse">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-              <FaRegFolderOpen className="mr-1" />
-              My SK/SE
-            </button>
-          </Link>
-          <Link href="/main/ppo/createnewskse">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
-              <IoCreateOutline className="mr-1" />
-              Create New SK/SE
-            </button>
-          </Link>
-        </div>
-      </div>
-      {/* End Button PPO */}
-      
-
-      {/* Start Button Operation */}
-      <div className="mt-3">
-        <span className="text-[#0066AE] font-semibold">Operation</span>
-        <div className="h-[0.5px] bg-black"></div>
-        <div className="">
-          <button
-            className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
-            onClick={() => setIsOpsMonitorSystemShow(!IsOpsMonitorSystemShow)}
-          >
-            <span className="flex items-center">
-              <MdArrowDropDown className="mr-1" />
-              Monitoring System
-            </span>
-          </button>
-        </div>
-        <div
-          className={`${
-            IsOpsMonitorSystemShow ? "flex  flex-col items-start pl-5 mt-2" : "hidden"
-          }  `}
-        >
-          <Link href="/main/operation">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-              <PiPath className="mr-1" />
-              Monitoring System
-            </button>
-          </Link>
-          <Link href="/main/operation/settingthreshold">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
-              <GoTasklist className="mr-1" />
-              Setting Threshold
-            </button>
-          </Link>
-        </div>
-      </div>
-      <div className="">
-        <button
-          className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-gray-600 mb-4"
-          onClick={() => setIsOpsMonitorNetworkShow(!IsOpsMonitorNetworkShow)}
-        >
-          <span className="flex items-center">
-            <MdArrowDropDown className="mr-1" />
-            Monitoring Network
-          </span>
-        </button>
-        <div
-          className={`${
-            IsOpsMonitorNetworkShow ? "flex  flex-col items-start pl-5 mt-2" : "hidden"
-          }  `}
-        >
-          <Link href="/main/operation/allprogress">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-              <GoFile className="mr-1" />
-              All Network Progress
-            </button>
-          </Link>
-          <Link href="/main/operation/myprogress">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-              <FaRegFolderOpen className="mr-1" />
-              My Progress
-            </button>
-          </Link>
-          <Link href="/main/operation/createnewprogress">
-            <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
-              <IoCreateOutline className="mr-1" />
-              Create New Progress
-            </button>
-          </Link>
-        </div>
-      </div>
-      {/* End Button Operation */}
-
-      {/* Start Button Logistic */}
-      <div>
-        {/* <span className="text-[#0066AE] font-semibold">Operation</span>
-        <div className=" h-[0.5px] bg-black"></div>
-        <Link href="/main/operation">
-          <button className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-            <span className="flex items-center">
-              <IoStatsChartOutline className="mr-1" />
-              Monitoring System
-            </span>
-          </button>
-        </Link>
-        <Link href="/main/operation/monitoringnetwork">
-          <button className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600 mb-4">
-            <span className="flex items-center">
-              <IoMdSettings className="mr-1" />
-              Monitoring Network
-            </span>
-          </button>
-        </Link> */}
-
-
-        
-        <div>
-          <span className="text-[#0066AE] font-semibold">Logistic</span>
-          <div className="h-[0.5px] bg-black"></div>
-          <button
-            className="flex flex-col items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600"
-            onClick={() => setIsLogisticMemoShow(!isLogisticMemoShow)}
-          >
-            <span className="flex items-center">
-              <MdArrowDropDown className="mr-1" />
-              Memo
-            </span>
-          </button>
-          <div
-            className={`${
-              isLogisticMemoShow
-                ? "flex  flex-col items-start pl-5 mt-2"
-                : "hidden"
-            }  `}
-          >
-            <Link href="/main/logistic">
-              <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-                <CiMemoPad className="mr-1" />
-                All Memo
-              </button>
-            </Link>
-            <Link href="/main/logistic/mymemo">
-              <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-                <FaRegFolderOpen className="mr-1" />
-                My Memo
-              </button>
-            </Link>
-            <Link href="/main/logistic/createnewmemo">
-              <button className="flex items-center justify-center tracking-wide text-black transition-colors duration-200 transform focus:outline-none hover:text-blue-600 focus:text-white-600">
-                <IoCreateOutline className="mr-1" />
-                Create New Memo
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
-      {/* End Button Logistic */}
-    </div>
-  );
+    );
 };
 
 export default Sidebar;
