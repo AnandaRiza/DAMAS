@@ -12,6 +12,10 @@ export const IsLogin = ({ children }) => {
 
     useEffect(() => {
         const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
+        setUser((prevData) => ({
+            ...prevData,
+            userdomain: userid
+        }))
 
         const fetchUserData = async () => {
             if (!userid) {
