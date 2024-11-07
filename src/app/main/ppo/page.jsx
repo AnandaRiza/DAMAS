@@ -4,6 +4,7 @@ import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
 import TablePpo from "@/components/Ppo/TablePpo";
 import HeaderPpo from "@/components/sdlc/header/HeaderPpo";
+import { useStateContext } from "@/context/ContextProvider";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -18,9 +19,15 @@ const page = () => {
     const [perPage, setPerPage] = useState(20);
     const [hasMoreData, setHasMoreData] = useState(true);
 
-    useEffect(() => {
+    const { user } = useStateContext();
+
+     useEffect(() => {
+        if (user && user.userdomain) {
         getDataAllProject();
-    }, [startIndex]);
+        } else {
+            setDataAllProject([]);
+        }
+    }, [startIndex, user]);
 
     const getDataAllProject = async () => {
         setDataAllProject(null);

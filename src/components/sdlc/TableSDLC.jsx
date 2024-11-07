@@ -168,7 +168,6 @@ const TableSDLC = ({ headers, data, action, link }) => {
                                 onDoubleClick={() => handleDoubleClick(item.recId)}
                             >
                                 {headers.map((header, headerIndex) => {
-                                    console.log(header)
                                     return (<td key={headerIndex} className="border">
                                         {header === "status"
                                             ? status

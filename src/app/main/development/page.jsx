@@ -6,6 +6,7 @@ import PleaseWait from "@/components/PleaseWait";
 import TableSDLC from "@/components/sdlc/TableSDLC";
 import HeaderDev from "@/components/sdlc/header/HeaderDev";
 import axios from "axios";
+import { useStateContext } from "@/context/ContextProvider";
 
 const Page = () => {
     const [searchInput, setSearchInput] = useState("");
@@ -16,16 +17,24 @@ const Page = () => {
     const [perPage, setPerPage] = useState(20);
     const [hasMoreData, setHasMoreData] = useState(true);
 
+    const { user } = useStateContext();
+
     useEffect(() => {
+        if (user && user.userdomain) {
         getDataAllProject();
-    }, [startIndex]);
+        } else {
+            setDataAllProject([]);
+        }
+    }, [startIndex, user]);
+
 
     const getDataAllProject = async () => {
         setDataAllProject(null);
         try {
             const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/frsproject?start=${startIndex}&size=${perPage}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/frsproject?start=${startIndex}&size=${perPage}&employee=${user.userdomain}`
             );
+            console.log(user.userdomain)
             const fetchedData = response.data.data;
             setDataAllProject(fetchedData);
             setHasMoreData(fetchedData.length === perPage); 
