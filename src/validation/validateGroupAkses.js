@@ -1,5 +1,12 @@
 import { useStateContext } from "@/context/ContextProvider";
 
+export const IsOperator = () => {
+    const { user } = useStateContext();
+    if (user === process.env.NEXT_PUBLIC_USER_OPERATOR) {
+        return true;
+    }
+    return false;
+};
 // const checkUserAccess = (expectedGroup, userId) => {
 //     const { userAplikasi } = useStateContext();
     

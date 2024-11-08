@@ -1,33 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { FaProjectDiagram } from "react-icons/fa";
-import { BsBuildingFillGear } from "react-icons/bs";
-import { FaTools } from "react-icons/fa";
-import { MdApproval } from "react-icons/md";
-// import {
-//     IsDacenOperator,
-//     IsDevOperator,
-//     IsDevSupervisor,
-//     IsItmoOperator,
-//     IsItsecurityOperator,
-//     IsItsupportOperator,
-//     IsLogisticOperator,
-//     IsLogisticSupervisor,
-//     IsNetworkOperator,
-//     IsOperationSupervisor,
-//     IsOperator,
-//     IsOperatorDev,
-//     IsOperatorMemo,
-//     IsOperatorOps,
-//     IsPpoOperator,
-//     IsPpoSupervisor,
-//     IsReviewerSupervisor,
-//     IsServerOperator,
-//     IsSkseOperator,
-//     IsSupervisor,
-// } from "@/validation/validateGroupAkses";
-import { CiMemoPad } from "react-icons/ci";
 
 const Sidebar = () => {
     const [isSdlcShow, setIsSdlcShow] = useState(false);
@@ -55,17 +28,6 @@ const Sidebar = () => {
                     </Link>
                 </div>
 
-                {/* My Memo */}
-                <div className="w-full mb-2">
-                    <Link href="/main/logistic/createnewmemo">
-                        <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
-                            <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
-                                My Memo
-                            </button>
-                        </div>
-                    </Link>
-                </div>
-
                 {/* Disposisi Memo */}
                 <div className="w-full mb-2">
                     <Link href="/main/logistic/createnewmemo">
@@ -76,6 +38,29 @@ const Sidebar = () => {
                         </div>
                     </Link>
                 </div>
+
+                <div className="w-full mb-2">
+                    <Link href="/main/ppo">
+                        <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
+                            <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
+                                All Memo
+                            </button>
+                        </div>
+                    </Link>
+                </div>
+
+                {/* My Memo */}
+                <div className="w-full mb-2">
+                    <Link href="/main/ppo">
+                        <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
+                            <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
+                                My Memo
+                            </button>
+                        </div>
+                    </Link>
+                </div>
+
+                
 
                 {/* Approval */}
                 <div className="w-full mb-2">
