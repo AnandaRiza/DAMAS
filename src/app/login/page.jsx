@@ -122,7 +122,7 @@ const Page = () => {
                                     })
                                 }
                             />
-                            <button
+                            {/* <button
                                 onClick={handleToggle}
                                 style={{
                                     border: "none",
@@ -132,7 +132,7 @@ const Page = () => {
                                 className="absolute inset-y-0 right-0 flex items-center pr-4 mt-8"
                             >
                                 {showPassword ? <LuEyeOff /> : <LuEye />}
-                            </button>
+                            </button> */}
                         </div>
                         
                         <div className="mt-5">

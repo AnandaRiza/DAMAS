@@ -40,7 +40,7 @@ export const IsOperatorMemo = () => {
         const userId = userAplikasi.userid; 
         if (userId) {
             switch (userId) {
-                case 'ACSYSOPT2':
+                case 'DAMASMEMO':
                     return true;
             }
         }
