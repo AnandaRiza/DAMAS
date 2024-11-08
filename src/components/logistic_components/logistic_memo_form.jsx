@@ -51,7 +51,7 @@ const MemoForm = () => {
     setDataAllPic(null);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/bcas-sdmdev/users`
+        `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/organization/satuankerja`
       );
       setDataAllPic(response.data.data);
       setFilteredDataAllPic(response.data.data);
@@ -312,17 +312,16 @@ const getMinDateTime = () => {
                   id="memo_pic"
                   className="input input-bordered mt-1"
                   value={JSON.stringify(
-                    dataAllPic.find((item) => item.nama === formData.memo_pic)
+                    dataAllPic.find((item) => item.name === formData.memo_pic)
                   )}
                   onChange={(e) => {
                     const selectedPic = JSON.parse(e.target.value);
                     setFormData({
                       ...formData,
-                      memo_pic: selectedPic.nama,
-                      memo_department: selectedPic.departemen,
-                      userdomainpic: selectedPic.userdomain,
+                      memo_pic: selectedPic.employee,
+                      memo_department: selectedPic.name,
                     });
-                    setSelectedDept(selectedPic.departemen);
+                    setSelectedDept(selectedPic.name);
                   }}
                 >
                   <option
@@ -334,7 +333,7 @@ const getMinDateTime = () => {
                   </option>
                   {filteredDataAllPic.map((item, index) => (
                     <option key={index} value={JSON.stringify(item)}>
-                      {item.nama}
+                      {item.employee}
                     </option>
                   ))}
                 </select>
