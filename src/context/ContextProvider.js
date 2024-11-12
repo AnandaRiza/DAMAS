@@ -9,6 +9,8 @@ export const ContexProvider = ({ children }) => {
     const [header, setHeader] = useState("Home");
     const [userAplikasi, setUserAplikasi] = useState(null);
     const [user, setUser] = useState(null);
+    const [isOperatorDpti, setIsOperatorDpti] = useState(false);
+    const [isAdminMemo, setIsAdminMemo] = useState(false);
 
     return (
         <stateContext.Provider
@@ -21,6 +23,10 @@ export const ContexProvider = ({ children }) => {
                 setUser,
                 userAplikasi,
                 setUserAplikasi,
+                isOperatorDpti,
+                setIsOperatorDpti,
+                isAdminMemo,
+                setIsAdminMemo,
             }}
         >
             {children}

@@ -1,15 +1,40 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import axios from "axios";
+import { useStateContext } from "@/context/ContextProvider";
 
 const Sidebar = () => {
-    const [isSdlcShow, setIsSdlcShow] = useState(false);
-    const [isPpoSdlcShow, setIsPpoSdlcShow] = useState(false);
-    const [isPpoSkseShow, setIsPpoSkseShow] = useState(false);
-    const [IsOpsMonitorSystemShow, setIsOpsMonitorSystemShow] = useState(false);
-    const [IsOpsMonitorNetworkShow, setIsOpsMonitorNetworkShow] =
-        useState(false);
-    const [isLogisticMemoShow, setIsLogisticMemoShow] = useState(false);
+   const {isOperatorDpti, setIsOperatorDpti} = useStateContext();
+ const {isAdminMemo, setIsAdminMemo} = useStateContext();
+
+    useEffect(() => {
+        const getIsOperatorDpti = async () => {
+            try {
+                const response = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/validation/Spv-Dpti`
+                );
+                const fetchedData = response.data.data;
+                setIsOperatorDpti(fetchedData);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        const getAdminMemo = async () => {
+            try {
+                const response = await axios.get(
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/validation/admin-register`
+                );
+                const fetchedData = response.data.data;
+                setIsAdminMemo(fetchedData);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getIsOperatorDpti();
+        getAdminMemo();
+    }, []);
 
     return (
         <div
@@ -17,7 +42,7 @@ const Sidebar = () => {
                  p-2 ml-4 mt-20 rounded-xl shadow-r-md`}
         >
             <div className="w-full">
-                {/* Register Memo */}
+                {isAdminMemo && (
                 <div className="w-full mb-2">
                     <Link href="/main/logistic/createnewmemo">
                         <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
@@ -27,6 +52,7 @@ const Sidebar = () => {
                         </div>
                     </Link>
                 </div>
+                )}
 
                 {/* Disposisi Memo */}
                 <div className="w-full mb-2">
@@ -38,16 +64,17 @@ const Sidebar = () => {
                         </div>
                     </Link>
                 </div>
-
-                <div className="w-full mb-2">
-                    <Link href="/main/ppo">
-                        <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
-                            <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
-                                All Memo
-                            </button>
-                        </div>
-                    </Link>
-                </div>
+                {isOperatorDpti && (
+                    <div className="w-full mb-2">
+                        <Link href="/main/ppo">
+                            <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
+                                <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
+                                    All Memo
+                                </button>
+                            </div>
+                        </Link>
+                    </div>
+                )}
 
                 {/* My Memo */}
                 <div className="w-full mb-2">
@@ -59,8 +86,6 @@ const Sidebar = () => {
                         </div>
                     </Link>
                 </div>
-
-                
 
                 {/* Approval */}
                 <div className="w-full mb-2">
