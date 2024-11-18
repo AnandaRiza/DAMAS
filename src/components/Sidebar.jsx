@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useStateContext } from "@/context/ContextProvider";
+import { BsBuildingFillGear } from "react-icons/bs";
+import { CiMemoPad } from "react-icons/ci";
+import { MdApproval } from "react-icons/md";
+import { FaProjectDiagram } from "react-icons/fa";
 
 const Sidebar = () => {
    const {isOperatorDpti, setIsOperatorDpti} = useStateContext();
