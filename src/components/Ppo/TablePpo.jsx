@@ -236,22 +236,12 @@ const TablePpo = ({ headers, data, action, link }) => {
                                 {getDisplayName(item)}
                             </th>
                         ))}
-                        {(IsOperator() ||
-                            IsDevOperator() ||
-                            IsPpoOperator() ||
-                            IsSkseOperator() ||
-                            IsNetworkOperator() ||
-                            IsServerOperator() ||
-                            IsDacenOperator() ||
-                            IsItsupportOperator() ||
-                            IsItmoOperator() ||
-                            IsItsecurityOperator() ||
-                            IsLogisticOperator()) &&
+                        
                             action && (
                                 <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                     Edit
                                 </th>
-                            )}
+                            )
                     </tr>
                 </thead>
                 <tbody>
@@ -326,17 +316,7 @@ const TablePpo = ({ headers, data, action, link }) => {
                                             : item[header]}
                                     </td>
                                 ))}
-                                {(IsOperator() ||
-                                    IsDevOperator() ||
-                                    IsPpoOperator() ||
-                                    IsSkseOperator() ||
-                                    IsNetworkOperator() ||
-                                    IsServerOperator() ||
-                                    IsDacenOperator() ||
-                                    IsItsupportOperator() ||
-                                    IsItmoOperator() ||
-                                    IsItsecurityOperator() ||
-                                    IsLogisticOperator()) &&
+                               
                                     action && (
                                         <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                             <button
@@ -349,7 +329,7 @@ const TablePpo = ({ headers, data, action, link }) => {
                                                 <AiOutlineEdit size={20} />
                                             </button>
                                         </td>
-                                    )}
+                                    )
                             </tr>
                         );
                     })}

@@ -12,54 +12,55 @@ export const IsLogin = ({ children }) => {
 
     useEffect(() => {
         const userid = document.cookie.split('; ').find(row => row.startsWith('DAMAS-USERID='))?.split('=')[1];
-        setUser((prevData) => ({
-            ...prevData,
-            userdomain: userid
-        }))
-
+       
         const fetchUserData = async () => {
             if (!userid) {
                 router.push('/login');
                 return;
             }
 
-            // try {
-                // const userResponse = await axios.get(`${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/secure/users`, {
-                //     headers: { 'USER-ID': userid }
-                // });
-                // const userData = userResponse.data.data;
+            try {
+                const userResponse = await axios.get(`${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/Ldap/users`, {
+                    headers: { 'USER-ID': userid }
+                });
+                
+                const userData = userResponse.data.data;
+                console.log(userid)
+            
+                // Check if the user is valid
+                // if (userData.status !== 1) {
+                //     router.push("/login");
+                //     return;
+                // }
 
-            //     // Check if the user is valid
-            //     // if (userData.status !== 1) {
-            //     //     router.push("/login");
-            //     //     return;
-            //     // }
+                setUser((prevData) => ({
+                    ...prevData,
+                    userdomain: userData.domain
+                }))
 
-            //     setUser(userData);
+            //     // const aplikasiResponse = await axios.get(
+            //     //     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/secure/usraplikasi`,
+            //     //     { headers: { "USER-ID": userid } }
+            //     // );
 
-            // //     // const aplikasiResponse = await axios.get(
-            // //     //     `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/secure/usraplikasi`,
-            // //     //     { headers: { "USER-ID": userid } }
-            // //     // );
+            //     // setUserAplikasi(aplikasiResponse.data.data);
 
-            // //     // setUserAplikasi(aplikasiResponse.data.data);
-
-            // //     axios.defaults.headers.common['USER-ID'] = userid;
-
-            // } catch (error) {
-            //     console.error("Error fetching user data:", error.response ? error.response.data : error.message);
-            //     router.push('/login');
-            // } finally {
-            //     setLoading(false);
-            // }
+            //     axios.defaults.headers.common['USER-ID'] = userid;
+            axios.defaults.headers.common["USER-ID"] = userid;
+            } catch (error) {
+                console.error("Error fetching user data:", error.response ? error.response.data : error.message);
+                router.push('/login');
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchUserData();
     }, [router, setUser, setUserAplikasi]);
 
-    // if (loading) {
-    //     return <div><PleaseWait /></div>;
-    // }
+    if (loading) {
+        return <div><PleaseWait /></div>;
+    }
 
     return children;
 };
