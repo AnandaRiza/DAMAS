@@ -250,7 +250,7 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
               </label>
               <input
                 type="text"
-                id="namaproject"
+                id="namaproject"z
                 name="namaproject"
                 required
                 value={formData.network_no}
