@@ -42,9 +42,9 @@ const Sidebar = () => {
                  p-2 ml-4 mt-20 rounded-xl shadow-r-md`}
         >
             <div className="w-full">
-                {isAdminMemo && (
+                
                 <div className="w-full mb-2">
-                    <Link href="/main/logistic/createnewmemo">
+                    <Link href="/main/memo/register">
                         <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                             <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
                                 Register Memo
@@ -52,11 +52,11 @@ const Sidebar = () => {
                         </div>
                     </Link>
                 </div>
-                )}
+             
 
                 {/* Disposisi Memo */}
                 <div className="w-full mb-2">
-                    <Link href="/main/logistic/createnewmemo">
+                    <Link href="/main/memo/disposisimemo">
                         <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                             <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
                                 Disposisi Memo
@@ -66,7 +66,7 @@ const Sidebar = () => {
                 </div>
                 {isOperatorDpti && (
                     <div className="w-full mb-2">
-                        <Link href="/main/ppo">
+                        <Link href="/main/logistic">
                             <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                                 <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
                                     All Memo
@@ -89,7 +89,7 @@ const Sidebar = () => {
 
                 {/* Approval */}
                 <div className="w-full mb-2">
-                    <Link href="/main/logistic/createnewmemo">
+                    <Link href="/main/status/approvelogistic_supervisor">
                         <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                             <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
                                 Approval

@@ -17,7 +17,7 @@ const ReviewMemoDetail = () => {
                 </div>
                 <LogisticBreadcrumbs />
                 <div className="px-10 mt-10">
-                    <ReviewMemoDetailSupervisorPage memoId={memoId} />
+                    <ReviewMemoDetailSupervisorPage memoId={memoId}/>
                 </div>
             </div>
         </div>

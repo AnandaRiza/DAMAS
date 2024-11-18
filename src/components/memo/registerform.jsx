@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useStateContext } from "@/context/ContextProvider";
 import Swal from "sweetalert2";
 
-const MemoForm = () => {
+const RegisterForm = () => {
     const [dataAllPic, setDataAllPic] = useState(null);
     const [filteredDataAllPic, setFilteredDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
@@ -49,7 +49,7 @@ const MemoForm = () => {
         setDataAllPic(null);
         try {
             const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/organization/satuankerja`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/organization/spv-stl-example`
             );
             setDataAllPic(response.data.data);
             setFilteredDataAllPic(response.data.data);
@@ -309,13 +309,7 @@ const MemoForm = () => {
                         </label>
                         {dataAllPic && (
                             <>
-                                {/* <input
-                  type="text"
-                  placeholder="Search PIC..."
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  className="input input-bordered mt-1"
-                /> */}
+                               
                                 <select
                                     name="memo_pic"
                                     id="memo_pic"
@@ -702,4 +696,4 @@ const MemoForm = () => {
     );
 };
 
-export default MemoForm;
+export default RegisterForm;
