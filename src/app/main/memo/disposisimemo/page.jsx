@@ -7,22 +7,6 @@ import HeaderLogistic from "@/components/logistic_components/header/HeaderLogist
 import axios from "axios";
 import DispositionTable from "@/tables/disposition";
 
-const getDisplayName = (header) => {
-    const displayNames = {
-        memoNum: "NOMOR MEMO",
-        memoPerihal: "PERIHAL MEMO",
-        memoPic: "PIC",
-        memoStatus: "STATUS MEMO",
-        memoSuratType: "TIPE SURAT",
-        memoMasuk: "TANGGAL MEMO MASUK",
-        memoDocType: "TIPE DOKUMEN",
-        memoKeluar: "TANGGAL MEMO KELUAR",
-        memoTerima: "TANGGAL TERIMA MEMO",
-        memoCategory: "KATEGORI MEMO",
-        memoDeadline: "MEMO DEADLINE",
-    };
-    return displayNames[header] || header;
-};
 
 const Page = () => {
     const [searchInput, setSearchInput] = useState("");
@@ -82,10 +66,8 @@ const Page = () => {
                     <div className="w-full flex justify-between items-center"></div>
                 </div>
 
-                {/* Show PleaseWait while fetching data */}
                 {!dataAllMemo && !searchResult && <PleaseWait />}
 
-                {/* Render the disposition table if data is available */}
                 {dataAllMemo && dataAllMemo.length > 0 && !searchResult && (
                     <div className="mt-4">
                         <DispositionTable
@@ -105,7 +87,7 @@ const Page = () => {
                             headers={Object.keys(searchResult[0]).slice(0, Object.keys(searchResult[0]).length - 1)}
                             data={searchResult}
                             action={true}
-                            link={"/main/logistic/"}
+                            link={"/main/memo/disposisimemo"}
                         />
                     </div>
                 )}

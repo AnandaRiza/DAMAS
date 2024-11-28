@@ -6,7 +6,7 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { AiOutlineEdit } from "react-icons/ai";
 import { convertToDate, convertToDateCalculate } from "@/utils/dateFormater";
 
-const DispositionTable = ({ headers, data, action, link }) => {
+const DraftTable = ({ headers, data, action, link }) => {
   const router = useRouter();
 
   const rowClass = (inputDate, status) => {
@@ -37,14 +37,14 @@ const DispositionTable = ({ headers, data, action, link }) => {
     const updatedData = data.map((item) => {
       if (item.id === id) {
         item.status = "Finish";
-        router.push(`${link}/disposisi/${id}`);
+        router.push(`${link}/editdraft/${id}`);
       }
       return item;
     });
   };
 
   const handleDoubleClick = (id) => {
-    router.push(`${link}/disposisi/${id}`);
+    router.push(`${link}/detail/${id}`);
   };
 
   const getDisplayName = (header) => {
@@ -60,7 +60,7 @@ const DispositionTable = ({ headers, data, action, link }) => {
       memoTerima: "TANGGAL TERIMA MEMO",
       memoCategory: "KATEGORI MEMO",
       memoDeadline: "MEMO DEADLINE",
-      memoNotes: "MEMO NOTES"
+      memoReviewer: "DISPOSITION NOTES"
       
     };
     return displayNames[header] || header;
@@ -127,22 +127,21 @@ const DispositionTable = ({ headers, data, action, link }) => {
       <table className="table cursor-pointer text-center">
         <thead>
           <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
-          {action && (
-              <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                EDIT
-              </th>
-            )}
             {headers.map((item, index) => (
               <th key={index}
               className={`py-3 px-6 uppercase ${
-                item === "id" || item === "userdomain" || item === "memoCreatedBy" || item === "memoReviewer" || item === "memoKeluar" || item === "userdomainreviewer" || item === "memoUpload" || item === "idMemo" || item === "userdomainpic"
+                item === "id" || item === "userdomain" || item === "userdomainreviewer" || item === "memoUpload" || item === "idMemo" || item === "userdomainpic"
                     ? "hidden"
                     : ""
             }`}
               >
                 {getDisplayName(item)}</th>
             ))}
-           
+            {action && (
+              <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                Edit
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -155,6 +154,19 @@ const DispositionTable = ({ headers, data, action, link }) => {
                 className={`${rowClassName} text-xs leading-5`}
                 onDoubleClick={() => handleDoubleClick(item.id)}
               >
+                {headers.map((header, headerIndex) => (
+                  <td key={headerIndex}
+                  className={`py-3 px-6 ${
+                    header === "id" || header === "userdomain" || header === "userdomainreviewer" || header === "memoUpload" || header === "idMemo" || header === "userdomainpic" ? "hidden" : ""
+                }`}
+                   >
+                    {header === "memoStatus" ? memoStatus : 
+                      // Gunakan convertToDateFormat untuk memformat tanggal
+                      (header === "memoKeluar" || header === "memoMasuk" || header === "memoTerima" ? convertToDate(item[header]) : item[header])
+                    }
+                  </td>
+                ))}
+
                 {action && (
                   <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                     <button
@@ -166,20 +178,6 @@ const DispositionTable = ({ headers, data, action, link }) => {
                     </button>
                   </td>
                 )}
-                {headers.map((header, headerIndex) => (
-                  <td key={headerIndex}
-                  className={`py-3 px-6 ${
-                    header === "id" || header === "userdomain" || header === "memoCreatedBy" || header === "memoReviewer" || header === "memoKeluar"|| header === "userdomainreviewer" || header === "memoUpload" || header === "idMemo" || header === "userdomainpic" ? "hidden" : ""
-                }`}
-                   >
-                    {header === "memoStatus" ? memoStatus : 
-                 
-                      (header === "memoKeluar" || header === "memoMasuk" || header === "memoTerima" ? convertToDate(item[header]) : item[header])
-                    }
-                  </td>
-                ))}
-
-                
               </tr>
             );
           })}
@@ -189,4 +187,4 @@ const DispositionTable = ({ headers, data, action, link }) => {
   );
 };
 
-export default DispositionTable;
+export default DraftTable;

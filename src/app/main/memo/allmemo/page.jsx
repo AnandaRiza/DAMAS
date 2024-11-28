@@ -97,7 +97,7 @@ const Page = () => {
                                 )}
                                 data={dataAllMemo}
                                 action={true}
-                                link={"/main/logistic/"}
+                                link={"/main/memo/allmemo/"}
                             />
                         </div>
                     )}
@@ -113,7 +113,7 @@ const Page = () => {
                                 )}
                                 data={searchResult}
                                 action={true}
-                                link={"/main/logistic/"}
+                                link={"/main/memo/allmemo/"}
                             />
                         </div>
                     )}

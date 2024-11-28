@@ -4,149 +4,114 @@ import { useRouter } from "next/navigation";
 import React, { useMemo, useEffect, useState } from "react";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { AiOutlineEdit } from "react-icons/ai";
-import { convertToDateCalculate } from "@/utils/dateFormater";
+import { convertToDate, convertToDateCalculate } from "@/utils/dateFormater";
 
 const MyMemoTable = ({ headers, data, action, link }) => {
   const router = useRouter();
 
 
-const rowClass = (inputDate, status) => {
-  const calculateTimeLeft = (date) => {
+  const rowClass = (inputDate, status) => {
+    const calculateTimeLeft = (date) => {
       const now = new Date();
       const deadline = new Date(convertToDateCalculate(date));
       const difference = deadline.getTime() - now.getTime();
       const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
       return daysLeft;
-  };
+    };
 
-  if (status === "Finished") {
+    if (status === "Finished") {
       return "bg-green-200 hover:bg-green-300";
-  }
+    }
 
-  const daysLeft = calculateTimeLeft(inputDate);
+    const daysLeft = calculateTimeLeft(inputDate);
 
-  if (daysLeft <= 3) {
+    if (daysLeft <= 3) {
       return "bg-red-200 hover:bg-red-300";
-  } else if (daysLeft <= 7) {
+    } else if (daysLeft <= 7) {
       return "bg-yellow-200 hover:bg-yellow-300";
-  } else {
+    } else {
       return "bg-white-200 hover:bg-gray-300";
-  }
-};
- 
-const handleEdit = (id) => {
-  const updatedData = data.map((item) => {
-      if (item.id === id) {
-          item.status = "Finish";
-          router.push(`${link}/edit/${id}`);
-      }
-      return item;
-  });
-};
-
-const handleDoubleClick = (id) => {
-  router.push(`${link}/detail/${id}`);
-};
-
-const getDisplayName = (header) => {
-  const displayNames = {
-    memoNum: "NOMOR MEMO",
-    memoPerihal: "PERIHAL MEMO",
-    memoPic: "PIC",
-    memoStatus: "STATUS MEMO",
-    memoSuratType: "TIPE SURAT",
-    memoMasuk: "TANGGAL MEMO MASUK",
-    memoDocType: "TIPE DOKUMEN",
-    memoKeluar: "TANGGAL MEMO KELUAR",
-    memoTerima: "TANGGAL TERIMA MEMO",
-    memoCategory: "KATEGORI MEMO",
-    memoDeadline: "MEMO DEADLINE",
-    memoReviewer: "DISPOSITION NOTES",
-    memoNotes: "MEMO NOTES",
-    memoDepartment: "MEMO DEPARTMENT",
-    memoCreatedBy: "CREATED BY"
+    }
   };
-  return displayNames[header] || header;
-};
 
-const getStatus = (item) => {
-  const calculateTimeLeft = (date) => {
+
+  const handleDoubleClick = (id) => {
+    router.push(`${link}/detail/${id}`);
+  };
+
+  const getDisplayName = (header) => {
+    const displayNames = {
+      memoNum: "NOMOR MEMO",
+      memoPerihal: "PERIHAL MEMO",
+      memoPic: "PIC",
+      memoStatus: "STATUS MEMO",
+      memoSuratType: "TIPE SURAT",
+      memoMasuk: "TANGGAL MEMO MASUK",
+      memoDocType: "TIPE DOKUMEN",
+      memoKeluar: "TANGGAL MEMO KELUAR",
+      memoTerima: "TANGGAL TERIMA MEMO",
+      memoCategory: "KATEGORI MEMO",
+      memoDeadline: "MEMO DEADLINE",
+      
+    };
+    return displayNames[header] || header;
+  };
+
+  const getStatus = (item) => {
+    const calculateTimeLeft = (date) => {
       const now = new Date();
       const deadline = new Date(convertToDateCalculate(date));
       const difference = deadline.getTime() - now.getTime();
       const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
-
       return daysLeft;
+    };
+
+    const { memoStatus } = item;
+
+    if (memoStatus === "Finished") {
+      return "Finished";
+    }
+
+    const daysLeft = calculateTimeLeft(item.memoDeadline);
+
+    if (daysLeft < 0) {
+      return memoStatus;
+    } else if (daysLeft <= 3) {
+      return memoStatus;
+    } else if (daysLeft <= 7) {
+      return memoStatus;
+    } else {
+      return memoStatus;
+    }
   };
 
-  const { status } = item;
+  const sortedData = useMemo(() => {
+    return data.slice().sort((a, b) => {
+      const classA = rowClass(convertToDateCalculate(a.memoDeadline), a.memoStatus);
+      const classB = rowClass(convertToDateCalculate(b.memoDeadline), b.memoStatus);
 
-  if (status === "Finished") {
-      return "Finished";
-  }
+      const aIsFinished = a.memoStatus === "Finished";
+      const bIsFinished = b.memoStatus === "Finished";
 
-  const daysLeft = calculateTimeLeft(item.memoDeadline);
+      if (aIsFinished && bIsFinished) {
+        return classA.localeCompare(classB);
+      }
 
-  if (daysLeft < 0) {
-      return "Past Deadline";
-  } else if (daysLeft <= 3) {
-      return "Within 3 days";
-  } else if (daysLeft <= 7) {
-      return "Within 7 days";
-  } else {
-      return "Ongoing";
-  }
-};
+      if (aIsFinished) {
+        return 1;
+      }
 
-const sortedData = data.slice().sort((a, b) => {
-  const classA = rowClass(convertToDateCalculate(a.memoDeadline), a.memoStatus);
-  const classB = rowClass(convertToDateCalculate(b.memoDeadline), b.memoStatus);
+      if (bIsFinished) {
+        return -1;
+      }
 
-  const aIsFinished = a.memoStatus === "Finished";
-  const bIsFinished = b.memoStatus === "Finished";
+      if (a.memoStatus === "Ongoing" && b.memoStatus === "Ongoing") {
+        return new Date(convertToDateCalculate(a.memoDeadline)) - new Date(convertToDateCalculate(b.memoDeadline));
+      }
 
-  if (aIsFinished && bIsFinished) {
-      return classA.localeCompare(classB);
-  }
-
-  if (aIsFinished) {
-      return 1; 
-  }
-
-  if (bIsFinished) {
-      return -1; 
-  }
-
-  if (a.memoStatus === "Finished" && b.memoStatus === "Finished") {
-      return classA.localeCompare(classB);
-  }
-
-  if (a.memoStatus === "Finished") {
-      return 1; 
-  }
-
-  if (b.memoStatus === "Finished") {
-      return -1; 
-  }
-
-  
-  if (a.memoStatus === "Ongoing" && b.memoStatus === "Ongoing") {
-     
-      return new Date(convertToDateCalculate(a.memoDeadline)) - new Date(convertToDateCalculate(b.memoDeadline));
-  }
-
-  
-  if (a.memoStatus === "Ongoing") {
-      return 1; 
-  }
-
-  if (b.memoStatus === "Ongoing") {
-      return -1; 
-  }
-
-
-  return classA.localeCompare(classB);
-});
+      return a.memoStatus === "Ongoing" ? 1 : -1;
+    });
+  }, [data]);
 
   return (
     <div className="overflow-x-auto">
@@ -154,14 +119,15 @@ const sortedData = data.slice().sort((a, b) => {
         <thead>
             <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
                 {headers.map((item, index) => (
-                    <th>
+                    <th key={index}
+                    className={`py-3 px-6 uppercase ${
+                      item === "id" || item === "userdomain" || item === "memoCreatedBy" || item === "memoNotes" || item === "memoReviewer" || item === "memoKeluar" || item === "userdomainreviewer" || item === "memoUpload" || item === "idMemo" || item === "userdomainpic"
+                          ? "hidden"
+                          : ""
+                  }`}>
                         {getDisplayName(item)}
                     </th>
                 ))}
-                
-                        <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                            Edit
-                        </th>
             </tr>
         </thead>
         <tbody>
@@ -178,14 +144,18 @@ const sortedData = data.slice().sort((a, b) => {
                         onDoubleClick={() => handleDoubleClick(item.id)}
                     >
                         {headers.map((header, headerIndex) => (
-                            <td >
-                                {header === "status"
-                                    ? memoStatus
-                                    : item[header]}
+                            <td key={headerIndex}
+                            className={`py-3 px-6 ${
+                              header === "id" || header === "userdomain" || header === "memoNotes" || header === "memoCreatedBy" || header === "memoReviewer" || header === "memoKeluar"|| header === "userdomainreviewer" || header === "memoUpload" || header === "idMemo" || header === "userdomainpic" ? "hidden" : ""
+                          }`}>
+                                {header === "memoStatus"
+                                    ? memoStatus :
+                                    (header === "memoKeluar" || header === "memoMasuk" || header === "memoTerima" ? convertToDate(item[header]) : item[header])
+                                    }
                             </td>
                         ))}
 
-                        {
+                        {/* {
                             action && (
                                 <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
                                     <button
@@ -198,7 +168,7 @@ const sortedData = data.slice().sort((a, b) => {
                                         <AiOutlineEdit size={20} />
                                     </button>
                                 </td>
-                            )}
+                            )} */}
                     </tr>
                 );
             })}
