@@ -5,8 +5,8 @@ import axios from "axios";
 import { useStateContext } from "@/context/ContextProvider";
 
 const Sidebar = () => {
-   const {isOperatorDpti, setIsOperatorDpti} = useStateContext();
- const {isAdminMemo, setIsAdminMemo} = useStateContext();
+    const { isOperatorDpti, setIsOperatorDpti } = useStateContext();
+    const { isAdminMemo, setIsAdminMemo } = useStateContext();
 
     useEffect(() => {
         const getIsOperatorDpti = async () => {
@@ -42,7 +42,6 @@ const Sidebar = () => {
                  p-2 ml-4 mt-20 rounded-xl shadow-r-md`}
         >
             <div className="w-full">
-                
                 <div className="w-full mb-2">
                     <Link href="/main/memo/register">
                         <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
@@ -52,21 +51,22 @@ const Sidebar = () => {
                         </div>
                     </Link>
                 </div>
-             
 
-                {/* Disposisi Memo */}
-                <div className="w-full mb-2">
-                    <Link href="/main/memo/disposisimemo">
-                        <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
-                            <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
-                                Disposisi Memo
-                            </button>
-                        </div>
-                    </Link>
-                </div>
-                {isOperatorDpti && (
+                {isAdminMemo && (
                     <div className="w-full mb-2">
-                        <Link href="/main/logistic">
+                        <Link href="/main/memo/disposisimemo">
+                            <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
+                                <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
+                                    Disposisi Memo
+                                </button>
+                            </div>
+                        </Link>
+                    </div>
+                )}
+
+                {isAdminMemo && (
+                    <div className="w-full mb-2">
+                        <Link href="/main/memo/allmemo">
                             <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                                 <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
                                     All Memo
@@ -75,6 +75,16 @@ const Sidebar = () => {
                         </Link>
                     </div>
                 )}
+
+                <div className="w-full mb-2">
+                    <Link href="/main/memo/draftmemo">
+                        <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
+                            <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
+                                Draft Memo
+                            </button>
+                        </div>
+                    </Link>
+                </div>
 
                 {/* My Memo */}
                 <div className="w-full mb-2">
