@@ -51,9 +51,12 @@ const Page = () => {
             );
             const fetchedData = response.data.data;
             
-            // Filter memos where PIC matches user's domain
+            // Filter memos based on multiple conditions
             const filteredMemos = fetchedData.filter(memo => 
-                memo.memoPic.toLowerCase() === user.userdomain.toLowerCase()
+                memo.userid === user.userdomain ||
+                memo.userdomain_pic?.toLowerCase() === user.userdomain.toLowerCase() ||
+                memo.userdomain_reviewer?.toLowerCase() === user.userdomain.toLowerCase() 
+                // memo.memoCreatedBy?.toLowerCase() === user.userdomain.toLowerCase()
             );
 
             setDataAllMemo(filteredMemos);
@@ -73,9 +76,12 @@ const Page = () => {
             );
             const fetchedData = response.data.data;
             
-            // Filter search results where PIC matches user's domain
+            // Filter search results based on multiple conditions
             const filteredMemos = fetchedData.filter(memo => 
-                memo.memoPic.toLowerCase() === user.userdomain.toLowerCase()
+                memo.userid === user.userdomain ||
+                memo.userdomain_pic?.toLowerCase() === user.userdomain.toLowerCase() ||
+                memo.userdomain_reviewer?.toLowerCase() === user.userdomain.toLowerCase() ||
+                memo.memoCreatedBy?.toLowerCase() === user.userdomain.toLowerCase()
             );
 
             setSearchResult(filteredMemos);
@@ -117,7 +123,7 @@ const Page = () => {
                                 )}
                                 data={dataAllMemo}
                                 action={true}
-                                link={"/main/memo/allmemo/"}
+                                link={"/main/memo/mymemo/"}
                             />
                         </div>
                     )}
@@ -133,7 +139,7 @@ const Page = () => {
                                 )}
                                 data={searchResult}
                                 action={true}
-                                link={"/main/memo/allmemo/"}
+                                link={"/main/memo/mymemo/"}
                             />
                         </div>
                     )}
