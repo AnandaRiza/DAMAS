@@ -5,8 +5,8 @@ import axios from "axios";
 import { useStateContext } from "@/context/ContextProvider";
 
 const Sidebar = () => {
-  const { isOperatorDpti, setIsOperatorDpti } = useStateContext();
-  const { isAdminMemo, setIsAdminMemo } = useStateContext();
+    const { isOperatorDpti, setIsOperatorDpti } = useStateContext();
+    const { isAdminMemo, setIsAdminMemo } = useStateContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,21 +44,80 @@ const Sidebar = () => {
     navItems.push({ href: "/main/logistic", label: "All Memo" });
   }
 
-  return (
-    <div
-      className={`fixed top-0 flex flex-col w-[270px] transition-width duration-300 h-full overflow-auto bg-[#00A6B4]/50 p-4 ml-4 mt-20 rounded-xl shadow-md`}
-    >
-      {navItems.map((item, index) => (
-        <Link
-          key={index}
-          href={item.href}
-          className="mb-2 block hover:bg-[#ACC8E5] rounded bg-base-200 text-center text-[#112A46] text-lg font-bold p-4 transition-colors"
+    return (
+        <div
+            className={`fixed top-0 flex w-[270px] transition-width duration-300 h-full overflow-auto bg-[#00A6B4]/[0.5]
+                 p-2 ml-4 mt-20 rounded-xl shadow-r-md`}
         >
-          {item.label}
-        </Link>
-      ))}
-    </div>
-  );
+            <div className="w-full">
+                <div className="w-full mb-2">
+                    <Link href="/main/memo/register">
+                        <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
+                            <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
+                                Register Memo
+                            </button>
+                        </div>
+                    </Link>
+                </div>
+
+                {isAdminMemo && (
+                    <div className="w-full mb-2">
+                        <Link href="/main/memo/disposisimemo">
+                            <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
+                                <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
+                                    Disposisi Memo
+                                </button>
+                            </div>
+                        </Link>
+                    </div>
+                )}
+
+                {isAdminMemo && (
+                    <div className="w-full mb-2">
+                        <Link href="/main/memo/allmemo">
+                            <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
+                                <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
+                                    All Memo
+                                </button>
+                            </div>
+                        </Link>
+                    </div>
+                )}
+
+                <div className="w-full mb-2">
+                    <Link href="/main/memo/draftmemo">
+                        <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
+                            <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
+                                Draft Memo
+                            </button>
+                        </div>
+                    </Link>
+                </div>
+
+                {/* My Memo */}
+                <div className="w-full mb-2">
+                    <Link href="/main/ppo">
+                        <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
+                            <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
+                                My Memo
+                            </button>
+                        </div>
+                    </Link>
+                </div>
+
+                {/* Approval */}
+                <div className="w-full mb-2">
+                    <Link href="/main/status/approvelogistic_supervisor">
+                        <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
+                            <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
+                                Approval
+                            </button>
+                        </div>
+                    </Link>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default Sidebar;

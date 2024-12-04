@@ -6,9 +6,8 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { AiOutlineEdit } from "react-icons/ai";
 import { convertToDate, convertToDateCalculate } from "@/utils/dateFormater";
 
-const MyMemoTable = ({ headers, data, action, link }) => {
+const DraftTable = ({ headers, data, action, link }) => {
   const router = useRouter();
-
 
   const rowClass = (inputDate, status) => {
     const calculateTimeLeft = (date) => {
@@ -34,9 +33,18 @@ const MyMemoTable = ({ headers, data, action, link }) => {
     }
   };
 
+  const handleEdit = (id) => {
+    const updatedData = data.map((item) => {
+      if (item.id === id) {
+        item.status = "Finish";
+        router.push(`${link}/editdraft/${id}`);
+      }
+      return item;
+    });
+  };
 
   const handleDoubleClick = (id) => {
-    router.push(`${link}/detail/${id}`);
+    router.push(`${link}/editdraft/${id}`);
   };
 
   const getDisplayName = (header) => {
@@ -52,6 +60,7 @@ const MyMemoTable = ({ headers, data, action, link }) => {
       memoTerima: "TANGGAL TERIMA MEMO",
       memoCategory: "KATEGORI MEMO",
       memoDeadline: "MEMO DEADLINE",
+      memoReviewer: "DISPOSITION NOTES"
       
     };
     return displayNames[header] || header;
@@ -115,67 +124,69 @@ const MyMemoTable = ({ headers, data, action, link }) => {
 
   return (
     <div className="overflow-x-auto">
-    <table className="table cursor-pointer text-center">
+      <table className="table cursor-pointer text-center">
         <thead>
-            <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
-                {headers.map((item, index) => (
-                    <th key={index}
-                    className={`py-3 px-6 uppercase ${
-                      item === "id" || item === "userdomain" || item === "memoCreatedBy" || item === "memoNotes" || item === "memoReviewer" || item === "memoKeluar" || item === "userdomainreviewer" || item === "memoUpload" || item === "idMemo" || item === "userdomainpic"
-                          ? "hidden"
-                          : ""
-                  }`}>
-                        {getDisplayName(item)}
-                    </th>
-                ))}
-            </tr>
+          <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
+          {action && (
+              <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                EDIT
+              </th>
+            )}
+            {headers.map((item, index) => (
+              <th key={index}
+              className={`py-3 px-6 uppercase ${
+                item === "id" || item === "userdomain" || item === "userdomainreviewer" || item === "memoUpload" || item === "idMemo" || item === "userdomainpic"
+                    ? "hidden"
+                    : ""
+            }`}
+              >
+                {getDisplayName(item)}</th>
+            ))}
+           
+          </tr>
         </thead>
         <tbody>
-            {sortedData.map((item, index) => {
-                const memoStatus = getStatus(item);
-                const rowClassName = rowClass(
-                    item.memoDeadline,
-                    item.memoStatus
-                );
-                return (
-                    <tr
-                        key={index}
-                        className={`${rowClassName} text-xs leading-5`}
-                        onDoubleClick={() => handleDoubleClick(item.id)}
+          {sortedData.map((item, index) => {
+            const memoStatus = getStatus(item);
+            const rowClassName = rowClass(item.memoDeadline, item.memoStatus);
+            return (
+              <tr
+                key={index}
+                className={`${rowClassName} text-xs leading-5`}
+                onDoubleClick={() => handleDoubleClick(item.id)}
+              >
+                 {action && (
+                  <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => handleEdit(item.id)}
+                      className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
                     >
-                        {headers.map((header, headerIndex) => (
-                            <td key={headerIndex}
-                            className={`py-3 px-6 ${
-                              header === "id" || header === "userdomain" || header === "memoNotes" || header === "memoCreatedBy" || header === "memoReviewer" || header === "memoKeluar"|| header === "userdomainreviewer" || header === "memoUpload" || header === "idMemo" || header === "userdomainpic" ? "hidden" : ""
-                          }`}>
-                                {header === "memoStatus"
-                                    ? memoStatus :
-                                    (header === "memoKeluar" || header === "memoMasuk" || header === "memoTerima" ? convertToDate(item[header]) : item[header])
-                                    }
-                            </td>
-                        ))}
+                      <AiOutlineEdit size={20} />
+                    </button>
+                  </td>
+                )}
+                {headers.map((header, headerIndex) => (
+                  <td key={headerIndex}
+                  className={`py-3 px-6 ${
+                    header === "id" || header === "userdomain" || header === "userdomainreviewer" || header === "memoUpload" || header === "idMemo" || header === "userdomainpic" ? "hidden" : ""
+                }`}
+                   >
+                    {header === "memoStatus" ? memoStatus : 
+                      // Gunakan convertToDateFormat untuk memformat tanggal
+                      (header === "memoKeluar" || header === "memoMasuk" || header === "memoTerima" ? convertToDate(item[header]) : item[header])
+                    }
+                  </td>
+                ))}
 
-                        {/* {
-                            action && (
-                                <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            handleEdit(item.id)
-                                        }
-                                        className="text-black-400  flex flex-col gap-1 items-center justify-center pt-2"
-                                    >
-                                        <AiOutlineEdit size={20} />
-                                    </button>
-                                </td>
-                            )} */}
-                    </tr>
-                );
-            })}
+               
+              </tr>
+            );
+          })}
         </tbody>
-    </table>
-</div>
-);
+      </table>
+    </div>
+  );
 };
 
-export default MyMemoTable;
+export default DraftTable;

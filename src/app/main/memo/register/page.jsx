@@ -1,4 +1,4 @@
-import HeaderLogistic from "@/components/logistic_components/header/HeaderLogistic";
+import HeaderLogistic from "@/header/HeaderAllMemo";
 import RegisterForm from "@/components/memo/registerform";
 import React from 'react'
 

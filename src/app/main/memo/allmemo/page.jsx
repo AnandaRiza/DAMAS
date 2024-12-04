@@ -3,16 +3,34 @@ import { useEffect, useState } from "react";
 import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
+import HeaderLogistic from "@/header/HeaderAllMemo";
+import LogisticTable from "@/components/logistic_components/table/logistic_table_allmemo";
 import axios from "axios";
-import DispositionTable from "@/tables/disposition";
-import HeaderDisposisiMemo from "@/header/HeaderDisposisiMemo";
+import Header from "@/components/logistic_components/general/logistic_header_allproject";
+import Body from "@/components/logistic_components/general/logistic_body_allproject";
 
+const getDisplayName = (header) => {
+    const displayNames = {
+        memoNum: "NOMOR MEMO",
+        memoPerihal: "PERIHAL MEMO",
+        memoPic: "PIC",
+        memoStatus: "STATUS MEMO",
+        memoSuratType: "TIPE SURAT",
+        memoMasuk: "TANGGAL MEMO MASUK",
+        memoDocType: "TIPE DOKUMEN",
+        memoKeluar: "TANGGAL MEMO KELUAR",
+        memoTerima: "TANGGAL TERIMA MEMO",
+        memoCategory: "KATEGORI MEMO",
+        memoDeadline: "MEMO DEADLINE",
+        memoReviewer: "TEST"
+    };
+    return displayNames[header] || header;
+};
 
 const Page = () => {
     const [searchInput, setSearchInput] = useState("");
     const [searchResult, setSearchResult] = useState(null);
     const [dataAllMemo, setDataAllMemo] = useState(null);
-    const [filteredData, setFilteredData] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
     const [perPage, setPerPage] = useState(20);
@@ -23,10 +41,10 @@ const Page = () => {
     }, [startIndex]);
 
     const getDataAllMemo = async () => {
-        setDataAllMemo(null); 
+        setDataAllMemo(null);
         try {
             const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/disposition/all?start=${startIndex}&size=${perPage}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/findregister/all?start=${startIndex}&size=${perPage}`
             );
             const fetchedData = response.data.data;
             setDataAllMemo(fetchedData);
@@ -39,7 +57,7 @@ const Page = () => {
     const handleSearch = async () => {
         try {
             const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/disposition/getall?input=${searchInput}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/findregister/memo?input=${searchInput}`
             );
             setSearchResult(response.data.data);
             setCurrentPage(1);
@@ -51,7 +69,7 @@ const Page = () => {
 
     return (
         <div>
-            <HeaderDisposisiMemo title="Disposisi Memo" />
+            <HeaderLogistic title="All Memo" />
 
             <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch
@@ -68,33 +86,44 @@ const Page = () => {
 
                 {!dataAllMemo && !searchResult && <PleaseWait />}
 
-                {dataAllMemo && dataAllMemo.length > 0 && !searchResult && (
-                    <div className="mt-4">
-                        <DispositionTable
-                            headers={Object.keys(dataAllMemo[0]).slice(0, Object.keys(dataAllMemo[0]).length - 1)}
-                            data={dataAllMemo}
-                            action={true}
-                            link={"/main/memo/disposisimemo"}
-                        />
-                    </div>
-                )}
+                {dataAllMemo &&
+                    dataAllMemo.length > 0 &&
+                    (!searchResult || searchInput === "") && (
+                        <div className="mt-4">
+                            <LogisticTable
+                                headers={Object.keys(dataAllMemo[0]).slice(
+                                    0,
+                                    Object.keys(dataAllMemo[0]).length - 1
+                                )}
+                                data={dataAllMemo}
+                                action={true}
+                                link={"/main/memo/allmemo/"}
+                            />
+                        </div>
+                    )}
 
-                {searchResult && searchResult.length === 0 && <NotFound />}
+                {searchResult &&
+                    searchInput !== "" &&
+                    searchResult.length > 0 && (
+                        <div className="mt-4">
+                            <LogisticTable
+                                headers={Object.keys(searchResult[0]).slice(
+                                    0,
+                                    Object.keys(searchResult[0]).length - 1
+                                )}
+                                data={searchResult}
+                                action={true}
+                                link={"/main/memo/allmemo/"}
+                            />
+                        </div>
+                    )}
 
-                {searchResult && searchResult.length > 0 && searchInput !== "" && (
-                    <div className="mt-4">
-                        <DispositionTable
-                            headers={Object.keys(searchResult[0]).slice(0, Object.keys(searchResult[0]).length - 1)}
-                            data={searchResult}
-                            action={true}
-                            link={"/main/memo/disposisimemo"}
-                        />
-                    </div>
-                )}
-
+                {searchResult &&
+                    searchInput !== "" &&
+                    searchResult.length === 0 && <NotFound />}
                 {dataAllMemo && dataAllMemo.length === 0 && <NotFound />}
 
-                {dataAllMemo && dataAllMemo.length > 0 && (
+                {dataAllMemo && (
                     <div className="w-full flex justify-end items-center gap-3 mt-4">
                         <button
                             type="button"
@@ -104,7 +133,9 @@ const Page = () => {
                                 setStartIndex(startIndex - perPage);
                             }}
                             className={`py-2 px-4 rounded-xl ${
-                                currentPage === 1 || startIndex === 0 ? "bg-gray-400" : "bg-[#00A6B4]"
+                                currentPage === 1 || startIndex === 0
+                                    ? "bg-gray-400"
+                                    : "bg-[#00A6B4]"
                             } text-white`}
                         >
                             Prev

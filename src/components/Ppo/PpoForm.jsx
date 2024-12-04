@@ -173,7 +173,6 @@ Wassalamualaikum Warahmatullahi Wabarakatuh`,
     return (
         <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl">
             <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
-
             <form onSubmit={(e) => {
                         e.preventDefault();
                         handleSubmit();

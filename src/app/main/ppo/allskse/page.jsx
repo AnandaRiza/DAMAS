@@ -63,10 +63,9 @@ const page = () => {
                     <div className="w-full flex justify-between items-center"></div>
                 </div>
                 
-                {/* Render PleaseWait while loading */}
+            
                 {(!dataAllSkse && !searchResult) && <PleaseWait />}
 
-                {/* Render TableSKSE if dataAllSkse has data and no searchResult or empty searchInput */}
                 {dataAllSkse && dataAllSkse.length > 0 && (!searchResult || searchInput === "") && (
                     <div className="mt-4">
                         <TableSKSE
@@ -90,7 +89,7 @@ const page = () => {
                     </div>
                 )}
 
-                {/* Render NotFound if searchResult is empty */}
+        
                 {searchResult && searchInput !== "" && searchResult.length === 0 && <NotFound />}
 
                 {/* Render NotFound if dataAllSkse is empty */}

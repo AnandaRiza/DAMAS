@@ -1,14 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import DraftTable from "@/tables/draft";
+import React from "react";
+import HeaderLogistic from "@/header/HeaderAllMemo";
 import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
-import axios from "axios";
-import DispositionTable from "@/tables/disposition";
-import HeaderDisposisiMemo from "@/header/HeaderDisposisiMemo";
 
 
-const Page = () => {
+const page = () => {
     const [searchInput, setSearchInput] = useState("");
     const [searchResult, setSearchResult] = useState(null);
     const [dataAllMemo, setDataAllMemo] = useState(null);
@@ -23,10 +24,10 @@ const Page = () => {
     }, [startIndex]);
 
     const getDataAllMemo = async () => {
-        setDataAllMemo(null); 
+        setDataAllMemo(null);
         try {
             const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/disposition/all?start=${startIndex}&size=${perPage}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/draftmemo/all?start=${startIndex}&size=${perPage}`
             );
             const fetchedData = response.data.data;
             setDataAllMemo(fetchedData);
@@ -51,7 +52,7 @@ const Page = () => {
 
     return (
         <div>
-            <HeaderDisposisiMemo title="Disposisi Memo" />
+            <HeaderLogistic title="Draft Memo" />
 
             <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch
@@ -66,31 +67,41 @@ const Page = () => {
                     <div className="w-full flex justify-between items-center"></div>
                 </div>
 
+                {/* Show PleaseWait while fetching data */}
                 {!dataAllMemo && !searchResult && <PleaseWait />}
 
+                {/* Render the disposition table if data is available */}
                 {dataAllMemo && dataAllMemo.length > 0 && !searchResult && (
                     <div className="mt-4">
-                        <DispositionTable
-                            headers={Object.keys(dataAllMemo[0]).slice(0, Object.keys(dataAllMemo[0]).length - 1)}
+                        <DraftTable
+                            headers={Object.keys(dataAllMemo[0]).slice(
+                                0,
+                                Object.keys(dataAllMemo[0]).length - 1
+                            )}
                             data={dataAllMemo}
                             action={true}
-                            link={"/main/memo/disposisimemo"}
+                            link={"/main/memo/draftmemo"}
                         />
                     </div>
                 )}
 
                 {searchResult && searchResult.length === 0 && <NotFound />}
 
-                {searchResult && searchResult.length > 0 && searchInput !== "" && (
-                    <div className="mt-4">
-                        <DispositionTable
-                            headers={Object.keys(searchResult[0]).slice(0, Object.keys(searchResult[0]).length - 1)}
-                            data={searchResult}
-                            action={true}
-                            link={"/main/memo/disposisimemo"}
-                        />
-                    </div>
-                )}
+                {searchResult &&
+                    searchResult.length > 0 &&
+                    searchInput !== "" && (
+                        <div className="mt-4">
+                            <DraftTable
+                                headers={Object.keys(searchResult[0]).slice(
+                                    0,
+                                    Object.keys(searchResult[0]).length - 1
+                                )}
+                                data={searchResult}
+                                action={true}
+                                link={"/main/memo/draftmemo"}
+                            />
+                        </div>
+                    )}
 
                 {dataAllMemo && dataAllMemo.length === 0 && <NotFound />}
 
@@ -104,7 +115,9 @@ const Page = () => {
                                 setStartIndex(startIndex - perPage);
                             }}
                             className={`py-2 px-4 rounded-xl ${
-                                currentPage === 1 || startIndex === 0 ? "bg-gray-400" : "bg-[#00A6B4]"
+                                currentPage === 1 || startIndex === 0
+                                    ? "bg-gray-400"
+                                    : "bg-[#00A6B4]"
                             } text-white`}
                         >
                             Prev
@@ -130,4 +143,4 @@ const Page = () => {
     );
 };
 
-export default Page;
+export default page;
