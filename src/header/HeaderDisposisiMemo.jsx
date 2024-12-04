@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const HeaderLogistic = ({title}) => {
+const HeaderDisposisiMemo = ({title}) => {
   return (
     <>
       <div className="flex-grow justify-center items-center rounded-xl bg-[#FFFFFF] shadow-md">
@@ -19,7 +19,7 @@ const HeaderLogistic = ({title}) => {
                     </Link>
                   </li>
                   <li>
-                  <Link href="/main/logistic">
+                  <Link href="/main/memo/disposisimemo">
                     Memo
                     </Link>
                   </li>
@@ -37,4 +37,4 @@ const HeaderLogistic = ({title}) => {
   )
 }
 
-export default HeaderLogistic
+export default HeaderDisposisiMemo

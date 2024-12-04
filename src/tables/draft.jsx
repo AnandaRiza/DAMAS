@@ -44,7 +44,7 @@ const DraftTable = ({ headers, data, action, link }) => {
   };
 
   const handleDoubleClick = (id) => {
-    router.push(`${link}/detail/${id}`);
+    router.push(`${link}/editdraft/${id}`);
   };
 
   const getDisplayName = (header) => {
@@ -127,6 +127,11 @@ const DraftTable = ({ headers, data, action, link }) => {
       <table className="table cursor-pointer text-center">
         <thead>
           <tr className="border-b-2 bg-[#00A6B4]/[0.5] text-sm">
+          {action && (
+              <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                EDIT
+              </th>
+            )}
             {headers.map((item, index) => (
               <th key={index}
               className={`py-3 px-6 uppercase ${
@@ -137,11 +142,7 @@ const DraftTable = ({ headers, data, action, link }) => {
               >
                 {getDisplayName(item)}</th>
             ))}
-            {action && (
-              <th className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                Edit
-              </th>
-            )}
+           
           </tr>
         </thead>
         <tbody>
@@ -154,6 +155,17 @@ const DraftTable = ({ headers, data, action, link }) => {
                 className={`${rowClassName} text-xs leading-5`}
                 onDoubleClick={() => handleDoubleClick(item.id)}
               >
+                 {action && (
+                  <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => handleEdit(item.id)}
+                      className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
+                    >
+                      <AiOutlineEdit size={20} />
+                    </button>
+                  </td>
+                )}
                 {headers.map((header, headerIndex) => (
                   <td key={headerIndex}
                   className={`py-3 px-6 ${
@@ -167,17 +179,7 @@ const DraftTable = ({ headers, data, action, link }) => {
                   </td>
                 ))}
 
-                {action && (
-                  <td className="py-3 px-6 w-32 flex items-center justify-center gap-3">
-                    <button
-                      type="button"
-                      onClick={() => handleEdit(item.id)}
-                      className="text-black-400 flex flex-col gap-1 items-center justify-center pt-2"
-                    >
-                      <AiOutlineEdit size={20} />
-                    </button>
-                  </td>
-                )}
+               
               </tr>
             );
           })}

@@ -2,7 +2,7 @@
 import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
-import HeaderLogistic from "@/components/logistic_components/header/HeaderLogistic";
+import HeaderLogistic from "@/header/HeaderAllMemo";
 import MyMemoTable from "@/components/logistic_components/logistic_mymemo_table";
 import axios from "axios";
 import { useEffect, useState } from "react";

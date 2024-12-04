@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const HeaderDev = ({title}) => {
+const HeaderAllMemo = ({title}) => {
   return (
     <>
       <div className="flex-grow justify-center items-center rounded-xl bg-[#FFFFFF] shadow-md">
@@ -13,14 +13,14 @@ const HeaderDev = ({title}) => {
             <span className="flex text-[#0066AE] ml-12 mt-2">
               <div className="text-sm breadcrumbs">
                 <ul>
-                  {/* <li>
+                  <li>
                   <Link href="/main">
-                    Main
+                    Home
                     </Link>
-                  </li> */}
+                  </li>
                   <li>
                   <Link href="/main/memo/allmemo">
-                    List Memo
+                    Memo
                     </Link>
                   </li>
                   <li>
@@ -37,4 +37,4 @@ const HeaderDev = ({title}) => {
   )
 }
 
-export default HeaderDev
+export default HeaderAllMemo

@@ -42,6 +42,7 @@ const RegisterForm = () => {
         memoDocType: "",
         memoKeluar: "",
         memoTerima: "",
+        tanggalDokumen: ""
     });
 
     const getDataAllPic = async () => {
@@ -139,7 +140,7 @@ const RegisterForm = () => {
                             htmlFor="memo_num"
                             className="text-sm font-semibold text-gray-600"
                         >
-                            Nomor Memo <span className="text-red-500">*</span>
+                            Nomor Dokumen
                         </label>
                         <input
                             type="text"
@@ -157,10 +158,31 @@ const RegisterForm = () => {
                     </div>
                     <div className="flex flex-col">
                         <label
+                            htmlFor="memo_masuk"
+                            className="text-sm font-semibold text-gray-600"
+                        >
+                            Tanggal Dokumen
+                        </label>
+                        <input
+                            type="date"
+                            id="memo_masuk"
+                            name="memo_masuk"
+                            value={formData.tanggalDokumen}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    tanggalDokumen: e.target.value,
+                                })
+                            }
+                            className="input input-bordered mt-1"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label
                             htmlFor="memo_perihal"
                             className="text-sm font-semibold text-gray-600"
                         >
-                            Perihal Memo <span className="text-red-500">*</span>
+                            Perihal Dokumen
                         </label>
                         <input
                             type="text"
@@ -269,8 +291,8 @@ const RegisterForm = () => {
                             htmlFor="memo_category"
                             className="text-sm font-semibold text-gray-600"
                         >
-                            Kategori Memo{" "}
-                            <span className="text-red-500">*</span>
+                            Kategori Dokumen{" "}
+                            {/* <span className="text-red-500">*</span> */}
                         </label>
                         <select
                             type="text"
@@ -286,10 +308,10 @@ const RegisterForm = () => {
                             className="input input-bordered mt-1"
                         >
                             <option value="" disabled>
-                                Pilih Kategori Memo ...
+                                Pilih Kategori Dokumen ...
                             </option>
-                            <option value="Memo Masuk">Memo Masuk</option>
-                            <option value="Memo Keluar">Memo Keluar</option>
+                            <option value="Memo Masuk">Masuk</option>
+                            <option value="Memo Keluar">Keluar</option>
                         </select>
                     </div>
 
@@ -317,7 +339,7 @@ const RegisterForm = () => {
                                 Pilih Tipe Surat ...
                             </option>
                             <option value="-">-</option>
-                            <option value="MO">MO</option>
+                            <option value="MO">MEMO</option>
                             <option value="SE">SE</option>
                             <option value="SK">SK</option>
                             <option value="AGR">AGR</option>
@@ -374,7 +396,7 @@ const RegisterForm = () => {
                             htmlFor="memo_masuk"
                             className="text-sm font-semibold text-gray-600"
                         >
-                            Tanggal Masuk Memo
+                            Tanggal Masuk
                         </label>
                         <input
                             type="date"
@@ -413,7 +435,7 @@ const RegisterForm = () => {
                         />
                     </div> */}
 
-                    <div className="flex flex-col">
+                    {/* <div className="flex flex-col">
                         <label
                             htmlFor="memo_masuk"
                             className="text-sm font-semibold text-gray-600"
@@ -433,7 +455,7 @@ const RegisterForm = () => {
                             }
                             className="input input-bordered mt-1"
                         />
-                    </div>
+                    </div> */}
 
                     <div className="flex flex-col">
                         <label

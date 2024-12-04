@@ -64,7 +64,6 @@ const AllDetail = () => {
         };
         getDataAllPic();
         getCurrentData();
-        // console.log(dataAllProject);
     }, [params.id]);
 
     const getDataAllPic = async () => {
@@ -74,7 +73,7 @@ const AllDetail = () => {
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/organization/spv-stl-example`
             );
             setDataAllPic(response.data.data);
-            // console.log(response.data.data);
+
         } catch (error) {
             console.log(error);
         }
@@ -88,7 +87,6 @@ const AllDetail = () => {
             );
             setDataAllKadep(response.data.data);
             setFilteredDataAllPic(response.data.data);
-            // console.log(response.data.data);
         } catch (error) {
             console.log(error);
         }
@@ -108,91 +106,15 @@ const AllDetail = () => {
             ?.split("=")[1];
     }, []);
 
-    const handleEditedData = async (newStatus, action) => {
-        // Set loading state based on action (REJECTED or APPROVED)
-        setLoadingAction(action);
-
-        try {
-            // Perform the API call
-            await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/disposition/disposisimemo`,
-                {
-                    ...formData,
-                    memoStatus: newStatus, // Update the status field with the new value
-                    idmemo: formData.id,
-                    userdomain: formData.userdomain,
-                    userdomainpic: formData.userdomainpic,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "USER-ID": userid,
-                    },
-                }
-            );
-
-            // After success, navigate to the next page
-            router.push("/main/memo/disposisimemo");
-        } catch (error) {
-            console.error(error);
-        } finally {
-            // Reset loading state after request is completed
-            setLoadingAction(null);
-        }
-    };
-
-    // const convertDateToCron = (date) => {
-    //     const d = new Date(date);
-    //     const seconds = "0";
-    //     const minutes = d.getMinutes();
-    //     const hours = d.getHours();
-    //     const dayOfMonth = d.getDate();
-    //     const month = d.getMonth() + 1;
-    //     const dayOfWeek = "?";
-    //     return `${seconds} ${minutes} ${hours} ${dayOfMonth} ${month} ${dayOfWeek}`;
-    // };
-
-    const calculateDeadline = (date) => {
-        const d = new Date(date);
-        d.setDate(d.getDate() - 1);
-
-        const day = String(d.getDate()).padStart(2, "0");
-        const month = String(d.getMonth() + 1).padStart(2, "0");
-        const year = d.getFullYear();
-        const hours = String(d.getHours()).padStart(2, "0");
-        const minutes = String(d.getMinutes()).padStart(2, "0");
-        const seconds = String(d.getSeconds()).padStart(2, "0");
-
-        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
-    };
-
-    const submitAtDate = () => {
-        const d = new Date();
-        const day = String(d.getDate()).padStart(2, "0");
-        const month = String(d.getMonth() + 1).padStart(2, "0");
-        const year = d.getFullYear();
-        const hours = String(d.getHours()).padStart(2, "0");
-        const minutes = String(d.getMinutes()).padStart(2, "0");
-        const seconds = String(d.getSeconds()).padStart(2, "0");
-
-        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
-    };
-
-    // const getMinDateTime = () => {
-    //     const now = new Date();
-    //     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-    //     return now.toISOString().slice(0, 16);
-    // };
-
     return (
         <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl">
             <div className="px-10 grid grid-cols-2 gap-3 mt-4 w-full p-4">
                 {formData ? (
                     <form className="space-y-4">
-                        <div className="flex flex-col">
+                        <div className="flex flex-col" >
                             <label
                                 htmlFor="memo_num"
-                                className="text-sm font-semibold text-[#0066AE]"
+                                className="text-sm font-semibold text-[#0066AE] "
                             >
                                 Nomor Memo
                             </label>
@@ -205,7 +127,8 @@ const AllDetail = () => {
                                         memoNum: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                                disabled
                             />
                         </div>
                         <div className="flex flex-col">
@@ -224,59 +147,24 @@ const AllDetail = () => {
                                         memoPerihal: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                                disabled
                             />
                         </div>
-
                         <div className="flex flex-col" >
                             <label
-                                htmlFor="pic"
+                                htmlFor="departemen"
                                 className="text-sm font-semibold text-[#0066AE]"
                             >
                                 PIC
                             </label>
-                            {dataAllPic && (
-                                <select
+                            <input
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                                type="text"
+                                value={formData.memoPic}
                                 disabled
-                                    type="text"
-                                    className="input input-bordered disabled:bg-gray-100 disabled:text-black"
-                                    value={formData.name}
-                                    onChange={(e) => {
-                                        const selectedPic = JSON.parse(
-                                            e.target.value
-                                        );
-                                        setFormData({
-                                            ...formData,
-                                            memoPic: selectedPic.nama,
-                                            memoDepartment:
-                                                selectedPic.departemen,
-                                            userdomainpic:
-                                                selectedPic.userdomain,
-                                        });
-                                        setSelectedDept(selectedPic.departemen);
-                                        setSelectedUserDomain(
-                                            selectedPic.userdomain
-                                        );
-                                    }}
-                                >
-                                    <option
-                                        className="text-sm text-black opacity-50"
-                                        value={formData.memoPic}
-                                    >
-                                        {formData.memoPic}
-                                    </option>
-                                    {dataAllPic.map((item, index) => (
-                                        <option
-                                            key={index}
-                                            value={JSON.stringify(item)}
-                                        >
-                                            {item.nama}
-                                        </option>
-                                    ))}
-                                </select>
-                            )}
+                            />
                         </div>
-
                         <div className="flex flex-col" >
                             <label
                                 htmlFor="departemen"
@@ -326,7 +214,8 @@ const AllDetail = () => {
                                         memoCategory: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                                disabled
                             />
                         </div>
                         <div className="flex flex-col">
@@ -345,7 +234,8 @@ const AllDetail = () => {
                                         memoSuratType: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                                disabled
                             />
                         </div>
                         <div className="flex flex-col">
@@ -364,7 +254,8 @@ const AllDetail = () => {
                                         memoDocType: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                                disabled
                             />
                         </div>
                         <div className="flex flex-col">
@@ -386,7 +277,8 @@ const AllDetail = () => {
                                         memoMasuk: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                              
                             />
                         </div>
                         <div className="" hidden>
@@ -408,7 +300,8 @@ const AllDetail = () => {
                                         memoKeluar: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                               
                             />
                         </div>
                         <div className="flex flex-col">
@@ -430,14 +323,14 @@ const AllDetail = () => {
                                         memoTerima: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
                         </div>
                         <div className="flex flex-col">
                             <label
                                 htmlFor="memo_notes"
                                 hidden
-                                className="text-sm font-semibold text-gray-600"
+                                className="text-sm font-semibold text-gray-600 "
                             >
                                 Notes
                             </label>
@@ -451,7 +344,7 @@ const AllDetail = () => {
                                         memoNotes: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 "
                                 rows={3}
                                 hidden
                             />
@@ -524,30 +417,9 @@ const AllDetail = () => {
                                         memoDeadline: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1"
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
-                        </div>
-                        <div className="flex flex-col">
-                            <label
-                                htmlFor="memo_notes"
-                                className="text-sm font-semibold text-gray-600"
-                            >
-                                Notes
-                            </label>
-                            <textarea
-                                id="memo_notes"
-                                name="memo_notes"
-                                value={formData.memoReviewer}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        memoReviewer: e.target.value,
-                                    })
-                                }
-                                className="input input-bordered mt-1"
-                                rows={3}
-                            />
-                        </div>
+                        </div>  
                     </form>
                 ) : (
                     <PleaseWait />

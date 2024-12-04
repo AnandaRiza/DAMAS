@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
-import HeaderLogistic from "@/components/logistic_components/header/HeaderLogistic";
 import axios from "axios";
 import DispositionTable from "@/tables/disposition";
+import HeaderDisposisiMemo from "@/header/HeaderDisposisiMemo";
 
 
 const Page = () => {
@@ -51,7 +51,7 @@ const Page = () => {
 
     return (
         <div>
-            <HeaderLogistic title="Disposisi Memo" />
+            <HeaderDisposisiMemo title="Disposisi Memo" />
 
             <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch

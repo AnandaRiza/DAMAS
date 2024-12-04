@@ -57,7 +57,7 @@ const Page = () => {
         const getCurrentData = async () => {
             try {
                 const response = await axios.get(
-                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/disposition/memo?input=${params.id}`
+                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/draftmemo/memo?input=${params.id}`
                 );
                 setFormData(response.data.data[0]);
             } catch (error) {
@@ -66,7 +66,7 @@ const Page = () => {
         };
         getDataAllPic();
         getCurrentData();
-        // console.log(dataAllProject);
+        console.log(formData);
     }, [params.id]);
 
     const getDataAllPic = async () => {
@@ -76,21 +76,7 @@ const Page = () => {
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/organization/spv-stl-example`
             );
             setDataAllPic(response.data.data);
-            // console.log(response.data.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const getDataAllKadep = async () => {
-        setDataAllKadep(null);
-        try {
-            const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/organization/spv-kadep-example`
-            );
-            setDataAllKadep(response.data.data);
             setFilteredDataAllPic(response.data.data);
-            // console.log(response.data.data);
         } catch (error) {
             console.log(error);
         }
@@ -103,7 +89,7 @@ const Page = () => {
     }, [formData]);
 
     useEffect(() => {
-        getDataAllKadep();
+        getDataAllPic();
         const userid = document.cookie
             .split("; ")
             .find((row) => row.startsWith("DAMAS-USERID="))
@@ -111,19 +97,18 @@ const Page = () => {
     }, []);
 
     const handleEditedData = async (newStatus, action) => {
-        // Set loading state based on action (REJECTED or APPROVED)
         setLoadingAction(action);
 
         try {
-            // Perform the API call
             await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/disposition/disposisimemo`,
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/register/editedmemo`,
                 {
                     ...formData,
-                    memoStatus: newStatus, // Update the status field with the new value
                     idmemo: formData.id,
                     userdomain: formData.userdomain,
                     userdomainpic: formData.userdomainpic,
+                    memoCreatedBy: formData.memoCreatedBy,
+                    memoDeadline: formData.memoDeadline,
                 },
                 {
                     headers: {
@@ -132,13 +117,10 @@ const Page = () => {
                     },
                 }
             );
-
-            // After success, navigate to the next page
             router.push("/main/memo/disposisimemo");
         } catch (error) {
             console.error(error);
         } finally {
-            // Reset loading state after request is completed
             setLoadingAction(null);
         }
     };
@@ -207,8 +189,7 @@ const Page = () => {
                                         memoNum: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                                disabled
+                                className="input input-bordered mt-1"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -227,109 +208,41 @@ const Page = () => {
                                         memoPerihal: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                                disabled
+                                className="input input-bordered mt-1"
                             />
                         </div>
 
-                        {/* <div className="" hidden>
+                        <div className="flex flex-col">
                             <label
-                                htmlFor="pic"
-                                className="text-sm font-semibold text-[#0066AE]"
+                                htmlFor="memo_pic"
+                                className="text-sm font-semibold"
                             >
-                                PIC
+                                PIC <span className="text-red-500">*</span>
                             </label>
                             {dataAllPic && (
                                 <select
-                                    type="text"
-                                    className="input input-bordered"
-                                    value={formData.name}
+                                    name="memo_pic"
+                                    id="memo_pic"
+                                    className="input input-bordered mt-1"
+                                    value={JSON.stringify(
+                                        dataAllPic.find(
+                                            (item) =>
+                                                item.name === formData.memoPic
+                                        )
+                                    )}
                                     onChange={(e) => {
                                         const selectedPic = JSON.parse(
                                             e.target.value
                                         );
                                         setFormData({
                                             ...formData,
-                                            memoPic: selectedPic.nama,
-                                            memoDepartment:
-                                                selectedPic.departemen,
-                                            userdomainpic:
-                                                selectedPic.userdomain,
+                                            memoPic: selectedPic.employee,
+                                            memoDepartment: selectedPic.name,
                                         });
-                                        setSelectedDept(selectedPic.departemen);
-                                        setSelectedUserDomain(
-                                            selectedPic.userdomain
-                                        );
+                                        setSelectedDept(selectedPic.name);
                                     }}
                                 >
                                     <option
-                                        className="text-sm text-gray-600 opacity-50"
-                                        value={formData.memoPic}
-                                    >
-                                        {formData.memoPic}
-                                    </option>
-                                    {dataAllPic.map((item, index) => (
-                                        <option
-                                            key={index}
-                                            value={JSON.stringify(item)}
-                                        >
-                                            {item.nama}
-                                        </option>
-                                    ))}
-                                </select>
-                            )}
-                        </div>
-
-                        <div className="" hidden>
-                            <label
-                                htmlFor="departemen"
-                                className="text-sm font-semibold text-[#0066AE]"
-                            >
-                                Departemen
-                            </label>
-                            <input
-                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                                type="text"
-                                value={selectedDept}
-                                disabled
-                            />
-                        </div> */}
-
-                        <div className="flex flex-col">
-                            <label
-                                htmlFor="memo_pic_kadep"
-                                className="text-sm font-semibold"
-                            >
-                                PIC <span className="text-red-500">*</span>
-                            </label>
-                            {dataAllKadep && (
-                                <select
-                                    name="memo_pic_kadep"
-                                    id="memo_pic_kadep"
-                                    className="input input-bordered mt-1"
-                                    value={JSON.stringify(
-                                        dataAllKadep.find(
-                                            (item) =>
-                                                item.name === formData.memoPic
-                                        )
-                                    )}
-                                    onChange={(e) => {
-                                        const selectedPicKadep = JSON.parse(
-                                            e.target.value
-                                        );
-                                        setFormData({
-                                            ...formData,
-                                            memoPic: selectedPicKadep.employee,
-                                            memoDepartment:
-                                                selectedPicKadep.name,
-                                        });
-                                        setSelectedDeptKadep(
-                                            selectedPicKadep.name
-                                        );
-                                    }}
-                                >
-                                    <option
-                                        disabled
                                         selected
                                         className="text-sm text-gray-600 opacity-50"
                                     >
@@ -357,10 +270,77 @@ const Page = () => {
                             <input
                                 className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                                 type="text"
-                                value={selectedDeptKadep}
+                                value={selectedDept}
                                 disabled
                             />
                         </div>
+
+                        {/* <div className="flex flex-col">
+                            <label
+                                htmlFor="memo_pic_kadep"
+                                className="text-sm font-semibold"
+                            >
+                                PIC Dis <span className="text-red-500">*</span>
+                            </label>
+                            {dataAllPic && (
+                                <select
+                                    name="memo_pic_kadep"
+                                    id="memo_pic_kadep"
+                                    className="input input-bordered mt-1"
+                                    value={JSON.stringify(
+                                        dataAllPic.find(
+                                            (item) =>
+                                                item.name === formData.memoPic
+                                        )
+                                    )}
+                                    onChange={(e) => {
+                                        const selectedPic = JSON.parse(
+                                            e.target.value
+                                        );
+                                        setFormData({
+                                            ...formData,
+                                            memoPic: selectedPic.employee,
+                                            memoDepartment:
+                                            selectedPic.name,
+                                        });
+                                        setSelectedDept(
+                                            selectedPic.name
+                                        );
+                                    }}
+                                >
+                                    <option
+                                        disabled
+                                        selected
+                                        className="text-sm text-gray-600 opacity-50"
+                                    >
+                                        Select PIC...
+                                    </option>
+                                    {filteredDataAllPic.map((item, index) => (
+                                        <option
+                                            key={index}
+                                            value={JSON.stringify(item)}
+                                        >
+                                            {item.employee}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                        </div> */}
+
+                        {/* <div className="flex flex-col">
+                            <label
+                                htmlFor="memo_department"
+                                className="text-sm font-semibold"
+                            >
+                                Department Dis
+                            </label>
+                            <input
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                                type="text"
+                                value={selectedDept}
+                                disabled
+                            />
+                        </div> */}
                         <div className="" hidden>
                             <label
                                 htmlFor="memo_createdBy"
@@ -396,8 +376,7 @@ const Page = () => {
                                         memoCategory: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                                disabled
+                                className="input input-bordered mt-1"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -407,8 +386,9 @@ const Page = () => {
                             >
                                 Tipe Surat
                             </label>
-                            <input
-                                type="text"
+                            <select
+                                id="memo_surat_type"
+                                name="memo_surat_type"
                                 value={formData.memoSuratType}
                                 onChange={(e) =>
                                     setFormData({
@@ -416,10 +396,24 @@ const Page = () => {
                                         memoSuratType: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                                disabled
-                            />
+                                className="input input-bordered mt-1"
+                            >
+                                <option value="" disabled>
+                                    Pilih Tipe Surat ...
+                                </option>
+                                <option value="-">-</option>
+                            <option value="MO">MO</option>
+                            <option value="SE">SE</option>
+                            <option value="SK">SK</option>
+                            <option value="AGR">AGR</option>
+                            <option value="NDA">NDA</option>
+                            <option value="PKS">PKS</option>
+                            <option value="SPJ">SPJ</option>
+                            <option value="SKU">SKU</option>
+                            <option value="BAST">BAST</option>
+                            </select>
                         </div>
+
                         <div className="flex flex-col">
                             <label
                                 htmlFor="memo_doc_type"
@@ -427,8 +421,9 @@ const Page = () => {
                             >
                                 Tipe Dokumen
                             </label>
-                            <input
-                                type="text"
+                            <select
+                                id="memo_doc_type"
+                                name="memo_doc_type"
                                 value={formData.memoDocType}
                                 onChange={(e) =>
                                     setFormData({
@@ -436,10 +431,32 @@ const Page = () => {
                                         memoDocType: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                                disabled
-                            />
+                                className="input input-bordered mt-1"
+                            >
+                                <option value="" disabled>
+                                    Pilih Tipe Dokumen ...
+                                </option>
+                                <option value="-">-</option>
+                                <option value="PKS">PKS</option>
+                                <option value="BAST">BAST</option>
+                                <option value="MEMO">MEMO</option>
+                                <option value="INVOICE">INVOICE</option>
+                                <option value="NDA">NDA</option>
+                                <option value="PROGRAM KERJA">
+                                    PROGRAM KERJA
+                                </option>
+                                <option value="BON">BON</option>
+                                <option value="DOKUMEN">DOKUMEN</option>
+                                <option value="PAYMENT">PAYMENT</option>
+                                <option value="FORM">FORM</option>
+                                <option value="TANDA TERIMA">
+                                    TANDA TERIMA
+                                </option>
+                                <option value="SURAT">SURAT</option>
+                                <option value="LAPORAN">LAPORAN</option>
+                            </select>
                         </div>
+
                         <div className="flex flex-col">
                             <label
                                 htmlFor="memo_masuk"
@@ -448,7 +465,6 @@ const Page = () => {
                                 Tanggal Masuk Memo
                             </label>
                             <input
-                                disabled
                                 type="date"
                                 id="memo_masuk"
                                 name="memo_masuk"
@@ -459,8 +475,7 @@ const Page = () => {
                                         memoMasuk: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                                
+                                className="input input-bordered mt-1"
                             />
                         </div>
                         <div className="" hidden>
@@ -471,7 +486,6 @@ const Page = () => {
                                 Tanggal Keluar Memo
                             </label>
                             <input
-                                disabled
                                 type="date"
                                 id="memo_keluar"
                                 name="memo_keluar"
@@ -482,7 +496,7 @@ const Page = () => {
                                         memoKeluar: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                                className="input input-bordered mt-1"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -493,7 +507,6 @@ const Page = () => {
                                 Tanggal Terima Memo
                             </label>
                             <input
-                                disabled
                                 type="date"
                                 id="memo_terima"
                                 name="memo_terima"
@@ -504,7 +517,7 @@ const Page = () => {
                                         memoTerima: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                                className="input input-bordered mt-1"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -537,7 +550,7 @@ const Page = () => {
                             >
                                 Status <span className="text-red-500">*</span>
                             </label>
-                            <div className="dropdown mt-1 ">
+                            <div className="dropdown mt-1">
                                 <div
                                     tabIndex={0}
                                     role="button"
@@ -587,8 +600,7 @@ const Page = () => {
                                 Deadline Memo
                             </label>
                             <input
-                                disabled
-                                // type="date"
+                                type="datetime-local"
                                 id="deadlinememo"
                                 name="deadlinememo"
                                 value={formData.memoDeadline}
@@ -598,7 +610,7 @@ const Page = () => {
                                         memoDeadline: e.target.value,
                                     })
                                 }
-                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                                className="input input-bordered mt-1"
                             />
                         </div>
                         <div className="flex flex-col">

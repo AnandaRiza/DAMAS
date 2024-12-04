@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
-import HeaderLogistic from "@/components/logistic_components/header/HeaderLogistic";
+import HeaderLogistic from "@/header/HeaderAllMemo";
 import LogisticTable from "@/components/logistic_components/table/logistic_table_allmemo";
 import axios from "axios";
 import Header from '@/components/logistic_components/general/logistic_header_allproject';

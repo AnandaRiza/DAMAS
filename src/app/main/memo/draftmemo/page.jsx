@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import DraftTable from "@/tables/draft";
 import React from "react";
-import HeaderLogistic from "@/components/logistic_components/header/HeaderLogistic";
+import HeaderLogistic from "@/header/HeaderAllMemo";
 import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
@@ -98,7 +98,7 @@ const page = () => {
                                 )}
                                 data={searchResult}
                                 action={true}
-                                link={"/main/logistic/"}
+                                link={"/main/memo/draftmemo"}
                             />
                         </div>
                     )}
