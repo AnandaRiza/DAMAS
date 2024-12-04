@@ -96,7 +96,7 @@ const Sidebar = () => {
 
                 {/* My Memo */}
                 <div className="w-full mb-2">
-                    <Link href="/main/ppo">
+                    <Link href="/main/memo/mymemo">
                         <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                             <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
                                 My Memo
