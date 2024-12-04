@@ -111,16 +111,28 @@ const Page = () => {
     }, []);
 
     const handleEditedData = async (newStatus, action) => {
-        // Set loading state based on action (REJECTED or APPROVED)
         setLoadingAction(action);
 
+        if (newStatus === "PROCESS") {
+            const currentDate = new Date();
+            const year = currentDate.getFullYear();
+            const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+            const day = String(currentDate.getDate()).padStart(2, "0");
+
+            const formattedDate = `${year}-${month}-${day}`;
+
+            setFormData({
+                ...formData,
+                memoKeluar: formattedDate,
+            });
+        }
+
         try {
-            // Perform the API call
             await axios.put(
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/disposition/disposisimemo`,
                 {
                     ...formData,
-                    memoStatus: newStatus, // Update the status field with the new value
+                    memoStatus: newStatus,
                     idmemo: formData.id,
                     userdomain: formData.userdomain,
                     userdomainpic: formData.userdomainpic,
@@ -132,13 +144,10 @@ const Page = () => {
                     },
                 }
             );
-
-            // After success, navigate to the next page
             router.push("/main/memo/disposisimemo");
         } catch (error) {
             console.error(error);
         } finally {
-            // Reset loading state after request is completed
             setLoadingAction(null);
         }
     };
@@ -460,7 +469,6 @@ const Page = () => {
                                     })
                                 }
                                 className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                                
                             />
                         </div>
                         <div className="" hidden>
@@ -633,10 +641,10 @@ const Page = () => {
                                 disabled={
                                     loadingAction &&
                                     loadingAction !== "REJECTED"
-                                } // Disable if another action is loading
+                                }
                             >
                                 <MdOutlineCancel />
-                                {loadingAction === "REJECTED" ? ( // Show loading spinner only for REJECTED
+                                {loadingAction === "REJECTED" ? (
                                     <div className="flex justify-center gap-3">
                                         <p>Please wait</p>
                                         <span className="loading loading-spinner"></span>
@@ -648,8 +656,9 @@ const Page = () => {
                             <button
                                 type="button"
                                 className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center"
-                                onClick={() =>
-                                    handleEditedData("APPROVED", "APPROVED")
+                                onClick={
+                                    () =>
+                                        handleEditedData("PROCESS", "APPROVED") // Change the status to "PROCESS"
                                 }
                                 disabled={
                                     loadingAction &&
@@ -657,7 +666,7 @@ const Page = () => {
                                 } // Disable if another action is loading
                             >
                                 <FiSave />
-                                {loadingAction === "APPROVED" ? ( // Show loading spinner only for APPROVED
+                                {loadingAction === "APPROVED" ? (
                                     <div className="flex justify-center gap-3">
                                         <p>Please wait</p>
                                         <span className="loading loading-spinner"></span>

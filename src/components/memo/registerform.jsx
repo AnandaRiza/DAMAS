@@ -413,7 +413,7 @@ const RegisterForm = () => {
                         />
                     </div>
 
-                    {/* <div className="flex flex-col">
+                    <div className="flex flex-col">
                         <label
                             htmlFor="memo_keluar"
                             className="text-sm font-semibold text-gray-600"
@@ -433,7 +433,7 @@ const RegisterForm = () => {
                             }
                             className="input input-bordered mt-1"
                         />
-                    </div> */}
+                    </div>
 
                     {/* <div className="flex flex-col">
                         <label

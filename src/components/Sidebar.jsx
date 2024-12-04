@@ -46,7 +46,7 @@ const Sidebar = () => {
                     <Link href="/main/memo/register">
                         <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                             <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
-                                Register Memo
+                                Register 
                             </button>
                         </div>
                     </Link>
@@ -57,7 +57,7 @@ const Sidebar = () => {
                         <Link href="/main/memo/disposisimemo">
                             <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                                 <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
-                                    Disposisi Memo
+                                    Disposition 
                                 </button>
                             </div>
                         </Link>
@@ -69,7 +69,7 @@ const Sidebar = () => {
                         <Link href="/main/memo/allmemo">
                             <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                                 <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
-                                    All Memo
+                                    All Document
                                 </button>
                             </div>
                         </Link>
@@ -80,7 +80,7 @@ const Sidebar = () => {
                     <Link href="/main/memo/draftmemo">
                         <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                             <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
-                                Draft Memo
+                                Draft
                             </button>
                         </div>
                     </Link>
@@ -91,7 +91,7 @@ const Sidebar = () => {
                     <Link href="/main/ppo">
                         <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                             <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
-                                My Memo
+                                My Document
                             </button>
                         </div>
                     </Link>
