@@ -187,22 +187,34 @@ const operation_network_table = ({ headers, data, action, link }) => {
                   item === "network_category_others" ||
                   item === "network_kickoff_start" ||
                   item === "network_kickoff_deadline" ||
+                  item === "network_kickoff_acstart" ||
                   item === "network_kickoff_done" ||
+                  item === "network_kickoff_note" ||
                   item === "network_mop_start" ||
                   item === "network_mop_deadline" ||
+                  item === "network_mop_acstart" ||
                   item === "network_mop_done" ||
+                  item === "network_mop_note" ||
                   item === "network_demomop_start" ||
                   item === "network_demomop_deadline" ||
+                  item === "network_demomop_acstart" ||
                   item === "network_demomop_done" ||
+                  item === "network_demomop_note" ||
                   item === "network_implementasi_start" ||
                   item === "network_implementasi_deadline" ||
+                  item === "network_implementasi_acstart" ||
                   item === "network_implementasi_done" ||
+                  item === "network_implementasi_note" ||
                   item === "network_skse_start" ||
                   item === "network_skse_deadline" ||
+                  item === "network_skse_acstart" ||
                   item === "network_skse_done" ||
+                  item === "network_skse_note" ||
                   item === "network_uat_start" ||
                   item === "network_uat_deadline" ||
+                  item === "network_uat_acstart" ||
                   item === "network_uat_done" ||
+                  item === "network_uat_note" ||
                   item === "userdomain" ||
                   item === "userdomain_pic"
                     ? "hidden"
@@ -244,22 +256,34 @@ const operation_network_table = ({ headers, data, action, link }) => {
                       header === "network_category_others" |
                       header === "network_kickoff_start" ||
                       header === "network_kickoff_deadline" ||
+                      header === "network_kickoff_acstart" ||
                       header === "network_kickoff_done" ||
+                      header === "network_kickoff_note" ||
                       header === "network_mop_start" ||
                       header === "network_mop_deadline" ||
+                      header === "network_mop_acstart" ||
                       header === "network_mop_done" ||
+                      header === "network_mop_note" ||
                       header === "network_demomop_start" ||
                       header === "network_demomop_deadline" ||
+                      header === "network_demomop_acstart" ||
                       header === "network_demomop_done" ||
+                      header === "network_demomop_note" ||
                       header === "network_implementasi_start" ||
                       header === "network_implementasi_deadline" ||
+                      header === "network_implementasi_acstart" ||
                       header === "network_implementasi_done" ||
+                      header === "network_implementasi_note" ||
                       header === "network_skse_start" ||
                       header === "network_skse_deadline" ||
+                      header === "network_skse_acstart" ||
                       header === "network_skse_done" ||
+                      header === "network_skse_note" ||
                       header === "network_uat_start" ||
                       header === "network_uat_deadline" ||
+                      header === "network_uat_acstart" ||
                       header === "network_uat_done" ||
+                      header === "network_uat_note" ||
                       header === "userdomain" ||
                       header === "userdomain_pic"
                         ? "hidden"

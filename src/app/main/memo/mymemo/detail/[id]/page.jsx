@@ -1,15 +1,15 @@
 
 import HeaderDev from "@/components/sdlc/header/HeaderDev";
-import AllDetail from "@/tables/alldetail";
+import MyDetail from "@/tables/mymemo";
 import React from "react";
 
 const page = () => {
     return (
         <div className="flex-grow justify-center items-center min-h-screen">
         <div>
-          <HeaderDev title="Detail Document"/>
+          <HeaderDev title="Detail Memo"/>
           <div>
-            <AllDetail/>
+            <MyDetail/>
           </div>
         </div>
       </div>

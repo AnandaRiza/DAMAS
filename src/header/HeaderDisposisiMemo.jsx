@@ -19,11 +19,6 @@ const HeaderDisposisiMemo = ({title}) => {
                     </Link>
                   </li>
                   <li>
-                  <Link href="/main/memo/disposisimemo">
-                    Memo
-                    </Link>
-                  </li>
-                  <li>
                     <a>{title}</a>
                   </li>
                 </ul>

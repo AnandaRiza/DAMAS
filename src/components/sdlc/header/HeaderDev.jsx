@@ -13,14 +13,9 @@ const HeaderDev = ({title}) => {
             <span className="flex text-[#0066AE] ml-12 mt-2">
               <div className="text-sm breadcrumbs">
                 <ul>
-                  {/* <li>
-                  <Link href="/main">
-                    Main
-                    </Link>
-                  </li> */}
                   <li>
-                  <Link href="/main/memo/allmemo">
-                    List Memo
+                  <Link href="/main">
+                    Home
                     </Link>
                   </li>
                   <li>

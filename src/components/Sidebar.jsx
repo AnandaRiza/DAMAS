@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useStateContext } from "@/context/ContextProvider";
@@ -8,33 +8,41 @@ const Sidebar = () => {
     const { isOperatorDpti, setIsOperatorDpti } = useStateContext();
     const { isAdminMemo, setIsAdminMemo } = useStateContext();
 
-    useEffect(() => {
-        const getIsOperatorDpti = async () => {
-            try {
-                const response = await axios.get(
-                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/validation/Spv-Dpti`
-                );
-                const fetchedData = response.data.data;
-                setIsOperatorDpti(fetchedData);
-            } catch (error) {
-                console.log(error);
-            }
-        };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [operatorResponse, adminResponse] = await Promise.all([
+          axios.get(
+            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/validation/Spv-Dpti`
+          ),
+          axios.get(
+            `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/validation/admin-register`
+          ),
+        ]);
 
-        const getAdminMemo = async () => {
-            try {
-                const response = await axios.get(
-                    `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/validation/admin-register`
-                );
-                const fetchedData = response.data.data;
-                setIsAdminMemo(fetchedData);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        getIsOperatorDpti();
-        getAdminMemo();
-    }, []);
+        setIsOperatorDpti(operatorResponse.data.data);
+        setIsAdminMemo(adminResponse.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [setIsOperatorDpti, setIsAdminMemo]);
+
+  const navItems = [
+    { href: "/main/memo/register", label: "Register Memo" },
+    { href: "/main/memo/disposisimemo", label: "Disposisi Memo" },
+    { href: "/main/ppo", label: "My Memo" },
+    {
+      href: "/main/status/approvelogistic_supervisor",
+      label: "Approval",
+    },
+  ];
+
+  if (isOperatorDpti) {
+    navItems.push({ href: "/main/logistic", label: "All Memo" });
+  }
 
     return (
         <div
@@ -88,7 +96,7 @@ const Sidebar = () => {
 
                 {/* My Memo */}
                 <div className="w-full mb-2">
-                    <Link href="/main/ppo">
+                    <Link href="/main/memo/mymemo">
                         <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                             <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
                                 My Document
@@ -99,7 +107,7 @@ const Sidebar = () => {
 
                 {/* Approval */}
                 <div className="w-full mb-2">
-                    <Link href="/main/status/approvelogistic_supervisor">
+                    <Link href="/main/memo/approval">
                         <div className="hover:bg-[#ACC8E5] rounded bg-base-200 text-center w-full justify-center">
                             <button className="w-full justify-center text-[#112A46] text-lg font-bold p-4">
                                 Approval

@@ -49,18 +49,20 @@ const DispositionTable = ({ headers, data, action, link }) => {
 
   const getDisplayName = (header) => {
     const displayNames = {
-      memoNum: "NOMOR MEMO",
-      memoPerihal: "PERIHAL MEMO",
+      memoNum: "NOMOR DOCUMENT",
+      memoPerihal: "PERIHAL DOCUMENT",
       memoPic: "PIC",
-      memoStatus: "STATUS MEMO",
+      memoStatus: "STATUS DOCUMENT",
       memoSuratType: "TIPE SURAT",
-      memoMasuk: "TANGGAL MEMO MASUK",
-      memoDocType: "TIPE DOKUMEN",
-      memoKeluar: "TANGGAL MEMO KELUAR",
-      memoTerima: "TANGGAL TERIMA MEMO",
-      memoCategory: "KATEGORI MEMO",
-      memoDeadline: "MEMO DEADLINE",
-      memoNotes: "MEMO NOTES"
+      memoMasuk: "TANGGAL DOCUMENT MASUK",
+      memoDocType: "TIPE DOCUMENT",
+      memoKeluar: "TANGGAL DOCUMENT KELUAR",
+      memoTerima: "TANGGAL TERIMA DOCUMENT",
+      memoCategory: "KATEGORI DOCUMENT",
+      memoDeadline: "DOCUMENT DEADLINE",
+      tanggalDokumen: "TANGGAL DOCUMENT",
+      memoDepartment: "DEPARTMENT",
+      memoNotes: "NOTES"
       
     };
     return displayNames[header] || header;

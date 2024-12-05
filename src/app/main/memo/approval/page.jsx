@@ -1,63 +1,44 @@
 "use client";
-import { useEffect, useState } from "react";
 import FormSearch from "@/components/FormSearch";
 import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
-import HeaderLogistic from "@/header/HeaderAllMemo";
-import LogisticTable from "@/components/logistic_components/table/logistic_table_allmemo";
+import TableApprove from "@/components/status/TableApprove";
+import HeaderStatusSdlc from "@/components/status/header.jsx/HeaderStatusSdlc";
 import axios from "axios";
-import Header from "@/components/logistic_components/general/logistic_header_allproject";
-import Body from "@/components/logistic_components/general/logistic_body_allproject";
-
-const getDisplayName = (header) => {
-    const displayNames = {
-        memoNum: "NOMOR MEMO",
-        memoPerihal: "PERIHAL MEMO",
-        memoPic: "PIC",
-        memoStatus: "STATUS MEMO",
-        memoSuratType: "TIPE SURAT",
-        memoMasuk: "TANGGAL MEMO MASUK",
-        memoDocType: "TIPE DOKUMEN",
-        memoKeluar: "TANGGAL MEMO KELUAR",
-        memoTerima: "TANGGAL TERIMA MEMO",
-        memoCategory: "KATEGORI MEMO",
-        memoDeadline: "MEMO DEADLINE",
-        memoReviewer: "TEST"
-    };
-    return displayNames[header] || header;
-};
+import React, { useEffect, useState } from "react";
 
 const Page = () => {
+    const [dataLog, setDataLog] = useState(null);
     const [searchInput, setSearchInput] = useState("");
     const [searchResult, setSearchResult] = useState(null);
-    const [dataAllMemo, setDataAllMemo] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
     const [perPage, setPerPage] = useState(20);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [refresh, setRefresh] = useState(false);
     const [hasMoreData, setHasMoreData] = useState(true);
 
     useEffect(() => {
-        getDataAllMemo();
-    }, [startIndex]);
+        getAllDataLog();
+    }, [startIndex, refresh]);
 
-    const getDataAllMemo = async () => {
-        setDataAllMemo(null);
+    const getAllDataLog = async () => {
+        setDataLog(null);
         try {
             const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/findregister/all?start=${startIndex}&size=${perPage}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/projectdevlog?start=${startIndex}&size=${perPage}`
             );
             const fetchedData = response.data.data;
-            setDataAllMemo(fetchedData);
+            setDataLog(fetchedData);
             setHasMoreData(fetchedData.length === perPage);
         } catch (error) {
-            console.error("Error fetching data:", error);
+            console.log(error);
         }
     };
 
     const handleSearch = async () => {
         try {
             const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/findregister/memo?input=${searchInput}`
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/projectdev/getprojectlog?input=${searchInput}`
             );
             setSearchResult(response.data.data);
             setCurrentPage(1);
@@ -67,64 +48,65 @@ const Page = () => {
         }
     };
 
+    const handleRefresh = () => {
+        setRefresh(!refresh);
+        getAllDataLog();
+    };
+
     return (
         <div>
-            <HeaderLogistic title="All Document" />
+            <HeaderStatusSdlc title="SDLC Approval Request" />
 
             <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch
-                    placeholder="Find Memo"
+                    placeholder="Find Project"
                     setState={setSearchInput}
                     handleSubmit={handleSearch}
                 />
             </div>
-
             <div className="flex-grow justify-center items-center min-h-screen bg-white rounded-xl px-3">
-                <div className="w-full px-5 py-2 mt-4">
-                    <div className="w-full flex justify-between items-center"></div>
+                <div className=" bw-full px-5 py-2 mt-4">
+                    <div className="w-full flex justify-between items-center "></div>
                 </div>
-
-                {!dataAllMemo && !searchResult && <PleaseWait />}
-
-                {dataAllMemo &&
-                    dataAllMemo.length > 0 &&
-                    (!searchResult || searchInput === "") && (
-                        <div className="mt-4">
-                            <LogisticTable
-                                headers={Object.keys(dataAllMemo[0]).slice(
-                                    0,
-                                    Object.keys(dataAllMemo[0]).length - 1
-                                )}
-                                data={dataAllMemo}
-                                action={true}
-                                link={"/main/memo/allmemo/"}
-                            />
-                        </div>
-                    )}
-
+                {dataLog &&
+                dataLog.length !== 0 &&
+                (!searchResult || searchInput == "") ? (
+                    <TableApprove
+                        headers={Object.keys(dataLog[0]).slice(
+                            0,
+                            Object.keys(dataLog[0]).length - 1
+                        )}
+                        data={dataLog}
+                        parameter={"projectdev"}
+                        action={true}
+                        isRefresh={handleRefresh}
+                    />
+                ) : (
+                    !(searchResult && searchInput != "") && <PleaseWait />
+                )}
                 {searchResult &&
-                    searchInput !== "" &&
-                    searchResult.length > 0 && (
+                    searchInput != "" &&
+                    searchResult.length !== 0 && (
                         <div className="mt-4">
-                            <LogisticTable
+                            <TableApprove
                                 headers={Object.keys(searchResult[0]).slice(
                                     0,
                                     Object.keys(searchResult[0]).length - 1
                                 )}
                                 data={searchResult}
+                                parameter={"projectdev"}
                                 action={true}
-                                link={"/main/memo/allmemo/"}
+                                isRefresh={handleRefresh}
                             />
                         </div>
                     )}
 
                 {searchResult &&
-                    searchInput !== "" &&
+                    searchInput != "" &&
                     searchResult.length === 0 && <NotFound />}
-                {dataAllMemo && dataAllMemo.length === 0 && <NotFound />}
 
-                {dataAllMemo && (
-                    <div className="w-full flex justify-end items-center gap-3 mt-4">
+                {dataLog && (
+                    <div className="w-full flex justify-end items-center gap-3">
                         <button
                             type="button"
                             disabled={currentPage === 1 || startIndex === 0}

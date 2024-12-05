@@ -49,18 +49,23 @@ const DraftTable = ({ headers, data, action, link }) => {
 
   const getDisplayName = (header) => {
     const displayNames = {
-      memoNum: "NOMOR MEMO",
-      memoPerihal: "PERIHAL MEMO",
+      
+      memoReviewer: "DISPOSITION NOTES",
+      memoNum: "NOMOR DOCUMENT",
+      memoPerihal: "PERIHAL DOCUMENT",
       memoPic: "PIC",
-      memoStatus: "STATUS MEMO",
+      memoStatus: "STATUS DOCUMENT",
       memoSuratType: "TIPE SURAT",
-      memoMasuk: "TANGGAL MEMO MASUK",
-      memoDocType: "TIPE DOKUMEN",
-      memoKeluar: "TANGGAL MEMO KELUAR",
-      memoTerima: "TANGGAL TERIMA MEMO",
-      memoCategory: "KATEGORI MEMO",
-      memoDeadline: "MEMO DEADLINE",
-      memoReviewer: "DISPOSITION NOTES"
+      memoMasuk: "TANGGAL DOCUMENT MASUK",
+      memoDocType: "TIPE DOCUMENT",
+      memoKeluar: "TANGGAL DOCUMENT KELUAR",
+      memoTerima: "TANGGAL TERIMA DOCUMENT",
+      memoCategory: "KATEGORI DOCUMENT",
+      memoDeadline: "DOCUMENT DEADLINE",
+      tanggalDokumen: "TANGGAL DOCUMENT",
+      memoDepartment: "DEPARTMENT",
+      memoNotes: "DOCUMENT NOTES"
+      
       
     };
     return displayNames[header] || header;
@@ -135,7 +140,7 @@ const DraftTable = ({ headers, data, action, link }) => {
             {headers.map((item, index) => (
               <th key={index}
               className={`py-3 px-6 uppercase ${
-                item === "id" || item === "userdomain" || item === "userdomainreviewer" || item === "memoUpload" || item === "idMemo" || item === "userdomainpic"
+                item === "id" || item === "userdomain" || item === "memoCreatedBy" || item === "userdomainreviewer" || item === "memoUpload" || item === "idMemo" || item === "userdomainpic"
                     ? "hidden"
                     : ""
             }`}
@@ -169,7 +174,7 @@ const DraftTable = ({ headers, data, action, link }) => {
                 {headers.map((header, headerIndex) => (
                   <td key={headerIndex}
                   className={`py-3 px-6 ${
-                    header === "id" || header === "userdomain" || header === "userdomainreviewer" || header === "memoUpload" || header === "idMemo" || header === "userdomainpic" ? "hidden" : ""
+                    header === "id" || header === "userdomain" || header === "memoCreatedBy"|| header === "userdomainreviewer" || header === "memoUpload" || header === "idMemo" || header === "userdomainpic" ? "hidden" : ""
                 }`}
                    >
                     {header === "memoStatus" ? memoStatus : 

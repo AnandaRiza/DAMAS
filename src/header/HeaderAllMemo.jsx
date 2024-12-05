@@ -19,11 +19,6 @@ const HeaderAllMemo = ({title}) => {
                     </Link>
                   </li>
                   <li>
-                  <Link href="/main/memo/allmemo">
-                    Memo
-                    </Link>
-                  </li>
-                  <li>
                     <a>{title}</a>
                   </li>
                 </ul>

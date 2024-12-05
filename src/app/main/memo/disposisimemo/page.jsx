@@ -51,7 +51,7 @@ const Page = () => {
 
     return (
         <div>
-            <HeaderDisposisiMemo title="Disposisi Memo" />
+            <HeaderDisposisiMemo title="Disposition" />
 
             <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch

@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
-const AllDetail = () => {
+const MyDetail = () => {
     const userid = document.cookie
         .split("; ")
         .find((row) => row.startsWith("DAMAS-USERID="))
@@ -50,7 +50,8 @@ const AllDetail = () => {
         memoKeluar: "",
         memoTerima: "",
         idmemo: "",
-        tanggalDokumen: "",
+        tanggalSelesai: "",
+
     });
     useEffect(() => {
         const getCurrentData = async () => {
@@ -67,6 +68,69 @@ const AllDetail = () => {
         getCurrentData();
     }, [params.id]);
 
+    const calculateDeadline = (date) => {
+        const d = new Date(date);
+        d.setDate(d.getDate() - 1);
+
+        const day = String(d.getDate()).padStart(2, "0");
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const year = d.getFullYear();
+        const hours = String(d.getHours()).padStart(2, "0");
+        const minutes = String(d.getMinutes()).padStart(2, "0");
+        const seconds = String(d.getSeconds()).padStart(2, "0");
+
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+    };
+
+    const submitAtDate = () => {
+        const d = new Date();
+        const day = String(d.getDate()).padStart(2, "0");
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const year = d.getFullYear();
+        const hours = String(d.getHours()).padStart(2, "0");
+        const minutes = String(d.getMinutes()).padStart(2, "0");
+        const seconds = String(d.getSeconds()).padStart(2, "0");
+
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+    };
+
+    const handleEditedData = async () => {
+        if (
+            formData.memoStatus === "DONE" &&
+            !formData.projectdone
+        ) {
+            alert("isi tanggal done dahulu!");
+            return;
+        }
+        setIsLoading(true);
+        try {
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/projectdev/log`,
+                {
+                    ...formData,
+                    submitter: userid,
+                    authorizer: "SUPERVISOR",
+                    submitAt: submitAtDate(),
+                    tanggalSelesai: calculateDeadline(scheduleInput),
+                    statusApprovement: "PENDING",
+                    idmemo: formData.id,
+                    userdomain: formData.userdomain,
+                    userdomainpic: formData.userdomainpic,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "USER-ID": userid,
+                    },
+                }
+            );
+            router.push("/main/development");
+            setIsLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const getDataAllPic = async () => {
         setDataAllPic(null);
         try {
@@ -78,6 +142,12 @@ const AllDetail = () => {
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const getMinDateTime = () => {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        return now.toISOString().slice(0, 16);
     };
 
     const getDataAllKadep = async () => {
@@ -126,26 +196,6 @@ const AllDetail = () => {
                                     setFormData({
                                         ...formData,
                                         memoNum: e.target.value,
-                                    })
-                                }
-                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
-                                disabled
-                            />
-                        </div>
-                        <div className="flex flex-col" >
-                            <label
-                                htmlFor="memo_num"
-                                className="text-sm font-semibold text-[#0066AE] "
-                            >
-                                Tanggal Dokumen
-                            </label>
-                            <input
-                                type="text"
-                                value={formData.tanggalDokumen}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        tanggalDokumen: e.target.value,
                                     })
                                 }
                                 className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
@@ -370,12 +420,12 @@ const AllDetail = () => {
                                 hidden
                             />
                         </div>
-                        <div className="" hidden>
+                        <div className="flex flex-col" >
                             <label
                                 htmlFor="memo_status"
                                 className="text-sm font-semibold text-gray-600"
                             >
-                                Status <span className="text-red-500">*</span>
+                                Status
                             </label>
                             <div className="dropdown mt-1">
                                 <div
@@ -416,6 +466,18 @@ const AllDetail = () => {
                                             DRAFT
                                         </a>
                                     </li>
+                                    <li>
+                                        <a
+                                            onClick={() =>
+                                                setFormData({
+                                                    ...formData,
+                                                    memoStatus: "DONE",
+                                                })
+                                            }
+                                        >
+                                            DONE
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -440,7 +502,32 @@ const AllDetail = () => {
                                 }
                                 className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                             />
-                        </div>  
+                        </div>
+                        <div className="flex flex-col">
+                        <label
+                            htmlFor="tanggaldone"
+                            className="text-sm font-semibold text-[#0066AE]"
+                        >
+                            Tanggal Done{" "}
+                        </label>
+                        <input
+                            type="datetime-local"
+                            id="tanggaldone"
+                            name="tanggaldone"
+                            required
+                            value={scheduleInput}
+                            min={getMinDateTime()}
+                            onChange={(e) => setScheduleInput(e.target.value)}
+                            className="input input-bordered mt-1"
+                        />
+                    </div>
+                    <button
+                        type="button"
+                        onClick={handleEditedData}
+                        className="bg-blue-500 text-white py-2 px-4 rounded-md"
+                    >
+                        EDIT
+                    </button>
                     </form>
                 ) : (
                     <PleaseWait />
@@ -450,4 +537,4 @@ const AllDetail = () => {
     );
 };
 
-export default AllDetail;
+export default MyDetail;

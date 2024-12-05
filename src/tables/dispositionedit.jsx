@@ -21,7 +21,7 @@ const Page = () => {
     const router = useRouter();
     const [selectedDept, setSelectedDept] = useState("");
     const [selectedDeptKadep, setSelectedDeptKadep] = useState("");
-    const [selectedUserDomain, setSelectedUserDomain] = useState("");
+    const [selectedUserKadep, setSelectedUserKadep] = useState("");
     const [scheduleInput, setScheduleInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [dataAllPic, setDataAllPic] = useState(null);
@@ -43,7 +43,7 @@ const Page = () => {
         memoNotes: "",
         memoUpload: null,
         userdomain: "",
-        userdomainpic: "apabang",
+        userdomainpic: "",
         userdomainreviewer: "apa",
         memoCategory: "",
         memoSuratType: "",
@@ -135,7 +135,7 @@ const Page = () => {
                     memoStatus: newStatus,
                     idmemo: formData.id,
                     userdomain: formData.userdomain,
-                    userdomainpic: formData.userdomainpic,
+                    userdomainpic: selectedUserKadep,
                 },
                 {
                     headers: {
@@ -331,10 +331,13 @@ const Page = () => {
                                             memoPic: selectedPicKadep.employee,
                                             memoDepartment:
                                                 selectedPicKadep.name,
+                                                userdomainpic:
+                                                selectedPicKadep.userDomainpics, 
                                         });
                                         setSelectedDeptKadep(
                                             selectedPicKadep.name
                                         );
+                                        setSelectedUserKadep(selectedPicKadep.userDomainpics);
                                     }}
                                 >
                                     <option
@@ -367,6 +370,21 @@ const Page = () => {
                                 className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
                                 type="text"
                                 value={selectedDeptKadep}
+                                disabled
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label
+                                htmlFor="memo_department"
+                                className="text-sm font-semibold"
+                            >
+                                userdomainpickadep
+                            </label>
+                            <input
+                                className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                                type="text"
+                                value={selectedUserKadep}
                                 disabled
                             />
                         </div>

@@ -52,7 +52,7 @@ const page = () => {
 
     return (
         <div>
-            <HeaderLogistic title="Draft Memo" />
+            <HeaderLogistic title="Draft" />
 
             <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch

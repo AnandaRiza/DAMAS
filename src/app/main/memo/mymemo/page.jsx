@@ -1,33 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import FormSearch from "@/components/FormSearch";
-import NotFound from "@/components/NotFound";
 import PleaseWait from "@/components/PleaseWait";
 import HeaderLogistic from "@/header/HeaderAllMemo";
-import LogisticTable from "@/components/logistic_components/table/logistic_table_allmemo";
+import LogisticTable from "@/components/logistic_components/table/logistic_table_mymemo";
 import axios from "axios";
-import Header from "@/components/logistic_components/general/logistic_header_allproject";
-import Body from "@/components/logistic_components/general/logistic_body_allproject";
-
-const getDisplayName = (header) => {
-    const displayNames = {
-        memoNum: "NOMOR MEMO",
-        memoPerihal: "PERIHAL MEMO",
-        memoPic: "PIC",
-        memoStatus: "STATUS MEMO",
-        memoSuratType: "TIPE SURAT",
-        memoMasuk: "TANGGAL MEMO MASUK",
-        memoDocType: "TIPE DOKUMEN",
-        memoKeluar: "TANGGAL MEMO KELUAR",
-        memoTerima: "TANGGAL TERIMA MEMO",
-        memoCategory: "KATEGORI MEMO",
-        memoDeadline: "MEMO DEADLINE",
-        memoReviewer: "TEST"
-    };
-    return displayNames[header] || header;
-};
+import { useStateContext } from "@/context/ContextProvider";
 
 const Page = () => {
+    const { user } = useStateContext();
     const [searchInput, setSearchInput] = useState("");
     const [searchResult, setSearchResult] = useState(null);
     const [dataAllMemo, setDataAllMemo] = useState(null);
@@ -38,38 +19,56 @@ const Page = () => {
 
     useEffect(() => {
         getDataAllMemo();
-    }, [startIndex]);
+    }, [startIndex, user]);
 
     const getDataAllMemo = async () => {
+        if (!user || !user.userdomain) return;
+
         setDataAllMemo(null);
         try {
             const response = await axios.get(
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/findregister/all?start=${startIndex}&size=${perPage}`
             );
             const fetchedData = response.data.data;
-            setDataAllMemo(fetchedData);
-            setHasMoreData(fetchedData.length === perPage);
+            
+            // Filter the fetched data based on userdomain_pic matching user.userdomain
+            const filteredMemos = fetchedData.filter(memo => 
+                memo.userdomainpic?.toLowerCase() === user.userdomain.toLowerCase()
+            );
+
+            setDataAllMemo(filteredMemos);
+            setHasMoreData(filteredMemos.length === perPage);
         } catch (error) {
             console.error("Error fetching data:", error);
+            setDataAllMemo([]);
         }
     };
 
     const handleSearch = async () => {
+        if (!user || !user.userdomain) return;
+
         try {
             const response = await axios.get(
                 `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/findregister/memo?input=${searchInput}`
+            );  
+
+            // Filter the search results based on userdomain_pic matching user.userdomain
+            const filteredMemos = response.data.data.filter(memo => 
+                memo.userdomain_pic?.toLowerCase() === user.userdomain.toLowerCase()
             );
-            setSearchResult(response.data.data);
+
+            setSearchResult(filteredMemos);
             setCurrentPage(1);
             setStartIndex(0);
         } catch (error) {
             console.log(error);
+            setSearchResult([]);
         }
     };
 
     return (
         <div>
-            <HeaderLogistic title="All Document" />
+            <HeaderLogistic title="My Memo" />
 
             <div style={{ position: "absolute", top: 30, right: 45 }}>
                 <FormSearch
@@ -97,7 +96,7 @@ const Page = () => {
                                 )}
                                 data={dataAllMemo}
                                 action={true}
-                                link={"/main/memo/allmemo/"}
+                                link={"/main/memo/mymemo/"}
                             />
                         </div>
                     )}
@@ -113,17 +112,19 @@ const Page = () => {
                                 )}
                                 data={searchResult}
                                 action={true}
-                                link={"/main/memo/allmemo/"}
+                                link={"/main/memo/mymemo/"}
                             />
                         </div>
                     )}
 
-                {searchResult &&
-                    searchInput !== "" &&
-                    searchResult.length === 0 && <NotFound />}
-                {dataAllMemo && dataAllMemo.length === 0 && <NotFound />}
+                {((searchResult && searchInput !== "" && searchResult.length === 0) || 
+                  (dataAllMemo && dataAllMemo.length === 0)) && (
+                    <div className="text-center text-gray-600 mt-10 text-xl">
+                        No memos available for you.
+                    </div>
+                )}
 
-                {dataAllMemo && (
+                {dataAllMemo && dataAllMemo.length > 0 && (
                     <div className="w-full flex justify-end items-center gap-3 mt-4">
                         <button
                             type="button"

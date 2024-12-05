@@ -18,6 +18,7 @@ const RegisterForm = () => {
     const [dataAllPic, setDataAllPic] = useState(null);
     const [filteredDataAllPic, setFilteredDataAllPic] = useState(null);
     const [selectedDept, setSelectedDept] = useState("");
+    const [selectedUser, setSelectedUser] = useState("");
     const [scheduleInput, setScheduleInput] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const router = useRouter();
@@ -34,7 +35,7 @@ const RegisterForm = () => {
         memoNotes: "",
         memoUpload: null,
         userdomain: "",
-        userdomainpic: "apabang",
+        userdomainpic: "",
         userdomainreviewer: "apa",
         memoCategory: "",
         memoSuratType: "",
@@ -42,7 +43,7 @@ const RegisterForm = () => {
         memoDocType: "",
         memoKeluar: "",
         memoTerima: "",
-        tanggalDokumen: ""
+        tanggalDokumen: "",
     });
 
     const getDataAllPic = async () => {
@@ -74,6 +75,7 @@ const RegisterForm = () => {
                     ...formData,
                     memoCreatedBy: userid,
                     userdomain: user.userdomain,
+                    userdomainpic: selectedUser,
                     memoDeadline: convertToDateFormat(scheduleInput),
                 },
 
@@ -90,7 +92,6 @@ const RegisterForm = () => {
             alert("Create Project Failed!");
         }
     };
-
 
     const calculateDeadline = (date) => {
         const d = new Date(date);
@@ -138,7 +139,7 @@ const RegisterForm = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="memo_num"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Nomor Dokumen
                         </label>
@@ -159,7 +160,7 @@ const RegisterForm = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="memo_masuk"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Tanggal Dokumen
                         </label>
@@ -180,7 +181,7 @@ const RegisterForm = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="memo_perihal"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Perihal Dokumen
                         </label>
@@ -202,7 +203,7 @@ const RegisterForm = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="memo_pic"
-                            className="text-sm font-semibold"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             PIC <span className="text-red-500">*</span>
                         </label>
@@ -220,18 +221,23 @@ const RegisterForm = () => {
                                     const selectedPic = JSON.parse(
                                         e.target.value
                                     );
+
                                     setFormData({
                                         ...formData,
                                         memoPic: selectedPic.employee,
                                         memoDepartment: selectedPic.name,
+                                        userdomainpic:
+                                        selectedPic.userDomainpics, 
                                     });
+
                                     setSelectedDept(selectedPic.name);
+                                    setSelectedUser(selectedPic.userDomainpics);
                                 }}
                             >
                                 <option
                                     disabled
                                     selected
-                                    className="text-sm text-gray-600 opacity-50"
+                                    className="text-sm text-[#0066AE] opacity-50"
                                 >
                                     Select PIC...
                                 </option>
@@ -250,7 +256,7 @@ const RegisterForm = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="memo_department"
-                            className="text-sm font-semibold"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Department
                         </label>
@@ -262,10 +268,25 @@ const RegisterForm = () => {
                         />
                     </div>
 
+                    <div className=""hidden>
+                        <label
+                            htmlFor="memo_department"
+                            className="text-sm font-semibold"
+                        >
+                            userdomainpic
+                        </label>
+                        <input
+                            className="input input-bordered mt-1 disabled:bg-gray-100 disabled:text-black"
+                            type="text"
+                            value={selectedUser}
+                            disabled
+                        />
+                    </div>
+
                     <div className="flex flex-col">
                         <label
                             htmlFor="memo_createdBy"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                             hidden
                         >
                             Created By
@@ -289,7 +310,7 @@ const RegisterForm = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="memo_category"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Kategori Dokumen{" "}
                             {/* <span className="text-red-500">*</span> */}
@@ -318,7 +339,7 @@ const RegisterForm = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="memo_surat_type"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Tipe Surat
                         </label>
@@ -354,7 +375,7 @@ const RegisterForm = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="memo_doc_type"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Tipe Dokumen
                         </label>
@@ -394,7 +415,7 @@ const RegisterForm = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="memo_masuk"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Tanggal Masuk
                         </label>
@@ -416,7 +437,7 @@ const RegisterForm = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="memo_keluar"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Tanggal Keluar Memo
                         </label>
@@ -438,7 +459,7 @@ const RegisterForm = () => {
                     {/* <div className="flex flex-col">
                         <label
                             htmlFor="memo_masuk"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Tanggal Terima Memo
                         </label>
@@ -461,7 +482,7 @@ const RegisterForm = () => {
                         <label
                             htmlFor="memo_notes"
                             hidden
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Notes
                         </label>
@@ -484,7 +505,7 @@ const RegisterForm = () => {
                     <div className="flex flex-col">
                         <label
                             htmlFor="memo_status"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Status <span className="text-red-500">*</span>
                         </label>
@@ -503,7 +524,8 @@ const RegisterForm = () => {
                                         onClick={() =>
                                             setFormData({
                                                 ...formData,
-                                                memoStatus: "WAITING FOR APPROVAL",
+                                                memoStatus:
+                                                    "WAITING FOR APPROVAL",
                                             })
                                         }
                                     >
@@ -528,7 +550,7 @@ const RegisterForm = () => {
                     <div className="flex flex-col mt-4">
                         <label
                             htmlFor="note"
-                            className="text-sm font-semibold text-gray-600"
+                            className="text-sm font-semibold text-[#0066AE]"
                         >
                             Note
                         </label>
@@ -564,12 +586,9 @@ const RegisterForm = () => {
                             min={getMinDateTime()}
                             onChange={(e) => setScheduleInput(e.target.value)}
                             className="input input-bordered mt-1"
-                        
                         />
-
-                       
                     </div>
-                   
+
                     <button
                         type="button"
                         onClick={handleSubmit}
@@ -577,9 +596,7 @@ const RegisterForm = () => {
                     >
                         Register Memo
                     </button>
-                    
                 </form>
-                
             </div>
         </div>
     );

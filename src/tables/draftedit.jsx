@@ -1,7 +1,7 @@
 "use client";
 import PleaseWait from "@/components/PleaseWait";
 import { useStateContext } from "@/context/ContextProvider";
-import { convertToDate } from "@/utils/dateFormater";
+import { convertToDate, convertToDateFormat } from "@/utils/dateFormater";
 import axios from "axios";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -43,7 +43,7 @@ const Page = () => {
         memoNotes: "",
         memoUpload: null,
         userdomain: "",
-        userdomainpic: "apabang",
+        userdomainpic: "",
         userdomainreviewer: "apa",
         memoCategory: "",
         memoSuratType: "",
@@ -52,6 +52,7 @@ const Page = () => {
         memoKeluar: "",
         memoTerima: "",
         idmemo: "",
+        tanggalDokumen: ""
     });
     useEffect(() => {
         const getCurrentData = async () => {
@@ -100,15 +101,15 @@ const Page = () => {
         setLoadingAction(action);
 
         try {
+            // Include the 'input' parameter in the URL as a query parameter
             await axios.put(
-                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/register/editedmemo`,
+                `${process.env.NEXT_PUBLIC_DAMAS_URL_SERVER}/draftmemo/editedmemo`, // Pass 'input' as a query parameter
                 {
                     ...formData,
-                    idmemo: formData.id,
                     userdomain: formData.userdomain,
-                    userdomainpic: formData.userdomainpic,
+                    userdomainpic: dataAllPic.userdomainpic,
                     memoCreatedBy: formData.memoCreatedBy,
-                    memoDeadline: formData.memoDeadline,
+                    memoDeadline: convertToDateFormat(formData.memoDeadline),
                 },
                 {
                     headers: {
@@ -117,6 +118,8 @@ const Page = () => {
                     },
                 }
             );
+
+            // Navigate to another page after successful request
             router.push("/main/memo/disposisimemo");
         } catch (error) {
             console.error(error);
@@ -192,6 +195,28 @@ const Page = () => {
                                 className="input input-bordered mt-1"
                             />
                         </div>
+
+                        <div className="flex flex-col">
+                            <label
+                                htmlFor="tanggaldokumen"
+                                className="text-sm font-semibold text-[#0066AE]"
+                            >
+                                Tanggal Document
+                            </label>
+                            <input
+                                type="date"
+                                id="tanggaldokumen"
+                                name="tanggaldokumen"
+                                value={convertToDate(formData.tanggalDokumen)}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        tanggalDokumen: e.target.value,
+                                    })
+                                }
+                                className="input input-bordered mt-1"
+                            />
+                        </div>
                         <div className="flex flex-col">
                             <label
                                 htmlFor="memo_perihal"
@@ -215,7 +240,7 @@ const Page = () => {
                         <div className="flex flex-col">
                             <label
                                 htmlFor="memo_pic"
-                                className="text-sm font-semibold"
+                                className="text-sm font-semibold text-[#0066AE]"
                             >
                                 PIC <span className="text-red-500">*</span>
                             </label>
@@ -263,7 +288,7 @@ const Page = () => {
                         <div className="flex flex-col">
                             <label
                                 htmlFor="memo_department"
-                                className="text-sm font-semibold"
+                                className="text-sm font-semibold text-[#0066AE]"
                             >
                                 Department
                             </label>
@@ -362,13 +387,15 @@ const Page = () => {
                         </div>
                         <div className="flex flex-col">
                             <label
-                                htmlFor="memo_createdBy"
+                                htmlFor="memo_category"
                                 className="text-sm font-semibold text-[#0066AE]"
                             >
-                                Kategori Memo
+                                Kategori Dokumen{" "}
                             </label>
-                            <input
+                            <select
                                 type="text"
+                                id="memo_category"
+                                name="memo_category"
                                 value={formData.memoCategory}
                                 onChange={(e) =>
                                     setFormData({
@@ -377,7 +404,13 @@ const Page = () => {
                                     })
                                 }
                                 className="input input-bordered mt-1"
-                            />
+                            >
+                                <option value="" disabled>
+                                    Pilih Kategori Dokumen ...
+                                </option>
+                                <option value="Memo Masuk">Masuk</option>
+                                <option value="Memo Keluar">Keluar</option>
+                            </select>
                         </div>
                         <div className="flex flex-col">
                             <label
@@ -402,15 +435,15 @@ const Page = () => {
                                     Pilih Tipe Surat ...
                                 </option>
                                 <option value="-">-</option>
-                            <option value="MO">MO</option>
-                            <option value="SE">SE</option>
-                            <option value="SK">SK</option>
-                            <option value="AGR">AGR</option>
-                            <option value="NDA">NDA</option>
-                            <option value="PKS">PKS</option>
-                            <option value="SPJ">SPJ</option>
-                            <option value="SKU">SKU</option>
-                            <option value="BAST">BAST</option>
+                                <option value="MO">MO</option>
+                                <option value="SE">SE</option>
+                                <option value="SK">SK</option>
+                                <option value="AGR">AGR</option>
+                                <option value="NDA">NDA</option>
+                                <option value="PKS">PKS</option>
+                                <option value="SPJ">SPJ</option>
+                                <option value="SKU">SKU</option>
+                                <option value="BAST">BAST</option>
                             </select>
                         </div>
 
@@ -543,7 +576,7 @@ const Page = () => {
                                 hidden
                             />
                         </div>
-                        <div className="" hidden>
+                        <div className="flex flex-col">
                             <label
                                 htmlFor="memo_status"
                                 className="text-sm font-semibold text-gray-600"
@@ -603,11 +636,11 @@ const Page = () => {
                                 type="datetime-local"
                                 id="deadlinememo"
                                 name="deadlinememo"
-                                value={formData.memoDeadline}
+                                value={formData.memoDeadline} 
                                 onChange={(e) =>
                                     setFormData({
                                         ...formData,
-                                        memoDeadline: e.target.value,
+                                        memoDeadline: e.target.value, 
                                     })
                                 }
                                 className="input input-bordered mt-1"
@@ -635,50 +668,13 @@ const Page = () => {
                             />
                         </div>
 
-                        <div className="flex gap-2 items-center text-white ml-3 mt-3">
-                            <button
-                                type="button"
-                                className="py-2 px-4 rounded-xl bg-red-500 flex gap-1 items-center"
-                                onClick={() =>
-                                    handleEditedData("REJECTED", "REJECTED")
-                                }
-                                disabled={
-                                    loadingAction &&
-                                    loadingAction !== "REJECTED"
-                                } // Disable if another action is loading
-                            >
-                                <MdOutlineCancel />
-                                {loadingAction === "REJECTED" ? ( // Show loading spinner only for REJECTED
-                                    <div className="flex justify-center gap-3">
-                                        <p>Please wait</p>
-                                        <span className="loading loading-spinner"></span>
-                                    </div>
-                                ) : (
-                                    <span>REJECTED</span>
-                                )}
-                            </button>
-                            <button
-                                type="button"
-                                className="py-2 px-4 rounded-xl bg-blue-500 flex gap-1 items-center"
-                                onClick={() =>
-                                    handleEditedData("APPROVED", "APPROVED")
-                                }
-                                disabled={
-                                    loadingAction &&
-                                    loadingAction !== "APPROVED"
-                                } // Disable if another action is loading
-                            >
-                                <FiSave />
-                                {loadingAction === "APPROVED" ? ( // Show loading spinner only for APPROVED
-                                    <div className="flex justify-center gap-3">
-                                        <p>Please wait</p>
-                                        <span className="loading loading-spinner"></span>
-                                    </div>
-                                ) : (
-                                    <span>APPROVED</span>
-                                )}
-                            </button>
-                        </div>
+                        <button
+                            type="button"
+                            onClick={handleEditedData}
+                            className="bg-blue-500 text-white py-2 px-4 rounded-md"
+                        >
+                            Register Draft
+                        </button>
                     </form>
                 ) : (
                     <PleaseWait />
